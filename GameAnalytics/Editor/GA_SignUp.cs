@@ -956,7 +956,7 @@ namespace GameAnalyticsSDK
 					new StringWithType { Text = "Read about the build process for iOS.", Type = StringType.Link, Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20Xcode" },
 #else
 					new StringWithType { Text = "Your selected build platform is not currently supported by GameAnalytics." },
-					new StringWithType { Text = "Read about our supported platforms.", Type = StringType.Link, Link = "http://support.gameanalytics.com" },
+					new StringWithType { Text = "Read about our supported platforms.", Type = StringType.Link, Link = "http://www.gameanalytics.com/docs" },
 #endif
 				};
 			default:
