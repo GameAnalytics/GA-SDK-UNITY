@@ -14,6 +14,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.0.1**
+* fix for business event receipt rejection in some cases
+* tweaked local db size trimming
+
 **2.0.0**
 * redesigned Unity SDK 
 * initially with **only iOS** support
