@@ -7,7 +7,7 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 > :information_source:<br>
 > The initial release of the new Unity SDK include only support for iOS.<br>
 > The prior V1 Unity SDK is still functional and available [here](http://download.gameanalytics.com/unity/UnityWrapper.unitypackage).<br>
-> Read [more](http://www.gameanalytics.com/update/) about our launch of the new events (V2).
+> Read this [SDK update FAQ](http://www.gameanalytics.com/docs/sdk-update-faq/) to keep yourself informed about future V2 SDK updates.
 
 
 
