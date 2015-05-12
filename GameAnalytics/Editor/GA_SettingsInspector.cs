@@ -1916,20 +1916,20 @@ namespace GameAnalyticsSDK
 				if (string.IsNullOrEmpty(www.error))
 				{
 					Hashtable returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-					if (!returnParam.ContainsKey("unity")) {
-						return false;
-					}
-					
-					Hashtable unityParam = (Hashtable)returnParam["unity"];
-					if (unityParam.ContainsKey("version")) {
-						string newVersion = ((Hashtable)returnParam["unity"])["version"].ToString();
+					if (returnParam.ContainsKey("unity"))
+					{
+						Hashtable unityParam = (Hashtable)returnParam["unity"];
+						if (unityParam.ContainsKey("version")) {
+							string newVersion = ((Hashtable)returnParam["unity"])["version"].ToString();
 
-						if (IsNewVersion(newVersion, Settings.VERSION)) {
-							GetChangeLogsAndShowUpdateWindow(newVersion);
+							if (IsNewVersion(newVersion, Settings.VERSION))
+							{
+								GetChangeLogsAndShowUpdateWindow(newVersion);
+							}
 						}
 					}
 				}
-			} catch {}
+			} catch { }
 		}
 		
 		private static IEnumerator<WWW> GetChangeLogsAndShowUpdateWindowCoroutine (WWW www, string newVersion)

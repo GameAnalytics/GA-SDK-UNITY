@@ -27,12 +27,15 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmString ItemID;
 
 		[RequiredField]
-		[Tooltip("")]
+		[Tooltip("Cart Type")]
 		public FsmString CartType;
-		
-		[RequiredField]
+
 		[Tooltip("App Store Receipt, used for purchase validation")]
 		public FsmString Receipt;
+		
+		[RequiredField]
+		[Tooltip("If true the SDK will ignore the receipt parameter and attempt to automatically get the receipt.")]
+		public FsmBool AutoFetchReceipt;
 		
 		public override void Reset()
 		{
@@ -42,11 +45,12 @@ namespace HutongGames.PlayMaker.Actions
 			ItemID = new FsmString() { UseVariable = false };
 			CartType = new FsmString() { UseVariable = false };
 			Receipt = new FsmString() { UseVariable = false };
+			AutoFetchReceipt = new FsmBool() { UseVariable = false };
 		}
 		
 		public override void OnEnter()
 		{
-			GA_Business.NewEvent(Currency.Value, Amount.Value, ItemType.Value, ItemID.Value, CartType.Value, Receipt.Value);
+			GA_Business.NewEvent(Currency.Value, Amount.Value, ItemType.Value, ItemID.Value, CartType.Value, Receipt.Value, AutoFetchReceipt.Value);
 			
 			Finish();
 		}

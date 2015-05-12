@@ -41,11 +41,13 @@ namespace HutongGames.PlayMakerEditor
 
 			EditField("Progression01");
 
-			if (_target.Progression01.Value != "")
+			if (_target.Progression01.Value != "" || !_target.Progression01.IsNone)
 				EditField("Progression02");
-
-			if (_target.Progression02.Value != "")
+			
+			if (_target.Progression02.Value != "" || !_target.Progression02.IsNone)
 				EditField("Progression03");
+
+			EditField("Score");
 
 			return GUI.changed || edited;
         }

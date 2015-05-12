@@ -10,8 +10,6 @@ public class PlayMakerPresenceCheck : AssetPostprocessor{
 	static string IgnorePlayMakerBridgeKey = "IgnorePlayMakerBridge";
 	static string PlayMakerBridgeEnabledKey = "PlayMakerBridgeEnabled";
 
-	static public string PlayMakerDemoPackageFile = "Assets/GameAnalytics/Plugins/Playmaker/Examples/GameAnalyticsPlayMakerDemo.unitypackage";
-
 	static bool _debug = false;
 
 
@@ -69,21 +67,12 @@ public class PlayMakerPresenceCheck : AssetPostprocessor{
 				{
 					EditorPrefs.SetBool(PlayMakerBridgeEnabledKey+"-"+Application.dataPath,true);
 
-					if (EditorUtility.DisplayDialog("GameAnalytics : PlayMaker Examples","Do you want to import The GameAnalytics PlayMaker Examples?","Yes","No"))
-					{
-						EditorApplication.ExecuteMenuItem("Window/GameAnalytics/PlayMaker/Import Examples");
-					}else{
-						Debug.Log("To import PlayMaker demo for GameAnalytics manualy, simply go to the menu: 'Window/GameAnalytics/PlayMaker/import Examples'");
-					}
-
-
 					EditorApplication.ExecuteMenuItem("Window/GameAnalytics/PlayMaker/Toggle Scripts");
 
 
 				}else{
 					EditorPrefs.SetBool(IgnorePlayMakerBridgeKey+"-"+Application.dataPath,true);
 					Debug.Log("To enable PlayMaker support for GameAnalytics manualy, simply go to the menu: 'Window/GameAnalytics/PlayMaker/Toggle Scripts'");
-					Debug.Log("To import PlayMaker demo for GameAnalytics manualy, simply go to the menu: 'Window/GameAnalytics/PlayMaker/import Examples'");
 				}
 			}
 		}

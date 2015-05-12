@@ -91,14 +91,6 @@ namespace GameAnalyticsSDK
 			}
 		}
 
-		[MenuItem ("Window/GameAnalytics/PlayMaker/Import Examples", false, 500)]
-		static void ImportPlayMakerDemo ()
-		{
-			AssetDatabase.ImportPackage(PlayMakerPresenceCheck.PlayMakerDemoPackageFile,true);
-			
-			AssetDatabase.Refresh();
-		}
-		
 		public static bool ReplaceInFile (string filePath, string searchText, string replaceText)
 		{
 			bool enabled = false;

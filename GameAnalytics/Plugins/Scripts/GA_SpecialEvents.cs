@@ -26,6 +26,8 @@ namespace GameAnalyticsSDK
 		private static float _lastUpdateAvg = 0f;
 		private int _frameCountCrit = 0;
 		private float _lastUpdateCrit = 0f;
+
+		private static int _criticalFpsCount = 0;
 		
 		#endregion
 		
@@ -33,25 +35,25 @@ namespace GameAnalyticsSDK
 		
 		public void Start ()
 		{
-			StartCoroutine(SubmitAverageFPSRoutine());
-			StartCoroutine(SubmitCriticalFPSRoutine());
+			StartCoroutine(SubmitFPSRoutine());
+			StartCoroutine(CheckCriticalFPSRoutine());
 		}
 		
-		private IEnumerator SubmitAverageFPSRoutine()
+		private IEnumerator SubmitFPSRoutine()
 		{
 			while(Application.isPlaying && GameAnalytics.SettingsGA.SubmitFpsAverage)
 			{
 				yield return new WaitForSeconds(30);
-				SubmitAverageFPS();
+				SubmitFPS();
 			}
 		}
 		
-		private IEnumerator SubmitCriticalFPSRoutine()
+		private IEnumerator CheckCriticalFPSRoutine()
 		{
 			while(Application.isPlaying && GameAnalytics.SettingsGA.SubmitFpsCritical)
 			{
 				yield return new WaitForSeconds(GameAnalytics.SettingsGA.FpsCirticalSubmitInterval);
-				SubmitCriticalFPS();
+				CheckCriticalFPS();
 			}
 		}
 		
@@ -70,7 +72,7 @@ namespace GameAnalyticsSDK
 			}
 		}
 		
-		public static void SubmitAverageFPS()
+		public static void SubmitFPS()
 		{
 			//average FPS
 			if (GameAnalytics.SettingsGA.SubmitFpsAverage)
@@ -89,9 +91,18 @@ namespace GameAnalyticsSDK
 					}
 				}
 			}
+
+			if (GameAnalytics.SettingsGA.SubmitFpsCritical)
+			{
+				if (_criticalFpsCount > 0)
+				{
+					GA_Design.NewEvent("GA:CriticalFPS", _criticalFpsCount);
+					_criticalFpsCount = 0;
+				}
+			}
 		}
 		
-		public void SubmitCriticalFPS()
+		public void CheckCriticalFPS()
 		{
 			//critical FPS
 			if (GameAnalytics.SettingsGA.SubmitFpsCritical)
@@ -106,7 +117,7 @@ namespace GameAnalyticsSDK
 					
 					if (fpsSinceUpdate <= GameAnalytics.SettingsGA.FpsCriticalThreshold)
 					{
-						GA_Design.NewEvent("GA:CriticalFPS", ((int)fpsSinceUpdate));
+						_criticalFpsCount++;
 					}
 				}
 			}

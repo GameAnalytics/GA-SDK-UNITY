@@ -26,22 +26,38 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Progression layer 3")]
 		public FsmString Progression03;
 
+		[Tooltip("The player's score")]
+		public FsmInt Score;
+
 		public override void Reset()
 		{
 			ProgressionStatus = GA_Progression.GAProgressionStatus.GAProgressionStatusStart;
 			Progression01 = new FsmString() { UseVariable = false };
 			Progression02 = new FsmString() { UseVariable = false };
 			Progression03 = new FsmString() { UseVariable = false };
+			Score = new FsmInt() { UseVariable = false };
 		}
 		
 		public override void OnEnter()
 		{
-			if (!Progression03.IsNone && !Progression02.IsNone)
-				GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value);
-			else if (!Progression02.IsNone)
-				GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value);
+			if (!Score.IsNone)
+			{
+				if (!Progression03.IsNone && !Progression02.IsNone)
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, Score.Value);
+				else if (!Progression02.IsNone)
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Score.Value);
+				else
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Score.Value);
+			}
 			else
-				GA_Progression.NewEvent(ProgressionStatus, Progression01.Value);
+			{
+				if (!Progression03.IsNone && !Progression02.IsNone)
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value);
+				else if (!Progression02.IsNone)
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value);
+				else
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value);
+			}
 			
 			Finish();
 		}
