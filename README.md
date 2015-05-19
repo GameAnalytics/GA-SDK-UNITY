@@ -14,6 +14,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.0.3**
+* fixed an iOS 6 issue
+* added a post process build script for setting up Xcode (Unity 5 only)
+
 **2.0.2**
 * fix for PlayMaker events
 * fix for Critical FPS events
