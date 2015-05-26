@@ -15,14 +15,9 @@
 
  <p>Latest changes</p>
  <ul>
- <li>changed authentication hash method to HMAC</li>
- <li>added method to set engine version from wrapper engines</li>
- <li>altered method naming to conform to apple naming guidelines</li>
- <li>added ‘score’ value to progression events</li>
- <li>fixed bug when submitting business event receipt</li>
- <li>minor optimizations</li>
+ <li>fixed iOS6 issues</li>
  </ul>
- <p>Current version: 2.0.2</p>
+ <p>Current version: 2.0.3</p>
 
  <h3>Event types</h3>
  <p>We provide a wide range of event types that you can instrument in your game to track the data you're interested in building your analysis from. Here's a brief overview of their uses:</p>

@@ -14,6 +14,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.0.4**
+* fixed an issue with going-to-background on iOS 6
+* fixed submit of birthyear value
+
 **2.0.3**
 * fixed an iOS 6 issue
 * added a post process build script for setting up Xcode (Unity 5 only)
