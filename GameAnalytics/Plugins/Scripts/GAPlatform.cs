@@ -9,4 +9,10 @@ namespace GameAnalyticsSDK
 		iOS = 1,
 		Android = 2
 	}
+
+	public enum GAPlatformSignUp
+	{
+		iOS = 0,
+		Android = 1
+	}
 }

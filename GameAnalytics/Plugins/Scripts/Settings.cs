@@ -137,6 +137,8 @@ namespace GameAnalyticsSDK
 		public List<string> ResourceItemTypes = new List<string>();
 		public List<string> ResourceCurrencies = new List<string>();
 
+		public GAPlatform LastCreatedGamePlatform;
+
 		//These values are used for the GA_Inspector only
 		public enum InspectorStates
 		{
@@ -371,24 +373,40 @@ namespace GameAnalyticsSDK
 			Games = games;
 		}
 
-		public static string[] GetStudioNames(List<Studio> studios)
+		public static string[] GetStudioNames(List<Studio> studios, bool addFirstEmpty = true)
 		{
 			if(studios == null)
 			{
 				return new string[] { "-" };
 			}
-			
-			string[] names = new string[studios.Count + 1];
-			names[0] = "-";
 
-			string spaceAdd = "";
-			for(int i = 0; i < studios.Count; i++)
+			if(addFirstEmpty)
 			{
-				names[i + 1] = studios[i].Name + spaceAdd;
-				spaceAdd += " ";
+				string[] names = new string[studios.Count + 1];
+				names[0] = "-";
+
+				string spaceAdd = "";
+				for(int i = 0; i < studios.Count; i++)
+				{
+					names[i + 1] = studios[i].Name + spaceAdd;
+					spaceAdd += " ";
+				}
+				
+				return names;
 			}
-			
-			return names;
+			else
+			{
+				string[] names = new string[studios.Count];
+
+				string spaceAdd = "";
+				for(int i = 0; i < studios.Count; i++)
+				{
+					names[i] = studios[i].Name + spaceAdd;
+					spaceAdd += " ";
+				}
+
+				return names;
+			}
 		}
 
 		public static string[] GetGameNames(int index, List<Studio> studios)

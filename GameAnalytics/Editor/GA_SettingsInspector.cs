@@ -735,6 +735,22 @@ namespace GameAnalyticsSDK
 							GUILayout.EndHorizontal();
 							EditorGUILayout.Space();
 						}
+
+						if(GUILayout.Button("Add game"))
+						{
+							GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp>();
+							signup.maxSize = new Vector2(640, 520);
+							signup.minSize = new Vector2(640, 520);
+							signup.TourStep = 1;
+							#if UNITY_UP_TO_5_0
+							signup.title = "GameAnalytics - Sign up for FREE";
+							#else
+							signup.titleContent = new GUIContent("GameAnalytics - Sign up for FREE");
+							#endif
+							signup.ShowUtility();
+							signup.Opened();
+						}
+
 						GUILayout.BeginHorizontal();
 						//GUILayout.Label("", GUILayout.Width(7));
 						GUILayout.Label("Status", GUILayout.Width(63));
@@ -760,43 +776,43 @@ namespace GameAnalyticsSDK
 								//GUILayout.Label("", GUILayout.Width(7));
 								GUILayout.Label(_studiosLabel, GUILayout.Width(50));
 								string[] studioNames = Studio.GetStudioNames(ga.Studios);
-								if(ga.SelectedStudio[(int)platform - 1] >= studioNames.Length)
+								if(ga.SelectedStudio[i] >= studioNames.Length)
 								{
-									ga.SelectedStudio[(int)platform - 1] = 0;
+									ga.SelectedStudio[i] = 0;
 								}
-								int tmpSelectedStudio = ga.SelectedStudio[(int)platform - 1];
-								ga.SelectedStudio[(int)platform - 1] = EditorGUILayout.Popup("", ga.SelectedStudio[(int)platform - 1], studioNames);
-								if(tmpSelectedStudio != ga.SelectedStudio[(int)platform - 1])
+								int tmpSelectedStudio = ga.SelectedStudio[i];
+								ga.SelectedStudio[i] = EditorGUILayout.Popup("", ga.SelectedStudio[i], studioNames);
+								if(tmpSelectedStudio != ga.SelectedStudio[i])
 								{
-									ga.SelectedGame[(int)platform - 1] = 0;
+									ga.SelectedGame[i] = 0;
 								}
 								GUILayout.EndHorizontal();
-								
-								if(ga.SelectedStudio[(int)platform - 1] > 0)
+
+								if(ga.SelectedStudio[i] > 0)
 								{
-									if(tmpSelectedStudio != ga.SelectedStudio[(int)platform - 1])
+									if(tmpSelectedStudio != ga.SelectedStudio[i])
 									{
-										SelectStudio(ga.SelectedStudio[(int)platform - 1], ga, (int)platform - 1);
+										SelectStudio(ga.SelectedStudio[i], ga, i);
 									}
 									
 									GUILayout.BeginHorizontal();
 									//GUILayout.Label("", GUILayout.Width(7));
 									GUILayout.Label(_gamesLabel, GUILayout.Width(50));
-									string[] gameNames = Studio.GetGameNames(ga.SelectedStudio[(int)platform - 1] - 1, ga.Studios);
-									if(ga.SelectedGame[(int)platform - 1] >= gameNames.Length)
+									string[] gameNames = Studio.GetGameNames(ga.SelectedStudio[i] - 1, ga.Studios);
+									if(ga.SelectedGame[i] >= gameNames.Length)
 									{
-										ga.SelectedGame[(int)platform - 1] = 0;
+										ga.SelectedGame[i] = 0;
 									}
-									int tmpSelectedGame = ga.SelectedGame[(int)platform - 1];
-									ga.SelectedGame[(int)platform - 1] = EditorGUILayout.Popup("", ga.SelectedGame[(int)platform - 1], gameNames);
+									int tmpSelectedGame = ga.SelectedGame[i];
+									ga.SelectedGame[i] = EditorGUILayout.Popup("", ga.SelectedGame[i], gameNames);
 									GUILayout.EndHorizontal();
-									
-									if(ga.SelectedStudio[(int)platform - 1] > 0 && tmpSelectedGame != ga.SelectedGame[(int)platform - 1])
+
+									if(ga.SelectedStudio[i] > 0 && tmpSelectedGame != ga.SelectedGame[i])
 									{
-										SelectGame(ga.SelectedGame[(int)platform - 1], ga, (int)platform - 1);
+										SelectGame(ga.SelectedGame[i], ga, i);
 									}
 								}
-								else if(tmpSelectedStudio != ga.SelectedStudio[(int)platform - 1])
+								else if(tmpSelectedStudio != ga.SelectedStudio[i])
 								{
 									SetLoginStatus("Please select studio..", ga);
 								}
@@ -858,31 +874,31 @@ namespace GameAnalyticsSDK
 
 							EditorGUILayout.Space();
 
-							if (ga.SelectedPlatformGameID[(int)platform - 1] >= 0)
+							if(ga.SelectedPlatformGameID[i] >= 0)
 							{
 								EditorGUILayout.Space();
 								GUILayout.BeginHorizontal();
 								//GUILayout.Label("View", GUILayout.Width(65));
 								if(GUILayout.Button("Integration Status"))
 								{
-									if (string.IsNullOrEmpty(ga.TokenGA))
+									if(string.IsNullOrEmpty(ga.TokenGA))
 									{
-										Application.OpenURL("https://go.gameanalytics.com/game/" + ga.SelectedPlatformGameID[(int)platform - 1] + "/initialize");
+										Application.OpenURL("https://go.gameanalytics.com/game/" + ga.SelectedPlatformGameID[i] + "/initialize");
 									}
 									else
 									{
-										Application.OpenURL("https://go.gameanalytics.com/login?token=" + ga.TokenGA + "&exp=" + ga.ExpireTime + "&goto=/game/" + ga.SelectedPlatformGameID[(int)platform - 1] + "/initialize");
+										Application.OpenURL("https://go.gameanalytics.com/login?token=" + ga.TokenGA + "&exp=" + ga.ExpireTime + "&goto=/game/" + ga.SelectedPlatformGameID[i] + "/initialize");
 									}
 								}
 								if(GUILayout.Button("Game Settings"))
 								{
-									if (string.IsNullOrEmpty(ga.TokenGA))
+									if(string.IsNullOrEmpty(ga.TokenGA))
 									{
-										Application.OpenURL("https://go.gameanalytics.com/game/" + ga.SelectedPlatformGameID[(int)platform - 1] + "/settings");
+										Application.OpenURL("https://go.gameanalytics.com/game/" + ga.SelectedPlatformGameID[i] + "/settings");
 									}
 									else
 									{
-										Application.OpenURL("https://go.gameanalytics.com/login?token=" + ga.TokenGA + "&exp=" + ga.ExpireTime + "&goto=/game" + ga.SelectedPlatformGameID[(int)platform - 1] + "/settings");
+										Application.OpenURL("https://go.gameanalytics.com/login?token=" + ga.TokenGA + "&exp=" + ga.ExpireTime + "&goto=/game" + ga.SelectedPlatformGameID[i] + "/settings");
 									}
 								}
 								GUILayout.EndHorizontal();
@@ -1454,24 +1470,24 @@ namespace GameAnalyticsSDK
 
 			try
 			{
-                Hashtable returnParam = null;
-                string error = "";
-                if (!string.IsNullOrEmpty(www.text))
-                {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if (returnParam.ContainsKey("errors"))
-                    {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
+				Hashtable returnParam = null;
+				string error = "";
+				if(!string.IsNullOrEmpty(www.text))
+				{
+					returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+					if(returnParam.ContainsKey("errors"))
+					{
+						ArrayList errorList = (ArrayList)returnParam["errors"];
+						if(errorList != null && errorList.Count > 0)
+						{
+							Hashtable errors = (Hashtable)errorList[0];
+							if(errors.ContainsKey("msg"))
+							{
+								error = errors["msg"].ToString();
+							}
+						}
+					}
+				}
 
 				if(string.IsNullOrEmpty(www.error))
 				{
@@ -1481,7 +1497,7 @@ namespace GameAnalyticsSDK
 						SetLoginStatus("Failed to sign up.", ga);
 						signup.SignUpFailed();
 					}
-					else if (returnParam != null)
+					else if(returnParam != null)
 					{
 						ArrayList resultList = (ArrayList)returnParam["results"];
 						Hashtable results = (Hashtable)resultList[0];
@@ -1532,25 +1548,25 @@ namespace GameAnalyticsSDK
 			
 			try
 			{
-                string error = "";
-                Hashtable returnParam = null;
-                if (!string.IsNullOrEmpty(www.text))
-                {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+				string error = "";
+				Hashtable returnParam = null;
+				if(!string.IsNullOrEmpty(www.text))
+				{
+					returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
                     
-                    if (returnParam.ContainsKey("errors"))
-                    {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
+					if(returnParam.ContainsKey("errors"))
+					{
+						ArrayList errorList = (ArrayList)returnParam["errors"];
+						if(errorList != null && errorList.Count > 0)
+						{
+							Hashtable errors = (Hashtable)errorList[0];
+							if(errors.ContainsKey("msg"))
+							{
+								error = errors["msg"].ToString();
+							}
+						}
+					}
+				}
 
 				if(string.IsNullOrEmpty(www.error))
 				{
@@ -1559,7 +1575,7 @@ namespace GameAnalyticsSDK
 						Debug.LogError(error);
 						SetLoginStatus("Failed to login.", ga);
 					}
-					else if (returnParam != null)
+					else if(returnParam != null)
 					{
 						ArrayList resultList = (ArrayList)returnParam["results"];
 						Hashtable results = (Hashtable)resultList[0];
@@ -1596,24 +1612,24 @@ namespace GameAnalyticsSDK
 			
 			try
 			{
-                Hashtable returnParam = null;
-                string error = "";
-                if (!string.IsNullOrEmpty(www.text))
-                {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if (returnParam.ContainsKey("errors"))
-                    {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
+				Hashtable returnParam = null;
+				string error = "";
+				if(!string.IsNullOrEmpty(www.text))
+				{
+					returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+					if(returnParam.ContainsKey("errors"))
+					{
+						ArrayList errorList = (ArrayList)returnParam["errors"];
+						if(errorList != null && errorList.Count > 0)
+						{
+							Hashtable errors = (Hashtable)errorList[0];
+							if(errors.ContainsKey("msg"))
+							{
+								error = errors["msg"].ToString();
+							}
+						}
+					}
+				}
 
 				if(string.IsNullOrEmpty(www.error))
 				{
@@ -1622,7 +1638,7 @@ namespace GameAnalyticsSDK
 						Debug.LogError(error);
 						SetLoginStatus("Failed to get data.", ga);
 					}
-					else if (returnParam != null)
+					else if(returnParam != null)
 					{
 						ArrayList resultList = (ArrayList)returnParam["results"];
 						Hashtable results = (Hashtable)resultList[0];
@@ -1654,8 +1670,13 @@ namespace GameAnalyticsSDK
 							for(int i = 0; i < NumberOfPlatforms; ++i)
 							{
 								GAPlatform platform = (GAPlatform)(i + 1);
-								SelectStudio(1, ga, (int)platform - 1);
+
+								if(platform == ga.LastCreatedGamePlatform)
+								{
+									SelectStudio(1, ga, (int)platform - 1);
+								}
 							}
+							ga.LastCreatedGamePlatform = GAPlatform.None;
 						}
 						else
 						{
@@ -1678,7 +1699,7 @@ namespace GameAnalyticsSDK
 			}
 		}
 
-		public static void CreateGame(Settings ga, GA_SignUp signup, string gameTitle, string googlePlayPublicKey, GAPlatform platform, AppFiguresGame appFiguresGame)
+		public static void CreateGame(Settings ga, GA_SignUp signup, int studioIndex, string gameTitle, string googlePlayPublicKey, GAPlatformSignUp platform, AppFiguresGame appFiguresGame)
 		{
 			Hashtable jsonTable = new Hashtable();
 
@@ -1698,35 +1719,35 @@ namespace GameAnalyticsSDK
 			}
 			byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.JsonEncode(jsonTable));
 
-            string url = _gaUrl + "studios/" + ga.Studios[0].ID + "/games";
+			string url = _gaUrl + "studios/" + ga.Studios[studioIndex].ID + "/games";
 			WWW www = new WWW(url, data, GA_EditorUtilities.WWWHeadersWithAuthorization(ga.TokenGA));
 			GA_ContinuationManager.StartCoroutine(CreateGameFrontend(www, ga, signup, platform, appFiguresGame), () => www.isDone);
 		}
 
-		private static IEnumerator<WWW> CreateGameFrontend(WWW www, Settings ga, GA_SignUp signup, GAPlatform platform, AppFiguresGame appFiguresGame)
+		private static IEnumerator<WWW> CreateGameFrontend(WWW www, Settings ga, GA_SignUp signup, GAPlatformSignUp platform, AppFiguresGame appFiguresGame)
 		{
 			yield return www;
 			
 			try
 			{
-                Hashtable returnParam = null;
-                string error = "";
-                if (!string.IsNullOrEmpty(www.text))
-                {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if (returnParam.ContainsKey("errors"))
-                    {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
+				Hashtable returnParam = null;
+				string error = "";
+				if(!string.IsNullOrEmpty(www.text))
+				{
+					returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+					if(returnParam.ContainsKey("errors"))
+					{
+						ArrayList errorList = (ArrayList)returnParam["errors"];
+						if(errorList != null && errorList.Count > 0)
+						{
+							Hashtable errors = (Hashtable)errorList[0];
+							if(errors.ContainsKey("msg"))
+							{
+								error = errors["msg"].ToString();
+							}
+						}
+					}
+				}
 
 				if(string.IsNullOrEmpty(www.error))
 				{
@@ -1738,6 +1759,7 @@ namespace GameAnalyticsSDK
 					}
 					else
 					{
+						ga.LastCreatedGamePlatform = (GAPlatform)((int)(platform + 1));
 						GetUserData(ga);
 						signup.CreateGameComplete();
 					}
@@ -1799,24 +1821,24 @@ namespace GameAnalyticsSDK
 			
 			try
 			{
-                Hashtable returnParam = null;
-                string error = "";
-                if (!string.IsNullOrEmpty(www.text))
-                {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if (returnParam.ContainsKey("errors"))
-                    {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
+				Hashtable returnParam = null;
+				string error = "";
+				if(!string.IsNullOrEmpty(www.text))
+				{
+					returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+					if(returnParam.ContainsKey("errors"))
+					{
+						ArrayList errorList = (ArrayList)returnParam["errors"];
+						if(errorList != null && errorList.Count > 0)
+						{
+							Hashtable errors = (Hashtable)errorList[0];
+							if(errors.ContainsKey("msg"))
+							{
+								error = errors["msg"].ToString();
+							}
+						}
+					}
+				}
 
 				if(string.IsNullOrEmpty(www.error))
 				{
@@ -1825,7 +1847,7 @@ namespace GameAnalyticsSDK
 						Debug.LogError(error);
 						SetLoginStatus("Failed to get app.", ga);
 					}
-					else if (returnParam != null)
+					else if(returnParam != null)
 					{
 						ArrayList resultList = (ArrayList)returnParam["results"];
 
@@ -1839,8 +1861,11 @@ namespace GameAnalyticsSDK
 							string store = result["store"].ToString();
 							string developer = result["developer"].ToString();
 							string iconUrl = result["image"].ToString();
-							
-							appFiguresGames.Add(new AppFiguresGame(name, appID, store, developer, iconUrl, signup));
+
+							if(store.Equals("apple") || store.Equals("google_play") || store.Equals("amazon_appstore"))
+							{
+								appFiguresGames.Add(new AppFiguresGame(name, appID, store, developer, iconUrl, signup));
+							}
 						}
 
 						signup.AppFigComplete(gameName, appFiguresGames);
@@ -1864,7 +1889,11 @@ namespace GameAnalyticsSDK
 			ga.SelectedStudio[platform] = index;
 			if(ga.Studios[index - 1].Games.Count == 1)
 			{
-				SelectGame(1, ga, platform);
+				if(ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[0].GameKey) &&
+				   ga.IsSecretKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[0].SecretKey))
+				{
+					SelectGame(1, ga, platform);
+				}
 			}
 			else
 			{
@@ -1876,7 +1905,12 @@ namespace GameAnalyticsSDK
 		{
 			ga.SelectedGame[platform] = index;
 
-			if(ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey) &&
+			if(index == 0)
+			{
+				ga.UpdateGameKey(platform, "");
+				ga.UpdateSecretKey(platform, "");
+			}
+			else if(ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey) &&
 			   ga.IsSecretKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
 			{
 				ga.SelectedPlatformStudio[platform] = ga.Studios[ga.SelectedStudio[platform] - 1].Name;
@@ -1891,10 +1925,12 @@ namespace GameAnalyticsSDK
 				if(!ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey))
 				{
 					Debug.LogError("[GameAnalytics] Game key already exists for another platform. Platforms can't use the same key.");
+					ga.SelectedGame[platform] = 0;
 				}
 				else if(!ga.IsSecretKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
 				{
 					Debug.LogError("[GameAnalytics] Secret key already exists for another platform. Platforms can't use the same key.");
+					ga.SelectedGame[platform] = 0;
 				}
 			}
 		}
