@@ -8,31 +8,42 @@ using System.Collections.Generic;
 
 namespace GameAnalyticsSDK
 {
-	public static class GA_Business 
+	public static class GA_Business
 	{
 		#region public methods
-
+		
+#if (UNITY_IOS)
 		public static void NewEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt, bool autoFetchReceipt)
 		{
-			CreateNewEvent(currency, amount, itemType, itemId, cartType, receipt, autoFetchReceipt);
-		}
-		
-		#endregion
-		
-		#region private methods
-
-		private static void CreateNewEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt, bool autoFetchReceipt)
-		{
-			if (autoFetchReceipt)
+			if(autoFetchReceipt)
 			{
-				GA_iOSWrapper.AddBusinessEventAndAutoFetchReceipt(currency, amount, itemType, itemId, cartType);
+				GA_Wrapper.AddBusinessEventAndAutoFetchReceipt(currency, amount, itemType, itemId, cartType);
 			}
 			else
 			{
-				GA_iOSWrapper.AddBusinessEvent(currency, amount, itemType, itemId, cartType, receipt);
+				GA_Wrapper.AddBusinessEvent(currency, amount, itemType, itemId, cartType, receipt);
 			}
 		}
-		
-		#endregion
-	}
+
+		public static void NewEvent(string currency, int amount, string itemType, string itemId, string cartType)
+		{
+			NewEvent(currency, amount, itemType, itemId, cartType, null, false);
+		}
+#endif
+
+#if (UNITY_ANDROID)
+        public static void NewEventGooglePlay(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string signature)
+		{
+            GA_Wrapper.AddBusinessEventWithReceipt(currency, amount, itemType, itemId, cartType, receipt, "google_play", signature);
+		}
+#endif
+
+#if (!UNITY_IOS)
+        public static void NewEvent(string currency, int amount, string itemType, string itemId, string cartType)
+		{
+			GA_Wrapper.AddBusinessEvent(currency, amount, itemType, itemId, cartType);
+		}
+#endif
+        #endregion
+    }
 }

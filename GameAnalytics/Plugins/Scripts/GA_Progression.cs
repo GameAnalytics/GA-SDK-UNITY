@@ -17,7 +17,7 @@ namespace GameAnalyticsSDK
 		}
 
 		#region public methods
-		
+
 		public static void NewEvent(GAProgressionStatus progressionStatus, string progression01)
 		{
 			CreateEvent(progressionStatus, progression01, null, null, null);
@@ -37,12 +37,12 @@ namespace GameAnalyticsSDK
 		{
 			CreateEvent(progressionStatus, progression01, null, null, score);
 		}
-		
+
 		public static void NewEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, int score)
 		{
 			CreateEvent(progressionStatus, progression01, progression02, null, score);
 		}
-		
+
 		public static void NewEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score)
 		{
 			CreateEvent(progressionStatus, progression01, progression02, progression03, score);
@@ -54,13 +54,13 @@ namespace GameAnalyticsSDK
 
 		private static void CreateEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int? score)
 		{
-			if (score.HasValue)
+			if(score.HasValue)
 			{
-				GA_iOSWrapper.AddProgressionEventWithScore(progressionStatus, progression01, progression02, progression03, score.Value);
+				GA_Wrapper.AddProgressionEventWithScore(progressionStatus, progression01, progression02, progression03, score.Value);
 			}
 			else
 			{
-				GA_iOSWrapper.AddProgressionEvent(progressionStatus, progression01, progression02, progression03);
+				GA_Wrapper.AddProgressionEvent(progressionStatus, progression01, progression02, progression03);
 			}
 		}
 

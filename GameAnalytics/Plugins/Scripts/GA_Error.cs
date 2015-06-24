@@ -9,7 +9,7 @@ using System;
 
 namespace GameAnalyticsSDK
 {
-	public static class GA_Error 
+	public static class GA_Error
 	{
 		public enum GAErrorSeverity
 		{
@@ -21,21 +21,21 @@ namespace GameAnalyticsSDK
 		}
 
 		#region public methods
-		
+
 		public static void NewEvent(GAErrorSeverity severity, string message)
 		{
 			CreateNewEvent(severity, message);
 		}
 
 		#endregion
-		
+
 		#region private methods
 
 		private static void CreateNewEvent(GAErrorSeverity severity, string message)
 		{
-			GA_iOSWrapper.AddErrorEvent(severity, message);
+			GA_Wrapper.AddErrorEvent(severity, message);
 		}
-		
+
 		#endregion
 	}
 }

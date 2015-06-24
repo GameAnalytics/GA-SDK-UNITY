@@ -20,9 +20,23 @@ namespace GameAnalyticsSDK
 		/// <summary>
 		/// Types of help given in the help box of the GA inspector
 		/// </summary>
-		public enum HelpTypes { None, IncludeSystemSpecsHelp, ProvideCustomUserID };
-		public enum MessageTypes { None, Error, Info, Warning };
-		
+		public enum HelpTypes
+		{
+			None,
+			IncludeSystemSpecsHelp,
+			ProvideCustomUserID}
+
+		;
+
+		public enum MessageTypes
+		{
+			None,
+			Error,
+			Info,
+			Warning}
+
+		;
+
 		/// <summary>
 		/// A message and message type for the help box displayed on the GUI inspector
 		/// </summary>
@@ -32,19 +46,19 @@ namespace GameAnalyticsSDK
 			public MessageTypes MsgType;
 			public HelpTypes HelpType;
 		}
-		
+
 		#region public static values
-		
+
 		/// <summary>
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "2.0.4";
-		
+		public static string VERSION = "2.1.0";
+
 		#endregion
-		
+
 		#region public values
-		
+
 		public int TotalMessagesSubmitted;
 		public int TotalMessagesFailed;
 		
@@ -58,16 +72,26 @@ namespace GameAnalyticsSDK
 		public int BusinessMessagesFailed;
 		public int UserMessagesSubmitted;
 		public int UserMessagesFailed;
-		
+
 		public string CustomArea = string.Empty;
-		
+
 		[SerializeField]
-		public string GameKey = "";
+		private string[] gameKey = CreateStringArrayWithEmptyStrings(NumberOfPlatforms);
 		[SerializeField]
-		public string SecretKey = "";
+		private string[] secretKey = CreateStringArrayWithEmptyStrings(NumberOfPlatforms);
 		[SerializeField]
-		public string Build = "0.1";
-		
+		public string[] Build = CreateStringArrayWithPlatformStrings(NumberOfPlatforms);
+		[SerializeField]
+		public string[] SelectedPlatformStudio = CreateStringArrayWithEmptyStrings(NumberOfPlatforms);
+		[SerializeField]
+		public string[] SelectedPlatformGame = CreateStringArrayWithEmptyStrings(NumberOfPlatforms);
+		[SerializeField]
+		public int[] SelectedPlatformGameID = CreateIntArrayWithIDs(NumberOfPlatforms, -1);
+		[SerializeField]
+		public int[] SelectedStudio = CreateIntArrayWithIDs(NumberOfPlatforms, 0);
+		[SerializeField]
+		public int[] SelectedGame = CreateIntArrayWithIDs(NumberOfPlatforms, 0);
+
 		public string NewVersion = "";
 		public string Changes = "";
 
@@ -79,6 +103,7 @@ namespace GameAnalyticsSDK
 		public string PasswordConfirm = "";
 		public bool EmailOptIn = true;
 		public string EmailGA = "";
+
 		[System.NonSerialized]
 		public string PasswordGA = "";
 		[System.NonSerialized]
@@ -87,10 +112,6 @@ namespace GameAnalyticsSDK
 		public string ExpireTime = "";
 		[System.NonSerialized]
 		public string LoginStatus = "Not logged in.";
-		[System.NonSerialized]
-		public int SelectedStudio = 0;
-		[System.NonSerialized]
-		public int SelectedGame = 0;
 		[System.NonSerialized]
 		public bool JustSignedUp = false;
 		[System.NonSerialized]
@@ -117,7 +138,51 @@ namespace GameAnalyticsSDK
 		public List<string> ResourceCurrencies = new List<string>();
 
 		//These values are used for the GA_Inspector only
-		public enum InspectorStates { Account, Basic, Debugging, Pref }
+		public enum InspectorStates
+		{
+			Account,
+			Basic,
+			Debugging,
+			Pref
+
+		}
+
+		private static string[] CreateStringArrayWithEmptyStrings(int size)
+		{
+			string[] result = new string[size];
+
+			for(int i = 0; i < size; ++i)
+			{
+				result[i] = "";
+			}
+
+			return result;
+		}
+
+		private static string[] CreateStringArrayWithPlatformStrings(int size)
+		{
+			string[] result = new string[size];
+			
+			for(int i = 0; i < size; ++i)
+			{
+				result[i] = "1.0";
+			}
+			
+			return result;
+		}
+
+		private static int[] CreateIntArrayWithIDs(int size, int value)
+		{
+			int[] result = new int[size];
+			
+			for(int i = 0; i < size; ++i)
+			{
+				result[i] = value;
+			}
+			
+			return result;
+		}
+
 		public InspectorStates CurrentInspectorState;
 		public List<HelpTypes> ClosedHints = new List<HelpTypes>();
 		public bool DisplayHints;
@@ -148,6 +213,8 @@ namespace GameAnalyticsSDK
 		public int FpsCriticalThreshold = 20;
 		public int FpsCirticalSubmitInterval = 1;
 
+		public bool[] PlatformFoldOut = new bool[NumberOfPlatforms];
+
 		public bool CustomDimensions01FoldOut = false;
 		public bool CustomDimensions02FoldOut = false;
 		public bool CustomDimensions03FoldOut = false;
@@ -155,8 +222,10 @@ namespace GameAnalyticsSDK
 		public bool ResourceItemTypesFoldOut = false;
 		public bool ResourceCurrenciesFoldOut = false;
 
+		private const int NumberOfPlatforms = 2;
+
 		#endregion
-		
+
 		#region public methods
 
 		/// <summary>
@@ -169,12 +238,102 @@ namespace GameAnalyticsSDK
 		/// </param>
 		public void SetCustomUserID(string customID)
 		{
-			if (customID != string.Empty)
+			if(customID != string.Empty)
 			{
 				// Set custom ID native
 			}
 		}
-			
+
+		public bool IsGameKeyValid(int index, string value)
+		{
+			bool valid = true;
+
+			for(int i = 0; i < NumberOfPlatforms; ++i)
+			{
+				if(index != i)
+				{
+					if(value.Equals(this.gameKey[i]))
+					{
+						valid = false;
+						break;
+					}
+				}
+			}
+
+			return valid;
+		}
+
+		public bool IsSecretKeyValid(int index, string value)
+		{
+			bool valid = true;
+
+			for(int i = 0; i < NumberOfPlatforms; ++i)
+			{
+				if(index != i)
+				{
+					if(value.Equals(this.secretKey[i]))
+					{
+						valid = false;
+						break;
+					}
+				}
+			}
+
+			return valid;
+		}
+
+		public void UpdateGameKey(int index, string value)
+		{
+			if(!string.IsNullOrEmpty(value))
+			{
+				bool valid = this.IsGameKeyValid(index, value);
+
+				if(valid)
+				{
+					this.gameKey[index] = value;
+				}
+				else if(this.gameKey[index].Equals(value))
+				{
+					this.gameKey[index] = "";
+				}
+			}
+			else
+			{
+				this.gameKey[index] = value;
+			}
+		}
+
+		public void UpdateSecretKey(int index, string value)
+		{
+			if(!string.IsNullOrEmpty(value))
+			{
+				bool valid = this.IsSecretKeyValid(index, value);
+
+				if(valid)
+				{
+					this.secretKey[index] = value;
+				}
+				else if(this.secretKey[index].Equals(value))
+				{
+					this.secretKey[index] = "";
+				}
+			}
+			else
+			{
+				this.secretKey[index] = value;
+			}
+		}
+
+		public string GetGameKey(int index)
+		{
+			return this.gameKey[index];
+		}
+
+		public string GetSecretKey(int index)
+		{
+			return this.secretKey[index];
+		}
+
 		/// <summary>
 		/// Sets a custom area string. An area is often just a level, but you can set it to whatever makes sense for your game. F.x. in a big open world game you will probably need custom areas to identify regions etc.
 		/// By default, if no custom area is set, the Application.loadedLevelName string is used.
@@ -187,7 +346,7 @@ namespace GameAnalyticsSDK
 			// Set custom area native
 		}
 
-		public void SetKeys (string gamekey, string secretkey)
+		public void SetKeys(string gamekey, string secretkey)
 		{
 			// set keys native
 		}
@@ -203,26 +362,18 @@ namespace GameAnalyticsSDK
 		public string ID { get; private set; }
 		
 		//[SerializeField]
-		public List<string> Games { get; private set; }
+		public List<Game> Games { get; private set; }
 
-		//[SerializeField]
-		public List<string> Tokens { get; private set; }
-
-		//[SerializeField]
-		public List<int> GameIDs { get; private set; }
-
-		public Studio (string name, string id, List<string> games, List<string> tokens, List<int> ids)
+		public Studio(string name, string id, List<Game> games)
 		{
 			Name = name;
 			ID = id;
 			Games = games;
-			Tokens = tokens;
-			GameIDs = ids;
 		}
-		
-		public static string[] GetStudioNames (List<Studio> studios)
+
+		public static string[] GetStudioNames(List<Studio> studios)
 		{
-			if (studios == null)
+			if(studios == null)
 			{
 				return new string[] { "-" };
 			}
@@ -231,18 +382,18 @@ namespace GameAnalyticsSDK
 			names[0] = "-";
 
 			string spaceAdd = "";
-			for (int i = 0; i < studios.Count; i++)
+			for(int i = 0; i < studios.Count; i++)
 			{
-				names[i+1] = studios[i].Name + spaceAdd;
+				names[i + 1] = studios[i].Name + spaceAdd;
 				spaceAdd += " ";
 			}
 			
 			return names;
 		}
-		
-		public static string[] GetGameNames (int index, List<Studio> studios)
+
+		public static string[] GetGameNames(int index, List<Studio> studios)
 		{
-			if (studios == null || studios[index].Games == null)
+			if(studios == null || studios[index].Games == null)
 			{
 				return new string[] { "-" };
 			}
@@ -251,13 +402,32 @@ namespace GameAnalyticsSDK
 			names[0] = "-";
 			
 			string spaceAdd = "";
-			for (int i = 0; i < studios[index].Games.Count; i++)
+			for(int i = 0; i < studios[index].Games.Count; i++)
 			{
-				names[i+1] = studios[index].Games[i] + spaceAdd;
+				names[i + 1] = studios[index].Games[i].Name + spaceAdd;
 				spaceAdd += " ";
 			}
 			
 			return names;
+		}
+	}
+
+	public class Game
+	{
+		public string Name { get; private set; }
+
+		public int ID { get; private set; }
+
+		public string GameKey { get; private set; }
+
+		public string SecretKey { get; private set; }
+
+		public Game(string name, int id, string gameKey, string secretKey)
+		{
+			Name = name;
+			ID = id;
+			GameKey = gameKey;
+			SecretKey = secretKey;
 		}
 	}
 }

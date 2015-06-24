@@ -32,6 +32,8 @@ namespace GameAnalyticsSDK
 
 		private bool _signUpInProgress = false;
 		private bool _createGameInProgress = false;
+		private string _googlePlayPublicKey = "";
+		private GAPlatform _selectedPlatform;
 
 		private enum StringType { Label, TextBox, Link }
 
@@ -65,6 +67,7 @@ namespace GameAnalyticsSDK
 		{
 			switch(_tourStep)
 			{
+				#region sign up
 			case 0: // sign up
 
 				GUILayout.Space(20);
@@ -230,7 +233,9 @@ namespace GameAnalyticsSDK
 				GUILayout.EndHorizontal();
 
 				break;
+				#endregion // sign up
 
+				#region add your game
 			case 1: // add your game
 
 				GUILayout.Space(20);
@@ -324,7 +329,7 @@ namespace GameAnalyticsSDK
 						GUILayout.Label(_appFiguresGames[i].Name, GUILayout.Width(200));
 						GUILayout.Label(_appFiguresGames[i].Developer, GUILayout.Width(200));
 
-						PaintAppStoreIcon (_appFiguresGames[i].StoreName);
+						PaintAppStoreIcon (_appFiguresGames[i].Store);
 
 						GUI.skin.label.contentOffset = tmpOffsetLabel;
 						GUILayout.EndHorizontal();
@@ -373,7 +378,9 @@ namespace GameAnalyticsSDK
 				EditorGUILayout.Space();
 
 				break;
+				#endregion // add your game
 
+				#region create new game
 			case 2: // create new game
 				
 				GUILayout.Space(20);
@@ -418,6 +425,35 @@ namespace GameAnalyticsSDK
 				
 				EditorGUILayout.Space();
 				EditorGUILayout.Space();
+
+				GUILayout.BeginHorizontal();
+				GUILayout.FlexibleSpace();
+				this._selectedPlatform = (GAPlatform)EditorGUILayout.Popup("", (int)this._selectedPlatform, System.Enum.GetNames(typeof(GAPlatform)), GUILayout.Width(200));
+				GUILayout.FlexibleSpace();
+				GUILayout.EndHorizontal();
+
+				if(this._selectedPlatform == GAPlatform.Android)
+				{
+					GUILayout.BeginHorizontal();
+					EditorGUILayout.HelpBox("PLEASE NOTICE: If you want to validate your Android in-app purchase please enter your Google Play License key (public key). Click here to learn more about the Google Play License key.", MessageType.Info);
+
+					if (GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
+					{
+						//Application.OpenURL("https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20XCode");
+					}
+					EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
+
+					GUILayout.EndHorizontal();
+
+					EditorGUILayout.Space ();
+					EditorGUILayout.Space ();
+
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("Google Play License key", GUILayout.Width(150));
+					this._googlePlayPublicKey = GUILayout.TextField (this._googlePlayPublicKey);
+					GUILayout.EndHorizontal();
+				}
+
 				EditorGUILayout.Space();
 				EditorGUILayout.Space();
 				
@@ -429,7 +465,7 @@ namespace GameAnalyticsSDK
 				if (GUILayout.Button("Create game", new GUILayoutOption[] { GUILayout.Width(200), GUILayout.MaxHeight(30) }))
 				{
 					_createGameInProgress = true;
-					GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, GameAnalytics.SettingsGA.GameName, null);
+					GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, GameAnalytics.SettingsGA.GameName, this._googlePlayPublicKey, this._selectedPlatform, null);
 				}
 				GUI.enabled = true;
 				GUILayout.FlexibleSpace();
@@ -465,64 +501,88 @@ namespace GameAnalyticsSDK
 				GUILayout.EndHorizontal();
 
 				break;
+				#endregion // create new game
 
+				#region  app figures add game
 			case 3: // app figures add game
 
-				GUILayout.Space(20);
+				GUILayout.Space (20);
 				
-				GUILayout.BeginHorizontal();
-				GUILayout.FlexibleSpace();
-				GUILayout.Label(GameAnalytics.SettingsGA.GameIcon, new GUILayoutOption[] { GUILayout.Width(40), GUILayout.MaxHeight(40) });
-				GUILayout.FlexibleSpace();
-				GUILayout.EndHorizontal();
+				GUILayout.BeginHorizontal ();
+				GUILayout.FlexibleSpace ();
+				GUILayout.Label (GameAnalytics.SettingsGA.GameIcon, new GUILayoutOption[] {
+					GUILayout.Width (40),
+					GUILayout.MaxHeight (40)
+				});
+				GUILayout.FlexibleSpace ();
+				GUILayout.EndHorizontal ();
 				
-				GUILayout.Space(5);
+				GUILayout.Space (5);
 				
-				GUILayout.BeginHorizontal();
-				GUILayout.FlexibleSpace();
-				GUILayout.Label("Is this your game?", EditorStyles.whiteLargeLabel);
-				GUILayout.FlexibleSpace();
-				GUILayout.EndHorizontal();
+				GUILayout.BeginHorizontal ();
+				GUILayout.FlexibleSpace ();
+				GUILayout.Label ("Is this your game?", EditorStyles.whiteLargeLabel);
+				GUILayout.FlexibleSpace ();
+				GUILayout.EndHorizontal ();
 				
-				EditorGUILayout.Space();
-				EditorGUILayout.Space();
+				EditorGUILayout.Space ();
+				EditorGUILayout.Space ();
 				
-				GUILayout.BeginHorizontal();
-				GUILayout.FlexibleSpace();
-				GUILayout.Label("Please confirm that this is the game you want to add.");
-				GUILayout.FlexibleSpace();
-				GUILayout.EndHorizontal();
+				GUILayout.BeginHorizontal ();
+				GUILayout.FlexibleSpace ();
+				GUILayout.Label ("Please confirm that this is the game you want to add.");
+				GUILayout.FlexibleSpace ();
+				GUILayout.EndHorizontal ();
 				
-				EditorGUILayout.Space();
-				EditorGUILayout.Space();
-				EditorGUILayout.Space();
+				EditorGUILayout.Space ();
+				EditorGUILayout.Space ();
+				EditorGUILayout.Space ();
 				
 				// game name
 				
-				GUILayout.BeginHorizontal();
-				GUILayout.FlexibleSpace();
+				GUILayout.BeginHorizontal ();
+				GUILayout.FlexibleSpace ();
 
-				if (_appFiguresGame.Icon != null)
-				{
-					GUILayout.Label(_appFiguresGame.Icon, new GUILayoutOption[] { GUILayout.Width(100), GUILayout.Height(100) });
+				if (_appFiguresGame.Icon != null) {
+					GUILayout.Label (_appFiguresGame.Icon, new GUILayoutOption[] { GUILayout.Width (100), GUILayout.Height (100) });
+				} else {
+					GUILayout.Label ("", new GUILayoutOption[] { GUILayout.Width (100), GUILayout.Height (100) });
 				}
-				else
-				{
-					GUILayout.Label("", new GUILayoutOption[] { GUILayout.Width(100), GUILayout.Height(100) });
-				}
-				GUILayout.Label("", GUILayout.Width(25));
-				GUILayout.BeginVertical();
-				GUILayout.Label(_appFiguresGame.Name, EditorStyles.whiteLargeLabel, GUILayout.Width(200));
-				GUILayout.Label(_appFiguresGame.Developer, GUILayout.Width(200));
-				GUILayout.Label("", GUILayout.Height(20));
-				PaintAppStoreIcon (_appFiguresGame.StoreName);
-				GUILayout.EndVertical();
+				GUILayout.Label ("", GUILayout.Width (25));
+				GUILayout.BeginVertical ();
+				GUILayout.Label (_appFiguresGame.Name, EditorStyles.whiteLargeLabel, GUILayout.Width (200));
+				GUILayout.Label (_appFiguresGame.Developer, GUILayout.Width (200));
+				GUILayout.Label ("", GUILayout.Height (20));
+				PaintAppStoreIcon (_appFiguresGame.Store);
+				GUILayout.EndVertical ();
 
-				GUILayout.FlexibleSpace();
-				GUILayout.EndHorizontal();
+				GUILayout.FlexibleSpace ();
+				GUILayout.EndHorizontal ();
 				
-				EditorGUILayout.Space();
-				EditorGUILayout.Space();
+				EditorGUILayout.Space ();
+				EditorGUILayout.Space ();
+
+				if (_appFiguresGame.Store.Equals ("google_play")) {
+					GUILayout.BeginHorizontal();
+					EditorGUILayout.HelpBox("PLEASE NOTICE: If you want to validate your Android in-app purchase please enter your Google Play License key (public key). Click here to learn more about the Google Play License key.", MessageType.Info);
+
+					if (GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
+					{
+						//Application.OpenURL("https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20XCode");
+					}
+					EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
+
+					GUILayout.EndHorizontal();
+
+					EditorGUILayout.Space ();
+					EditorGUILayout.Space ();
+
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("Google Play License key", GUILayout.Width(150));
+					this._googlePlayPublicKey = GUILayout.TextField (this._googlePlayPublicKey);
+					GUILayout.EndHorizontal();
+				}
+
 				EditorGUILayout.Space();
 				EditorGUILayout.Space();
 				
@@ -534,7 +594,7 @@ namespace GameAnalyticsSDK
 				if (GUILayout.Button("Add game", new GUILayoutOption[] { GUILayout.Width(200), GUILayout.MaxHeight(30) }))
 				{
 					_createGameInProgress = true;
-					GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, _appFiguresGame.Name, _appFiguresGame);
+					GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, _appFiguresGame.Name, this._googlePlayPublicKey, this._selectedPlatform, _appFiguresGame);
 				}
 				GUI.enabled = true;
 				GUILayout.FlexibleSpace();
@@ -594,7 +654,9 @@ namespace GameAnalyticsSDK
 				GUILayout.EndHorizontal();
 
 				break;
+				#endregion // app figures add game
 
+				#region game created
 			case 4:
 				
 				GUILayout.Space(20);
@@ -658,7 +720,9 @@ namespace GameAnalyticsSDK
 				GUILayout.EndHorizontal();
 				
 				break;
+				#endregion // game created
 
+				#region guide
 			case 5:
 			case 6:
 			case 7:
@@ -803,6 +867,7 @@ namespace GameAnalyticsSDK
 				GUI.EndGroup();
 
 				break;
+				#endregion // guide
 			}
 		}
 
@@ -952,12 +1017,19 @@ namespace GameAnalyticsSDK
 				return new StringWithType[] {
 					new StringWithType { Text = "You're almost there! To complete the integration and start sending data to GameAnalytics, all you need to do is build and run your game. The link below describes the important last steps you need to complete to build for your platform." },
 					new StringWithType { Text = "" },
-#if UNITY_IPHONE
+
+					#if UNITY_IOS
+
 					new StringWithType { Text = "Read about the build process for iOS.", Type = StringType.Link, Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20Xcode" },
-#else
+
+					#elif UNITY_ANDROID
+
+					#else
+
 					new StringWithType { Text = "Your selected build platform is not currently supported by GameAnalytics." },
 					new StringWithType { Text = "Read about our supported platforms.", Type = StringType.Link, Link = "http://www.gameanalytics.com/docs" },
-#endif
+
+					#endif
 				};
 			default:
 				return new StringWithType[] {
@@ -1017,7 +1089,7 @@ namespace GameAnalyticsSDK
 
 				GUILayout.Label("Google Play", GUILayout.Width(80));
 				break;
-			case "apple:ios":
+			case "apple":
 				if (GameAnalytics.SettingsGA.iosIcon != null)
 				{
 					//GUILayout.Label("", GUILayout.Height(-20));
@@ -1086,17 +1158,15 @@ namespace GameAnalyticsSDK
 	public class AppFiguresGame
 	{
 		public string Name { get; private set; }
-		public string StoreName { get; private set; }
 		public string AppID { get; private set; }
 		public string Store { get; private set; }
 		public string Developer { get; private set; }
 		public string IconUrl { get; private set; }
 		public Texture2D Icon { get; private set; }
 		
-		public AppFiguresGame (string name, string storeName, string appID, string store, string developer, string iconUrl, GA_SignUp signup)
+		public AppFiguresGame (string name, string appID, string store, string developer, string iconUrl, GA_SignUp signup)
 		{
 			Name = name;
-			StoreName = storeName;
 			AppID = appID;
 			Store = store;
 			Developer = developer;

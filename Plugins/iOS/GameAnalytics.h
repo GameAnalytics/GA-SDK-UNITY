@@ -15,9 +15,9 @@
 
  <p>Latest changes</p>
  <ul>
- <li>fixed iOS6 issues</li>
+ <li>altered validation to allow 64 chars in some cases</li>
  </ul>
- <p>Current version: 2.0.3</p>
+ <p>Current version: 2.0.4</p>
 
  <h3>Event types</h3>
  <p>We provide a wide range of event types that you can instrument in your game to track the data you're interested in building your analysis from. Here's a brief overview of their uses:</p>

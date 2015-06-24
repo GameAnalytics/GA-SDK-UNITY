@@ -15,12 +15,12 @@ namespace GameAnalyticsSDK
 		}
 
 		#region public methods
-		
+
 		public static void NewEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)
 		{
-			GA_iOSWrapper.AddResourceEvent(flowType, currency, amount, itemType, itemId);
+			GA_Wrapper.AddResourceEvent(flowType, currency, amount, itemType, itemId);
 		}
-		
+
 		#endregion
 	}
 }

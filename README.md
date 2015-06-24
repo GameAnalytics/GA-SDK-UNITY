@@ -14,6 +14,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.1.0**
+* Android support added
+* Google Play purchase validation
+* support for individual game keys for each supported platform
+
 **2.0.4**
 * fixed an issue with going-to-background on iOS 6
 * fixed submit of birthyear value

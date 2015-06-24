@@ -9,7 +9,7 @@ namespace GameAnalyticsSDK
 	public static class GA_Design
 	{
 		#region public methods
-		
+
 		/// <summary>
 		/// Creates a new event
 		/// </summary>
@@ -34,11 +34,11 @@ namespace GameAnalyticsSDK
 		{
 			CreateNewEvent(eventName, null);
 		}
-		
+
 		#endregion
-		
+
 		#region private methods
-		
+
 		/// <summary>
 		/// Adds a custom event to the submit queue (see GA_Queue)
 		/// </summary>
@@ -56,16 +56,16 @@ namespace GameAnalyticsSDK
 		/// </param>
 		private static void CreateNewEvent(string eventName, float? eventValue)
 		{
-			if (eventValue.HasValue)
+			if(eventValue.HasValue)
 			{
-				GA_iOSWrapper.AddDesignEvent(eventName, eventValue.Value);
+				GA_Wrapper.AddDesignEvent(eventName, eventValue.Value);
 			}
 			else
 			{
-				GA_iOSWrapper.AddDesignEvent(eventName);
+				GA_Wrapper.AddDesignEvent(eventName);
 			}
 		}
-		
+
 		#endregion
 	}
 }

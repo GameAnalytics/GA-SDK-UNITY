@@ -1,3 +1,7 @@
+#if (UNITY_5_0 || UNITY_4_6 || UNITY_4_5 || UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0 || UNITY_3_5 || UNITY_3_4 || UNITY_3_3 || UNITY_3_2 || UNITY_3_1 || UNITY_3_0_0 || UNITY_3_0 || UNITY_2_6_1 || UNITY_2_6)
+#define UNITY_UP_TO_5_0
+#endif
+
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -19,7 +23,13 @@ namespace GameAnalyticsSDK
 			GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp> ();
 			signup.maxSize = new Vector2(640, 480);
 			signup.minSize = new Vector2(640, 480);
+
+			#if UNITY_UP_TO_5_0
 			signup.title = "GameAnalytics - Sign up for FREE";
+			#else
+			Debug.Log("Test");
+			signup.titleContent = new GUIContent("GameAnalytics - Sign up for FREE");
+			#endif
 			signup.ShowUtility ();
 			signup.Opened();
 			
@@ -31,7 +41,7 @@ namespace GameAnalyticsSDK
 		{
 			if (FindObjectOfType (typeof(GameAnalytics)) == null)
 			{
-				GameObject go = PrefabUtility.InstantiatePrefab(Resources.LoadAssetAtPath<GameObject>("Assets/GameAnalytics/Plugins/Prefabs/GameAnalytics.prefab")) as GameObject;
+				GameObject go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Plugins/Prefabs/GameAnalytics.prefab", typeof(GameObject))) as GameObject;
 				go.name = "GameAnalytics";
 				Selection.activeObject = go;
 			}
