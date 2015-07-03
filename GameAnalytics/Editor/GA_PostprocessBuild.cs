@@ -1,4 +1,4 @@
-﻿#if !UNITY_4_6
+﻿#if !UNITY_4_6 // For getting this to work in Unity 4.6 read the iOS build section on our wiki on github at https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/iOS%20Build
 
 using UnityEditor.iOS.Xcode;
 using UnityEditor.Callbacks;
@@ -12,7 +12,11 @@ namespace GameAnalyticsSDK
 		[PostProcessBuild]
 		public static void OnPostprocessBuild(BuildTarget buildTarget, string path)
 		{
+			#if UNITY_4_6
+			if (buildTarget == BuildTarget.iPhone)
+			#else
 			if (buildTarget == BuildTarget.iOS)
+			#endif
 			{
 				string projPath = path + "/Unity-iPhone.xcodeproj/project.pbxproj";
 				
