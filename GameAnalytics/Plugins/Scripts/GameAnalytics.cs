@@ -108,15 +108,18 @@ namespace GameAnalyticsSDK
 						Directory.CreateDirectory(Application.dataPath + "/Resources/GameAnalytics");
 						Debug.LogWarning("GameAnalytics: Resources/GameAnalytics folder is required to store settings. it was created ");
 					}
-					
-					Settings asset = null;
 
 					const string path = "Assets/Resources/GameAnalytics/Settings.asset";
-					if(!File.Exists(path))
+
+					if(File.Exists(path))
 					{
-						asset = ScriptableObject.CreateInstance<Settings>();
-						AssetDatabase.CreateAsset(asset, path);
+						AssetDatabase.DeleteAsset(path);
+						AssetDatabase.Refresh();
 					}
+
+					var asset = ScriptableObject.CreateInstance<Settings>();
+					AssetDatabase.CreateAsset(asset, path);
+					AssetDatabase.Refresh();
 
 					AssetDatabase.SaveAssets();
 					Debug.LogWarning("GameAnalytics: Settings file didn't exist and was created");
