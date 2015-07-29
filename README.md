@@ -14,6 +14,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.1.1**
+* minor bug fixes
+
 **2.1.0**
 * Android support added
 * Google Play purchase validation
