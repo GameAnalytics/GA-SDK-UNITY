@@ -15,7 +15,8 @@ Changelog
 ---------
 
 **2.1.1**
-* minor bug fixes
+* fixed rare editor bug causing settings object replication
+* minor bug fixes (android)
 
 **2.1.0**
 * Android support added
