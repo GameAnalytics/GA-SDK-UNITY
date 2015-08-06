@@ -11,7 +11,6 @@ namespace GameAnalyticsSDK
 {
 	public static class GA_Debug
 	{
-		public static bool SubmitErrors = true;
 		public static int MaxErrorCount = 10;
 		
 		private static int _errorCount = 0;
@@ -44,7 +43,7 @@ namespace GameAnalyticsSDK
 			}
 
 			//We only submit exceptions and errors
-			if (SubmitErrors && _errorCount < MaxErrorCount && type != LogType.Log)
+			if (GameAnalytics.SettingsGA.SubmitErrors && _errorCount < MaxErrorCount && type != LogType.Log)
 			{
 				_errorCount++;
 				

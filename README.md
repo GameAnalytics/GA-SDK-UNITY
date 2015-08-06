@@ -14,6 +14,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.1.2**
+* fixed enable/disable submit errors in unity settings
+* improved session handling (android)
+* minor bug fixes (android)
+
 **2.1.1**
 * fixed rare editor bug causing settings object replication
 * minor bug fixes (android)

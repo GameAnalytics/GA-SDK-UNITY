@@ -87,6 +87,31 @@ namespace GameAnalyticsSDK
 				_instance = null;	
 		}
 
+		void OnApplicationPause(bool pauseStatus) 
+		{
+			#if UNITY_ANDROID && !UNITY_EDITOR
+			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
+			if (pauseStatus) {
+				ga.CallStatic("onActivityPaused", activity);
+			}
+			else {
+				ga.CallStatic("onActivityResumed", activity);
+			}
+			#endif
+		}
+
+		void OnApplicationQuit() 
+		{
+			#if UNITY_ANDROID && !UNITY_EDITOR
+			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
+			ga.CallStatic("onActivityStopped", activity);
+			#endif
+		}
+
 		#endregion
 
 		private static void InitAPI()
@@ -153,11 +178,10 @@ namespace GameAnalyticsSDK
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
-			AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-			AndroidJavaObject context = jo.Call<AndroidJavaObject>("getApplicationContext");
+			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
 
 			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-			ga.CallStatic("initializeWithContext", context);
+			ga.CallStatic("initializeWithActivity", activity);
 #endif
 			
 			GAPlatform platform = GetPlatform();
