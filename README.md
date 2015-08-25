@@ -15,7 +15,7 @@ Changelog
 ---------
 
 **2.1.4**
-* increased allowed character count to 64 for many parameters
+* increased allowed character count to 64 for many parameters (android)
 
 **2.1.3**
 * fix for session length (android)
