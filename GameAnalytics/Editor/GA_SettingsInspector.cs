@@ -898,7 +898,7 @@ namespace GameAnalyticsSDK
 									}
 									else
 									{
-										Application.OpenURL("https://go.gameanalytics.com/login?token=" + ga.TokenGA + "&exp=" + ga.ExpireTime + "&goto=/game" + ga.SelectedPlatformGameID[i] + "/settings");
+										Application.OpenURL("https://go.gameanalytics.com/login?token=" + ga.TokenGA + "&exp=" + ga.ExpireTime + "&goto=/game/" + ga.SelectedPlatformGameID[i] + "/settings");
 									}
 								}
 								GUILayout.EndHorizontal();

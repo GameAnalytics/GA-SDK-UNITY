@@ -26,7 +26,7 @@ namespace GameAnalyticsSDK
 			EditorGUILayout.Space();
 			
 			GUILayout.Label("Currently installed version: " + Settings.VERSION);
-			GUILayout.Label("Newest version: " + GameAnalytics.SettingsGA.NewVersion);
+			GUILayout.Label("Latest version: " + GameAnalytics.SettingsGA.NewVersion);
 			
 			EditorGUILayout.Space();
 			
@@ -44,7 +44,7 @@ namespace GameAnalyticsSDK
 			
 			EditorGUILayout.Space();
 			
-			GUILayout.Label("You can download the newest version from the GameAnalytics download support page.", EditorStyles.wordWrappedMiniLabel, GUILayout.MaxWidth(320));
+			GUILayout.Label("You can download the latest version from the GameAnalytics download support page.", EditorStyles.wordWrappedMiniLabel, GUILayout.MaxWidth(320));
 			
 			EditorGUILayout.Space();
 			

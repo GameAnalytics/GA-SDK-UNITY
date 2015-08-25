@@ -14,6 +14,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.1.4**
+* increased allowed character count to 64 for many parameters
+
 **2.1.3**
 * fix for session length (android)
 
