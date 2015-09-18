@@ -24,10 +24,10 @@ namespace GameAnalyticsSDK
 		private static extern void configureAvailableResourceItemTypes(string list);
 		
 		[DllImport ("GameAnalytics")]
-		private static extern void configureUnitySdkVersion(string unitySdkVersion);
+		private static extern void configureSdkGameEngineVersion(string unitySdkVersion);
 		
 		[DllImport ("GameAnalytics")]
-		private static extern void configureUnityEngineVersion(string unityEngineVersion);
+		private static extern void configureGameEngineVersion(string unityEngineVersion);
 		
 		[DllImport ("GameAnalytics")]
 		private static extern void configureBuild(string build);

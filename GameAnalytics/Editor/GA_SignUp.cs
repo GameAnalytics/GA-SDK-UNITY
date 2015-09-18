@@ -1158,9 +1158,19 @@ namespace GameAnalyticsSDK
 
 					#if UNITY_IOS
 
-					new StringWithType { Text = "Read about the build process for iOS.", Type = StringType.Link, Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20Xcode" },
+					new StringWithType {
+						Text = "iOS",
+						Type = StringType.Link,
+						Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/iOS%20Build"
+					}
 
 					#elif UNITY_ANDROID
+
+					new StringWithType {
+						Text = "Android",
+						Type = StringType.Link,
+						Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Android%20Build"
+					}
 
 					#else
 

@@ -14,6 +14,12 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.2.0**
+* improved code structure (android)
+* built library with Xcode7 (iOS 9.0)
+* fixed missing links in setup guide
+* minor tweaks
+
 **2.1.4**
 * increased allowed character count to 64 for many parameters (android)
 

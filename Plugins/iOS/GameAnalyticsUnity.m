@@ -63,14 +63,14 @@ void configureAvailableResourceItemTypes(const char *list) {
     [GameAnalytics configureAvailableResourceItemTypes:list_array];
 }
 
-void configureUnitySdkVersion(const char *unitySdkVersion) {
-    NSString *unitySdkVersionString = unitySdkVersion != NULL ? [NSString stringWithUTF8String:unitySdkVersion] : nil;
-    [GameAnalytics configureSdkVersion:unitySdkVersionString];
+void configureSdkGameEngineVersion(const char *gameEngineSdkVersion) {
+    NSString *gameEngineSdkVersionString = gameEngineSdkVersion != NULL ? [NSString stringWithUTF8String:gameEngineSdkVersion] : nil;
+    [GameAnalytics configureSdkVersion:gameEngineSdkVersionString];
 }
 
-void configureUnityEngineVersion(const char *unityEngineVersion) {
-    NSString *unityEngineVersionString = unityEngineVersion != NULL ? [NSString stringWithUTF8String:unityEngineVersion] : nil;
-    [GameAnalytics configureEngineVersion:unityEngineVersionString];
+void configureGameEngineVersion(const char *gameEngineVersion) {
+    NSString *gameEngineVersionString = gameEngineVersion != NULL ? [NSString stringWithUTF8String:gameEngineVersion] : nil;
+    [GameAnalytics configureEngineVersion:gameEngineVersionString];
 }
 
 void configureBuild(const char *build) {

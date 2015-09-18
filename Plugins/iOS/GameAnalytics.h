@@ -10,14 +10,6 @@
  @discussion
  <h2>What is GameAnalytics?</h2>
  <p>GameAnalytics is a cloud-hosted solution for tracking, analysis and reporting of game metrics. You can use the services provided by GameAnalytics to store your game-related data directly in the cloud and process, visualize, and analyze it on the fly.</p>
- 
- <h3>Changelog</h3>
-
- <p>Latest changes</p>
- <ul>
- <li>altered validation to allow 64 chars in some cases</li>
- </ul>
- <p>Current version: 2.0.4</p>
 
  <h3>Event types</h3>
  <p>We provide a wide range of event types that you can instrument in your game to track the data you're interested in building your analysis from. Here's a brief overview of their uses:</p>

@@ -47,11 +47,11 @@ namespace GameAnalyticsSDK
 			}
 		}
 
-		private static void configureUnitySdkVersion(string unitySdkVersion)
+		private static void configureSdkGameEngineVersion(string unitySdkVersion)
 		{
 		}
 
-		private static void configureUnityEngineVersion(string unityEngineVersion)
+		private static void configureGameEngineVersion(string unityEngineVersion)
 		{
 		}
 
@@ -248,12 +248,12 @@ namespace GameAnalyticsSDK
 
 		public static void SetUnitySdkVersion(string unitySdkVersion)
 		{
-			configureUnitySdkVersion(unitySdkVersion);
+			configureSdkGameEngineVersion(unitySdkVersion);
 		}
 
 		public static void SetUnityEngineVersion(string unityEngineVersion)
 		{
-			configureUnityEngineVersion(unityEngineVersion);
+			configureGameEngineVersion(unityEngineVersion);
 		}
 
 		public static void SetBuild(string build)
