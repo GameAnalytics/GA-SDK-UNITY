@@ -14,6 +14,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.3.0**
+* 'Receiver not registered' bug fix
+
 **2.2.0**
 * improved code structure (android)
 * built library with Xcode7 (iOS 9.0)
