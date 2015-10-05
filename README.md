@@ -14,8 +14,12 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.3.1**
+* fix related to connection changes (android)
+
+
 **2.3.0**
-* 'Receiver not registered' bug fix
+* 'Receiver not registered' bug fix (android)
 
 **2.2.0**
 * improved code structure (android)
