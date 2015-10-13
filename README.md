@@ -15,6 +15,9 @@ Changelog
 ---------
 
 **2.3.1**
+* no network connection bug fix (android)
+
+**2.3.1**
 * fix related to connection changes (android)
 
 
