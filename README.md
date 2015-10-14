@@ -14,7 +14,7 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
-**2.3.1**
+**2.3.2**
 * no network connection bug fix (android)
 
 **2.3.1**
