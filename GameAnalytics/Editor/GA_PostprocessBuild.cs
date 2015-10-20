@@ -18,12 +18,13 @@ namespace GameAnalyticsSDK
 			if (buildTarget == BuildTarget.iOS)
 			#endif
 			{
-				string projPath = path + "/Unity-iPhone.xcodeproj/project.pbxproj";
+				string projPath = PBXProject.GetPBXProjectPath(path);
 				
 				PBXProject proj = new PBXProject();
 				proj.ReadFromString(File.ReadAllText(projPath));
 				
-				string target = proj.TargetGuidByName("Unity-iPhone");
+				string targetName = PBXProject.GetUnityTargetName();
+				string target = proj.TargetGuidByName(targetName);
 				
 				proj.AddFileToBuild(target, proj.AddFile("usr/lib/libsqlite3.dylib", "Frameworks/libsqlite3.dylib", PBXSourceTree.Sdk));
 				proj.AddFileToBuild(target, proj.AddFile("usr/lib/libz.dylib", "Frameworks/libz.dylib", PBXSourceTree.Sdk));
