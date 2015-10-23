@@ -14,6 +14,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.4.0**
+* fixed tracking bug with ad opt out enabled (android)
+
 **2.3.2**
 * no network connection bug fix (android)
 
