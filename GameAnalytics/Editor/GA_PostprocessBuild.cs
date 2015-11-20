@@ -19,17 +19,25 @@ namespace GameAnalyticsSDK
 			#endif
 			{
 				string projPath = PBXProject.GetPBXProjectPath(path);
-				
+
+				// Fix on 4.6.x
+				#if UNITY_4_6
+				if(!projPath.Contains("Unity-iPhone.xcodeproj"))
+				{
+					projPath = projPath.Replace("Unity-iPhone", "Unity-iPhone.xcodeproj");
+				}
+				#endif
+
 				PBXProject proj = new PBXProject();
 				proj.ReadFromString(File.ReadAllText(projPath));
-				
+
 				string targetName = PBXProject.GetUnityTargetName();
 				string target = proj.TargetGuidByName(targetName);
-				
+
 				proj.AddFileToBuild(target, proj.AddFile("usr/lib/libsqlite3.dylib", "Frameworks/libsqlite3.dylib", PBXSourceTree.Sdk));
 				proj.AddFileToBuild(target, proj.AddFile("usr/lib/libz.dylib", "Frameworks/libz.dylib", PBXSourceTree.Sdk));
 				proj.AddFileToBuild(target, proj.AddFile("Frameworks/AdSupport.framework", "Frameworks/AdSupport.framework", PBXSourceTree.Sdk));
-				
+
 				File.WriteAllText(projPath, proj.WriteToString());
 			}
 		}
