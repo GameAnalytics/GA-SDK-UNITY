@@ -15,7 +15,7 @@ Changelog
 ---------
 
 **2.4.2**
-* Postprocessor script for XCode fixed for Unity 4.6.x
+* Postprocessor script for XCode fixed for Unity 4.6.x (ios)
 
 **2.4.1**
 * android.permission.WRITE_EXTERNAL_STORAGE not needed anymore (android)
