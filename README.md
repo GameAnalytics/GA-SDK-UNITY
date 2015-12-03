@@ -14,6 +14,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 
+**2.4.3**
+* Google Play Services libraries updated to version 8.3.0 (android)
+
 **2.4.2**
 * Postprocessor script for XCode fixed for Unity 4.6.x (ios)
 
