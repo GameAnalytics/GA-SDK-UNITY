@@ -14,7 +14,7 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 **3.0.0b**
-* new pure java implementation (android)
+* new java-only implementation (android)
 * install size reduced (android)
 
 **2.4.3**
