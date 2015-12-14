@@ -13,6 +13,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.0.0b**
+* new pure java implementation (android)
+* install size reduced (android)
 
 **2.4.3**
 * Google Play Services libraries updated to version 8.3.0 (android)
