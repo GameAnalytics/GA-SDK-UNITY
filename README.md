@@ -13,6 +13,13 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.1.0**
+* altered jailbreak check causing ios9 warning (ios)
+* library / framework now compiled with bitcode (ios)
+* alternative non-bitcode library (Xcode6) added (ios)
+* restructuring to prepare for tvOS (ios)
+* fix issue for offline initialization (android)
+
 **3.0.0b**
 * new java-only implementation (android)
 * install size reduced (android)

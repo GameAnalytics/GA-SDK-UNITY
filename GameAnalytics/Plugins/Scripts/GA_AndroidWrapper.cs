@@ -6,82 +6,148 @@ namespace GameAnalyticsSDK
 {
 	public partial class GA_Wrapper 
 	{
-		#if (UNITY_ANDROID) && (!UNITY_EDITOR)
+		#if (UNITY_ANDROID) && !(UNITY_EDITOR)
 
-		[DllImport ("GameAnalytics")]
-		private static extern void configureAvailableCustomDimensions01(string list);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureAvailableCustomDimensions02(string list);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureAvailableCustomDimensions03(string list);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureAvailableResourceCurrencies(string list);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureAvailableResourceItemTypes(string list);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureSdkGameEngineVersion(string unitySdkVersion);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureGameEngineVersion(string unityEngineVersion);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void configureBuild(string build);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void initialize(string gamekey, string gamesecret);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setCustomDimension01(string customDimension);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setCustomDimension02(string customDimension);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setCustomDimension03(string customDimension);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addBusinessEventWithReceipt(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string store, string signature);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addDesignEvent(string eventId);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addDesignEventWithValue(string eventId, float value);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void addErrorEvent(int severity, string message);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setEnabledInfoLog(bool enabled);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setEnabledVerboseLog(bool enabled);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setFacebookId(string facebookId);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setGender(string gender);
-		
-		[DllImport ("GameAnalytics")]
-		private static extern void setBirthYear(int birthYear);
+		private static readonly AndroidJavaClass GA = new AndroidJavaClass("com.gameanalytics.sdk.GameAnalytics");
+
+		private static void configureAvailableCustomDimensions01(string list)
+		{
+			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
+			GA.CallStatic("configureAvailableCustomDimensions01", array.ToArray(typeof(string)));
+		}
+
+		private static void configureAvailableCustomDimensions02(string list)
+		{
+			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
+			GA.CallStatic("configureAvailableCustomDimensions02", array.ToArray(typeof(string)));
+		}
+
+		private static void configureAvailableCustomDimensions03(string list)
+		{
+			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
+			GA.CallStatic("configureAvailableCustomDimensions03", array.ToArray(typeof(string)));
+		}
+
+		private static void configureAvailableResourceCurrencies(string list)
+		{
+			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
+			GA.CallStatic("configureAvailableResourceCurrencies", array.ToArray(typeof(string)));
+		}
+
+		private static void configureAvailableResourceItemTypes(string list)
+		{
+			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
+			GA.CallStatic("configureAvailableResourceItemTypes", array.ToArray(typeof(string)));
+		}
+
+		private static void configureSdkGameEngineVersion(string unitySdkVersion)
+		{
+			GA.CallStatic("configureSdkGameEngineVersion", unitySdkVersion);
+		}
+
+		private static void configureGameEngineVersion(string unityEngineVersion)
+		{
+			GA.CallStatic("configureGameEngineVersion", unityEngineVersion);
+		}
+
+		private static void configureBuild(string build)
+		{
+			GA.CallStatic("configureBuild", build);
+		}
+
+		private static void initialize(string gamekey, string gamesecret)
+		{
+			GA.CallStatic("initializeWithGameKey", gamekey, gamesecret);
+		}
+
+		private static void setCustomDimension01(string customDimension)
+		{
+			GA.CallStatic("setCustomDimension01", customDimension);
+		}
+
+		private static void setCustomDimension02(string customDimension)
+		{
+			GA.CallStatic("setCustomDimension02", customDimension);
+		}
+
+		private static void setCustomDimension03(string customDimension)
+		{
+			GA.CallStatic("setCustomDimension03", customDimension);
+		}
+
+		private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType)
+		{
+			GA.CallStatic("addBusinessEventWithCurrency", currency, amount, itemType, itemId, cartType);
+		}
+
+		private static void addBusinessEventWithReceipt(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string store, string signature)
+		{
+			GA.CallStatic("addBusinessEventWithCurrency", currency, amount, itemType, itemId, cartType, receipt, store, signature);
+		}
+
+		private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId)
+		{
+			GA.CallStatic("addResourceEventWithFlowType", flowType, currency, amount, itemType, itemId);
+		}
+
+		private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03)
+		{
+			GA.CallStatic("addProgressionEventWithProgressionStatus", progressionStatus, progression01, progression02, progression03);
+		}
+
+		private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score)
+		{
+			GA.CallStatic("addProgressionEventWithProgressionStatus", progressionStatus, progression01, progression02, progression03, (double)score);
+		}
+
+		private static void addDesignEvent(string eventId)
+		{
+			GA.CallStatic("addDesignEventWithEventId", eventId);
+		}
+
+		private static void addDesignEventWithValue(string eventId, float value)
+		{
+			GA.CallStatic("addDesignEventWithEventId", eventId, (double)value);
+		}
+
+		private static void addErrorEvent(int severity, string message)
+		{
+			GA.CallStatic("addErrorEventWithSeverity", severity, message);
+		}
+
+		private static void setEnabledInfoLog(bool enabled)
+		{
+			GA.CallStatic("setEnabledInfoLog", enabled);
+		}
+
+		private static void setEnabledVerboseLog(bool enabled)
+		{
+			GA.CallStatic("setEnabledVerboseLog", enabled);
+		}
+
+		private static void setFacebookId(string facebookId)
+		{
+			GA.CallStatic("setFacebookId", facebookId);
+		}
+
+		private static void setGender(string gender)
+		{
+			switch(gender)
+			{
+				case "male":
+					GA.CallStatic("setGender", 1);
+					break;
+				case "female":
+					GA.CallStatic("setGender", 2);
+					break;
+			}
+			
+		}
+
+		private static void setBirthYear(int birthYear)
+		{
+			GA.CallStatic("setBirthYear", birthYear);
+		}
 		#endif
 	}
 }
