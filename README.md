@@ -13,6 +13,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.1.1**
+* fixed inclusion of faulty library in 3.1.0 (ios)
+
 **3.1.0**
 * altered jailbreak check causing ios9 warning (ios)
 * library / framework now compiled with bitcode (ios)
