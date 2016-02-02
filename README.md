@@ -5,9 +5,7 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 
 > :information_source:<br>
-> The new Unity SDK only includes support for iOS and Android.<br>
-> The prior V1 Unity SDK is still functional and available [here](https://github.com/GameAnalytics/GA-SDK-UNITY-LEGACY).<br>
-> Read this [SDK update FAQ](http://www.gameanalytics.com/docs/sdk-update-faq/) to keep yourself informed about future V2 SDK updates.
+> The Unity SDK include support for **iOS** and **Android** platforms.<br>
 
 
 
