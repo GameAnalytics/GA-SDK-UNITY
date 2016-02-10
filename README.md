@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.2.0**
+* added support for tvOS (tvos)
+
 **3.1.1**
 * fixed inclusion of faulty library in 3.1.0 (ios)
 
