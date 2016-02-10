@@ -1,17 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameAnalyticsSDK.Utilities;
+using GameAnalyticsSDK.Wrapper;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Setup
 	{
-		public enum GAGender
-		{
-			Male = 1,
-			Female = 2
-		}
-
 		#region public methods
 
 		public static void SetAvailableCustomDimensions01(List<string> customDimensions)
@@ -38,7 +34,7 @@ namespace GameAnalyticsSDK
 		public static void SetAvailableResourceCurrencies(List<string> resourceCurrencies)
 		{
 			string json = GA_MiniJSON.JsonEncode(resourceCurrencies.ToArray());
-			
+
 			GA_Wrapper.SetAvailableResourceCurrencies(json);
 		}
 
@@ -68,12 +64,12 @@ namespace GameAnalyticsSDK
 		{
 			switch(gender)
 			{
-				case GAGender.Male:
-					GA_Wrapper.SetGender("male");
-					break;
-				case GAGender.Female:
-					GA_Wrapper.SetGender("female");
-					break;
+			case GAGender.Male:
+				GA_Wrapper.SetGender("male");
+				break;
+			case GAGender.Female:
+				GA_Wrapper.SetGender("female");
+				break;
 			}
 		}
 

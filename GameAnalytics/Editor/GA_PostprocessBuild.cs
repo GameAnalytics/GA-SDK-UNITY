@@ -5,7 +5,7 @@ using UnityEditor.Callbacks;
 using UnityEditor;
 using System.IO;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Editor
 {
 	public class GA_PostprocessBuild
 	{
@@ -15,7 +15,7 @@ namespace GameAnalyticsSDK
 			#if UNITY_4_6
 			if (buildTarget == BuildTarget.iPhone)
 			#else
-			if (buildTarget == BuildTarget.iOS)
+			if (buildTarget == BuildTarget.iOS || buildTarget == BuildTarget.tvOS)
 			#endif
 			{
 				string projPath = PBXProject.GetPBXProjectPath(path);

@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Text;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Utilities
 {
 	/* Based on the JSON parser from 
 	 * http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html
@@ -56,7 +56,7 @@ namespace GameAnalyticsSDK
 			if(json != null)
 			{
 				char[] charArray = json.ToCharArray();
-				
+
 				int index = 0;
 				bool success = true;
 				object value = GA_MiniJSON.instance.ParseValue(charArray, ref index, ref success);
@@ -235,25 +235,25 @@ namespace GameAnalyticsSDK
 		{
 			switch(LookAhead(json, index))
 			{
-				case GA_MiniJSON.TOKEN_STRING:
-					return ParseString(json, ref index);
-				case GA_MiniJSON.TOKEN_NUMBER:
-					return ParseNumber(json, ref index);
-				case GA_MiniJSON.TOKEN_CURLY_OPEN:
-					return ParseObject(json, ref index);
-				case GA_MiniJSON.TOKEN_SQUARED_OPEN:
-					return ParseArray(json, ref index);
-				case GA_MiniJSON.TOKEN_TRUE:
-					NextToken(json, ref index);
-					return Boolean.Parse("TRUE");
-				case GA_MiniJSON.TOKEN_FALSE:
-					NextToken(json, ref index);
-					return Boolean.Parse("FALSE");
-				case GA_MiniJSON.TOKEN_NULL:
-					NextToken(json, ref index);
-					return null;
-				case GA_MiniJSON.TOKEN_NONE:
-					break;
+			case GA_MiniJSON.TOKEN_STRING:
+				return ParseString(json, ref index);
+			case GA_MiniJSON.TOKEN_NUMBER:
+				return ParseNumber(json, ref index);
+			case GA_MiniJSON.TOKEN_CURLY_OPEN:
+				return ParseObject(json, ref index);
+			case GA_MiniJSON.TOKEN_SQUARED_OPEN:
+				return ParseArray(json, ref index);
+			case GA_MiniJSON.TOKEN_TRUE:
+				NextToken(json, ref index);
+				return Boolean.Parse("TRUE");
+			case GA_MiniJSON.TOKEN_FALSE:
+				NextToken(json, ref index);
+				return Boolean.Parse("FALSE");
+			case GA_MiniJSON.TOKEN_NULL:
+				NextToken(json, ref index);
+				return null;
+			case GA_MiniJSON.TOKEN_NONE:
+				break;
 			}
 
 			success = false;
@@ -266,7 +266,7 @@ namespace GameAnalyticsSDK
 			char c;
 
 			EatWhitespace(json, ref index);
-			
+
 			// "
 			c = json[index];
 			index++;
@@ -339,16 +339,16 @@ namespace GameAnalyticsSDK
 							{
 								unicodeCharArray[i] = json[index + i];
 							}
-	                        
+
 							// Drop in the HTML markup for the unicode character
 							s += "&#x" + new string(unicodeCharArray) + ";";
-							
+
 							/*
-							uint codePoint = UInt32.Parse(new string(unicodeCharArray), NumberStyles.HexNumber);
-							// convert the integer codepoint to a unicode char and add to string
-							s += Char.ConvertFromUtf32((int)codePoint);
-							*/
-							
+								uint codePoint = UInt32.Parse(new string(unicodeCharArray), NumberStyles.HexNumber);
+								// convert the integer codepoint to a unicode char and add to string
+								s += Char.ConvertFromUtf32((int)codePoint);
+								*/
+
 							// skip 4 chars
 							index += 4;
 						}
@@ -369,7 +369,7 @@ namespace GameAnalyticsSDK
 			{
 				return null;
 			}
-			
+
 			return s;
 		}
 
@@ -429,37 +429,37 @@ namespace GameAnalyticsSDK
 			{
 				return GA_MiniJSON.TOKEN_NONE;
 			}
-			
+
 			char c = json[index];
 			index++;
 			switch(c)
 			{
-				case '{':
-					return GA_MiniJSON.TOKEN_CURLY_OPEN;
-				case '}':
-					return GA_MiniJSON.TOKEN_CURLY_CLOSE;
-				case '[':
-					return GA_MiniJSON.TOKEN_SQUARED_OPEN;
-				case ']':
-					return GA_MiniJSON.TOKEN_SQUARED_CLOSE;
-				case ',':
-					return GA_MiniJSON.TOKEN_COMMA;
-				case '"':
-					return GA_MiniJSON.TOKEN_STRING;
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4': 
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				case '-': 
-					return GA_MiniJSON.TOKEN_NUMBER;
-				case ':':
-					return GA_MiniJSON.TOKEN_COLON;
+			case '{':
+				return GA_MiniJSON.TOKEN_CURLY_OPEN;
+			case '}':
+				return GA_MiniJSON.TOKEN_CURLY_CLOSE;
+			case '[':
+				return GA_MiniJSON.TOKEN_SQUARED_OPEN;
+			case ']':
+				return GA_MiniJSON.TOKEN_SQUARED_CLOSE;
+			case ',':
+				return GA_MiniJSON.TOKEN_COMMA;
+			case '"':
+				return GA_MiniJSON.TOKEN_STRING;
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4': 
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+			case '-': 
+				return GA_MiniJSON.TOKEN_NUMBER;
+			case ':':
+				return GA_MiniJSON.TOKEN_COLON;
 			}
 			index--;
 
@@ -469,10 +469,10 @@ namespace GameAnalyticsSDK
 			if(remainingLength >= 5)
 			{
 				if(json[index] == 'f' &&
-				    json[index + 1] == 'a' &&
-				    json[index + 2] == 'l' &&
-				    json[index + 3] == 's' &&
-				    json[index + 4] == 'e')
+					json[index + 1] == 'a' &&
+					json[index + 2] == 'l' &&
+					json[index + 3] == 's' &&
+					json[index + 4] == 'e')
 				{
 					index += 5;
 					return GA_MiniJSON.TOKEN_FALSE;
@@ -483,9 +483,9 @@ namespace GameAnalyticsSDK
 			if(remainingLength >= 4)
 			{
 				if(json[index] == 't' &&
-				    json[index + 1] == 'r' &&
-				    json[index + 2] == 'u' &&
-				    json[index + 3] == 'e')
+					json[index + 1] == 'r' &&
+					json[index + 2] == 'u' &&
+					json[index + 3] == 'e')
 				{
 					index += 4;
 					return GA_MiniJSON.TOKEN_TRUE;
@@ -496,9 +496,9 @@ namespace GameAnalyticsSDK
 			if(remainingLength >= 4)
 			{
 				if(json[index] == 'n' &&
-				    json[index + 1] == 'u' &&
-				    json[index + 2] == 'l' &&
-				    json[index + 3] == 'l')
+					json[index + 1] == 'u' &&
+					json[index + 2] == 'l' &&
+					json[index + 3] == 'l')
 				{
 					index += 4;
 					return GA_MiniJSON.TOKEN_NULL;
@@ -582,9 +582,9 @@ namespace GameAnalyticsSDK
 
 		protected bool SerializeValue(object value, StringBuilder builder)
 		{
-			
+
 			// Type t = value.GetType();
-			
+
 			// Debug.Log("type: " + t.ToString() + " isArray: " + t.IsArray);
 
 			if(value == null)
@@ -619,7 +619,7 @@ namespace GameAnalyticsSDK
 			{
 				builder.Append("false");
 			}
-	//		else if (value.GetType().IsPrimitive) {
+			//		else if (value.GetType().IsPrimitive) {
 			else if(value is Single)
 			{
 				SerializeNumber((Single)value, builder);			
@@ -690,7 +690,7 @@ namespace GameAnalyticsSDK
 		}
 
 		/*
-		/// <summary>
+			/// <summary>
 		/// Determines if a given object is numeric in any way
 		/// (can be integer, float, etc). C# has no pretty way to do this.
 		/// </summary>

@@ -6,7 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public class GA_SpecialEvents : MonoBehaviour
 	{
@@ -87,7 +87,7 @@ namespace GameAnalyticsSDK
 					
 					if (fpsSinceUpdate > 0)
 					{
-						GA_Design.NewEvent("GA:AverageFPS", ((int)fpsSinceUpdate));
+						GameAnalytics.NewDesignEvent("GA:AverageFPS", ((int)fpsSinceUpdate));
 					}
 				}
 			}
@@ -96,7 +96,7 @@ namespace GameAnalyticsSDK
 			{
 				if (_criticalFpsCount > 0)
 				{
-					GA_Design.NewEvent("GA:CriticalFPS", _criticalFpsCount);
+					GameAnalytics.NewDesignEvent("GA:CriticalFPS", _criticalFpsCount);
 					_criticalFpsCount = 0;
 				}
 			}

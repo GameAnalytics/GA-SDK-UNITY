@@ -1,5 +1,3 @@
-#define IOS_ID
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +7,7 @@ using System.Runtime.InteropServices;
 using UnityEditor;
 #endif
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Setup
 {
 	/// <summary>
 	/// The Settings object contains an array of options which allows you to customize your use of GameAnalytics. Most importantly you will need to fill in your Game Key and Secret Key on the Settings object to use the service.
@@ -53,7 +51,7 @@ namespace GameAnalyticsSDK
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.1.1";
+		public static string VERSION = "3.2.0";
 
 		#endregion
 

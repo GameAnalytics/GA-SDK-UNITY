@@ -3,8 +3,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameAnalyticsSDK.Wrapper;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Design
 	{

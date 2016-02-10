@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
+using GameAnalyticsSDK.Setup;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Editor
 {
 	public class GA_SignUp : EditorWindow
 	{
@@ -1156,10 +1157,10 @@ namespace GameAnalyticsSDK
 						new StringWithType { Text = "You're almost there! To complete the integration and start sending data to GameAnalytics, all you need to do is build and run your game. The link below describes the important last steps you need to complete to build for your platform." },
 						new StringWithType { Text = "" },
 
-					#if UNITY_IOS
+					#if UNITY_IOS || UNITY_TVOS
 
 					new StringWithType {
-						Text = "iOS",
+						Text = "iOS/tvOS",
 						Type = StringType.Link,
 						Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/iOS%20Build"
 					}

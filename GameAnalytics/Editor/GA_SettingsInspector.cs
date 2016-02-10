@@ -1,4 +1,4 @@
-#if (UNITY_5_0 || UNITY_4_6 || UNITY_4_5 || UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0 || UNITY_3_5 || UNITY_3_4 || UNITY_3_3 || UNITY_3_2 || UNITY_3_1 || UNITY_3_0_0 || UNITY_3_0 || UNITY_2_6_1 || UNITY_2_6)
+#if (UNITY_5_0 || UNITY_4_6)
 #define UNITY_UP_TO_5_0
 #endif
 
@@ -13,11 +13,13 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
 using System;
+using GameAnalyticsSDK.Utilities;
+using GameAnalyticsSDK.Setup;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Editor
 {
 	[CustomEditor(typeof(Settings))]
-	public class GA_SettingsInspector : Editor
+	public class GA_SettingsInspector : UnityEditor.Editor
 	{
 		private GUIContent _publicKeyLabel = new GUIContent("Game Key", "Your GameAnalytics Game Key - copy/paste from the GA website.");
 		private GUIContent _privateKeyLabel = new GUIContent("Secret Key", "Your GameAnalytics Secret Key - copy/paste from the GA website.");
@@ -763,7 +765,7 @@ namespace GameAnalyticsSDK
 					for(int i = 0; i < NumberOfPlatforms; ++i)
 					{
 						GAPlatform platform = (GAPlatform)(i + 1);
-						ga.PlatformFoldOut[i] = EditorGUILayout.Foldout(ga.PlatformFoldOut[i], platform.ToString());
+						ga.PlatformFoldOut[i] = EditorGUILayout.Foldout(ga.PlatformFoldOut[i], PlatformToString(platform));
 
 						if(ga.PlatformFoldOut[i])
 						{
@@ -908,7 +910,7 @@ namespace GameAnalyticsSDK
 						Splitter(new Color(0.35f, 0.35f, 0.35f));
 					}
 
-					#if UNITY_IOS
+					#if UNITY_IOS || UNITY_TVOS
 
 					EditorGUILayout.Space();
 
@@ -2057,6 +2059,18 @@ namespace GameAnalyticsSDK
 				splitter.Draw(position, false, false, false, false);
 				GUI.color = restoreColor;
 			}
+		}
+
+		private static String PlatformToString(GAPlatform platform)
+		{
+			String result = platform.ToString();
+
+			if (platform == GAPlatform.iOS) 
+			{
+				result = "iOS/tvOS";
+			}
+
+			return result;
 		}
 
 		// versionstring is:

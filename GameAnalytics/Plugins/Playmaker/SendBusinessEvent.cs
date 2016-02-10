@@ -47,7 +47,7 @@ namespace HutongGames.PlayMaker.Actions
 		}
 	}
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 [ActionCategory("GameAnalytics")]
 [Tooltip("Sends an iOS business event message to the GameAnalytics server")]
 [HelpUrl("https://hutonggames.fogbugz.com/default.asp?W1163")]

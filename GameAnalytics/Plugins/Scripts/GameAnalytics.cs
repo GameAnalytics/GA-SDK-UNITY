@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using GameAnalyticsSDK.Events;
+using GameAnalyticsSDK.Setup;
+using GameAnalyticsSDK.Wrapper;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,7 +16,7 @@ namespace GameAnalyticsSDK
 {
 	[RequireComponent(typeof(GA_SpecialEvents))]
 	[ExecuteInEditMode]
-	public class GameAnalytics : MonoBehaviour
+	public partial class GameAnalytics : MonoBehaviour
 	{
 		#region public values
 
@@ -69,7 +72,7 @@ namespace GameAnalyticsSDK
 
 			DontDestroyOnLoad(gameObject);
 
-			#if (UNITY_4_9 || UNITY_4_8 || UNITY_4_7 || UNITY_4_6 || UNITY_4_5 || UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0 || UNITY_3_5 || UNITY_3_4 || UNITY_3_3 || UNITY_3_2 || UNITY_3_1 || UNITY_3_0_0 || UNITY_3_0 || UNITY_2_6_1 || UNITY_2_6)
+			#if (UNITY_4_6)
 			Application.RegisterLogCallback(GA_Debug.HandleLog);
 			#else
 			Application.logMessageReceived += GA_Debug.HandleLog;
@@ -248,7 +251,7 @@ namespace GameAnalyticsSDK
             GA_Business.NewEvent(currency, amount, itemType, itemId, cartType);
         }
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 		/// <summary>
 		/// Track any real money transaction in-game (iOS version).
 		/// </summary>
@@ -317,7 +320,7 @@ namespace GameAnalyticsSDK
 		/// </summary>
 		/// <param name="progressionStatus">Status of added progression.</param>
 		/// <param name="progression01">1st progression (e.g. world01).</param>
-		public static void NewProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01)
+		public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01)
 		{
 			GA_Progression.NewEvent(progressionStatus, progression01);
 		}
@@ -328,7 +331,7 @@ namespace GameAnalyticsSDK
 		/// <param name="progressionStatus">Status of added progression.</param>
 		/// <param name="progression01">1st progression (e.g. world01).</param>
 		/// <param name="progression02">2nd progression (e.g. level01).</param>
-		public static void NewProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01, string progression02)
+		public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02)
 		{
 			GA_Progression.NewEvent(progressionStatus, progression01, progression02);
 		}
@@ -340,7 +343,7 @@ namespace GameAnalyticsSDK
 		/// <param name="progression01">1st progression (e.g. world01).</param>
 		/// <param name="progression02">2nd progression (e.g. level01).</param>
 		/// <param name="progression03">3rd progression (e.g. phase01).</param>
-		public static void NewProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03)
+		public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03)
 		{
 			GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03);
 		}
@@ -351,7 +354,7 @@ namespace GameAnalyticsSDK
 		/// <param name="progressionStatus">Status of added progression.</param>
 		/// <param name="progression01">1st progression (e.g. world01).</param>
 		/// /// <param name="score">The player's score.</param>
-		public static void NewProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01, int score)
+		public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, int score)
 		{
 			GA_Progression.NewEvent(progressionStatus, progression01, score);
 		}
@@ -363,7 +366,7 @@ namespace GameAnalyticsSDK
 		/// <param name="progression01">1st progression (e.g. world01).</param>
 		/// <param name="progression02">2nd progression (e.g. level01).</param>
 		/// /// <param name="score">The player's score.</param>
-		public static void NewProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01, string progression02, int score)
+		public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, int score)
 		{
 			GA_Progression.NewEvent(progressionStatus, progression01, progression02, score);
 		}
@@ -376,7 +379,7 @@ namespace GameAnalyticsSDK
 		/// <param name="progression02">2nd progression (e.g. level01).</param>
 		/// <param name="progression03">3rd progression (e.g. phase01).</param>
 		/// <param name="score">The player's score.</param>
-		public static void NewProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score)
+		public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score)
 		{
 			GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, score);
 		}
@@ -389,7 +392,7 @@ namespace GameAnalyticsSDK
 		/// <param name="amount">Amount sourced or sinked.</param>
 		/// <param name="itemType">One of the available currencies set in Settings (Setup tab).</param>
 		/// <param name="itemId">Item id (string max length=16).</param>
-		public static void NewResourceEvent(GA_Resource.GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)
+		public static void NewResourceEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)
 		{
 			GA_Resource.NewEvent(flowType, currency, amount, itemType, itemId);
 		}
@@ -399,7 +402,7 @@ namespace GameAnalyticsSDK
 		/// </summary>
 		/// <param name="severity">Severity of error.</param>
 		/// <param name="message">Error message (Optional, can be nil).</param>
-		public static void NewErrorEvent(GA_Error.GAErrorSeverity severity, string message)
+		public static void NewErrorEvent(GAErrorSeverity severity, string message)
 		{
 			GA_Error.NewEvent(severity, message);
 		}
@@ -417,7 +420,7 @@ namespace GameAnalyticsSDK
 		/// Set user gender.
 		/// </summary>
 		/// <param name="gender">Gender of user (Persists cross session).</param>
-		public static void SetGender(GA_Setup.GAGender gender)
+		public static void SetGender(GAGender gender)
 		{
 			GA_Setup.SetGender(gender);
 		}
@@ -498,6 +501,7 @@ namespace GameAnalyticsSDK
 					break;
 
 				case RuntimePlatform.IPhonePlayer:
+				case RuntimePlatform.tvOS:
 					{
 						result = GAPlatform.iOS;
 					}

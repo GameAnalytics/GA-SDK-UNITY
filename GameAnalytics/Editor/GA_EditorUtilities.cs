@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Editor
 {
 	public static class GA_EditorUtilities {
 
@@ -45,31 +45,6 @@ namespace GameAnalyticsSDK
 			}
 		}
 
-		#if UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0
-
-		public static Hashtable WWWHeaders()
-		{
-			Hashtable result = new Hashtable ();
-			result [XCallerKey] = XCaller;
-			result [XCallerVersionKey] = XCallerVersion;
-			result [XCallerPlatformKey] = XCallerPlatform;
-
-			return result;
-		}
-
-		public static Dictionary<string, string> WWWHeadersWithAuthorization(string token)
-		{
-			Hashtable result = new Hashtable ();
-			result [XCallerKey] = XCaller;
-			result [XCallerVersionKey] = XCallerVersion;
-			result [XCallerPlatformKey] = XCallerPlatform;
-			result [XAuthorizationKey] = token;
-
-			return result;
-		}
-
-		#else
-
 		public static Dictionary<string, string> WWWHeaders()
 		{
 			Dictionary<string, string> result = new Dictionary<string, string> ();
@@ -90,8 +65,6 @@ namespace GameAnalyticsSDK
 
 			return result;
 		}
-
-		#endif
 	}
 
 	public enum EPlatform

@@ -8,11 +8,12 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
 using System;
+using GameAnalyticsSDK.Setup;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Editor
 {
 	[CustomEditor(typeof(GameAnalytics))]
-	public class GameAnalyticsInspector : Editor
+	public class GameAnalyticsInspector : UnityEditor.Editor
 	{
 		private GUIContent _documentationLink		= new GUIContent("Help", "Opens the GameAnalytics Unity SDK documentation page in your browser.");
 		//private GUIContent _guiAllowScreenshot		= new GUIContent("Take Screenshot", "If enabled the player will be able to include a screenshot when submitting feedback and bug reports (This feature is not yet fully implemented).");

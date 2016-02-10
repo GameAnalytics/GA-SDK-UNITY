@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Runtime.InteropServices;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Wrapper
 {
 	public partial class GA_Wrapper 
 	{

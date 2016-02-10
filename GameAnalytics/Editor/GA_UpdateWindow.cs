@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
+using GameAnalyticsSDK.Setup;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Editor
 {
 	public class GA_UpdateWindow : EditorWindow
 	{

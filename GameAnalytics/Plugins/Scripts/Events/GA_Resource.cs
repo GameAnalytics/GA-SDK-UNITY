@@ -1,19 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameAnalyticsSDK.Wrapper;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Resource
 	{
-		public enum GAResourceFlowType
-		{
-			// Source: Used when adding resource to a user
-			GAResourceFlowTypeSource = 1,
-			// Sink: Used when removing a resource from a user
-			GAResourceFlowTypeSink = 2
-		}
-
 		#region public methods
 
 		public static void NewEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)

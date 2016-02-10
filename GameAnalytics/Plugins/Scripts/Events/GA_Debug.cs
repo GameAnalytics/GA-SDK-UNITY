@@ -7,17 +7,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Debug
 	{
 		public static int MaxErrorCount = 10;
-		
+
 		private static int _errorCount = 0;
 
 		private static bool _showLogOnGUI = false;
 		public static List<string> Messages;
-		
+
 		/// <summary>
 		/// If SubmitErrors is enabled on the GA object this makes sure that any exceptions or errors are submitted to the GA server
 		/// </summary>
@@ -46,40 +46,40 @@ namespace GameAnalyticsSDK
 			if (GameAnalytics.SettingsGA.SubmitErrors && _errorCount < MaxErrorCount && type != LogType.Log)
 			{
 				_errorCount++;
-				
+
 				string lString = logString.Replace('"', '\'').Replace('\n', ' ').Replace('\r', ' ');
 				string sTrace = stackTrace.Replace('"', '\'').Replace('\n', ' ').Replace('\r', ' ');
-				
+
 				SubmitError(lString + " " + sTrace, type);
 			}
 		}
-		
+
 		private static void SubmitError(string message, LogType type)
 		{
-			GA_Error.GAErrorSeverity severity = GA_Error.GAErrorSeverity.GAErrorSeverityInfo;
+			GAErrorSeverity severity = GAErrorSeverity.Info;
 
 			switch (type)
 			{
 			case LogType.Assert:
-				severity = GA_Error.GAErrorSeverity.GAErrorSeverityInfo;
+				severity = GAErrorSeverity.Info;
 				break;
 			case LogType.Error:
-				severity = GA_Error.GAErrorSeverity.GAErrorSeverityError;
+				severity = GAErrorSeverity.Error;
 				break;
 			case LogType.Exception:
-				severity = GA_Error.GAErrorSeverity.GAErrorSeverityCritical;
+				severity = GAErrorSeverity.Critical;
 				break;
 			case LogType.Log:
-				severity = GA_Error.GAErrorSeverity.GAErrorSeverityDebug;
+				severity = GAErrorSeverity.Debug;
 				break;
 			case LogType.Warning:
-				severity = GA_Error.GAErrorSeverity.GAErrorSeverityWarning;
+				severity = GAErrorSeverity.Warning;
 				break;
 			}
 
 			GA_Error.NewEvent(severity, message);
 		}
-		
+
 		/// <summary>
 		/// Used only for testing purposes
 		/// </summary>

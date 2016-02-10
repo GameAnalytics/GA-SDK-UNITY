@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Wrapper
 {
 	public partial class GA_Wrapper 
 	{
-		#if (UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID))
+		#if (UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS))
 
 		private static void configureAvailableCustomDimensions01(string list)
 		{
@@ -95,7 +95,7 @@ namespace GameAnalyticsSDK
 			}
 		}
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 		private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor)
@@ -121,7 +121,7 @@ namespace GameAnalyticsSDK
 		}
 #endif
 
-#if !UNITY_IOS
+#if !UNITY_IOS && !UNITY_TVOS
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType)
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor)
@@ -281,7 +281,7 @@ namespace GameAnalyticsSDK
 			setCustomDimension03(customDimension);
 		}
 		
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 		public static void AddBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt)
 		{
 			addBusinessEvent(currency, amount, itemType, itemId, cartType, receipt);
@@ -298,24 +298,24 @@ namespace GameAnalyticsSDK
 		}
 #endif
 
-#if !UNITY_IOS
+#if !UNITY_IOS && !UNITY_TVOS
         public static void AddBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType)
         {
             addBusinessEvent(currency, amount, itemType, itemId, cartType);
         }
 #endif
 
-		public static void AddResourceEvent(GA_Resource.GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)
+		public static void AddResourceEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)
 		{
 			addResourceEvent((int)flowType, currency, amount, itemType, itemId);
 		}
 
-		public static void AddProgressionEvent(GA_Progression.GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03)
+		public static void AddProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03)
 		{
 			addProgressionEvent((int)progressionStatus, progression01, progression02, progression03);
 		}
 
-		public static void AddProgressionEventWithScore(GA_Progression.GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score)
+		public static void AddProgressionEventWithScore(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score)
 		{
 			addProgressionEventWithScore((int)progressionStatus, progression01, progression02, progression03, score);
 		}
@@ -330,7 +330,7 @@ namespace GameAnalyticsSDK
 			addDesignEvent(eventID);
 		}
 
-		public static void AddErrorEvent (GA_Error.GAErrorSeverity severity, string message)
+		public static void AddErrorEvent (GAErrorSeverity severity, string message)
 		{
 			addErrorEvent((int)severity, message);
 		}

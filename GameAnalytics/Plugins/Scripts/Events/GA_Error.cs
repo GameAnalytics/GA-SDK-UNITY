@@ -6,20 +6,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using GameAnalyticsSDK.Wrapper;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Error
 	{
-		public enum GAErrorSeverity
-		{
-			GAErrorSeverityDebug = 1,
-			GAErrorSeverityInfo = 2,
-			GAErrorSeverityWarning = 3,
-			GAErrorSeverityError = 4,
-			GAErrorSeverityCritical = 5
-		}
-
 		#region public methods
 
 		public static void NewEvent(GAErrorSeverity severity, string message)

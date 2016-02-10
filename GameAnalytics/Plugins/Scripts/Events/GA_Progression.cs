@@ -1,21 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameAnalyticsSDK.Wrapper;
 
-namespace GameAnalyticsSDK
+namespace GameAnalyticsSDK.Events
 {
 	public static class GA_Progression
 	{
-		public enum GAProgressionStatus
-		{
-			// User started progression
-			GAProgressionStatusStart = 1,
-			// User succesfully ended a progression
-			GAProgressionStatusComplete = 2,
-			// User failed a progression
-			GAProgressionStatusFail = 3
-		}
-
 		#region public methods
 
 		public static void NewEvent(GAProgressionStatus progressionStatus, string progression01)
