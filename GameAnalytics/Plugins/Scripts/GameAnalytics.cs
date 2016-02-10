@@ -501,7 +501,9 @@ namespace GameAnalyticsSDK
 					break;
 
 				case RuntimePlatform.IPhonePlayer:
+				#if UNITY_5_3_2
 				case RuntimePlatform.tvOS:
+				#endif
 					{
 						result = GAPlatform.iOS;
 					}
