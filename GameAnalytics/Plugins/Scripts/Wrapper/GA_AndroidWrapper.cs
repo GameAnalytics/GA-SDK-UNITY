@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
+using GameAnalyticsSDK.Utilities;
 
 namespace GameAnalyticsSDK.Wrapper
 {
