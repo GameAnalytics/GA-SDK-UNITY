@@ -11,6 +11,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.2.2**
+* postprocess script fixed when ios library is not installed
+* Unity 4.7.x support fix
+
 **3.2.1**
 * error events fixed (android)
 

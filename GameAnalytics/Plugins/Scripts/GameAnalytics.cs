@@ -72,7 +72,7 @@ namespace GameAnalyticsSDK
 
 			DontDestroyOnLoad(gameObject);
 
-			#if (UNITY_4_6)
+			#if (UNITY_4_7 || UNITY_4_6)
 			Application.RegisterLogCallback(GA_Debug.HandleLog);
 			#else
 			Application.logMessageReceived += GA_Debug.HandleLog;
