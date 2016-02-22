@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.2.3**
+* fixed disappearing GameAnalytics prefab bug (happening since Unity 5.3.0)
+
 **3.2.2**
 * postprocess script fixed when ios library is not installed
 * Unity 4.7.x support fix

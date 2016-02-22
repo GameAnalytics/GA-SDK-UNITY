@@ -44,6 +44,9 @@ namespace GameAnalyticsSDK.Editor
 				GameObject go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Plugins/Prefabs/GameAnalytics.prefab", typeof(GameObject))) as GameObject;
 				go.name = "GameAnalytics";
 				Selection.activeObject = go;
+				#if UNITY_5_3
+				UnityEditor.SceneManagement.EditorSceneManager.SaveScene(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
+				#endif
 			}
 			else
 			{
