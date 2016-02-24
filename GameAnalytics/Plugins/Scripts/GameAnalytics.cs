@@ -182,14 +182,6 @@ namespace GameAnalyticsSDK
 			{
 				GA_Setup.SetVerboseLog(true);
 			}
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
-			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
-
-			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-			ga.CallStatic("initializeWithActivity", activity);
-#endif
 			
 			GAPlatform platform = GetPlatform();
 
@@ -229,8 +221,15 @@ namespace GameAnalyticsSDK
 
 			if(platform != GAPlatform.None)
 			{
-				int index = (int)platform;
-				GA_Wrapper.Initialize(SettingsGA.GetGameKey(index - 1), SettingsGA.GetSecretKey(index - 1));
+				if (!SettingsGA.UseCustomId) 
+				{
+					int index = (int)platform;
+					GA_Wrapper.Initialize (SettingsGA.GetGameKey (index - 1), SettingsGA.GetSecretKey (index - 1));
+				} 
+				else 
+				{
+					Debug.Log ("Custom id is enabled. Initialize is delayed until custom id has been set.");
+				}
 			}
 			else
 			{
@@ -432,6 +431,25 @@ namespace GameAnalyticsSDK
 		public static void SetBirthYear(int birthYear)
 		{
 			GA_Setup.SetBirthYear(birthYear);
+		}
+
+		/// <summary>
+		/// Sets the custom identifier.
+		/// </summary>
+		/// <param name="userId">User identifier.</param>
+		public static void SetCustomId(string userId)
+		{
+			if (SettingsGA.UseCustomId) 
+			{
+				Debug.Log ("Initializing with custom id: " + userId);
+				GA_Wrapper.SetCustomUserId (userId);
+				int index = (int)GetPlatform();
+				GA_Wrapper.Initialize (SettingsGA.GetGameKey (index - 1), SettingsGA.GetSecretKey (index - 1));
+			} 
+			else 
+			{
+				Debug.LogWarning ("Custom id is not enabled");
+			}
 		}
 
 		/// <summary>

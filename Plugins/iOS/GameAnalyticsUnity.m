@@ -78,6 +78,11 @@ void configureBuild(const char *build) {
     [GameAnalytics configureBuild:buildString];
 }
 
+void configureUserId(const char *userId) {
+    NSString *userIdString = userId != NULL ? [NSString stringWithUTF8String:userId] : nil;
+    [GameAnalytics configureUserId:userIdString];
+}
+
 void initialize(const char *gameKey, const char *gameSecret) {
     NSString *gameKeyString = gameKey != NULL ? [NSString stringWithUTF8String:gameKey] : nil;
     NSString *gameSecretString = gameSecret != NULL ? [NSString stringWithUTF8String:gameSecret] : nil;

@@ -45,6 +45,7 @@ namespace GameAnalyticsSDK.Editor
 		private GUIContent _gaFpsCritical = new GUIContent("Submit Critical FPS", "Submit a message whenever the frames per second falls below a certain threshold. The location of the Track Target will be used for critical FPS events.");
 		private GUIContent _gaFpsCriticalThreshold	= new GUIContent("FPS <", "Frames per second threshold.");
 		private GUIContent _gaSubmitErrors = new GUIContent("Submit Errors", "Submit error and exception messages to the GameAnalytics server. Useful for getting relevant data when the game crashes, etc.");
+		private GUIContent _gaUseCustomId = new GUIContent("Use custom id", "Use custom id. Define your own custom defined user id to send with events.");
 
 		private GUIContent _gameSetupIcon;
 		private bool _gameSetupIconOpen = false;
@@ -1318,6 +1319,19 @@ namespace GameAnalyticsSDK.Editor
 					}
 
 					EditorGUILayout.Space();
+					EditorGUILayout.Space();
+
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("", GUILayout.Width(-18));
+					ga.UseCustomId = EditorGUILayout.Toggle("", ga.UseCustomId, GUILayout.Width(35));
+					GUILayout.Label(_gaUseCustomId);
+					GUILayout.EndHorizontal();
+
+					if(ga.UseCustomId)
+					{
+						EditorGUILayout.HelpBox("PLEASE NOTICE: When using custom id you need GameAnalytics will first be fully initialized when you have set the custom id. No events can be sent before GameAnalytics is fully initialized.", MessageType.Info);
+					}
+
 					EditorGUILayout.Space();
 					
 					GUILayout.BeginHorizontal();

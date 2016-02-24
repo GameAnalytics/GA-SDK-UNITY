@@ -11,6 +11,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.3.0**
+* feature for using a custom user id
+* fix testflight issue with user id generation (ios)
+
 **3.2.3**
 * fixed disappearing GameAnalytics prefab bug (happening since Unity 5.3.0)
 

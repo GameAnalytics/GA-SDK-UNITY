@@ -56,8 +56,18 @@ namespace GameAnalyticsSDK.Wrapper
 			GA.CallStatic("configureBuild", build);
 		}
 
+		private static void configureUserId(string userId)
+		{
+			GA.CallStatic("configureUserId", userId);
+		}
+
 		private static void initialize(string gamekey, string gamesecret)
 		{
+			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+
+			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
+			ga.CallStatic("initializeWithActivity", activity);
 			GA.CallStatic("initializeWithGameKey", gamekey, gamesecret);
 		}
 

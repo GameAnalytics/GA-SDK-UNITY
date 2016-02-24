@@ -58,6 +58,7 @@ typedef enum GAErrorSeverity : NSInteger {
     GAErrorSeverityCritical = 5
 } GAErrorSeverity;
 
+
 @class GameAnalytics;
 
 @interface GameAnalytics : NSObject
@@ -187,13 +188,34 @@ typedef enum GAErrorSeverity : NSInteger {
  */
 + (void)configureBuild:(NSString *)build;
 
+/*!
+ @method
+
+ @abstract Set a custom unique user_id identifying the user.
+
+ @discussion <i>Example usage:</i>
+ <pre><code>
+ [GameAnalytics configureUserId:@"24566"];
+ </code></pre>
+
+ @param userId
+ (String max length=64)
+
+ @availability Available since 2.2.0
+
+ @attribute Note! This method must be called before initializing the SDK
+ */
++ (void)configureUserId:(NSString *)userId;
+
+
 /* @IF WRAPPER */
+
 /* 
  Used ONLY by GameAnalytics wrapper SDK's (for example Unity).
  Never call this manually!
  */
 + (void)configureSdkVersion:(NSString *)wrapperSdkVersion;
-/* @ENDIF UNITY */
+/* @ENDIF WRAPPER */
 
 /*!
  @method
@@ -463,21 +485,22 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Enable info logging to console
- 
+
  @param flag
-    Enable or disable info log mode
- 
+ Enable or disable info log mode
+
  @availability Available since 2.0.0
- 
-*/
+
+ */
 + (void)setEnabledInfoLog:(BOOL)flag;
+
 
 /*!
  @method
  
- @abstract Enable verbose info logging of event JSON data to console
+ @abstract Enable verbose info logging of analytics. Will output event JSON data to console.
  
  @param flag
  Enable or disable verbose info log mode

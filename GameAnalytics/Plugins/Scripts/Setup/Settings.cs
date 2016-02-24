@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.2.3";
+		public static string VERSION = "3.3.0";
 
 		#endregion
 
@@ -206,6 +206,7 @@ namespace GameAnalyticsSDK.Setup
 		[System.NonSerialized]
 		public GUIStyle SignupButton;
 
+		public bool UseCustomId = false;
 		public bool SubmitErrors = true;
 		public int MaxErrorCount = 10;
 		public bool SubmitFpsAverage = true;

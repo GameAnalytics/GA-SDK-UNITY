@@ -33,6 +33,9 @@ namespace GameAnalyticsSDK.Wrapper
 		private static extern void configureBuild(string build);
 
 		[DllImport ("__Internal")]
+		private static extern void configureUserId(string userId);
+
+		[DllImport ("__Internal")]
 		private static extern void initialize(string gamekey, string gamesecret);
 
 		[DllImport ("__Internal")]

@@ -49,10 +49,18 @@ namespace GameAnalyticsSDK.Wrapper
 
 		private static void configureSdkGameEngineVersion(string unitySdkVersion)
 		{
+			if (GameAnalytics.SettingsGA.InfoLogEditor)
+			{
+				Debug.Log("configureSdkGameEngineVersion("+unitySdkVersion+")");
+			}
 		}
 
 		private static void configureGameEngineVersion(string unityEngineVersion)
 		{
+			if (GameAnalytics.SettingsGA.InfoLogEditor)
+			{
+				Debug.Log("configureGameEngineVersion("+unityEngineVersion+")");
+			}
 		}
 
 		private static void configureBuild(string build)
@@ -62,6 +70,15 @@ namespace GameAnalyticsSDK.Wrapper
 				Debug.Log("setBuild("+build+")");
 			}
 		}
+
+		private static void configureUserId(string userId)
+		{
+			if (GameAnalytics.SettingsGA.InfoLogEditor)
+			{
+				Debug.Log("configureUserId("+userId+")");
+			}
+		}
+
 
 		private static void initialize(string gamekey, string gamesecret)
 		{
@@ -218,7 +235,7 @@ namespace GameAnalyticsSDK.Wrapper
 				Debug.Log("setBirthYear("+birthYear+")");
 			}
 		}
-
+			
 		#endif
 
 		public static void SetAvailableCustomDimensions01(string list)
@@ -259,6 +276,11 @@ namespace GameAnalyticsSDK.Wrapper
 		public static void SetBuild(string build)
 		{
 			configureBuild(build);
+		}
+
+		public static void SetCustomUserId (string userId)
+		{
+			configureUserId(userId);
 		}
 
 		public static void Initialize(string gamekey, string gamesecret)
