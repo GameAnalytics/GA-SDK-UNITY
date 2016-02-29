@@ -1329,7 +1329,7 @@ namespace GameAnalyticsSDK.Editor
 
 					if(ga.UseCustomId)
 					{
-						EditorGUILayout.HelpBox("PLEASE NOTICE: When using custom id you need GameAnalytics will first be fully initialized when you have set the custom id. No events can be sent before GameAnalytics is fully initialized.", MessageType.Info);
+						EditorGUILayout.HelpBox("PLEASE NOTICE: When using custom id you need to remember GameAnalytics will first be fully initialized when you have set the custom id. No events can be sent before GameAnalytics is fully initialized.", MessageType.Info);
 					}
 
 					EditorGUILayout.Space();

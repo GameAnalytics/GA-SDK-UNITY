@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.3.1**
+* Google Play Services libraries updated to version 8.4.0 (android)
+
 **3.3.0**
 * feature for using a custom user id
 * fix testflight issue with user id generation (ios)
