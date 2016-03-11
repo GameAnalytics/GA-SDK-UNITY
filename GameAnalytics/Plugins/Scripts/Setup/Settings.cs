@@ -223,7 +223,7 @@ namespace GameAnalyticsSDK.Setup
 		public bool ResourceItemTypesFoldOut = false;
 		public bool ResourceCurrenciesFoldOut = false;
 
-		private const int NumberOfPlatforms = 2;
+		private const int NumberOfPlatforms = 4;
 
 		#endregion
 

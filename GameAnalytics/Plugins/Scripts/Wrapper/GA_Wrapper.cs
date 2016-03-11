@@ -5,7 +5,7 @@ namespace GameAnalyticsSDK.Wrapper
 {
 	public partial class GA_Wrapper 
 	{
-		#if (UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS))
+		#if ((UNITY_EDITOR && !GAME_ANALYTICS_IN_EDITOR) || (!UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_STANDALONE))
 
 		private static void configureAvailableCustomDimensions01(string list)
 		{
