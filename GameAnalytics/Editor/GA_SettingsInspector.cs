@@ -79,7 +79,7 @@ namespace GameAnalyticsSDK.Editor
 
 		private const string _gaUrl = "https://userapi.gameanalytics.com/ext/v1/";
 
-		private const int NumberOfPlatforms = 2;
+		private const int NumberOfPlatforms = 4;
 
 		void OnEnable()
 		{
@@ -930,6 +930,10 @@ namespace GameAnalyticsSDK.Editor
 					#elif UNITY_ANDROID
 
 					// TODO: Add something here if needed specific for Android
+
+					#elif UNITY_STANDALONE
+
+					// TODO: Add something here if needed specific for Standalone
 
 					#else
 

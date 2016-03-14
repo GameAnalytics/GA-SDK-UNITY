@@ -113,6 +113,10 @@ namespace GameAnalyticsSDK
 			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 			ga.CallStatic("onActivityStopped", activity);
 			#endif
+			
+			#if ((UNITY_EDITOR && GAME_ANALYTICS_IN_EDITOR) || (UNITY_STANDALONE && !UNITY_EDITOR))
+			GA_Wrapper.AddSessionEndEvent();
+			#endif
 		}
 
 		#endregion
@@ -173,7 +177,11 @@ namespace GameAnalyticsSDK
 			Debug.Log("GameAnalytics running in Unity Editor: event validation disabled.");
 			#endif
 
-			if(SettingsGA.InfoLogBuild)
+			#if ((UNITY_EDITOR && GAME_ANALYTICS_IN_EDITOR) || (UNITY_STANDALONE && !UNITY_EDITOR))
+			GA_Wrapper.SetGameAnalyticsInstance(_instance);
+			#endif
+
+			if (SettingsGA.InfoLogBuild)
 			{
 				GA_Setup.SetInfoLog(true);
 			}
@@ -509,8 +517,33 @@ namespace GameAnalyticsSDK
 		private static GAPlatform GetPlatform()
 		{
 			GAPlatform result = GAPlatform.None;
+			#if GAME_ANALYTICS_AGGREGATED
+			switch (Application.platform)
+			{
+				case RuntimePlatform.Android:
+				case RuntimePlatform.IPhonePlayer:
+				#if UNITY_5_3_2
+				case RuntimePlatform.tvOS:
+				#endif
+				case RuntimePlatform.WindowsPlayer:
+				case RuntimePlatform.LinuxPlayer:
+				case RuntimePlatform.OSXPlayer:
+					{
+						result = GAPlatform.PC;
+					}
+					break;
 
-			switch(Application.platform)
+				#if GAME_ANALYTICS_IN_EDITOR
+				case RuntimePlatform.WindowsEditor:
+				case RuntimePlatform.OSXEditor:
+					{
+						result = GAPlatform.PC;
+					}
+					break;
+				#endif
+			}
+			#else
+			switch (Application.platform)
 			{
 				case RuntimePlatform.Android:
 					{
@@ -526,7 +559,25 @@ namespace GameAnalyticsSDK
 						result = GAPlatform.iOS;
 					}
 					break;
+
+				case RuntimePlatform.WindowsPlayer:
+				case RuntimePlatform.LinuxPlayer:
+				case RuntimePlatform.OSXPlayer:
+					{
+						result = GAPlatform.PC;
+					}
+					break;
+
+				#if GAME_ANALYTICS_IN_EDITOR
+				case RuntimePlatform.WindowsEditor:
+				case RuntimePlatform.OSXEditor:
+					{
+						result = GAPlatform.PC;
+					}
+					break;
+				#endif
 			}
+			#endif
 
 			return result;
 		}

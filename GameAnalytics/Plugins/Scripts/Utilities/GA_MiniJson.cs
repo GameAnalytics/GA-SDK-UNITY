@@ -624,6 +624,10 @@ namespace GameAnalyticsSDK.Utilities
 			{
 				SerializeNumber((Single)value, builder);			
 			}
+			else if(value is Int32)
+			{
+				SerializeInteger((int)value, builder);
+			}
 			else
 			{
 				return false;
@@ -685,6 +689,11 @@ namespace GameAnalyticsSDK.Utilities
 		}
 
 		protected void SerializeNumber(float number, StringBuilder builder)
+		{
+			builder.Append(number.ToString()); // , CultureInfo.InvariantCulture));
+		}
+
+		protected void SerializeInteger(int number, StringBuilder builder)
 		{
 			builder.Append(number.ToString()); // , CultureInfo.InvariantCulture));
 		}

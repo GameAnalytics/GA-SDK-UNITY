@@ -40,12 +40,16 @@ namespace GameAnalyticsSDK
 	{
 		None = 0,
 		iOS = 1,
-		Android = 2
+		Android = 2,
+		PC = 3,
+		Aggregated = 4
 	}
 
 	public enum GAPlatformSignUp
 	{
 		iOS = 0,
-		Android = 1
+		Android = 1,
+		PC = 2,
+		Aggregated = 3
 	}
 }
