@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_3_OR_NEWER || UNITY_5
+
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
@@ -78,3 +80,5 @@ namespace GameAnalyticsSDK.Editor
 		}
 	}
 }
+
+#endif
