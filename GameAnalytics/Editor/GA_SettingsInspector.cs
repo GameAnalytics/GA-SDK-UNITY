@@ -80,6 +80,7 @@ namespace GameAnalyticsSDK.Editor
 		private const string _gaUrl = "https://userapi.gameanalytics.com/ext/v1/";
 
 		private const int NumberOfPlatforms = 2;
+		private const int MaxNumberOfDimensions = 20;
 
 		void OnEnable()
 		{
@@ -1001,7 +1002,7 @@ namespace GameAnalyticsSDK.Editor
 					EditorGUILayout.Space();
 
 					// Custom dimensions 1
-					ga.CustomDimensions01FoldOut = EditorGUILayout.Foldout(ga.CustomDimensions01FoldOut, new GUIContent("   " + _customDimensions01.text + " (" + ga.CustomDimensions01.Count + " values)", _customDimensions01.tooltip));
+					ga.CustomDimensions01FoldOut = EditorGUILayout.Foldout(ga.CustomDimensions01FoldOut, new GUIContent("   " + _customDimensions01.text + " (" + ga.CustomDimensions01.Count + " / " + MaxNumberOfDimensions + " values)", _customDimensions01.tooltip));
 
 					if(ga.CustomDimensions01FoldOut)
 					{
@@ -1036,7 +1037,10 @@ namespace GameAnalyticsSDK.Editor
 						GUILayout.Label("", GUILayout.Width(21));
 						if(GUILayout.Button("Add", GUILayout.Width(63)))
 						{
-							ga.CustomDimensions01.Add("New " + (ga.CustomDimensions01.Count + 1));
+							if(ga.CustomDimensions01.Count < MaxNumberOfDimensions)
+							{
+								ga.CustomDimensions01.Add("New " + (ga.CustomDimensions01.Count + 1));
+							}
 						}
 						GUILayout.EndHorizontal();
 					}
@@ -1044,7 +1048,7 @@ namespace GameAnalyticsSDK.Editor
 					EditorGUILayout.Space();
 					
 					// Custom dimensions 2
-					ga.CustomDimensions02FoldOut = EditorGUILayout.Foldout(ga.CustomDimensions02FoldOut, new GUIContent("   " + _customDimensions02.text + " (" + ga.CustomDimensions02.Count + " values)", _customDimensions02.tooltip));
+					ga.CustomDimensions02FoldOut = EditorGUILayout.Foldout(ga.CustomDimensions02FoldOut, new GUIContent("   " + _customDimensions02.text + " (" + ga.CustomDimensions02.Count + " / " + MaxNumberOfDimensions + " values)", _customDimensions02.tooltip));
 
 					if(ga.CustomDimensions02FoldOut)
 					{
@@ -1079,7 +1083,10 @@ namespace GameAnalyticsSDK.Editor
 						GUILayout.Label("", GUILayout.Width(21));
 						if(GUILayout.Button("Add", GUILayout.Width(63)))
 						{
-							ga.CustomDimensions02.Add("New " + (ga.CustomDimensions02.Count + 1));
+							if(ga.CustomDimensions02.Count < MaxNumberOfDimensions)
+							{
+								ga.CustomDimensions02.Add("New " + (ga.CustomDimensions02.Count + 1));
+							}
 						}
 						GUILayout.EndHorizontal();
 					}
@@ -1087,7 +1094,7 @@ namespace GameAnalyticsSDK.Editor
 					EditorGUILayout.Space();
 					
 					// Custom dimensions 3
-					ga.CustomDimensions03FoldOut = EditorGUILayout.Foldout(ga.CustomDimensions03FoldOut, new GUIContent("   " + _customDimensions03.text + " (" + ga.CustomDimensions03.Count + " values)", _customDimensions03.tooltip));
+					ga.CustomDimensions03FoldOut = EditorGUILayout.Foldout(ga.CustomDimensions03FoldOut, new GUIContent("   " + _customDimensions03.text + " (" + ga.CustomDimensions03.Count + " / " + MaxNumberOfDimensions + " values)", _customDimensions03.tooltip));
 
 					if(ga.CustomDimensions03FoldOut)
 					{
@@ -1122,7 +1129,10 @@ namespace GameAnalyticsSDK.Editor
 						GUILayout.Label("", GUILayout.Width(21));
 						if(GUILayout.Button("Add", GUILayout.Width(63)))
 						{
-							ga.CustomDimensions03.Add("New " + (ga.CustomDimensions03.Count + 1));
+							if(ga.CustomDimensions03.Count < MaxNumberOfDimensions)
+							{
+								ga.CustomDimensions03.Add("New " + (ga.CustomDimensions03.Count + 1));
+							}
 						}
 						GUILayout.EndHorizontal();
 					}
@@ -1182,7 +1192,7 @@ namespace GameAnalyticsSDK.Editor
 					
 					// Resource types
 					
-					ga.ResourceCurrenciesFoldOut = EditorGUILayout.Foldout(ga.ResourceCurrenciesFoldOut, new GUIContent("   " + _resourceCurrrencies.text + " (" + ga.ResourceCurrencies.Count + " values)", _resourceCurrrencies.tooltip));
+					ga.ResourceCurrenciesFoldOut = EditorGUILayout.Foldout(ga.ResourceCurrenciesFoldOut, new GUIContent("   " + _resourceCurrrencies.text + " (" + ga.ResourceCurrencies.Count + " / " + MaxNumberOfDimensions + " values)", _resourceCurrrencies.tooltip));
 					
 					if(ga.ResourceCurrenciesFoldOut)
 					{
@@ -1216,14 +1226,17 @@ namespace GameAnalyticsSDK.Editor
 						GUILayout.Label("", GUILayout.Width(21));
 						if(GUILayout.Button("Add", GUILayout.Width(63)))
 						{
-							ga.ResourceCurrencies.Add("New " + (ga.ResourceCurrencies.Count + 1));
+							if(ga.ResourceCurrencies.Count < MaxNumberOfDimensions)
+							{
+								ga.ResourceCurrencies.Add("New " + (ga.ResourceCurrencies.Count + 1));
+							}
 						}
 						GUILayout.EndHorizontal();
 					}
 					
 					EditorGUILayout.Space();
 
-					ga.ResourceItemTypesFoldOut = EditorGUILayout.Foldout(ga.ResourceItemTypesFoldOut, new GUIContent("   " + _resourceItemTypes.text + " (" + ga.ResourceItemTypes.Count + " values)", _resourceItemTypes.tooltip));
+					ga.ResourceItemTypesFoldOut = EditorGUILayout.Foldout(ga.ResourceItemTypesFoldOut, new GUIContent("   " + _resourceItemTypes.text + " (" + ga.ResourceItemTypes.Count + " / " + MaxNumberOfDimensions + " values)", _resourceItemTypes.tooltip));
 
 					if(ga.ResourceItemTypesFoldOut)
 					{
@@ -1258,7 +1271,10 @@ namespace GameAnalyticsSDK.Editor
 						GUILayout.Label("", GUILayout.Width(21));
 						if(GUILayout.Button("Add", GUILayout.Width(63)))
 						{
-							ga.ResourceItemTypes.Add("New " + (ga.ResourceItemTypes.Count + 1));
+							if(ga.ResourceItemTypes.Count < MaxNumberOfDimensions)
+							{
+								ga.ResourceItemTypes.Add("New " + (ga.ResourceItemTypes.Count + 1));
+							}
 						}
 						GUILayout.EndHorizontal();
 					}

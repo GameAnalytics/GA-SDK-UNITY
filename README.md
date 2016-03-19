@@ -11,6 +11,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.3.2**
+* Added max cap (20) for custom dimensions, resource currencies and resource item types
+* tvOS library Unity asset importer bug fix
+
 **3.3.1**
 * Google Play Services libraries updated to version 8.4.0 (android)
 
