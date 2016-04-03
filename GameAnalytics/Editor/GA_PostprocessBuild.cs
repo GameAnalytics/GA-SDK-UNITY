@@ -1,6 +1,6 @@
 ﻿#if !(UNITY_4_7 || UNITY_4_6) // For getting this to work in Unity 4.6 read the iOS build section on our wiki on github at https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/iOS%20Build
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.Callbacks;
 using UnityEditor;
