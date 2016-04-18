@@ -5,7 +5,7 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 
 > :information_source:<br>
-> The Unity SDK include support for **iOS** and **Android** platforms.<br>
+> The Unity SDK include support for **iOS**, **tvOS** and **Android** platforms.<br>
 
 
 
