@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.3.3**
+* fixed bug related to network changes for Android API level 23 and above (android)
+
 **3.3.2**
 * Added max cap (20) for custom dimensions, resource currencies and resource item types
 * tvOS library Unity asset importer bug fix
