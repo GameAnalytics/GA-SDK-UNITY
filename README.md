@@ -14,7 +14,7 @@ Changelog
 **3.4.0**
 * added support for Standalone platforms (Windows, Mac, Linux) and WebGL
 * reworked settings inspector UI to support new platforms
-* moved Unity 4.6.x support to a separate package (see [here](https://github.com/GameAnalytics/GA-SDK-UNITY/wiki) for more details)
+* moved Unity 4.6.x support to a separate package (see [here](https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Download%20and%20Installation) for more details)
 
 **3.3.3**
 * fixed bug related to network changes for Android API level 23 and above (android)
