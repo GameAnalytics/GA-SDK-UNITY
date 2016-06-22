@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.4.1**
+* external storage read and write permissions are now optional (android)
+
 **3.4.0**
 * added support for Standalone platforms (Windows, Mac, Linux) and WebGL
 * reworked settings inspector UI to support new platforms
