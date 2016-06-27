@@ -3,6 +3,7 @@
 using System;
 using UnityEngine;
 using GameAnalyticsSDK;
+using GameAnalyticsSDK.Events;
 
 namespace HutongGames.PlayMaker.Actions
 {
@@ -15,22 +16,22 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmString GenderAsString;
 
 		[Tooltip("The player's gender")]
-		public GA_Setup.GAGender Gender;
+		public GAGender Gender;
 
 		public override void Reset()
 		{
-			Gender = GA_Setup.GAGender.Male;
+			Gender = GAGender.Male;
 		}
 		
 		public override void OnEnter()
 		{
 			if (GenderAsString.Value.Equals("male", StringComparison.InvariantCultureIgnoreCase) )
 			{
-				Gender = GA_Setup.GAGender.Male;
+				Gender = GAGender.Male;
 			}
 			else if (GenderAsString.Value.Equals("female", StringComparison.InvariantCultureIgnoreCase) )
 			{
-				Gender = GA_Setup.GAGender.Female;
+				Gender = GAGender.Female;
 			}
 
 			GA_Setup.SetGender(Gender);

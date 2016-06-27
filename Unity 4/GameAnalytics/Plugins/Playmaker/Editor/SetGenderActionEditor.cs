@@ -28,7 +28,7 @@ namespace HutongGames.PlayMakerEditor
 					
 			}else{
 				GUILayout.BeginHorizontal();
-				 	_target.Gender = (GA_Setup.GAGender)EditorGUILayout.EnumPopup("Gender", _target.Gender);
+				 	_target.Gender = (GAGender)EditorGUILayout.EnumPopup("Gender", _target.Gender);
 				
 					if (PlayMakerEditor.FsmEditorGUILayout.MiniButtonPadded(PlayMakerEditor.FsmEditorContent.VariableButton))
 					{

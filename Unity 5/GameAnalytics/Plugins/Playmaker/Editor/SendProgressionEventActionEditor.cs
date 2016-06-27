@@ -30,7 +30,7 @@ namespace HutongGames.PlayMakerEditor
 			else
 			{
 				GUILayout.BeginHorizontal();
-				_target.ProgressionStatus = (GA_Progression.GAProgressionStatus)EditorGUILayout.EnumPopup("Progression Status", _target.ProgressionStatus);
+				_target.ProgressionStatus = (GAProgressionStatus)EditorGUILayout.EnumPopup("Progression Status", _target.ProgressionStatus);
 				
 				if (PlayMakerEditor.FsmEditorGUILayout.MiniButtonPadded(PlayMakerEditor.FsmEditorContent.VariableButton))
 				{

@@ -30,7 +30,7 @@ namespace HutongGames.PlayMakerEditor
 			else
 			{
 				GUILayout.BeginHorizontal();
-				_target.ResourceFlowType = (GA_Resource.GAResourceFlowType)EditorGUILayout.EnumPopup("Resource Flow Type", _target.ResourceFlowType);
+				_target.ResourceFlowType = (GAResourceFlowType)EditorGUILayout.EnumPopup("Resource Flow Type", _target.ResourceFlowType);
 				
 				if (PlayMakerEditor.FsmEditorGUILayout.MiniButtonPadded(PlayMakerEditor.FsmEditorContent.VariableButton))
 				{

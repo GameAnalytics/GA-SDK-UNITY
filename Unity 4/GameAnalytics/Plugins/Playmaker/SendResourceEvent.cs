@@ -2,6 +2,7 @@
 
 using System;
 using GameAnalyticsSDK;
+using GameAnalyticsSDK.Events;
 
 namespace HutongGames.PlayMaker.Actions
 {
@@ -14,7 +15,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmString ResourceFlowTypeAsString;
 
 		[Tooltip("The resource flow type: add (source) or remove (sink) resource")]
-		public GA_Resource.GAResourceFlowType ResourceFlowType;
+		public GAResourceFlowType ResourceFlowType;
 		
 		[RequiredField]
 		[Tooltip("Type of virtual currency used (E.g. gold, lives)")]
@@ -34,7 +35,7 @@ namespace HutongGames.PlayMaker.Actions
 		
 		public override void Reset()
 		{
-			ResourceFlowType = GA_Resource.GAResourceFlowType.GAResourceFlowTypeSource;
+			ResourceFlowType = GAResourceFlowType.Source;
 			ResourceCurrency = new FsmString() { UseVariable = false };
 			Amount = new FsmFloat() { UseVariable = false };
 			ItemType = new FsmString() { UseVariable = false };

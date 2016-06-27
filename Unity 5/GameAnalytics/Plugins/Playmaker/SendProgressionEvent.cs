@@ -2,6 +2,7 @@
 
 using System;
 using GameAnalyticsSDK;
+using GameAnalyticsSDK.Events;
 
 namespace HutongGames.PlayMaker.Actions
 {
@@ -14,7 +15,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmString ProgressionStatusAsString;
 
 		[Tooltip("The progression status")]
-		public GA_Progression.GAProgressionStatus ProgressionStatus;
+		public GAProgressionStatus ProgressionStatus;
 
 		[RequiredField]
 		[Tooltip("Progression layer 1")]
@@ -31,7 +32,7 @@ namespace HutongGames.PlayMaker.Actions
 
 		public override void Reset()
 		{
-			ProgressionStatus = GA_Progression.GAProgressionStatus.GAProgressionStatusStart;
+			ProgressionStatus = GAProgressionStatus.Start;
 			Progression01 = new FsmString() { UseVariable = false };
 			Progression02 = new FsmString() { UseVariable = false };
 			Progression03 = new FsmString() { UseVariable = false };

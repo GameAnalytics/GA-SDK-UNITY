@@ -158,7 +158,11 @@ namespace GameAnalyticsSDK
 		void OnApplicationFocus(bool focusStatus)
 		{
 			#if UNITY_WSA_10_0 && !UNITY_EDITOR
-			if(!focusStatus)
+			if(focusStatus)
+			{
+				GameAnalyticsSDK.Net.GameAnalytics.OnResume();
+			}
+			else
 			{
 				GameAnalyticsSDK.Net.GameAnalytics.OnStop();
 			}

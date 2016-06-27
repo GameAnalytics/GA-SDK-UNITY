@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.4.2**
+* fixed playmaker bug
+
 **3.4.1**
 * external storage read and write permissions are now optional (android)
 

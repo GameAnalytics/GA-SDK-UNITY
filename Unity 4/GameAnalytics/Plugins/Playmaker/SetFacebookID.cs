@@ -3,6 +3,7 @@
 using System;
 using UnityEngine;
 using GameAnalyticsSDK;
+using GameAnalyticsSDK.Events;
 
 namespace HutongGames.PlayMaker.Actions
 {

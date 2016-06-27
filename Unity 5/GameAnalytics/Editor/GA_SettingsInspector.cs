@@ -400,10 +400,6 @@ namespace GameAnalyticsSDK.Editor
 					GUILayout.Space(8);
 
 					DrawLinkButton("Forgot password?", EditorStyles.label, "https://go.gameanalytics.com/login?showreset&email=" + ga.EmailGA, GUILayout.Width(105));
-					if(GUILayout.Button("Forgot password?", EditorStyles.label, GUILayout.Width(105)))
-					{
-						Application.OpenURL("https://go.gameanalytics.com/login?showreset&email=" + ga.EmailGA);
-					}
 					EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
 					GUILayout.EndVertical();
 					GUILayout.EndHorizontal();
