@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.4.3**
+* changed to use https to send events on windows, Mac, Windows, Linux and WebGL (mac, windows, linux, webgl)
+
 **3.4.2**
 * fixed playmaker bug
 
