@@ -155,20 +155,6 @@ namespace GameAnalyticsSDK
 #endif
 		}
 
-		void OnApplicationFocus(bool focusStatus)
-		{
-			#if UNITY_WSA_10_0 && !UNITY_EDITOR
-			if(focusStatus)
-			{
-				GameAnalyticsSDK.Net.GameAnalytics.OnResume();
-			}
-			else
-			{
-				GameAnalyticsSDK.Net.GameAnalytics.OnStop();
-			}
-			#endif
-		}
-
 #endregion
 
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -618,7 +604,7 @@ namespace GameAnalyticsSDK
 			}
             else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86)
             {
-                result = SettingsGA.Platforms.IndexOf(RuntimePlatform.WSAPlayerARM);
+				result = SettingsGA.Platforms.IndexOf(RuntimePlatform.WSAPlayerARM);
             }
             else
 			{

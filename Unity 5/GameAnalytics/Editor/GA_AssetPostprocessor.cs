@@ -446,6 +446,34 @@ namespace GameAnalyticsSDK.Editor
                     importer.SaveAndReimport();
                 }
             }
+			{
+                PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/ARM/sqlite3.dll") as PluginImporter;
+                if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
+                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP") ||
+                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "CPU").Equals("ARM")))
+                {
+                    importer.SetCompatibleWithAnyPlatform(false);
+                    importer.SetCompatibleWithEditor(false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
+                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
+                    importer.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "ARM");
+                    importer.SaveAndReimport();
+                }
+            }
             #endregion // WSA
         }
 	}
