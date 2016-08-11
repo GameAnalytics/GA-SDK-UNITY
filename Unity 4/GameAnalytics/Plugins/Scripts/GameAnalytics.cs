@@ -456,6 +456,31 @@ namespace GameAnalyticsSDK
 		}
 
 		/// <summary>
+		/// Sets the enabled manual session handling.
+		/// </summary>
+		/// <param name="enabled">If set to <c>true</c> enabled.</param>
+		public static void SetEnabledManualSessionHandling(bool enabled)
+		{
+			GA_Wrapper.SetEnabledManualSessionHandling(enabled);
+		}
+		
+		/// <summary>
+		/// Starts the session.
+		/// </summary>
+		public static void StartSession()
+		{
+			GA_Wrapper.StartSession();
+		}
+		
+		/// <summary>
+		/// Ends the session.
+		/// </summary>
+		public static void EndSession()
+		{
+			GA_Wrapper.EndSession();
+		}
+
+		/// <summary>
 		/// Set 1st custom dimension.
 		/// </summary>
 		/// <param name="customDimension">One of the available dimension values set in Settings (Setup tab). Will persist cross session. Set to null to remove again.</param>
