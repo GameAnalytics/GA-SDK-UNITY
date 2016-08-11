@@ -218,6 +218,11 @@ namespace GameAnalyticsSDK
 				GA_Setup.SetAvailableResourceCurrencies(SettingsGA.ResourceCurrencies);
 			}
 
+			if(SettingsGA.UseManualSessionHandling)
+			{
+				SetEnabledManualSessionHandling(true);
+			}
+
 			if(platformIndex >= 0)
 			{
 				if (!SettingsGA.UseCustomId) 

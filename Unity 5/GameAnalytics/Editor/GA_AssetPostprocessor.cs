@@ -22,8 +22,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -46,8 +44,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -70,8 +66,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -103,8 +97,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, true);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -129,8 +121,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -153,8 +143,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, true);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -179,8 +167,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, true);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -205,8 +191,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -231,8 +215,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, true);
@@ -255,8 +237,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, true);
@@ -279,8 +259,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, true);
@@ -303,8 +281,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, true);
@@ -327,8 +303,6 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-					importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, true);
@@ -354,8 +328,6 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -380,8 +352,6 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -407,8 +377,6 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -435,8 +403,6 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
@@ -463,8 +429,6 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayer, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebPlayerStreamed, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);

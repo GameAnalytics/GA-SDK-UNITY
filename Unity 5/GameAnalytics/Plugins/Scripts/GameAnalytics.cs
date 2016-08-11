@@ -148,7 +148,10 @@ namespace GameAnalyticsSDK
 			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 			ga.CallStatic("onActivityStopped", activity);
 #elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS)
-			GameAnalyticsSDK.Net.GameAnalytics.OnStop();
+			if(!SettingsGA.UseManualSessionHandling)
+			{
+				GameAnalyticsSDK.Net.GameAnalytics.OnStop();
+			}
 #if UNITY_WEBGL
 			keepRunningWwwCoroutines = false;
 #endif
@@ -288,6 +291,11 @@ namespace GameAnalyticsSDK
 				GA_Setup.SetAvailableResourceCurrencies(SettingsGA.ResourceCurrencies);
 			}
 
+			if(SettingsGA.UseManualSessionHandling)
+			{
+				SetEnabledManualSessionHandling(true);
+			}
+
 			if(platformIndex >= 0)
 			{
 				if (!SettingsGA.UseCustomId) 
@@ -301,7 +309,7 @@ namespace GameAnalyticsSDK
 			}
 			else
 			{
-				Debug.LogWarning("Unsupported platform: " + Application.platform);
+				Debug.LogWarning("Unsupported platform (or missing platform in settings): " + Application.platform);
 			}
 		}
 
@@ -518,6 +526,31 @@ namespace GameAnalyticsSDK
 			{
 				Debug.LogWarning ("Custom id is not enabled");
 			}
+		}
+
+		/// <summary>
+		/// Sets the enabled manual session handling.
+		/// </summary>
+		/// <param name="enabled">If set to <c>true</c> enabled.</param>
+		public static void SetEnabledManualSessionHandling(bool enabled)
+		{
+			GA_Wrapper.SetEnabledManualSessionHandling(enabled);
+		}
+
+		/// <summary>
+		/// Starts the session.
+		/// </summary>
+		public static void StartSession()
+		{
+			GA_Wrapper.StartSession();
+		}
+
+		/// <summary>
+		/// Ends the session.
+		/// </summary>
+		public static void EndSession()
+		{
+			GA_Wrapper.EndSession();
 		}
 
 		/// <summary>

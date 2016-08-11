@@ -159,6 +159,21 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			GA.CallStatic("setBirthYear", birthYear);
 		}
+
+		private static void setManualSessionHandling(bool enabled)
+		{
+			GA.CallStatic("setEnabledManualSessionHandling", enabled);
+		}
+
+		private static void startSession()
+		{
+			GA.CallStatic("startSession");
+		}
+
+		private static void endSession()
+		{
+			GA.CallStatic("endSession");
+		}
 		#endif
 	}
 }

@@ -76,8 +76,8 @@ typedef enum GAErrorSeverity : NSInteger {
  </code></pre>
  
  @param customDimensions
-    Must be an array of strings.<br>
-    (Array max length=20, String max length=32)
+   Must be an array of strings.<br>
+   Array max length=20, String max length=32)
  
  @availability Available since 2.0.0
  
@@ -97,8 +97,8 @@ typedef enum GAErrorSeverity : NSInteger {
  </code></pre>
  
  @param customDimensions
-    Must be an array of strings.<br>
-    (Array max length=20, String max length=32)
+   Must be an array of strings.<br>
+   (Array max length=20, String max length=32)
  
  @availability Available since 2.0.0
  
@@ -367,7 +367,7 @@ typedef enum GAErrorSeverity : NSInteger {
  @param amount
     Amount sourced or sinked
  @param itemType
-    One of the available currencies set in configureAvailableResourceItemTypes
+    One of the available item types set in configureAvailableResourceItemTypes
  @param itemId
     Item id (string max length=32)
  
@@ -509,6 +509,53 @@ typedef enum GAErrorSeverity : NSInteger {
  
  */
 + (void)setEnabledVerboseLog:(BOOL)flag;
+
+
+/*!
+ @method
+
+ @abstract Enable manual session handling.
+ This will disable the automatic session stop/start when the app goes to background/foreground and it is then needed to call endSession & startSession manually.
+ Remember to call endSession when the app is going to background.
+ The first session will always be started automatically when initialize is called.
+
+ @param flag
+ Enable or disable manual session handling.
+
+ @availability Available since 2.2.2
+
+ */
++ (void)setEnabledManualSessionHandling:(BOOL)flag;
+
+
+/*!
+ @method
+
+ @abstract Start a new session.
+ - if sdk is initialized
+ - if manual session handling is enabled
+ If a current session is currently active then it will end this session and start a new.
+
+
+ @availability Available since 2.2.2
+
+ */
++ (void)startSession;
+
+
+/*!
+ @method
+
+ @abstract End an active session.
+ - if sdk is initialized
+ - manual session handling is enabled
+ - a session is active
+
+ @availability Available since 2.2.2
+
+ */
++ (void)endSession;
+
 
 /*!
  @method

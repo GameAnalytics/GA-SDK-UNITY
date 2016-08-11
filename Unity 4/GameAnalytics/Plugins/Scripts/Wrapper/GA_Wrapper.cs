@@ -235,6 +235,30 @@ namespace GameAnalyticsSDK.Wrapper
 				Debug.Log("setBirthYear("+birthYear+")");
 			}
 		}
+
+		private static void setManualSessionHandling(bool enabled)
+		{
+			if (GameAnalytics.SettingsGA.InfoLogEditor)
+			{
+				Debug.Log("setManualSessionHandling("+enabled+")");
+			}
+		}
+
+		private static void startSession()
+		{
+			if (GameAnalytics.SettingsGA.InfoLogEditor)
+			{
+				Debug.Log("startSession()");
+			}
+		}
+
+		private static void endSession()
+		{
+			if (GameAnalytics.SettingsGA.InfoLogEditor)
+			{
+				Debug.Log("endSession()");
+			}
+		}
 			
 		#endif
 
@@ -281,6 +305,21 @@ namespace GameAnalyticsSDK.Wrapper
 		public static void SetCustomUserId (string userId)
 		{
 			configureUserId(userId);
+		}
+
+		public static void SetEnabledManualSessionHandling(bool enabled)
+		{
+			setManualSessionHandling(enabled);
+		}
+
+		public static void StartSession()
+		{
+			startSession();
+		}
+
+		public static void EndSession()
+		{
+			endSession();
 		}
 
 		public static void Initialize(string gamekey, string gamesecret)

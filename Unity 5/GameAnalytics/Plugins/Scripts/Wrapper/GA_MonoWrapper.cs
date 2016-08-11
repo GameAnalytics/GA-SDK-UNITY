@@ -124,6 +124,21 @@ namespace GameAnalyticsSDK.Wrapper
 			GameAnalyticsSDK.Net.GameAnalytics.SetEnabledVerboseLog(enabled);
 		}
 
+		private static void setManualSessionHandling(bool enabled)
+		{
+			GameAnalyticsSDK.Net.GameAnalytics.SetEnabledManualSessionHandling(enabled);
+		}
+
+		private static void startSession()
+		{
+			GameAnalyticsSDK.Net.GameAnalytics.StartSession();
+		}
+
+		private static void endSession()
+		{
+			GameAnalyticsSDK.Net.GameAnalytics.EndSession();
+		}
+
 		private static void setFacebookId(string facebookId)
 		{
 			GameAnalyticsSDK.Net.GameAnalytics.SetFacebookId(facebookId);

@@ -1,5 +1,5 @@
 //
-//  GameAnalyticsWrapper.m
+//  GameAnalyticsUnity.m
 //  GA-SDK-IOS
 //
 //  Copyright (c) GameAnalytics. All rights reserved.
@@ -181,6 +181,18 @@ void setEnabledInfoLog(BOOL flag) {
 
 void setEnabledVerboseLog(BOOL flag) {
     [GameAnalytics setEnabledVerboseLog:flag];
+}
+
+void setEnabledManualSessionHandling(BOOL flag) {
+    [GameAnalytics setEnabledManualSessionHandling:flag];
+}
+
+void startSession() {
+    [GameAnalytics startSession];
+}
+
+void endSession() {
+    [GameAnalytics endSession];
 }
 
 void setCustomDimension01(const char *customDimension) {

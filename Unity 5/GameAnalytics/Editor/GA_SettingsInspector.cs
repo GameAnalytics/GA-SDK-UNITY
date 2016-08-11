@@ -28,6 +28,7 @@ namespace GameAnalyticsSDK.Editor
 		private GUIContent _infoLogEditor = new GUIContent("Info Log Editor", "Show info messages from GA in the unity editor console when submitting data.");
 		private GUIContent _infoLogBuild = new GUIContent("Info Log Build", "Show info messages from GA in builds (f.x. Xcode for iOS).");
 		private GUIContent _verboseLogBuild = new GUIContent("Verbose Log Build", "Show full info messages from GA in builds (f.x. Xcode for iOS). Noet that this option includes long JSON messages sent to the server.");
+		private GUIContent _useManualSessionHandling = new GUIContent("Use manual session handling", "Manually choose when to end and start a new session. Note initializing of the SDK will automatically start the first session.");
 		//private GUIContent _sendExampleToMyGame		= new GUIContent("Get Example Game Data", "If enabled data collected while playing the example tutorial game will be sent to your game (using your game key and secret key). Otherwise data will be sent to a premade GA test game, to prevent it from polluting your data.");
 		private GUIContent _account = new GUIContent("Account", "This tab allows you to easily create a GameAnalytics account. You can also login to automatically retrieve your Game Key and Secret Key.");
 		private GUIContent _setup = new GUIContent("Setup", "This tab shows general options which are relevant for a wide variety of messages sent to GameAnalytics.");
@@ -843,7 +844,14 @@ namespace GameAnalyticsSDK.Editor
 					this.selectedPlatformIndex = EditorGUILayout.Popup("Platform to add", this.selectedPlatformIndex, this.availablePlatforms);
 					if(GUILayout.Button("Add platform"))
 					{
-						GameAnalytics.SettingsGA.AddPlatform((RuntimePlatform)System.Enum.Parse(typeof(RuntimePlatform), this.availablePlatforms[this.selectedPlatformIndex]));
+                        if(this.availablePlatforms[this.selectedPlatformIndex].Equals("UWP"))
+                        {
+                            GameAnalytics.SettingsGA.AddPlatform(RuntimePlatform.WSAPlayerARM);
+                        }
+                        else
+                        {
+                            GameAnalytics.SettingsGA.AddPlatform((RuntimePlatform)System.Enum.Parse(typeof(RuntimePlatform), this.availablePlatforms[this.selectedPlatformIndex]));
+                        }
 						this.availablePlatforms = GameAnalytics.SettingsGA.GetAvailablePlatforms();
 						this.selectedPlatformIndex = 0;
 					}
@@ -1283,6 +1291,12 @@ namespace GameAnalyticsSDK.Editor
 					{
 						EditorGUILayout.HelpBox("PLEASE NOTICE: When using custom id you need to remember GameAnalytics will first be fully initialized when you have set the custom id. No events can be sent before GameAnalytics is fully initialized.", MessageType.Info);
 					}
+
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("", GUILayout.Width(-18));
+					ga.UseManualSessionHandling = EditorGUILayout.Toggle("", ga.UseManualSessionHandling, GUILayout.Width(35));
+					GUILayout.Label(_useManualSessionHandling);
+					GUILayout.EndHorizontal();
 
 					EditorGUILayout.Space();
 					

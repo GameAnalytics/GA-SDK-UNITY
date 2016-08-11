@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.5.0";
+		public static string VERSION = "3.5.1";
 
 		#endregion
 
@@ -123,6 +123,7 @@ namespace GameAnalyticsSDK.Setup
 		public bool InfoLogEditor = true;
 		public bool InfoLogBuild = true;
 		public bool VerboseLogBuild = false;
+		public bool UseManualSessionHandling = false;
 		public bool SendExampleGameDataToMyGame = false;
 		//public bool UseBundleVersion = false;
 
