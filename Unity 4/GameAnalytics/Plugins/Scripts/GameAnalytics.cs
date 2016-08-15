@@ -447,7 +447,14 @@ namespace GameAnalyticsSDK
 				Debug.Log ("Initializing with custom id: " + userId);
 				GA_Wrapper.SetCustomUserId (userId);
 				int index = GetPlatformIndex();
-				GA_Wrapper.Initialize (SettingsGA.GetGameKey (index), SettingsGA.GetSecretKey (index));
+				if(index >= 0)
+				{
+					GA_Wrapper.Initialize (SettingsGA.GetGameKey (index), SettingsGA.GetSecretKey (index));
+				}
+				else
+				{
+					Debug.LogWarning("Unsupported platform (or missing platform in settings): " + Application.platform);
+				}
 			} 
 			else 
 			{

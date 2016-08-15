@@ -76,7 +76,7 @@ namespace GameAnalyticsSDK
 
 			Application.logMessageReceived += GA_Debug.HandleLog;
 
-#if (UNITY_WSA_10_0) && (!UNITY_EDITOR)
+#if (UNITY_WSA_10_0) && (ENABLE_DOTNET) && (!UNITY_EDITOR)
             GameAnalyticsSDK.Net.GameAnalytics.OnMessageLogged += (m, t) => 
             {
                 switch(t)
@@ -520,7 +520,14 @@ namespace GameAnalyticsSDK
 				Debug.Log ("Initializing with custom id: " + userId);
 				GA_Wrapper.SetCustomUserId (userId);
 				int index = GetPlatformIndex();
-				GA_Wrapper.Initialize (SettingsGA.GetGameKey (index), SettingsGA.GetSecretKey (index));
+				if(index >= 0)
+				{
+					GA_Wrapper.Initialize (SettingsGA.GetGameKey (index), SettingsGA.GetSecretKey (index));
+				}
+				else
+				{
+					Debug.LogWarning("Unsupported platform (or missing platform in settings): " + Application.platform);
+				}
 			} 
 			else 
 			{
@@ -635,7 +642,9 @@ namespace GameAnalyticsSDK
 					result = SettingsGA.Platforms.IndexOf(platform);
 				}
 			}
-            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86)
+			// HACK: To also check for RuntimePlatform.MetroPlayerARM, RuntimePlatform.MetroPlayerX64 and RuntimePlatform.MetroPlayerX86 which are deprecated but have same value as the WSA enums
+            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86 ||
+				((int)platform == (int)RuntimePlatform.WSAPlayerARM) || ((int)platform == (int)RuntimePlatform.WSAPlayerX64) || ((int)platform == (int)RuntimePlatform.WSAPlayerX86))
             {
 				result = SettingsGA.Platforms.IndexOf(RuntimePlatform.WSAPlayerARM);
             }

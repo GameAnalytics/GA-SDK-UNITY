@@ -8,6 +8,10 @@ PluginImporter:
   executionOrder: {}
   isPreloaded: 0
   platformData:
+    Android:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
     Any:
       enabled: 0
       settings: {}
@@ -48,7 +52,7 @@ PluginImporter:
         DontProcess: False
         PlaceholderPath: 
         SDK: UWP
-        ScriptingBackend: AnyScriptingBackend
+        ScriptingBackend: DotNet
   userData: 
   assetBundleName: 
   assetBundleVariant: 

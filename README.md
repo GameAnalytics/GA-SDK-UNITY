@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.5.2**
+* fixed support for UWP with IL2CPP backend bug
+
 **3.5.1**
 * added manual session handling
 * fixed bug for client timestamp handling and session length in certain edge cases
