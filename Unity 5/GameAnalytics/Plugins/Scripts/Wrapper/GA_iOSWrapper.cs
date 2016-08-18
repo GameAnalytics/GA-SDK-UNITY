@@ -78,7 +78,7 @@ namespace GameAnalyticsSDK.Wrapper
 		private static extern void setEnabledVerboseLog(bool enabled);
 
 		[DllImport ("__Internal")]
-		private static extern void setEnabledManualSessionHandling(bool enabled);
+		private static extern void setManualSessionHandling(bool enabled);
 
 		[DllImport ("__Internal")]
 		private static extern void startSession();

@@ -183,7 +183,7 @@ void setEnabledVerboseLog(BOOL flag) {
     [GameAnalytics setEnabledVerboseLog:flag];
 }
 
-void setEnabledManualSessionHandling(BOOL flag) {
+void setManualSessionHandling(BOOL flag) {
     [GameAnalytics setEnabledManualSessionHandling:flag];
 }
 

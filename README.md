@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.5.3**
+* fixed manual session handling compiling issue (iOS, tvOS)
+
 **3.5.2**
 * fixed support for UWP with IL2CPP backend bug
 
