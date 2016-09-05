@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.5.3";
+		public static string VERSION = "3.6.0";
 
 		#endregion
 
@@ -237,7 +237,7 @@ namespace GameAnalyticsSDK.Setup
 			this.SelectedPlatformGameID.Add(-1);
 			this.SelectedStudio.Add(0);
 			this.SelectedGame.Add(0);
-			this.PlatformFoldOut.Add(false);
+			this.PlatformFoldOut.Add(true);
 			this.Platforms.Add(platform);
 		}
 

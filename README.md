@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.6.0**
+* Google Play Services libraries updated to version 9.4.0 (android) 
+
 **3.5.3**
 * fixed manual session handling compiling issue (iOS, tvOS)
 
@@ -143,7 +146,7 @@ Changelog
 * tweaked local db size trimming
 
 **2.0.0**
-* redesigned Unity SDK 
+* redesigned Unity SDK
 * initially with **only iOS** support
 * progression event
 * business event validation

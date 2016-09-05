@@ -1662,7 +1662,7 @@ namespace GameAnalyticsSDK.Editor
 						}
 						else
 						{
-							SetLoginStatus("Received data. Select studio..", ga);
+							SetLoginStatus("Received data. Add a platform..", ga);
 						}
 
 						ga.CurrentInspectorState = Settings.InspectorStates.Basic;

@@ -12,7 +12,7 @@ namespace GameAnalyticsSDK.Setup
 	/// <summary>
 	/// The Settings object contains an array of options which allows you to customize your use of GameAnalytics. Most importantly you will need to fill in your Game Key and Secret Key on the Settings object to use the service.
 	/// </summary>
-	/// 
+	///
 	public class Settings : ScriptableObject
 	{
 		/// <summary>
@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.5.3";
+		public static string VERSION = "3.6.0";
 
 		#endregion
 
@@ -59,7 +59,7 @@ namespace GameAnalyticsSDK.Setup
 
 		public int TotalMessagesSubmitted;
 		public int TotalMessagesFailed;
-		
+
 		public int DesignMessagesSubmitted;
 		public int DesignMessagesFailed;
 		public int QualityMessagesSubmitted;
@@ -138,7 +138,7 @@ namespace GameAnalyticsSDK.Setup
 
 		public RuntimePlatform LastCreatedGamePlatform;
 
-		public List<RuntimePlatform> Platforms = new List<RuntimePlatform>(); 
+		public List<RuntimePlatform> Platforms = new List<RuntimePlatform>();
 
 		//These values are used for the GA_Inspector only
 		public enum InspectorStates
@@ -186,7 +186,7 @@ namespace GameAnalyticsSDK.Setup
 		public bool CustomDimensions01FoldOut = false;
 		public bool CustomDimensions02FoldOut = false;
 		public bool CustomDimensions03FoldOut = false;
-		
+
 		public bool ResourceItemTypesFoldOut = false;
 		public bool ResourceCurrenciesFoldOut = false;
 
@@ -398,7 +398,7 @@ namespace GameAnalyticsSDK.Setup
 		public string Name { get; private set; }
 
 		public string ID { get; private set; }
-		
+
 		//[SerializeField]
 		public List<Game> Games { get; private set; }
 
@@ -427,7 +427,7 @@ namespace GameAnalyticsSDK.Setup
 					names[i + 1] = studios[i].Name + spaceAdd;
 					spaceAdd += " ";
 				}
-				
+
 				return names;
 			}
 			else
@@ -451,17 +451,17 @@ namespace GameAnalyticsSDK.Setup
 			{
 				return new string[] { "-" };
 			}
-			
+
 			string[] names = new string[studios[index].Games.Count + 1];
 			names[0] = "-";
-			
+
 			string spaceAdd = "";
 			for(int i = 0; i < studios[index].Games.Count; i++)
 			{
 				names[i + 1] = studios[index].Games[i].Name + spaceAdd;
 				spaceAdd += " ";
 			}
-			
+
 			return names;
 		}
 	}
