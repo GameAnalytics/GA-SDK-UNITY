@@ -244,19 +244,19 @@ namespace GameAnalyticsSDK.Wrapper
 			}
 		}
 
-		private static void startSession()
+		private static void gameAnalyticsStartSession()
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor)
 			{
-				Debug.Log("startSession()");
+				Debug.Log("gameAnalyticsStartSession()");
 			}
 		}
 
-		private static void endSession()
+		private static void gameAnalyticsEndSession()
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor)
 			{
-				Debug.Log("endSession()");
+				Debug.Log("gameAnalyticsEndSession()");
 			}
 		}
 			
@@ -314,12 +314,12 @@ namespace GameAnalyticsSDK.Wrapper
 
 		public static void StartSession()
 		{
-			startSession();
+			gameAnalyticsStartSession();
 		}
 
 		public static void EndSession()
 		{
-			endSession();
+			gameAnalyticsEndSession();
 		}
 
 		public static void Initialize(string gamekey, string gamesecret)

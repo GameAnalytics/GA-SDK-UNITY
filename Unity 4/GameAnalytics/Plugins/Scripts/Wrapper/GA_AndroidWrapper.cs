@@ -165,12 +165,12 @@ namespace GameAnalyticsSDK.Wrapper
 			GA.CallStatic("setEnabledManualSessionHandling", enabled);
 		}
 
-		private static void startSession()
+		private static void gameAnalyticsStartSession()
 		{
 			GA.CallStatic("startSession");
 		}
 
-		private static void endSession()
+		private static void gameAnalyticsEndSession()
 		{
 			GA.CallStatic("endSession");
 		}

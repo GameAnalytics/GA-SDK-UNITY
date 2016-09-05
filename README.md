@@ -10,8 +10,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.6.1**
+* renamed methods to avoid duplicate symbols (ios)
+
 **3.6.0**
-* Google Play Services libraries updated to version 9.4.0 (android) 
+* Google Play Services libraries updated to version 9.4.0 (android)
 
 **3.5.3**
 * fixed manual session handling compiling issue (iOS, tvOS)

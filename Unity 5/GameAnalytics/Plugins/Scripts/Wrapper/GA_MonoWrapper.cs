@@ -129,12 +129,12 @@ namespace GameAnalyticsSDK.Wrapper
 			GameAnalyticsSDK.Net.GameAnalytics.SetEnabledManualSessionHandling(enabled);
 		}
 
-		private static void startSession()
+		private static void gameAnalyticsStartSession()
 		{
 			GameAnalyticsSDK.Net.GameAnalytics.StartSession();
 		}
 
-		private static void endSession()
+		private static void gameAnalyticsEndSession()
 		{
 			GameAnalyticsSDK.Net.GameAnalytics.EndSession();
 		}
