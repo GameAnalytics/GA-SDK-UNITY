@@ -10,8 +10,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.6.2**
+* fix isAppStoreReceiptSandbox bug on iOS 6 devices and lower (iOS)
+
 **3.6.1**
-* renamed methods to avoid duplicate symbols (ios)
+* renamed methods to avoid duplicate symbols (iOS)
 
 **3.6.0**
 * Google Play Services libraries updated to version 9.4.0 (android)
