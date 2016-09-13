@@ -318,7 +318,7 @@ namespace GameAnalyticsSDK.Editor
             #endregion // WebGL
             #region WSA
             {
-                PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/GameAnalytics.WSA.dll") as PluginImporter;
+                PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/GameAnalytics.UWP.dll") as PluginImporter;
                 if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP") ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "ScriptingBackend").Equals("DotNet")))
@@ -345,6 +345,30 @@ namespace GameAnalyticsSDK.Editor
             }
             {
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/Microsoft.Data.Sqlite.dll") as PluginImporter;
+                if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
+                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP")))
+                {
+                    importer.SetCompatibleWithAnyPlatform(false);
+                    importer.SetCompatibleWithEditor(false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
+                    importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
+                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
+                    importer.SaveAndReimport();
+                }
+            }
+            {
+                PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/MetroLog.dll") as PluginImporter;
                 if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP")))
                 {

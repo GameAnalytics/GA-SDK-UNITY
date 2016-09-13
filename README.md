@@ -10,6 +10,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.6.3**
+* fixed user_id tracking for iOS 10 (ios, tvos)
+* added MetroLog to use for logging in UWP library (uwp)
+* small fix related to manual session handling (android)
+
 **3.6.2**
 * fix isAppStoreReceiptSandbox bug on iOS 6 devices and lower (iOS)
 

@@ -2041,9 +2041,12 @@ namespace GameAnalyticsSDK.Editor
 		{
 			string result = platform.ToString();
 
-			if (platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.tvOS) 
+			if (platform == RuntimePlatform.IPhonePlayer) 
 			{
-				result = "iOS/tvOS";
+				result = "iOS";
+			}
+			if (platform == RuntimePlatform.tvOS) {
+				result = "tvOS";
 			}
             else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86)
             {

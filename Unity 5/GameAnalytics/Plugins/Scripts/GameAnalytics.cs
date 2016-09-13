@@ -76,38 +76,6 @@ namespace GameAnalyticsSDK
 
 			Application.logMessageReceived += GA_Debug.HandleLog;
 
-#if (UNITY_WSA_10_0) && (ENABLE_DOTNET) && (!UNITY_EDITOR)
-            GameAnalyticsSDK.Net.GameAnalytics.OnMessageLogged += (m, t) => 
-            {
-                switch(t)
-                {
-                    case GameAnalyticsSDK.Net.EGALoggerMessageType.Error:
-                        {
-                            Debug.LogError(m);
-                        }
-                        break;
-
-                    case GameAnalyticsSDK.Net.EGALoggerMessageType.Warning:
-                        {
-                            Debug.LogWarning(m);
-                        }
-                        break;
-
-                    case GameAnalyticsSDK.Net.EGALoggerMessageType.Info:
-                        {
-                            Debug.Log(m);
-                        }
-                        break;
-
-                    case GameAnalyticsSDK.Net.EGALoggerMessageType.Debug:
-                        {
-                            Debug.Log(m);
-                        }
-                        break;
-                }
-            };
-#endif
-
 #if UNITY_WEBGL && !UNITY_EDITOR
 			StartCoroutine(GameAnalyticsSDK.Net.Threading.GAThreading.Run());
 			StartCoroutine(WwwCoroutines());
