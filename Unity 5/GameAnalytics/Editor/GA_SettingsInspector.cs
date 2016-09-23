@@ -872,7 +872,7 @@ namespace GameAnalyticsSDK.Editor
 
 					GUILayout.EndHorizontal();
 
-#elif UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WP_8_1
+#elif UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WP_8_1 || UNITY_TIZEN || UNITY_SAMSUNGTV
 
                     // TODO: Add something here if needed specific for these platforms
 

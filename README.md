@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.7.1**
+* added support for Tizen
+
 **3.7.0**
 * added support for Universal Windows 8 (Windows 8 and Windows Phone 8)
 

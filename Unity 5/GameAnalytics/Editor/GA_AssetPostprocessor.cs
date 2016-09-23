@@ -85,7 +85,6 @@ namespace GameAnalyticsSDK.Editor
 				    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal) ||
 				    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneWindows) ||
 				    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneWindows64) ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.Tizen) ||
                     !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP") ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "ScriptingBackend").Equals("Il2Cpp")))
@@ -104,7 +103,7 @@ namespace GameAnalyticsSDK.Editor
 					importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
 					importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.Tizen, true);
+                    importer.SetCompatibleWithPlatform(BuildTarget.Tizen, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.SamsungTV, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
                     importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");

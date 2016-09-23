@@ -76,7 +76,7 @@ namespace GameAnalyticsSDK
 
 			Application.logMessageReceived += GA_Debug.HandleLog;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_TIZEN) && !UNITY_EDITOR
 			StartCoroutine(GameAnalyticsSDK.Net.Threading.GAThreading.Run());
 			StartCoroutine(WwwCoroutines());
 #endif
@@ -120,7 +120,7 @@ namespace GameAnalyticsSDK
 			{
 				GameAnalyticsSDK.Net.GameAnalytics.OnStop();
 			}
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_TIZEN
 			keepRunningWwwCoroutines = false;
 #endif
 #endif
@@ -128,7 +128,7 @@ namespace GameAnalyticsSDK
 
 #endregion
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_TIZEN) && !UNITY_EDITOR
 
 		private static bool keepRunningWwwCoroutines = true;
 

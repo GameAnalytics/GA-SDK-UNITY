@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.7.0";
+		public static string VERSION = "3.7.1";
 
 		#endregion
 
@@ -252,7 +252,7 @@ namespace GameAnalyticsSDK.Setup
 			RuntimePlatform.WindowsPlayer,
             RuntimePlatform.WSAPlayerARM,
             //RuntimePlatform.SamsungTVPlayer,
-            //RuntimePlatform.TizenPlayer
+            RuntimePlatform.TizenPlayer
 		};
 
 		public string[] GetAvailablePlatforms()

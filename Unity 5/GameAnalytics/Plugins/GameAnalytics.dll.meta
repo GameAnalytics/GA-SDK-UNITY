@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e185dadd9acc8487d8d4bb2936a243cc
-timeCreated: 1474581415
+timeCreated: 1474664995
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -31,7 +31,8 @@ PluginImporter:
         CPU: x86_64
     LinuxUniversal:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: None
     OSXIntel:
       enabled: 1
       settings:
@@ -42,13 +43,14 @@ PluginImporter:
         CPU: AnyCPU
     OSXUniversal:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: None
     SamsungTV:
       enabled: 0
       settings:
         STV_MODEL: STANDARD_13
     Tizen:
-      enabled: 1
+      enabled: 0
       settings: {}
     Win:
       enabled: 1
@@ -66,6 +68,16 @@ PluginImporter:
         PlaceholderPath: 
         SDK: UWP
         ScriptingBackend: Il2Cpp
+    iOS:
+      enabled: 0
+      settings:
+        CompileFlags: 
+        FrameworkDependencies: 
+    tvOS:
+      enabled: 0
+      settings:
+        CompileFlags: 
+        FrameworkDependencies: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 
