@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 30177d4e124608d4cb92d0a4fd4cad84
-timeCreated: 1468429559
+timeCreated: 1473775214
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -19,7 +19,7 @@ PluginImporter:
       enabled: 1
       settings:
         CPU: ARM
-        SDK: UWP
+        SDK: AnySDK
   userData: 
   assetBundleName: 
   assetBundleVariant: 

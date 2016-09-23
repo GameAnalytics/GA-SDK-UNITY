@@ -11,117 +11,117 @@ namespace GameAnalyticsSDK.Wrapper
 		private static void configureAvailableCustomDimensions01(string list)
 		{
 			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureAvailableCustomDimensions01((string[])array.ToArray(typeof(string)));
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureAvailableCustomDimensions01((string[])array.ToArray(typeof(string)));
 		}
 
 		private static void configureAvailableCustomDimensions02(string list)
 		{
 			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureAvailableCustomDimensions02((string[])array.ToArray(typeof(string)));
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureAvailableCustomDimensions02((string[])array.ToArray(typeof(string)));
 		}
 
 		private static void configureAvailableCustomDimensions03(string list)
 		{
 			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureAvailableCustomDimensions03((string[])array.ToArray(typeof(string)));
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureAvailableCustomDimensions03((string[])array.ToArray(typeof(string)));
 		}
 
 		private static void configureAvailableResourceCurrencies(string list)
 		{
 			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureAvailableResourceCurrencies((string[])array.ToArray(typeof(string)));
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureAvailableResourceCurrencies((string[])array.ToArray(typeof(string)));
 		}
 
 		private static void configureAvailableResourceItemTypes(string list)
 		{
 			ArrayList array = (ArrayList)GA_MiniJSON.JsonDecode(list);
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureAvailableResourceItemTypes((string[])array.ToArray(typeof(string)));
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureAvailableResourceItemTypes((string[])array.ToArray(typeof(string)));
 		}
 
 		private static void configureSdkGameEngineVersion(string unitySdkVersion)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureSdkGameEngineVersion(unitySdkVersion);
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureSdkGameEngineVersion(unitySdkVersion);
 		}
 
 		private static void configureGameEngineVersion(string unityEngineVersion)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureGameEngineVersion(unityEngineVersion);
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureGameEngineVersion(unityEngineVersion);
 		}
 
 		private static void configureBuild(string build)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureBuild(build);
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureBuild(build);
 		}
 
 		private static void configureUserId(string userId)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.ConfigureUserId(userId);
+			GameAnalyticsSDK.Net.GameAnalytics.ConfigureUserId(userId);
 		}
 
 
 		private static void initialize(string gamekey, string gamesecret)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.Initialize(gamekey, gamesecret);
+			GameAnalyticsSDK.Net.GameAnalytics.Initialize(gamekey, gamesecret);
 		}
 
 		private static void setCustomDimension01(string customDimension)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetCustomDimension01(customDimension);
+			GameAnalyticsSDK.Net.GameAnalytics.SetCustomDimension01(customDimension);
 		}
 
 		private static void setCustomDimension02(string customDimension)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetCustomDimension02(customDimension);
+			GameAnalyticsSDK.Net.GameAnalytics.SetCustomDimension02(customDimension);
 		}
 
 		private static void setCustomDimension03(string customDimension)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetCustomDimension03(customDimension);
+			GameAnalyticsSDK.Net.GameAnalytics.SetCustomDimension03(customDimension);
 		}
 			
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType)
         {
-			GameAnalyticsSDK.Mono.GameAnalytics.AddBusinessEvent(currency, amount, itemType, itemId, cartType);
+			GameAnalyticsSDK.Net.GameAnalytics.AddBusinessEvent(currency, amount, itemType, itemId, cartType);
         }
 
 		private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.AddResourceEvent((GameAnalyticsSDK.Mono.EGAResourceFlowType)flowType, currency, amount, itemType, itemId);
+			GameAnalyticsSDK.Net.GameAnalytics.AddResourceEvent((GameAnalyticsSDK.Net.EGAResourceFlowType)flowType, currency, amount, itemType, itemId);
 		}
 
 		private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Mono.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03);
+			GameAnalyticsSDK.Net.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Net.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03);
 		}
 
 		private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Mono.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03, score);
+			GameAnalyticsSDK.Net.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Net.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03, score);
 		}
 
 		private static void addDesignEvent(string eventId)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.AddDesignEvent(eventId);
+			GameAnalyticsSDK.Net.GameAnalytics.AddDesignEvent(eventId);
 		}
 
 		private static void addDesignEventWithValue(string eventId, float value)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.AddDesignEvent(eventId, value);
+			GameAnalyticsSDK.Net.GameAnalytics.AddDesignEvent(eventId, value);
 		}
 
 		private static void addErrorEvent(int severity, string message)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.AddErrorEvent((GameAnalyticsSDK.Mono.EGAErrorSeverity)severity, message);
+			GameAnalyticsSDK.Net.GameAnalytics.AddErrorEvent((GameAnalyticsSDK.Net.EGAErrorSeverity)severity, message);
 		}
 
 		private static void setEnabledInfoLog(bool enabled)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetEnabledInfoLog(enabled);
+			GameAnalyticsSDK.Net.GameAnalytics.SetEnabledInfoLog(enabled);
 		}
 
 		private static void setEnabledVerboseLog(bool enabled)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetEnabledVerboseLog(enabled);
+			GameAnalyticsSDK.Net.GameAnalytics.SetEnabledVerboseLog(enabled);
 		}
 
 		private static void setManualSessionHandling(bool enabled)
@@ -141,7 +141,7 @@ namespace GameAnalyticsSDK.Wrapper
 
 		private static void setFacebookId(string facebookId)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetFacebookId(facebookId);
+			GameAnalyticsSDK.Net.GameAnalytics.SetFacebookId(facebookId);
 		}
 
 		private static void setGender(string gender)
@@ -149,17 +149,17 @@ namespace GameAnalyticsSDK.Wrapper
 			switch(gender)
 			{
 				case "male":
-					GameAnalyticsSDK.Mono.GameAnalytics.SetGender(GameAnalyticsSDK.Mono.EGAGender.Male);
+					GameAnalyticsSDK.Net.GameAnalytics.SetGender(GameAnalyticsSDK.Net.EGAGender.Male);
 					break;
 				case "female":
-					GameAnalyticsSDK.Mono.GameAnalytics.SetGender(GameAnalyticsSDK.Mono.EGAGender.Female);
+					GameAnalyticsSDK.Net.GameAnalytics.SetGender(GameAnalyticsSDK.Net.EGAGender.Female);
 					break;
 			}
 		}
 
 		private static void setBirthYear(int birthYear)
 		{
-			GameAnalyticsSDK.Mono.GameAnalytics.SetBirthYear(birthYear);
+			GameAnalyticsSDK.Net.GameAnalytics.SetBirthYear(birthYear);
 		}
 			
 		#endif

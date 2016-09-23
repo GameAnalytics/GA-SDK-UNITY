@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 609d6badf2786ed4498758420c9f21bf
+timeCreated: 1474451506
+licenseType: Pro
+PluginImporter:
+  serializedVersion: 1
+  iconMap: {}
+  executionOrder: {}
+  isPreloaded: 0
+  platformData:
+    Any:
+      enabled: 0
+      settings: {}
+    Editor:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
+    WindowsStoreApps:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+        SDK: PhoneSDK81
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

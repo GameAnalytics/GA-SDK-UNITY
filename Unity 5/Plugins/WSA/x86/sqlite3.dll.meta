@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e0d67af8a5037e14796a31a6cec80537
-timeCreated: 1464875154
+timeCreated: 1473775214
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -59,7 +59,7 @@ PluginImporter:
         CPU: X86
         DontProcess: False
         PlaceholderPath: 
-        SDK: UWP
+        SDK: AnySDK
         ScriptingBackend: AnyScriptingBackend
     iOS:
       enabled: 0

@@ -611,8 +611,8 @@ namespace GameAnalyticsSDK
 				}
 			}
 			// HACK: To also check for RuntimePlatform.MetroPlayerARM, RuntimePlatform.MetroPlayerX64 and RuntimePlatform.MetroPlayerX86 which are deprecated but have same value as the WSA enums
-            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86 ||
-				((int)platform == (int)RuntimePlatform.WSAPlayerARM) || ((int)platform == (int)RuntimePlatform.WSAPlayerX64) || ((int)platform == (int)RuntimePlatform.WSAPlayerX86))
+            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86 || platform == RuntimePlatform.WP8Player ||
+                ((int)platform == (int)RuntimePlatform.WSAPlayerARM) || ((int)platform == (int)RuntimePlatform.WSAPlayerX64) || ((int)platform == (int)RuntimePlatform.WSAPlayerX86))
             {
 				result = SettingsGA.Platforms.IndexOf(RuntimePlatform.WSAPlayerARM);
             }
@@ -633,10 +633,14 @@ namespace GameAnalyticsSDK
 		/// <param name="">File name including extension e.g. image.png</param>
 		public static string WhereIs(string _file)
 		{
-			string[] assets = {"Assets"};
+#if UNITY_SAMSUNGTV
+			return "";
+#else
+			string[] assets = {"/Assets/"};
 			FileInfo[] myFile = new DirectoryInfo ("Assets").GetFiles (_file, SearchOption.AllDirectories);
 			string[] temp = myFile [0].ToString ().Split (assets, 2, System.StringSplitOptions.None);
-			return assets[0] + temp [1];
+			return "Assets/" + temp [1];
+#endif
 		}
 
 		public static void HierarchyWindowCallback(int instanceID, Rect selectionRect)
@@ -658,5 +662,5 @@ namespace GameAnalyticsSDK
 		}
 		
 #endif
-	}
+        }
 }

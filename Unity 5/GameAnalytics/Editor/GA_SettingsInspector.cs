@@ -844,7 +844,7 @@ namespace GameAnalyticsSDK.Editor
 					this.selectedPlatformIndex = EditorGUILayout.Popup("Platform to add", this.selectedPlatformIndex, this.availablePlatforms);
 					if(GUILayout.Button("Add platform"))
 					{
-                        if(this.availablePlatforms[this.selectedPlatformIndex].Equals("UWP"))
+                        if(this.availablePlatforms[this.selectedPlatformIndex].Equals("WSA"))
                         {
                             GameAnalytics.SettingsGA.AddPlatform(RuntimePlatform.WSAPlayerARM);
                         }
@@ -872,7 +872,7 @@ namespace GameAnalyticsSDK.Editor
 
 					GUILayout.EndHorizontal();
 
-#elif UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA_10_0
+#elif UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WP_8_1
 
                     // TODO: Add something here if needed specific for these platforms
 
@@ -2048,9 +2048,11 @@ namespace GameAnalyticsSDK.Editor
 			if (platform == RuntimePlatform.tvOS) {
 				result = "tvOS";
 			}
-            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86)
+            else if (platform == RuntimePlatform.WSAPlayerARM || 
+                platform == RuntimePlatform.WSAPlayerX64 || 
+                platform == RuntimePlatform.WSAPlayerX86)
             {
-                result = "UWP";
+                result = "WSA";
             }
 
             return result;

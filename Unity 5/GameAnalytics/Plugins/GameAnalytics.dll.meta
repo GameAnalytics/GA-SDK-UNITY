@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e185dadd9acc8487d8d4bb2936a243cc
-timeCreated: 1470996924
+timeCreated: 1474581415
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -41,6 +41,13 @@ PluginImporter:
       settings:
         CPU: AnyCPU
     OSXUniversal:
+      enabled: 1
+      settings: {}
+    SamsungTV:
+      enabled: 0
+      settings:
+        STV_MODEL: STANDARD_13
+    Tizen:
       enabled: 1
       settings: {}
     Win:

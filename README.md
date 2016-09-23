@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.7.0**
+* added support for Universal Windows 8 (Windows 8 and Windows Phone 8)
+
 **3.6.3**
 * fixed user_id tracking for iOS 10 (ios, tvos)
 * added MetroLog to use for logging in UWP library (uwp)

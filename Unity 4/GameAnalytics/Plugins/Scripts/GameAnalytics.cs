@@ -111,7 +111,7 @@ namespace GameAnalyticsSDK
 			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 			ga.CallStatic("onActivityStopped", activity);
 #elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID)
-			GameAnalyticsSDK.Mono.GameAnalytics.OnStop();
+			GameAnalyticsSDK.Net.GameAnalytics.OnStop();
 #endif
 		}
 

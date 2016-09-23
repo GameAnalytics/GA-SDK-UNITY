@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
 		/// The version of the GA Unity Wrapper plugin
 		/// </summary>
 		[HideInInspector]
-		public static string VERSION = "3.6.3";
+		public static string VERSION = "3.7.0";
 
 		#endregion
 
@@ -250,7 +250,9 @@ namespace GameAnalyticsSDK.Setup
 			RuntimePlatform.tvOS,
 			RuntimePlatform.WebGLPlayer,
 			RuntimePlatform.WindowsPlayer,
-            RuntimePlatform.WSAPlayerARM
+            RuntimePlatform.WSAPlayerARM,
+            //RuntimePlatform.SamsungTVPlayer,
+            //RuntimePlatform.TizenPlayer
 		};
 
 		public string[] GetAvailablePlatforms()
@@ -293,7 +295,7 @@ namespace GameAnalyticsSDK.Setup
 				{
 					if(!this.Platforms.Contains(value))
 					{
-						result.Add("UWP");
+						result.Add("WSA");
 					}
 				}
 				else
