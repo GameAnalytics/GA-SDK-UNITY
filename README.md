@@ -10,6 +10,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.7.2**
+* updated guide
+* fixed editor dynamic path finding issue on Windows machines
+
 **3.7.1**
 * added support for Tizen
 

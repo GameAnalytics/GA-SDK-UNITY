@@ -1154,7 +1154,10 @@ namespace GameAnalyticsSDK.Editor
 					};
 				case 10:
 					return new StringWithType[] {
-						new StringWithType { Text = "You're almost there! To complete the integration and start sending data to GameAnalytics, all you need to do is build and run your game. The link below describes the important last steps you need to complete to build for your platform." },
+						new StringWithType { Text = "You're almost there! To complete the integration and start sending data to GameAnalytics, all you need to do is build and run your game." },
+					#if UNITY_IOS || UNITY_ANDROID
+						new StringWithType {Text = "The link below describes the important last steps you need to complete to build for the build platform you selected in the editor."},
+					#endif
 						new StringWithType { Text = "" },
 
 					#if UNITY_IOS
@@ -1173,10 +1176,18 @@ namespace GameAnalyticsSDK.Editor
 						Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Android%20Build"
 					}
 
+					#elif UNITY_STANDALONE
+
+					new StringWithType {
+					Text = "Click here to check online documentation!",
+					Type = StringType.Link,
+					Link = "https://github.com/GameAnalytics/GA-SDK-UNITY/wiki"
+					}
+
 					#else
 
 					new StringWithType { Text = "Your selected build platform is not currently supported by GameAnalytics." },
-					new StringWithType { Text = "Read about our supported platforms.", Type = StringType.Link, Link = "http://www.gameanalytics.com/docs" },
+					new StringWithType { Text = "The Unity SDK includes support for Windows, Mac, Linux, WebGL, iOS, tvOS, UWP, Tizen, Universal Windows 8 and Android.", Type = StringType.Link, Link = "https://github.com/GameAnalytics/GA-SDK-UNITY" },
 
 					#endif
 					};

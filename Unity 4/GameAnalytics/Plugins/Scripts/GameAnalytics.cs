@@ -560,6 +560,19 @@ namespace GameAnalyticsSDK
 		}
 
 #if UNITY_EDITOR
+
+        /// <summary>
+		/// Dynamic search for a file.
+		/// </summary>
+		/// <returns>Returns the Unity path to a specified file.</returns>
+		/// <param name="">File name including extension e.g. image.png</param>
+		public static string WhereIs(string _file)
+		{
+			string[] assets = { Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar};
+			FileInfo[] myFile = new DirectoryInfo ("Assets").GetFiles (_file, SearchOption.AllDirectories);
+			string[] temp = myFile [0].ToString ().Split (assets, 2, System.StringSplitOptions.None);
+			return "Assets" + Path.DirectorySeparatorChar + temp [1];
+		}
 		
 		public static void HierarchyWindowCallback(int instanceID, Rect selectionRect)
 		{
@@ -572,7 +585,7 @@ namespace GameAnalyticsSDK
 				
 				if(GameAnalytics.SettingsGA.Logo == null)
 				{
-					GameAnalytics.SettingsGA.Logo = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/gaLogo.png", typeof(Texture2D));
+					GameAnalytics.SettingsGA.Logo = (Texture2D)AssetDatabase.LoadAssetAtPath(WhereIs("gaLogo.png"), typeof(Texture2D));
 				}
 				
 				Graphics.DrawTexture(new Rect(GUILayoutUtility.GetLastRect().width - selectionRect.height - 5 - addX, selectionRect.y, selectionRect.height, selectionRect.height), GameAnalytics.SettingsGA.Logo);
@@ -580,5 +593,5 @@ namespace GameAnalyticsSDK
 		}
 		
 #endif
-	}
+    }
 }
