@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.8.0**
+* added parameters validation for custom methods called during editor runtime
+
 **3.7.2**
 * updated guide
 * fixed editor dynamic path finding issue on Windows machines

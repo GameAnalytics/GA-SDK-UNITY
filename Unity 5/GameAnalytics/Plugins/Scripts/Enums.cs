@@ -5,6 +5,7 @@ namespace GameAnalyticsSDK
 {
 	public enum GAErrorSeverity
 	{
+		Undefined = 0,
 		Debug = 1,
 		Info = 2,
 		Warning = 3,
@@ -14,6 +15,8 @@ namespace GameAnalyticsSDK
 
 	public enum GAProgressionStatus
 	{
+		//Undefined progression
+		Undefined = 0,
 		// User started progression
 		Start = 1,
 		// User succesfully ended a progression
@@ -24,6 +27,8 @@ namespace GameAnalyticsSDK
 
 	public enum GAResourceFlowType
 	{
+		//Undefined progression
+		Undefined = 0,
 		// Source: Used when adding resource to a user
 		Source = 1,
 		// Sink: Used when removing a resource from a user
@@ -32,7 +37,8 @@ namespace GameAnalyticsSDK
 
 	public enum GAGender
 	{
-		Male = 1,
-		Female = 2
+		Undefined = 0,
+		male = 1,
+		female = 2
 	}
 }

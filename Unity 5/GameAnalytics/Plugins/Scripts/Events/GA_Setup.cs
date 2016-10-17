@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameAnalyticsSDK.Utilities;
 using GameAnalyticsSDK.Wrapper;
+using GameAnalyticsSDK.Validators;
 
 namespace GameAnalyticsSDK.Events
 {
@@ -10,89 +11,113 @@ namespace GameAnalyticsSDK.Events
 	{
 		#region public methods
 
-		public static void SetAvailableCustomDimensions01(List<string> customDimensions)
+		public static void SetAvailableCustomDimensions01 (List<string> customDimensions)
 		{
-			string json = GA_MiniJSON.JsonEncode(customDimensions.ToArray());
-
-			GA_Wrapper.SetAvailableCustomDimensions01(json);
+            if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions(customDimensions.ToArray()))
+            {
+                string json = GA_MiniJSON.JsonEncode(customDimensions.ToArray());
+                GA_Wrapper.SetAvailableCustomDimensions01(json);
+            }
 		}
 
-		public static void SetAvailableCustomDimensions02(List<string> customDimensions)
+		public static void SetAvailableCustomDimensions02 (List<string> customDimensions)
 		{
-			string json = GA_MiniJSON.JsonEncode(customDimensions.ToArray());
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
+				string json = GA_MiniJSON.JsonEncode (customDimensions.ToArray ());
+				GA_Wrapper.SetAvailableCustomDimensions02 (json);
+			}
+        }
 
-			GA_Wrapper.SetAvailableCustomDimensions02(json);
+		public static void SetAvailableCustomDimensions03 (List<string> customDimensions)
+		{
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
+				string json = GA_MiniJSON.JsonEncode (customDimensions.ToArray ());
+				GA_Wrapper.SetAvailableCustomDimensions03 (json);
+			}
+        }
+
+		public static void SetAvailableResourceCurrencies (List<string> resourceCurrencies)
+		{
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceCurrencies (resourceCurrencies.ToArray ())) {
+				string json = GA_MiniJSON.JsonEncode (resourceCurrencies.ToArray ());
+				GA_Wrapper.SetAvailableResourceCurrencies (json);
+			}
 		}
 
-		public static void SetAvailableCustomDimensions03(List<string> customDimensions)
+		public static void SetAvailableResourceItemTypes (List<string> resourceItemTypes)
 		{
-			string json = GA_MiniJSON.JsonEncode(customDimensions.ToArray());
-
-			GA_Wrapper.SetAvailableCustomDimensions03(json);
+			if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceItemTypes (resourceItemTypes.ToArray ())) {
+				string json = GA_MiniJSON.JsonEncode (resourceItemTypes.ToArray ());
+				GA_Wrapper.SetAvailableResourceItemTypes (json);
+			}
 		}
 
-		public static void SetAvailableResourceCurrencies(List<string> resourceCurrencies)
+		public static void SetInfoLog (bool enabled)
 		{
-			string json = GA_MiniJSON.JsonEncode(resourceCurrencies.ToArray());
-
-			GA_Wrapper.SetAvailableResourceCurrencies(json);
+			GA_Wrapper.SetInfoLog (enabled);
 		}
 
-		public static void SetAvailableResourceItemTypes(List<string> resourceItemTypes)
+		public static void SetVerboseLog (bool enabled)
 		{
-			string json = GA_MiniJSON.JsonEncode(resourceItemTypes.ToArray());
-
-			GA_Wrapper.SetAvailableResourceItemTypes(json);
+			GA_Wrapper.SetVerboseLog (enabled);
 		}
 
-		public static void SetInfoLog(bool enabled)
+		public static void SetFacebookId (string facebookId)
 		{
-			GA_Wrapper.SetInfoLog(enabled);
+			GA_Wrapper.SetFacebookId (facebookId);
 		}
 
-		public static void SetVerboseLog(bool enabled)
+		public static void SetGender (GAGender gender)
 		{
-			GA_Wrapper.SetVerboseLog(enabled);
-		}
-
-		public static void SetFacebookId(string facebookId)
-		{
-			GA_Wrapper.SetFacebookId(facebookId);
-		}
-
-		public static void SetGender(GAGender gender)
-		{
-			switch(gender)
-			{
-			case GAGender.Male:
-				GA_Wrapper.SetGender("male");
+			switch (gender) {
+			case GAGender.male:
+				GA_Wrapper.SetGender (GAGender.male.ToString ());
 				break;
-			case GAGender.Female:
-				GA_Wrapper.SetGender("female");
+			case GAGender.female:
+				GA_Wrapper.SetGender (GAGender.female.ToString ());
 				break;
 			}
 		}
 
-		public static void SetBirthYear(int birthYear)
+		public static void SetBirthYear (int birthYear)
 		{
-			GA_Wrapper.SetBirthYear(birthYear);
+			GA_Wrapper.SetBirthYear (birthYear);
 		}
 
-		public static void SetCustomDimension01(string customDimension)
+		public static void SetCustomDimension01 (string customDimension)
 		{
-			GA_Wrapper.SetCustomDimension01(customDimension);
-		}
+#if UNITY_EDITOR
+            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension01 (customDimension)) {
+				GA_Wrapper.SetCustomDimension01 (customDimension);
+			}
+#else
+				GA_Wrapper.SetCustomDimension01 (customDimension);
+#endif
+        }
 
-		public static void SetCustomDimension02(string customDimension)
+		public static void SetCustomDimension02 (string customDimension)
 		{
-			GA_Wrapper.SetCustomDimension02(customDimension);
-		}
+#if UNITY_EDITOR
+            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension02 (customDimension)) {
+				GA_Wrapper.SetCustomDimension02 (customDimension);
+			}
+#else
+				GA_Wrapper.SetCustomDimension02 (customDimension);
+#endif
+        }
 
-		public static void SetCustomDimension03(string customDimension)
+		public static void SetCustomDimension03 (string customDimension)
 		{
-			GA_Wrapper.SetCustomDimension03(customDimension);
-		}
+#if UNITY_EDITOR
+            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension03(customDimension))
+            {
+                GA_Wrapper.SetCustomDimension03(customDimension);
+            }
+#else
+				GA_Wrapper.SetCustomDimension03 (customDimension);
+#endif
+        }
 
-		#endregion
+#endregion
 	}
 }
