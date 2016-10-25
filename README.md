@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.8.1**
+* fix to Windows Store App certification test caused by GameAnalytics plugin (uwp, wsa)
+
 **3.8.0**
 * added parameters validation for custom methods called during editor runtime
 
