@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.8.3**
+* removed x86_64h architecture from sqlite3.bundle (mac)
+
 **3.8.2**
 * fix to Windows Store App certification test caused by GameAnalytics plugin (wsa)
 
