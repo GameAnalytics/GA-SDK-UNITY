@@ -396,7 +396,7 @@ namespace GameAnalyticsSDK.Editor
             {
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/x86/sqlite3.dll") as PluginImporter;
                 if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
-                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("AnySDK") ||
+                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP") ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "CPU").Equals("X86")))
                 {
                     importer.SetCompatibleWithAnyPlatform(false);
@@ -414,7 +414,7 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
-                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "AnySDK");
+                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
                     importer.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "X86");
                     importer.SaveAndReimport();
                 }
@@ -422,7 +422,7 @@ namespace GameAnalyticsSDK.Editor
             {
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/x64/sqlite3.dll") as PluginImporter;
                 if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
-                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("AnySDK") ||
+                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP") ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "CPU").Equals("X64")))
                 {
                     importer.SetCompatibleWithAnyPlatform(false);
@@ -440,7 +440,7 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
-                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "AnySDK");
+                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
                     importer.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "X64");
                     importer.SaveAndReimport();
                 }
@@ -448,7 +448,7 @@ namespace GameAnalyticsSDK.Editor
 			{
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/WSA/ARM/sqlite3.dll") as PluginImporter;
                 if (importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.WSAPlayer) ||
-                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("AnySDK") ||
+                    !importer.GetPlatformData(BuildTarget.WSAPlayer, "SDK").Equals("UWP") ||
                     !importer.GetPlatformData(BuildTarget.WSAPlayer, "CPU").Equals("ARM")))
                 {
                     importer.SetCompatibleWithAnyPlatform(false);
@@ -466,7 +466,7 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
-                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "AnySDK");
+                    importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
                     importer.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "ARM");
                     importer.SaveAndReimport();
                 }
