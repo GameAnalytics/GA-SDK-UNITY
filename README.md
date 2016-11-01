@@ -10,6 +10,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+**3.8.5**
+* bug fix to design events sent without value
+
 **3.8.4**
 * fix to Windows Store App certification test (Windows Phone) caused by GameAnalytics plugin (wsa)
 
