@@ -10,6 +10,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
+[//]: <> (CHANGELOG_TOP)
+**3.8.6**
+* session length bug fix
+* fixed bug when using manual session handling (android)
+
 **3.8.5**
 * bug fix to design events sent without value
 
