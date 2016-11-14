@@ -10,7 +10,7 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 
 Changelog
 ---------
-[//]: <> (CHANGELOG_TOP)
+<!--(CHANGELOG_TOP)-->
 **3.8.6**
 * session length bug fix
 * fixed bug when using manual session handling (android)
