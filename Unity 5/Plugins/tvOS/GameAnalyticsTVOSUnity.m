@@ -221,6 +221,6 @@ void setGender(const char *gender) {
 }
 
 void setBirthYear(int birthYear) {
-    NSInteger birthYearInteger = birthYear != NULL ? (NSInteger)birthYear : nil;
+    NSInteger birthYearInteger = birthYear != 0 ? (NSInteger)birthYear : 0;
     [GameAnalytics setBirthYear:birthYearInteger];
 }

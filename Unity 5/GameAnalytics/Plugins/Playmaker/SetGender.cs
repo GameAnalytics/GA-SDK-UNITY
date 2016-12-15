@@ -20,18 +20,18 @@ namespace HutongGames.PlayMaker.Actions
 
 		public override void Reset()
 		{
-			Gender = GAGender.Male;
+			Gender = GAGender.male;
 		}
 		
 		public override void OnEnter()
 		{
 			if (GenderAsString.Value.Equals("male", StringComparison.InvariantCultureIgnoreCase) )
 			{
-				Gender = GAGender.Male;
+				Gender = GAGender.male;
 			}
 			else if (GenderAsString.Value.Equals("female", StringComparison.InvariantCultureIgnoreCase) )
 			{
-				Gender = GAGender.Female;
+				Gender = GAGender.female;
 			}
 
 			GA_Setup.SetGender(Gender);
