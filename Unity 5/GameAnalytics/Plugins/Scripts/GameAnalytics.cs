@@ -77,7 +77,7 @@ namespace GameAnalyticsSDK
 
 			Application.logMessageReceived += GA_Debug.HandleLog;
 
-#if (UNITY_WEBGL || UNITY_TIZEN) && !UNITY_EDITOR
+#if (UNITY_TIZEN) && !UNITY_EDITOR
 			StartCoroutine(GameAnalyticsSDK.Net.Threading.GAThreading.Run());
 			StartCoroutine(WwwCoroutines());
 #endif
@@ -119,12 +119,12 @@ namespace GameAnalyticsSDK
 				AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 				ga.CallStatic("onActivityStopped", activity);
 			}
-#elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS)
+#elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL)
 			if(!SettingsGA.UseManualSessionHandling)
 			{
 				GameAnalyticsSDK.Net.GameAnalytics.OnStop();
 			}
-#if UNITY_WEBGL || UNITY_TIZEN
+#if UNITY_TIZEN
 			keepRunningWwwCoroutines = false;
 #endif
 #endif
@@ -132,7 +132,7 @@ namespace GameAnalyticsSDK
 
 #endregion
 
-#if (UNITY_WEBGL || UNITY_TIZEN) && !UNITY_EDITOR
+#if (UNITY_TIZEN) && !UNITY_EDITOR
 
 		private static bool keepRunningWwwCoroutines = true;
 

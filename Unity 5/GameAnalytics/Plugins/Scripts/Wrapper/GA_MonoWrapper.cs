@@ -4,9 +4,9 @@ using GameAnalyticsSDK.Utilities;
 
 namespace GameAnalyticsSDK.Wrapper
 {
-	public partial class GA_Wrapper 
+	public partial class GA_Wrapper
 	{
-		#if (UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WP_8_1 || UNITY_TIZEN || UNITY_SAMSUNGTV) && (!UNITY_EDITOR)
+		#if (UNITY_STANDALONE || UNITY_WSA || UNITY_WP_8_1 || UNITY_TIZEN || UNITY_SAMSUNGTV) && (!UNITY_EDITOR)
 
 		private static void configureAvailableCustomDimensions01(string list)
 		{
@@ -78,7 +78,7 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			GameAnalyticsSDK.Net.GameAnalytics.SetCustomDimension03(customDimension);
 		}
-			
+
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType)
         {
 			GameAnalyticsSDK.Net.GameAnalytics.AddBusinessEvent(currency, amount, itemType, itemId, cartType);
@@ -161,7 +161,7 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			GameAnalyticsSDK.Net.GameAnalytics.SetBirthYear(birthYear);
 		}
-			
+
 #endif
     }
 }

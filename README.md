@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.8.9**
+* added native javascript library for WebGL (webgl)
+
 **3.8.8**
 * added bundle_id, app version and app build tracking (iOS and Android)
 
