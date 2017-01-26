@@ -77,11 +77,6 @@ namespace GameAnalyticsSDK
 
 			Application.logMessageReceived += GA_Debug.HandleLog;
 
-#if (UNITY_TIZEN) && !UNITY_EDITOR
-			StartCoroutine(GameAnalyticsSDK.Net.Threading.GAThreading.Run());
-			StartCoroutine(WwwCoroutines());
-#endif
-
             Initialize();
 		}
 
@@ -119,48 +114,15 @@ namespace GameAnalyticsSDK
 				AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 				ga.CallStatic("onActivityStopped", activity);
 			}
-#elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL)
+#elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN)
 			if(!SettingsGA.UseManualSessionHandling)
 			{
 				GameAnalyticsSDK.Net.GameAnalytics.OnStop();
 			}
-#if UNITY_TIZEN
-			keepRunningWwwCoroutines = false;
-#endif
 #endif
 		}
 
 #endregion
-
-#if (UNITY_TIZEN) && !UNITY_EDITOR
-
-		private static bool keepRunningWwwCoroutines = true;
-
-		private static IEnumerator WwwCoroutines()
-		{
-			while(keepRunningWwwCoroutines)
-			{
-				Queue<IEnumerator> queue = GameAnalyticsSDK.Net.GameAnalytics.RequestCoroutineQueue;
-
-				if(queue.Count > 0)
-				{
-					IEnumerator enumerator = queue.Dequeue();
-					Coroutine coroutine = _instance.StartCoroutine(enumerator);
-
-					while(enumerator.MoveNext())
-					{
-						yield return null;
-					}
-
-					yield return coroutine;
-				}
-				else
-				{
-					yield return null;
-				}
-			}
-		}
-#endif
 
 		private static void InitAPI()
 		{

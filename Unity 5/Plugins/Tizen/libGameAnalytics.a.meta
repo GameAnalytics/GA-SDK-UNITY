@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e145335253318400081ec72d4ff0efc3
-timeCreated: 1474665027
+guid: 87b563831833df94b948b555664a4412
+timeCreated: 1484348001
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -18,10 +18,6 @@ PluginImporter:
     Tizen:
       enabled: 1
       settings: {}
-    WindowsStoreApps:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
   userData: 
   assetBundleName: 
   assetBundleVariant: 

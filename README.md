@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.0**
+* native tizen library added
+
 **3.8.9**
 * added native javascript library for WebGL (webgl)
 
