@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.1**
+* fixed webgl compile hang/freeze bug
+
 **3.9.0**
 * native tizen library added
 

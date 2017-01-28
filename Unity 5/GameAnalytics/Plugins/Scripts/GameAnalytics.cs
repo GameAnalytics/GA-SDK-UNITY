@@ -574,7 +574,7 @@ namespace GameAnalyticsSDK
 				}
 			}
 			// HACK: To also check for RuntimePlatform.MetroPlayerARM, RuntimePlatform.MetroPlayerX64 and RuntimePlatform.MetroPlayerX86 which are deprecated but have same value as the WSA enums
-            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86 || platform == RuntimePlatform.WP8Player ||
+            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86 ||
                 ((int)platform == (int)RuntimePlatform.WSAPlayerARM) || ((int)platform == (int)RuntimePlatform.WSAPlayerX64) || ((int)platform == (int)RuntimePlatform.WSAPlayerX86))
             {
 				result = SettingsGA.Platforms.IndexOf(RuntimePlatform.WSAPlayerARM);
