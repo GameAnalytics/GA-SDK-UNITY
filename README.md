@@ -11,6 +11,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.2**
+* added app signature and channel id (which app store was the app installed from)(android)
+* added IMEI as fallback option for identifier when Google AID and Android ID is not available on the device (requires to add optional READ_PHONE_STATE permission)(android)
+
 **3.9.1**
 * fixed webgl compile hang/freeze bug
 

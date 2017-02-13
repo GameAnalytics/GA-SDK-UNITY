@@ -58,7 +58,7 @@ namespace GameAnalyticsSDK.Editor
 			
 			if (GUILayout.Button(_download, GUILayout.MaxWidth(115)))
 			{
-				Application.OpenURL("http://download.gameanalytics.com/unity/GA_SDK_UNITY.package");
+				Application.OpenURL("http://download.gameanalytics.com/unity/GA_SDK_UNITY.unitypackage");
 			}
 			
 			if (GUILayout.Button(_close, GUILayout.MaxWidth(72)))

@@ -1058,7 +1058,7 @@ var ga;
             };
             return GADevice;
         }());
-        GADevice.sdkWrapperVersion = "javascript 1.0.1";
+        GADevice.sdkWrapperVersion = "javascript 1.0.3";
         GADevice.buildPlatform = GADevice.runtimePlatformToString();
         GADevice.deviceModel = "unknown";
         GADevice.deviceManufacturer = "unknown";
