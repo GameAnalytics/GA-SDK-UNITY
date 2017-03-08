@@ -89,7 +89,7 @@ var GameAnalyticsUnity = {
     },
     setManualSessionHandling: function(enabled)
     {
-        ga.GameAnalytics.setManualSessionHandling(enabled);
+        ga.GameAnalytics.setEnabledManualSessionHandling(enabled);
     },
     startSession: function()
     {

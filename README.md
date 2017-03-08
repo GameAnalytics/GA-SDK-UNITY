@@ -11,6 +11,10 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.3**
+* option added in Advanced for automatically assigning the bundle version from Player Settings as the build number (ios and android)
+* fixed error at launch for builds using manual session handling (webgl)
+
 **3.9.2**
 * added app signature and channel id (which app store was the app installed from)(android)
 * added IMEI as fallback option for identifier when Google AID and Android ID is not available on the device (requires to add optional READ_PHONE_STATE permission)(android)
