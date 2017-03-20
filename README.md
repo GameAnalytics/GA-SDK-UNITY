@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.4**
+* session length precision improvement
+
 **3.9.3**
 * option added in Advanced for automatically assigning the bundle version from Player Settings as the build number (ios and android)
 * fixed error at launch for builds using manual session handling (webgl)
