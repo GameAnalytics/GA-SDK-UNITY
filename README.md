@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.5**
+* removed debug log messages (webgl)
+
 **3.9.4**
 * session length precision improvement
 
