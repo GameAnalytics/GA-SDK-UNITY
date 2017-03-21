@@ -29,8 +29,9 @@ namespace GameAnalyticsSDK.Editor
 		private GUIContent _infoLogBuild = new GUIContent("Info Log Build", "Show info messages from GA in builds (f.x. Xcode for iOS).");
 		private GUIContent _verboseLogBuild = new GUIContent("Verbose Log Build", "Show full info messages from GA in builds (f.x. Xcode for iOS). Noet that this option includes long JSON messages sent to the server.");
 		private GUIContent _useManualSessionHandling = new GUIContent("Use manual session handling", "Manually choose when to end and start a new session. Note initializing of the SDK will automatically start the first session.");
-		//private GUIContent _sendExampleToMyGame		= new GUIContent("Get Example Game Data", "If enabled data collected while playing the example tutorial game will be sent to your game (using your game key and secret key). Otherwise data will be sent to a premade GA test game, to prevent it from polluting your data.");
-		private GUIContent _account = new GUIContent("Account", "This tab allows you to easily create a GameAnalytics account. You can also login to automatically retrieve your Game Key and Secret Key.");
+        private GUIContent _usePlayerSettingsBunldeVersionForBuild = new GUIContent("Send Player Settings bundle Version* as build number (iOS, Android)", "Change the SDK to automatically fetch the bundle version number on iOS and on Android and send it as the build number.");
+        //private GUIContent _sendExampleToMyGame		= new GUIContent("Get Example Game Data", "If enabled data collected while playing the example tutorial game will be sent to your game (using your game key and secret key). Otherwise data will be sent to a premade GA test game, to prevent it from polluting your data.");
+        private GUIContent _account = new GUIContent("Account", "This tab allows you to easily create a GameAnalytics account. You can also login to automatically retrieve your Game Key and Secret Key.");
 		private GUIContent _setup = new GUIContent("Setup", "This tab shows general options which are relevant for a wide variety of messages sent to GameAnalytics.");
 		private GUIContent _advanced = new GUIContent("Advanced", "This tab shows advanced and misc. options for the GameAnalytics SDK.");
 		private GUIContent _customDimensions01 = new GUIContent("Custom Dimensions 01", "List of custom dimensions 01.");
@@ -851,16 +852,40 @@ namespace GameAnalyticsSDK.Editor
 							GUILayout.EndHorizontal();
 							
 							EditorGUILayout.Space();
-							
-							GUILayout.BeginHorizontal();
-							//GUILayout.Label("", GUILayout.Width(7));
-							GUILayout.Label(_build, GUILayout.Width(60));
-							ga.Build[i] = EditorGUILayout.TextField("", ga.Build[i]);
-							GUILayout.EndHorizontal();
 
-							EditorGUILayout.Space();
+                            switch (GameAnalytics.SettingsGA.UsePlayerSettingsBundleVersion)
+                            {
+                                case true:
+                                    if (GameAnalytics.SettingsGA.Platforms[i] != RuntimePlatform.Android && GameAnalytics.SettingsGA.Platforms[i] != RuntimePlatform.IPhonePlayer)
+                                    {
+                                        GUILayout.BeginHorizontal();
+                                        //GUILayout.Label("", GUILayout.Width(7));
+                                        GUILayout.Label(_build, GUILayout.Width(60));
+                                        ga.Build[i] = EditorGUILayout.TextField("", ga.Build[i]);
+                                        GUILayout.EndHorizontal();
 
-							if(ga.SelectedPlatformGameID[i] >= 0)
+                                        EditorGUILayout.Space();
+                                    }
+                                    else
+                                    {
+                                        ga.Build[i] = PlayerSettings.bundleVersion;
+                                        EditorGUILayout.HelpBox("Using Player Settings identification Version* number as Build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
+                                    }
+                                    break;
+                                case false:
+                                    GUILayout.BeginHorizontal();
+                                    //GUILayout.Label("", GUILayout.Width(7));
+                                    GUILayout.Label(_build, GUILayout.Width(60));
+                                    ga.Build[i] = EditorGUILayout.TextField("", ga.Build[i]);
+                                    GUILayout.EndHorizontal();
+
+                                    EditorGUILayout.Space();
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            if (ga.SelectedPlatformGameID[i] >= 0)
 							{
 								EditorGUILayout.Space();
 								GUILayout.BeginHorizontal();
@@ -1399,8 +1424,19 @@ namespace GameAnalyticsSDK.Editor
 					GUILayout.EndHorizontal();
 
 					EditorGUILayout.Space();
-					
-					GUILayout.BeginHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("", GUILayout.Width(-18));
+                    ga.UsePlayerSettingsBundleVersion = EditorGUILayout.Toggle("", ga.UsePlayerSettingsBundleVersion, GUILayout.Width(35));
+                    GUILayout.Label(_usePlayerSettingsBunldeVersionForBuild);
+                    GUILayout.EndHorizontal();
+
+                    if (ga.UsePlayerSettingsBundleVersion)
+                    {
+                        EditorGUILayout.HelpBox("PLEASE NOTICE: The SDK will use the bundle Version* as the build number in events when targeting the Android or iOS platform. The bundle version can be set in the Player Settings of the iOS or Android build platforms.", MessageType.Info);
+                    }
+
+                    GUILayout.BeginHorizontal();
 					GUILayout.Label("", GUILayout.Width(-18));
 					ga.SubmitErrors = EditorGUILayout.Toggle("", ga.SubmitErrors, GUILayout.Width(35));
 					GUILayout.Label(_gaSubmitErrors);

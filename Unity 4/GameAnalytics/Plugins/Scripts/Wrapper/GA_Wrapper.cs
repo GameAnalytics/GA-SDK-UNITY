@@ -223,7 +223,15 @@ namespace GameAnalyticsSDK.Wrapper
 			}
 		}
 
-		private static void gameAnalyticsStartSession ()
+        private static void setUsePlayerSettingsBundleVersionForBuild(bool enabled)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("Using Player Settings bundle version for build(" + enabled + ")");
+            }
+        }
+
+        private static void gameAnalyticsStartSession ()
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
 				Debug.Log ("gameAnalyticsStartSession()");
