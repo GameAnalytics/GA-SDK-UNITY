@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.8**
+* bug fix for end session when using manual session handling
+
 **3.9.7**
 * bug fix for sending events straight after initializing sdk (webgl)
 
