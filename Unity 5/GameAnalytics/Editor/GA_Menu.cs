@@ -97,7 +97,7 @@ namespace GameAnalyticsSDK.Editor
         private static readonly string PlayServicesBasementArrPath = Application.dataPath + "/Plugins/Android/play-services-basement-9.4.0.aar";
         private const string Suffix = "x";
 
-        [MenuItem("Window/GameAnalytics/Exclude Google Play Services libraties (Android only)", false, 500)]
+        [MenuItem("Window/GameAnalytics/Exclude Google Play Services libraries (Android only)", false, 500)]
         public static void ExcludeGooglePlayLibs()
         {
             if (File.Exists(PlayServicesAdsArrPath))
@@ -112,7 +112,7 @@ namespace GameAnalyticsSDK.Editor
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("Window/GameAnalytics/Include Google Play Services libraties (Android only)", false, 510)]
+        [MenuItem("Window/GameAnalytics/Include Google Play Services libraries (Android only)", false, 510)]
         public static void IncludeGooglePlayLibs()
         {
             if (File.Exists(PlayServicesAdsArrPath + Suffix))
