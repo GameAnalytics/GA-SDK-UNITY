@@ -93,7 +93,41 @@ namespace GameAnalyticsSDK.Editor
 			}
 		}
 
-		public static bool ReplaceInFile (string filePath, string searchText, string replaceText)
+        private static readonly string PlayServicesAdsArrPath = Application.dataPath + "/Plugins/Android/play-services-ads-9.4.0.aar";
+        private static readonly string PlayServicesBasementArrPath = Application.dataPath + "/Plugins/Android/play-services-basement-9.4.0.aar";
+        private const string Suffix = "x";
+
+        [MenuItem("Window/GameAnalytics/Exclude Google Play Services libraties (Android only)", false, 500)]
+        public static void ExcludeGooglePlayLibs()
+        {
+            if (File.Exists(PlayServicesAdsArrPath))
+            {
+                FileUtil.MoveFileOrDirectory(PlayServicesAdsArrPath, PlayServicesAdsArrPath + Suffix);
+            }
+            if (File.Exists(PlayServicesBasementArrPath))
+            {
+                FileUtil.MoveFileOrDirectory(PlayServicesBasementArrPath, PlayServicesBasementArrPath + Suffix);
+            }
+
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Window/GameAnalytics/Include Google Play Services libraties (Android only)", false, 510)]
+        public static void IncludeGooglePlayLibs()
+        {
+            if (File.Exists(PlayServicesAdsArrPath + Suffix))
+            {
+                FileUtil.MoveFileOrDirectory(PlayServicesAdsArrPath + Suffix, PlayServicesAdsArrPath);
+            }
+            if (File.Exists(PlayServicesBasementArrPath + Suffix))
+            {
+                FileUtil.MoveFileOrDirectory(PlayServicesBasementArrPath + Suffix, PlayServicesBasementArrPath);
+            }
+
+            AssetDatabase.Refresh();
+        }
+
+        public static bool ReplaceInFile (string filePath, string searchText, string replaceText)
 		{
 			bool enabled = false;
 			
