@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.11**
+* updated to v10.2.1 of Google Play Services libraries (android)
+
 **3.9.10**
 * prevent session_num and transaction_num from resetting if app is killed (ios)
 
