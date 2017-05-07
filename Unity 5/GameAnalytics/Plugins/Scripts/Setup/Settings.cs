@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "3.9.11";
+        public static string VERSION = "3.9.12";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -246,7 +246,7 @@ namespace GameAnalyticsSDK.Setup
             this.Platforms.Add(platform);
         }
 
-        private static readonly RuntimePlatform[] AvailablePlatforms = new RuntimePlatform[]
+        public static readonly RuntimePlatform[] AvailablePlatforms = new RuntimePlatform[]
         {
             RuntimePlatform.Android,
             RuntimePlatform.IPhonePlayer,

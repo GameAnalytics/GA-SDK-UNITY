@@ -86,36 +86,18 @@ namespace GameAnalyticsSDK.Events
 
 		public static void SetCustomDimension01 (string customDimension)
 		{
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension01 (customDimension)) {
-				GA_Wrapper.SetCustomDimension01 (customDimension);
-			}
-#else
-				GA_Wrapper.SetCustomDimension01 (customDimension);
-#endif
+			GA_Wrapper.SetCustomDimension01 (customDimension);
         }
 
 		public static void SetCustomDimension02 (string customDimension)
 		{
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension02 (customDimension)) {
-				GA_Wrapper.SetCustomDimension02 (customDimension);
-			}
-#else
-				GA_Wrapper.SetCustomDimension02 (customDimension);
-#endif
-        }
+			GA_Wrapper.SetCustomDimension02 (customDimension);
+		}
+
 
 		public static void SetCustomDimension03 (string customDimension)
 		{
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension03(customDimension))
-            {
-                GA_Wrapper.SetCustomDimension03(customDimension);
-            }
-#else
-				GA_Wrapper.SetCustomDimension03 (customDimension);
-#endif
+            GA_Wrapper.SetCustomDimension03(customDimension);
         }
 
 #endregion

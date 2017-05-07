@@ -473,7 +473,8 @@ namespace GameAnalyticsSDK.Editor
 
 					GUILayout.BeginHorizontal();
 					GUILayout.FlexibleSpace();
-					this._selectedPlatform = (RuntimePlatform)EditorGUILayout.Popup("", (int)this._selectedPlatform, System.Enum.GetNames(typeof(RuntimePlatform)), GUILayout.Width(200));
+					Settings settings = CreateInstance<Settings>();
+					this._selectedPlatform = (RuntimePlatform)EditorGUILayout.Popup("", (int)this._selectedPlatform, settings.GetAvailablePlatforms(), GUILayout.Width(200));
 					GUILayout.FlexibleSpace();
 					GUILayout.EndHorizontal();
 

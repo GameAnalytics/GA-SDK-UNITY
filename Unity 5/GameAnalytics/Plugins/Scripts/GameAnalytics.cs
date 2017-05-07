@@ -240,7 +240,7 @@ namespace GameAnalyticsSDK
 			}
 			else
 			{
-				Debug.LogWarning("Unsupported platform (or missing platform in settings): " + Application.platform);
+				Debug.LogWarning("GameAnalytics: Unsupported platform (events will not be sent in editor; or missing platform in settings): " + Application.platform);
 			}
 		}
 

@@ -11,6 +11,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.9.12**
+* fixed webgl wrapper to use correct namespace (webgl)
+
 **3.9.11**
 * updated to v10.2.1 of Google Play Services libraries (android)
 

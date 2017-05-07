@@ -339,35 +339,18 @@ namespace GameAnalyticsSDK.Wrapper
 
 		public static void SetCustomDimension01 (string customDimension)
 		{
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension01 (customDimension)) {
-				setCustomDimension01 (customDimension);
-			}
-#else
-				setCustomDimension01 (customDimension);
-#endif
+			setCustomDimension01 (customDimension);
         }
 
 		public static void SetCustomDimension02 (string customDimension)
 		{
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension02 (customDimension)) {
-				setCustomDimension02 (customDimension);
-			}
-#else
-				setCustomDimension02 (customDimension);
-#endif
+
+			setCustomDimension02 (customDimension);
         }
 
 		public static void SetCustomDimension03 (string customDimension)
 		{
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDimension03 (customDimension)) {
-				setCustomDimension03 (customDimension);
-			}
-#else
-				setCustomDimension03 (customDimension);
-#endif
+			setCustomDimension03 (customDimension);
         }
 		
 #if UNITY_IOS || UNITY_TVOS
