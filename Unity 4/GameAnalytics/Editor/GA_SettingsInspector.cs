@@ -869,7 +869,7 @@ namespace GameAnalyticsSDK.Editor
                                     else
                                     {
                                         ga.Build[i] = PlayerSettings.bundleVersion;
-                                        EditorGUILayout.HelpBox("Using Player Settings identification Version* number as Build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
+                                        EditorGUILayout.HelpBox("Using Player Settings identification Bundle Version* number as build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
                                     }
                                     break;
                                 case false:
@@ -1433,7 +1433,7 @@ namespace GameAnalyticsSDK.Editor
 
                     if (ga.UsePlayerSettingsBundleVersion)
                     {
-                        EditorGUILayout.HelpBox("PLEASE NOTICE: The SDK will use the bundle Version* as the build number in events when targeting the Android or iOS platform. The bundle version can be set in the Player Settings of the iOS or Android build platforms.", MessageType.Info);
+                        EditorGUILayout.HelpBox("PLEASE NOTICE: The bundle version can now be set in the Player Settings tabs of the iOS or Android build platforms. Reopen this Settings object when these numbers change in Player Settings to refresh.", MessageType.Info);
                     }
 
                     GUILayout.BeginHorizontal();

@@ -13,6 +13,7 @@ using System.IO;
 #endif
 
 
+
 namespace GameAnalyticsSDK
 {
 	[RequireComponent(typeof(GA_SpecialEvents))]
@@ -194,7 +195,14 @@ namespace GameAnalyticsSDK
 
 			if(platformIndex >= 0)
 			{
-				GA_Wrapper.SetBuild(SettingsGA.Build[platformIndex]);
+				if (GameAnalytics.SettingsGA.UsePlayerSettingsBuildNumber) {
+					for (int i = 0; i < GameAnalytics.SettingsGA.Platforms.Count; ++i) {
+						if (GameAnalytics.SettingsGA.Platforms [i] == RuntimePlatform.Android || GameAnalytics.SettingsGA.Platforms [i] == RuntimePlatform.IPhonePlayer) {
+							GameAnalytics.SettingsGA.Build [i] = Application.version;
+						}
+					}
+				}
+				GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
 			}
 
 			if(SettingsGA.CustomDimensions01.Count > 0)
@@ -625,5 +633,16 @@ namespace GameAnalyticsSDK
 		}
 
 #endif
+        /// <summary>
+		/// Sets the build for all platforms.
+		/// </summary>
+		/// <param name="build">Build.</param>
+		public static void SetBuildAllPlatforms(string build)
+        {
+            for (int i = 0; i < GameAnalytics.SettingsGA.Build.Count; i++)
+            {
+                GameAnalytics.SettingsGA.Build[i] = build;
+            }
         }
+    }
 }
