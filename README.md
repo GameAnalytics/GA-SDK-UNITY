@@ -20,6 +20,11 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.10.2**
+* Android manifest file fix for Android SDK Tools v26.0.2 (android)
+* Send build number option fixed for Unity 5.6 and up (ios, android)
+* Added stack traces for non-development builds
+
 **3.10.1**
 * Advanced option Send Player Settings Build changed to work without refreshing the Settings object. Player Settings Build number is sent for iOS and identification Version number for Android when option is used (Unity 5)
 

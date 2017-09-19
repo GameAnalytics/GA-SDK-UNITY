@@ -28,7 +28,11 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _infoLogBuild = new GUIContent("Info Log Build", "Show info messages from GA in builds (f.x. Xcode for iOS).");
         private GUIContent _verboseLogBuild = new GUIContent("Verbose Log Build", "Show full info messages from GA in builds (f.x. Xcode for iOS). Noet that this option includes long JSON messages sent to the server.");
         private GUIContent _useManualSessionHandling = new GUIContent("Use manual session handling", "Manually choose when to end and start a new session. Note initializing of the SDK will automatically start the first session.");
-		private GUIContent _usePlayerSettingsBunldeVersionForBuild = new GUIContent("Send Build number (iOS) and Version* (Android) as build number", "The SDK will automatically fetch the build number on iOS and the version* number on Android and send it as the GameAnalytics build number.");
+#if UNITY_5_6_OR_NEWER
+        private GUIContent _usePlayerSettingsBunldeVersionForBuild = new GUIContent("Send Version* (Android, iOS) as build number", "The SDK will automatically fetch the version* number on Android and iOS and send it as the GameAnalytics build number.");
+#else
+        private GUIContent _usePlayerSettingsBunldeVersionForBuild = new GUIContent("Send Build number (iOS) and Version* (Android) as build number", "The SDK will automatically fetch the build number on iOS and the version* number on Android and send it as the GameAnalytics build number.");
+#endif
         //private GUIContent _sendExampleToMyGame        = new GUIContent("Get Example Game Data", "If enabled data collected while playing the example tutorial game will be sent to your game (using your game key and secret key). Otherwise data will be sent to a premade GA test game, to prevent it from polluting your data.");
         private GUIContent _account = new GUIContent("Account", "This tab allows you to easily create a GameAnalytics account. You can also login to automatically retrieve your Game Key and Secret Key.");
         private GUIContent _setup = new GUIContent("Setup", "This tab shows general options which are relevant for a wide variety of messages sent to GameAnalytics.");
@@ -802,14 +806,19 @@ namespace GameAnalyticsSDK.Editor
 									if(GameAnalytics.SettingsGA.Platforms[i] == RuntimePlatform.Android)
 									{
 										ga.Build[i] = PlayerSettings.bundleVersion;
-                                    	EditorGUILayout.HelpBox("Using Android Player Settings Version* number as build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
+										EditorGUILayout.HelpBox("Using Android Player Settings Version* number as build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
 									}
 									if(GameAnalytics.SettingsGA.Platforms[i] == RuntimePlatform.IPhonePlayer)
 									{
-										ga.Build[i] = PlayerSettings.iOS.buildNumber;
+#if UNITY_5_6_OR_NEWER
+										ga.Build[i] = PlayerSettings.bundleVersion;
+										EditorGUILayout.HelpBox("Using iOS Player Settings Version* number as build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
+#else
+									    ga.Build[i] = PlayerSettings.iOS.buildNumber;
 										EditorGUILayout.HelpBox("Using iOS Player Settings Build number as build number in events. \nBuild number is currently set to \"" + ga.Build[i] + "\".", MessageType.Info);
+#endif
 									}
-                                }
+								}
                                 break;
                             case false:
                                 GUILayout.BeginHorizontal ();
@@ -1337,7 +1346,11 @@ namespace GameAnalyticsSDK.Editor
 
                     if(ga.UsePlayerSettingsBuildNumber)
                     {
-					EditorGUILayout.HelpBox("PLEASE NOTICE: The SDK will use the Build number (iOS) and the Version* number (Android) from Player Settings as the build number in events.", MessageType.Info);
+#if UNITY_5_6_OR_NEWER
+                        EditorGUILayout.HelpBox("PLEASE NOTICE: The SDK will use the Version* number (Android, iOS) from Player Settings as the build number in events.", MessageType.Info);
+#else
+                        EditorGUILayout.HelpBox("PLEASE NOTICE: The SDK will use the Build number (iOS) and the Version* number (Android) from Player Settings as the build number in events.", MessageType.Info);
+#endif
                     }
 
                     EditorGUILayout.Space();
@@ -1691,6 +1704,7 @@ namespace GameAnalyticsSDK.Editor
 
                         if(ga.Studios.Count == 1)
                         {
+                            bool autoSelectedPlatform = false;
                             for(int i = 0; i < GameAnalytics.SettingsGA.Platforms.Count; ++i)
                             {
                                 RuntimePlatform platform = GameAnalytics.SettingsGA.Platforms[i];
@@ -1698,9 +1712,11 @@ namespace GameAnalyticsSDK.Editor
                                 if(platform == ga.LastCreatedGamePlatform)
                                 {
                                     SelectStudio(1, ga, i);
+                                    autoSelectedPlatform = true;
                                 }
                             }
                             ga.LastCreatedGamePlatform = (RuntimePlatform)(-1);
+                            SetLoginStatus(autoSelectedPlatform ? "Received data. Autoselected platform.." : "Received data. Add a platform..", ga);
                         }
                         else
                         {

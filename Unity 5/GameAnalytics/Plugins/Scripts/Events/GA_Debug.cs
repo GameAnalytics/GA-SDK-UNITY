@@ -45,12 +45,20 @@ namespace GameAnalyticsSDK.Events
 			//We only submit exceptions and errors
 			if (GameAnalytics.SettingsGA.SubmitErrors && _errorCount < MaxErrorCount && type != LogType.Log)
 			{
+				if (string.IsNullOrEmpty (stackTrace)) {
+					stackTrace = (new System.Diagnostics.StackTrace ()).ToString ();
+				}
 				_errorCount++;
 
 				string lString = logString.Replace('"', '\'').Replace('\n', ' ').Replace('\r', ' ');
 				string sTrace = stackTrace.Replace('"', '\'').Replace('\n', ' ').Replace('\r', ' ');
 
-				SubmitError(lString + " " + sTrace, type);
+				string _message = lString + " " + sTrace;
+				if (_message.Length > 8192) {
+					_message = _message.Substring (8192);
+				}
+
+				SubmitError(_message, type);
 			}
 		}
 
