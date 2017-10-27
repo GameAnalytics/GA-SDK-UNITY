@@ -20,6 +20,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.10.3**
+* bug fix to webgl platform (webgl)
+
 **3.10.2**
 * Android manifest file fix for Android SDK Tools v26.0.2 (android)
 * Send build number option fixed for Unity 5.6 and up (ios, android)
