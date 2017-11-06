@@ -20,6 +20,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.10.4**
+* fixed javascript library (webgl)
+
 **3.10.3**
 * bug fix to webgl platform (webgl)
 
