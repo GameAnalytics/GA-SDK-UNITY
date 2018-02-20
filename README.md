@@ -20,6 +20,9 @@ Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wik
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.10.5**
+* 'install' field added to session start events when called for the first time (android, ios)
+
 **3.10.4**
 * fixed javascript library (webgl)
 

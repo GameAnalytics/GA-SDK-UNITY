@@ -11,6 +11,7 @@ using System.Reflection;
 using System;
 using GameAnalyticsSDK.Utilities;
 using GameAnalyticsSDK.Setup;
+using System.Text.RegularExpressions;
 
 namespace GameAnalyticsSDK.Editor
 {
@@ -995,8 +996,8 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            //string tmp = ga.CustomDimensions01[i];
-                            ga.CustomDimensions01[i] = EditorGUILayout.TextField(ga.CustomDimensions01[i]);
+                            
+							ga.CustomDimensions01[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(ga.CustomDimensions01[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
                                 GUILayout.Width(16),
@@ -1021,7 +1022,7 @@ namespace GameAnalyticsSDK.Editor
                         {
                             if(ga.CustomDimensions01.Count < MaxNumberOfDimensions)
                             {
-                                ga.CustomDimensions01.Add("New " + (ga.CustomDimensions01.Count + 1));
+								ga.CustomDimensions01.Add("New (" + (ga.CustomDimensions01.Count + 1) + ")");
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -1041,8 +1042,8 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            //string tmp = ga.CustomDimensions02[i];
-                            ga.CustomDimensions02[i] = EditorGUILayout.TextField(ga.CustomDimensions02[i]);
+                            
+							ga.CustomDimensions02[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(ga.CustomDimensions02[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
                                 GUILayout.Width(16),
@@ -1067,7 +1068,7 @@ namespace GameAnalyticsSDK.Editor
                         {
                             if(ga.CustomDimensions02.Count < MaxNumberOfDimensions)
                             {
-                                ga.CustomDimensions02.Add("New " + (ga.CustomDimensions02.Count + 1));
+								ga.CustomDimensions02.Add("New (" + (ga.CustomDimensions02.Count + 1) + ")");
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -1087,8 +1088,8 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            //string tmp = ga.CustomDimensions03[i];
-                            ga.CustomDimensions03[i] = EditorGUILayout.TextField(ga.CustomDimensions03[i]);
+                            
+							ga.CustomDimensions03[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(ga.CustomDimensions03[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
                                 GUILayout.Width(16),
@@ -1113,7 +1114,7 @@ namespace GameAnalyticsSDK.Editor
                         {
                             if(ga.CustomDimensions03.Count < MaxNumberOfDimensions)
                             {
-                                ga.CustomDimensions03.Add("New " + (ga.CustomDimensions03.Count + 1));
+								ga.CustomDimensions03.Add("New (" + (ga.CustomDimensions03.Count + 1) + ")");
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -1185,8 +1186,8 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            ga.ResourceCurrencies[i] = EditorGUILayout.TextField(ga.ResourceCurrencies[i]);
-
+							ga.ResourceCurrencies[i] = ValidateResourceCurrencyEditor(EditorGUILayout.TextField(ga.ResourceCurrencies[i]));
+                            
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
                                 GUILayout.Width(16),
                                 GUILayout.Height(16)
@@ -1210,7 +1211,7 @@ namespace GameAnalyticsSDK.Editor
                         {
                             if(ga.ResourceCurrencies.Count < MaxNumberOfDimensions)
                             {
-                                ga.ResourceCurrencies.Add("New " + (ga.ResourceCurrencies.Count + 1));
+								ga.ResourceCurrencies.Add("NewCurrency"); // + (ga.ResourceCurrencies.Count + 1));
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -1230,7 +1231,7 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
                             //string tmp = ga.ResourceTypes[i];
-                            ga.ResourceItemTypes[i] = EditorGUILayout.TextField(ga.ResourceItemTypes[i]);
+							ga.ResourceItemTypes[i] = ValidateResourceItemTypeEditor(EditorGUILayout.TextField(ga.ResourceItemTypes[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
                                 GUILayout.Width(16),
@@ -1255,7 +1256,7 @@ namespace GameAnalyticsSDK.Editor
                         {
                             if(ga.ResourceItemTypes.Count < MaxNumberOfDimensions)
                             {
-                                ga.ResourceItemTypes.Add("New " + (ga.ResourceItemTypes.Count + 1));
+								ga.ResourceItemTypes.Add("New (" + (ga.ResourceItemTypes.Count + 1) + ")");
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -2291,5 +2292,84 @@ namespace GameAnalyticsSDK.Editor
         }
 
         #endregion // Helper functions
+
+		#region UIvalidation
+
+		/// <summary>
+		/// Check if a string matches a defined pattern
+		/// </summary>
+		/// <returns><c>true</c>, if match <c>false</c> otherwise.</returns>
+		/// <param name="s">Given string</param>
+		/// <param name="pattern">Pattern.</param>
+		public static bool StringMatch(string s, string pattern)
+		{
+			if(s == null || pattern == null)
+			{
+				return false;
+			}
+
+			return Regex.IsMatch(s, pattern);
+		}
+
+		private string ValidateResourceCurrencyEditor(string currency)
+		{
+			if (!StringMatch (currency, "^[A-Za-z]+$")) {
+				if (currency != null) {
+					Debug.LogError ("Validation fail - resource currency: Cannot contain other characters than 'A-Za-z'. String:'" + currency + "'");
+				}
+				return "Empty";
+			}
+			if (ConsistsOfWhiteSpace(currency)) {
+				return "Empty";
+			}
+			return currency;
+		}
+
+		private string ValidateResourceItemTypeEditor (string itemType)
+		{
+			if (itemType.Length > 64) {
+				Debug.LogError ("Validation fail - resource itemType cannot be longer than 64 chars.");
+				return "Empty";
+			}
+			if (!StringMatch (itemType, "^[A-Za-z0-9\\s\\-_\\.\\(\\)\\!\\?]{1,64}$")) {
+				if (itemType != null) {
+					Debug.LogError ("Validation fail - resource itemType: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: '" + itemType + "'");
+				}
+				return "Empty";
+			}
+			if (ConsistsOfWhiteSpace(itemType)) {
+				return "Empty";
+			}
+			return itemType;
+		}
+
+		private string ValidateCustomDimensionEditor(string customDimension)
+		{
+			if (customDimension.Length > 32) {
+				Debug.LogError ("Validation fail - custom dimension cannot be longer than 32 chars.");
+				return "Empty";
+			}
+			if (!StringMatch (customDimension, "^[A-Za-z0-9\\s\\-_\\.\\(\\)\\!\\?]{1,32}$")) {
+				if (customDimension != null) {
+					Debug.LogError ("Validation fail - custom dimension: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: '" + customDimension + "'");
+				}
+				return "Empty";
+			}
+			if (ConsistsOfWhiteSpace(customDimension)) {
+				return "Empty";
+			}
+			return customDimension;
+		}
+
+		private bool ConsistsOfWhiteSpace(string s)
+		{
+			foreach (char c in s) {
+				if (c != ' ')
+					return false;
+			}
+			return true;
+		}
+
+		#endregion
     }
 }
