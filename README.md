@@ -1,7 +1,7 @@
 # GA-SDK-UNITY
 GameAnalytics Unity SDK.
 
-Documentation is in the [wiki](https://github.com/GameAnalytics/GA-SDK-UNITY/wiki).
+Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 
 
 > :information_source:
