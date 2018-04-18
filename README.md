@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.11.2**
+* updated android google play libraries (android)
+
 **3.11.1**
 * various bug fixes in android native library (android)
 
