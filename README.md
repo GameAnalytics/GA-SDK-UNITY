@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.11.1**
+* various bug fixes in android native library (android)
+
 **3.11.0**
 * ui updated for sign up dialog
 * PLEASE NOTE: initialization is now manual and not automatic anymore
