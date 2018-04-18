@@ -51,7 +51,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "3.10.5";
+        public static string VERSION = "3.11.0";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -97,12 +97,8 @@ namespace GameAnalyticsSDK.Setup
         public string Changes = "";
 
         public bool SignUpOpen = true;
-        public string FirstName = "";
-        public string LastName = "";
-        public string StudioName = "";
-        public string GameName = "";
-        public string PasswordConfirm = "";
-        public bool EmailOptIn = true;
+		public string StudioName = "";
+		public string GameName = "";
         public string EmailGA = "";
 
         [System.NonSerialized]
@@ -176,7 +172,6 @@ namespace GameAnalyticsSDK.Setup
         [System.NonSerialized]
         public GUIStyle SignupButton;
 
-        public bool UseCustomId = false;
 		public bool UsePlayerSettingsBuildNumber = false;
         public bool SubmitErrors = true;
         public int MaxErrorCount = 10;

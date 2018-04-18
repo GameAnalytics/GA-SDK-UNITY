@@ -39,11 +39,6 @@ namespace GameAnalyticsSDK.State
 			return _settings.UseManualSessionHandling;
 		}
 
-		public static bool IsCustomIDEnabled()
-		{
-			return _settings.UseCustomId;
-		}
-
 		public static bool HasAvailableResourceCurrency (string _currency)
 		{
 			if (ListContainsString (_settings.ResourceCurrencies, _currency))

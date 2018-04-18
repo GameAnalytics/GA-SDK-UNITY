@@ -20,6 +20,10 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**3.11.0**
+* ui updated for sign up dialog
+* PLEASE NOTE: initialization is now manual and not automatic anymore
+
 **3.10.5**
 * 'install' field added to session start events when called for the first time (android, ios)
 
