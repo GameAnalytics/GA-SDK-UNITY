@@ -1135,7 +1135,7 @@ var gameanalytics;
             };
             return GADevice;
         }());
-        GADevice.sdkWrapperVersion = "javascript 2.1.2";
+        GADevice.sdkWrapperVersion = "javascript 2.1.3";
         GADevice.osVersionPair = GADevice.matchItem([
             navigator.platform,
             navigator.userAgent,
@@ -2412,6 +2412,7 @@ var gameanalytics;
                     var events = GAStore.select(EGAStore.Events, selectArgs);
                     if (!events || events.length == 0) {
                         GALogger.i("Event queue: No events to send");
+                        GAEvents.updateSessionStore();
                         return;
                     }
                     if (events.length > GAEvents.MaxEventCount) {
@@ -2483,7 +2484,6 @@ var gameanalytics;
                         GAStore["delete"](EGAStore.Events, requestIdWhereArgs);
                     }
                 }
-                GAEvents.updateSessionStore();
             };
             GAEvents.cleanupEvents = function () {
                 GAStore.update(EGAStore.Events, [["status", "new"]]);
@@ -3273,6 +3273,12 @@ var gameanalytics;
             if (needsInitialized && !GAState.isEnabled()) {
                 if (warn) {
                     GALogger.w(message + "SDK is disabled");
+                }
+                return false;
+            }
+            if (needsInitialized && !GAState.sessionIsStarted()) {
+                if (warn) {
+                    GALogger.w(message + "Session has not started yet");
                 }
                 return false;
             }
