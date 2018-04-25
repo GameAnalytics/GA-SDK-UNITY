@@ -22,7 +22,7 @@ Changelog
 <!--(CHANGELOG_TOP)-->
 **3.11.3**
 * fixed session length bug
-* fxied not allowing to send event when session is not started
+* fixed not allowing to send event when session is not started
 
 **3.11.2**
 * updated android google play libraries (android)
