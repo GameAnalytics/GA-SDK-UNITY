@@ -46,7 +46,7 @@ namespace GameAnalyticsSDK
 		void OnEnable()
 		{
 			EditorApplication.hierarchyWindowItemOnGUI += GameAnalytics.HierarchyWindowCallback;
-			
+
 			if(Application.isPlaying)
 				_instance = this;
 		}
@@ -59,11 +59,11 @@ namespace GameAnalyticsSDK
 
 		public void Awake()
 		{
-			if (!Application.isPlaying) 
+			if (!Application.isPlaying)
 			{
 				return;
 			}
-			
+
 			if(_instance != null)
 			{
 				// only one system tracker allowed per scene
@@ -77,22 +77,22 @@ namespace GameAnalyticsSDK
 
 			Application.RegisterLogCallback(GA_Debug.HandleLog);
 
-			Initialize();
+			InternalInitialize();
 		}
 
 		void OnDestroy()
 		{
 			if(!Application.isPlaying)
 				return;
-			
+
 			if(_instance == this)
-				_instance = null;	
+				_instance = null;
 		}
 
-		void OnApplicationPause(bool pauseStatus) 
+		void OnApplicationPause(bool pauseStatus)
 		{
 			#if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
 			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 			if (pauseStatus) {
@@ -104,10 +104,10 @@ namespace GameAnalyticsSDK
 			#endif
 		}
 
-		void OnApplicationQuit() 
+		void OnApplicationQuit()
 		{
 #if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
 			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
 			ga.CallStatic("onActivityStopped", activity);
@@ -154,7 +154,7 @@ namespace GameAnalyticsSDK
 					AssetDatabase.SaveAssets();
 					Debug.LogWarning("GameAnalytics: Settings file didn't exist and was created");
 					Selection.activeObject = asset;
-					
+
 					//save reference
 					_settings =	asset;
 				}
@@ -166,76 +166,74 @@ namespace GameAnalyticsSDK
 			}
 		}
 
-		private static void Initialize()
+        private static void InternalInitialize()
+        {
+            if(!Application.isPlaying)
+                return; // no need to setup anything else if we are in the editor and not playing
+
+            if(SettingsGA.InfoLogBuild)
+            {
+                GA_Setup.SetInfoLog(true);
+            }
+
+            if(SettingsGA.VerboseLogBuild)
+            {
+                GA_Setup.SetVerboseLog(true);
+            }
+
+            int platformIndex = GetPlatformIndex();
+
+            GA_Wrapper.SetUnitySdkVersion("unity " + Settings.VERSION);
+            GA_Wrapper.SetUnityEngineVersion("unity " + GetUnityVersion());
+
+            if(platformIndex >= 0)
+            {
+                GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
+            }
+
+            if(SettingsGA.CustomDimensions01.Count > 0)
+            {
+                GA_Setup.SetAvailableCustomDimensions01(SettingsGA.CustomDimensions01);
+            }
+
+            if(SettingsGA.CustomDimensions02.Count > 0)
+            {
+                GA_Setup.SetAvailableCustomDimensions02(SettingsGA.CustomDimensions02);
+            }
+
+            if(SettingsGA.CustomDimensions03.Count > 0)
+            {
+                GA_Setup.SetAvailableCustomDimensions03(SettingsGA.CustomDimensions03);
+            }
+
+            if(SettingsGA.ResourceItemTypes.Count > 0)
+            {
+                GA_Setup.SetAvailableResourceItemTypes(SettingsGA.ResourceItemTypes);
+            }
+
+            if(SettingsGA.ResourceCurrencies.Count > 0)
+            {
+                GA_Setup.SetAvailableResourceCurrencies(SettingsGA.ResourceCurrencies);
+            }
+
+            if(SettingsGA.UseManualSessionHandling)
+            {
+                SetEnabledManualSessionHandling(true);
+            }
+        }
+
+		public static void Initialize()
 		{
-			if(!Application.isPlaying)
-				return; // no need to setup anything else if we are in the editor and not playing
+            int platformIndex = GetPlatformIndex();
 
-			if(SettingsGA.InfoLogBuild)
-			{
-				GA_Setup.SetInfoLog(true);
-			}
-
-			if(SettingsGA.VerboseLogBuild)
-			{
-				GA_Setup.SetVerboseLog(true);
-			}
-			
-			int platformIndex = GetPlatformIndex();
-
-			GA_Wrapper.SetUnitySdkVersion("unity " + Settings.VERSION);
-			GA_Wrapper.SetUnityEngineVersion("unity " + GetUnityVersion());
-
-			if(platformIndex >= 0)
-			{
-				GA_Wrapper.SetBuild(SettingsGA.Build[platformIndex]);
-			}
-
-			if(SettingsGA.CustomDimensions01.Count > 0)
-			{
-				GA_Setup.SetAvailableCustomDimensions01(SettingsGA.CustomDimensions01);
-			}
-
-			if(SettingsGA.CustomDimensions02.Count > 0)
-			{
-				GA_Setup.SetAvailableCustomDimensions02(SettingsGA.CustomDimensions02);
-			}
-
-			if(SettingsGA.CustomDimensions03.Count > 0)
-			{
-				GA_Setup.SetAvailableCustomDimensions03(SettingsGA.CustomDimensions03);
-			}
-
-			if(SettingsGA.ResourceItemTypes.Count > 0)
-			{
-				GA_Setup.SetAvailableResourceItemTypes(SettingsGA.ResourceItemTypes);
-			}
-
-			if(SettingsGA.ResourceCurrencies.Count > 0)
-			{
-				GA_Setup.SetAvailableResourceCurrencies(SettingsGA.ResourceCurrencies);
-			}
-
-			if(SettingsGA.UseManualSessionHandling)
-			{
-				SetEnabledManualSessionHandling(true);
-			}
-
-			if(platformIndex >= 0)
-			{
-				if (!SettingsGA.UseCustomId) 
-				{
-					GA_Wrapper.Initialize (SettingsGA.GetGameKey (platformIndex), SettingsGA.GetSecretKey (platformIndex));
-				} 
-				else 
-				{
-					Debug.Log ("Custom id is enabled. Initialize is delayed until custom id has been set.");
-				}
-			}
-			else
-			{
-				Debug.LogWarning("Unsupported platform: " + Application.platform);
-			}
+            if(platformIndex >= 0)
+            {
+                GA_Wrapper.Initialize (SettingsGA.GetGameKey (platformIndex), SettingsGA.GetSecretKey (platformIndex));
+            }
+            else
+            {
+                Debug.LogWarning("GameAnalytics: Unsupported platform (events will not be sent in editor; or missing platform in settings): " + Application.platform);
+            }
 		}
 
         /// <summary>
@@ -440,7 +438,7 @@ namespace GameAnalyticsSDK
 		/// <param name="userId">User identifier.</param>
 		public static void SetCustomId(string userId)
 		{
-			if (SettingsGA.UseCustomId) 
+			if (SettingsGA.UseCustomId)
 			{
 				Debug.Log ("Initializing with custom id: " + userId);
 				GA_Wrapper.SetCustomUserId (userId);
@@ -453,8 +451,8 @@ namespace GameAnalyticsSDK
 				{
 					Debug.LogWarning("Unsupported platform (or missing platform in settings): " + Application.platform);
 				}
-			} 
-			else 
+			}
+			else
 			{
 				Debug.LogWarning ("Custom id is not enabled");
 			}
@@ -468,7 +466,7 @@ namespace GameAnalyticsSDK
 		{
 			GA_Wrapper.SetEnabledManualSessionHandling(enabled);
 		}
-		
+
 		/// <summary>
 		/// Starts the session.
 		/// </summary>
@@ -476,7 +474,7 @@ namespace GameAnalyticsSDK
 		{
 			GA_Wrapper.StartSession();
 		}
-		
+
 		/// <summary>
 		/// Ends the session.
 		/// </summary>
@@ -571,7 +569,7 @@ namespace GameAnalyticsSDK
 			string[] temp = myFile [0].ToString ().Split (assets, 2, System.StringSplitOptions.None);
 			return "Assets" + Path.DirectorySeparatorChar + temp [1];
 		}
-		
+
 		public static void HierarchyWindowCallback(int instanceID, Rect selectionRect)
 		{
 			GameObject go = (GameObject)EditorUtility.InstanceIDToObject(instanceID);
@@ -580,16 +578,16 @@ namespace GameAnalyticsSDK
 				float addX = 0;
 				if(go.GetComponent("PlayMakerFSM") != null)
 					addX = selectionRect.height + 2;
-				
+
 				if(GameAnalytics.SettingsGA.Logo == null)
 				{
 					GameAnalytics.SettingsGA.Logo = (Texture2D)AssetDatabase.LoadAssetAtPath(WhereIs("gaLogo.png"), typeof(Texture2D));
 				}
-				
+
 				Graphics.DrawTexture(new Rect(GUILayoutUtility.GetLastRect().width - selectionRect.height - 5 - addX, selectionRect.y, selectionRect.height, selectionRect.height), GameAnalytics.SettingsGA.Logo);
 			}
 		}
-		
+
 #endif
     }
 }

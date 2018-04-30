@@ -20,6 +20,10 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**4.0.0**
+* dumped major version to emphasize the need to use manual initialization of the SDK now
+* added log warnings to warn if the SDK has not been manually initialized before sending events
+
 **3.11.3**
 * fixed session length bug
 * fixed not allowing to send event when session is not started
