@@ -105,7 +105,7 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor)
 			{
-				Debug.Log("addBusinessEvent("+currency+","+amount+","+itemType+","+itemId+","+cartType+","+receipt+") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log("addBusinessEvent("+currency+","+amount+","+itemType+","+itemId+","+cartType+","+receipt+")");
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor)
 			{
-				Debug.Log("addBusinessEventAndAutoFetchReceipt("+currency+","+amount+","+itemType+","+itemId+","+cartType+") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log("addBusinessEventAndAutoFetchReceipt("+currency+","+amount+","+itemType+","+itemId+","+cartType+")");
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor)
 			{
-				Debug.Log("addBusinessEventWithReceipt("+currency+","+amount+","+itemType+","+itemId+","+cartType+","+receipt+","+store+","+signature+") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log("addBusinessEventWithReceipt("+currency+","+amount+","+itemType+","+itemId+","+cartType+","+receipt+","+store+","+signature+")");
 			}
 		}
 #endif
@@ -134,7 +134,7 @@ namespace GameAnalyticsSDK.Wrapper
 		private static void addBusinessEvent (string currency, int amount, string itemType, string itemId, string cartType)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addBusinessEvent(" + currency + "," + amount + "," + itemType + "," + itemId + "," + cartType + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addBusinessEvent(" + currency + "," + amount + "," + itemType + "," + itemId + "," + cartType + ")");
 			}
 		}
 		#endif
@@ -142,42 +142,42 @@ namespace GameAnalyticsSDK.Wrapper
 		private static void addResourceEvent (int flowType, string currency, float amount, string itemType, string itemId)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addResourceEvent(" + flowType + "," + currency + "," + amount + "," + itemType + "," + itemId + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addResourceEvent(" + flowType + "," + currency + "," + amount + "," + itemType + "," + itemId + ")");
 			}
 		}
 
 		private static void addProgressionEvent (int progressionStatus, string progression01, string progression02, string progression03)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addProgressionEvent(" + progressionStatus + "," + progression01 + "," + progression02 + "," + progression03 + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addProgressionEvent(" + progressionStatus + "," + progression01 + "," + progression02 + "," + progression03 + ")");
 			}
 		}
 
 		private static void addProgressionEventWithScore (int progressionStatus, string progression01, string progression02, string progression03, int score)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addProgressionEvent(" + progressionStatus + "," + progression01 + "," + progression02 + "," + progression03 + "," + score + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addProgressionEvent(" + progressionStatus + "," + progression01 + "," + progression02 + "," + progression03 + "," + score + ")");
 			}
 		}
 
 		private static void addDesignEvent (string eventId)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addDesignEvent(" + eventId + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addDesignEvent(" + eventId + ")");
 			}
 		}
 
 		private static void addDesignEventWithValue (string eventId, float value)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addDesignEventWithValue(" + eventId + "," + value + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addDesignEventWithValue(" + eventId + "," + value + ")");
 			}
 		}
 
 		private static void addErrorEvent (int severity, string message)
 		{
 			if (GameAnalytics.SettingsGA.InfoLogEditor) {
-				Debug.Log ("addErrorEvent(" + severity + "," + message + ") (REMEMBER SDK NOW NEEDS TO BE MANUALLY INITIALIZED)");
+				Debug.Log ("addErrorEvent(" + severity + "," + message + ")");
 			}
 		}
 
@@ -243,7 +243,7 @@ namespace GameAnalyticsSDK.Wrapper
 				Debug.Log ("gameAnalyticsEndSession()");
 			}
 		}
-			
+
 		#endif
 
 		public static void SetAvailableCustomDimensions01 (string list)
@@ -352,7 +352,7 @@ namespace GameAnalyticsSDK.Wrapper
 		{
 			setCustomDimension03 (customDimension);
         }
-		
+
 #if UNITY_IOS || UNITY_TVOS
 		public static void AddBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt)
 		{
@@ -372,7 +372,7 @@ namespace GameAnalyticsSDK.Wrapper
 		}
 #endif
 
-#if !UNITY_IOS && !UNITY_TVOS 
+#if !UNITY_IOS && !UNITY_TVOS
 		public static void AddBusinessEvent (string currency, int amount, string itemType, string itemId, string cartType)
 		{
 #if UNITY_EDITOR

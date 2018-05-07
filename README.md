@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**4.0.2**
+* small editor bug fixes for stop showing log warnings after calling initialize function
+
 **4.0.1**
 * small update for wehn signing up in editor
 

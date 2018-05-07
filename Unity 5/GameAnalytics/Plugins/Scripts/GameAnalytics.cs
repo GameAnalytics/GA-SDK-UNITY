@@ -249,6 +249,7 @@ namespace GameAnalyticsSDK
             }
             else
             {
+                GameAnalytics._hasInitializeBeenCalled = true;
                 Debug.LogWarning("GameAnalytics: Unsupported platform (events will not be sent in editor; or missing platform in settings): " + Application.platform);
             }
         }
