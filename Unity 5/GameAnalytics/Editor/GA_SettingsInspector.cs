@@ -995,7 +995,7 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            
+
 							ga.CustomDimensions01[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(ga.CustomDimensions01[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
@@ -1041,7 +1041,7 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            
+
 							ga.CustomDimensions02[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(ga.CustomDimensions02[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
@@ -1087,7 +1087,7 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
-                            
+
 							ga.CustomDimensions03[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(ga.CustomDimensions03[i]));
 
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
@@ -1186,7 +1186,7 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.Label("", GUILayout.Width(21));
                             GUILayout.Label("-", GUILayout.Width(10));
 							ga.ResourceCurrencies[i] = ValidateResourceCurrencyEditor(EditorGUILayout.TextField(ga.ResourceCurrencies[i]));
-                            
+
                             if(GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
                                 GUILayout.Width(16),
                                 GUILayout.Height(16)
@@ -1482,7 +1482,7 @@ namespace GameAnalyticsSDK.Editor
 			jsonTable["last_name"] = signup.LastName;
             jsonTable["studio_name"] = ga.StudioName;
 			jsonTable["email_opt_out"] = signup.EmailOptIn;
-			jsonTable["agree_terms"] = signup.AcceptedTerms;
+			jsonTable["accept_terms"] = signup.AcceptedTerms;
 
             byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.JsonEncode(jsonTable));
 
