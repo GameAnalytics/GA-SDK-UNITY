@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**4.0.3**
+* small uwp bug fix (uwp)
+
 **4.0.2**
 * small editor bug fixes for stop showing log warnings after calling initialize function
 
