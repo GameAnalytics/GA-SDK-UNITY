@@ -23,6 +23,7 @@ Changelog
 **4.0.4**
 * fixes to android session handling
 * added custom dimensions to design and error events
+* fixes to sqlite db path for windows and linux platforms
 
 **4.0.3**
 * small uwp bug fix (uwp)
