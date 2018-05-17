@@ -89,29 +89,9 @@ namespace GameAnalyticsSDK
 				_instance = null;
 		}
 
-		void OnApplicationPause(bool pauseStatus)
-		{
-			#if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
-			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-			if (pauseStatus) {
-				ga.CallStatic("onActivityPaused", activity);
-			}
-			else {
-				ga.CallStatic("onActivityResumed", activity);
-			}
-			#endif
-		}
-
 		void OnApplicationQuit()
 		{
-#if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-			AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
-			AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-			ga.CallStatic("onActivityStopped", activity);
-#elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID)
+#if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID)
 			GameAnalyticsSDK.Net.GameAnalytics.OnStop();
 #endif
 		}

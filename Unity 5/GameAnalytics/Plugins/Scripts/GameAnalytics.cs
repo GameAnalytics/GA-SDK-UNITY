@@ -92,32 +92,24 @@ namespace GameAnalyticsSDK
                 _instance = null;
         }
 
-        void OnApplicationPause(bool pauseStatus)
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-            if (pauseStatus) {
-                ga.CallStatic("onActivityPaused", activity);
-            }
-            else {
-                ga.CallStatic("onActivityResumed", activity);
-            }
-#endif
-        }
+//         void OnApplicationPause(bool pauseStatus)
+//         {
+// #if UNITY_ANDROID && !UNITY_EDITOR
+//             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+//             AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+//             AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
+//             if (pauseStatus) {
+//                 ga.CallStatic("onActivityPaused", activity);
+//             }
+//             else {
+//                 ga.CallStatic("onActivityResumed", activity);
+//             }
+// #endif
+//         }
 
         void OnApplicationQuit()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            if(!SettingsGA.UseManualSessionHandling)
-            {
-                AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-                AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
-                AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-                ga.CallStatic("onActivityStopped", activity);
-            }
-#elif (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN)
+#if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN)
             if(!SettingsGA.UseManualSessionHandling)
             {
                 GameAnalyticsSDK.Net.GameAnalytics.OnStop();
