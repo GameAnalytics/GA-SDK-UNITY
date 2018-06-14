@@ -259,6 +259,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Business.NewEvent(currency, amount, itemType, itemId, cartType);
         }
@@ -278,6 +279,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, receipt, false);
         }
@@ -295,6 +297,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null, true);
         }
@@ -315,6 +318,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Business.NewEventGooglePlay(currency, amount, itemType, itemId, cartType, receipt, signature);
         }
@@ -329,6 +333,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Design.NewEvent(eventName);
         }
@@ -343,6 +348,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Design.NewEvent(eventName, eventValue);
         }
@@ -357,6 +363,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01);
         }
@@ -372,6 +379,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, progression02);
         }
@@ -388,6 +396,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03);
         }
@@ -403,6 +412,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, score);
         }
@@ -419,6 +429,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, progression02, score);
         }
@@ -436,6 +447,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, score);
         }
@@ -453,6 +465,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Resource.NewEvent(flowType, currency, amount, itemType, itemId);
         }
@@ -467,6 +480,7 @@ namespace GameAnalyticsSDK
             if(!GameAnalytics._hasInitializeBeenCalled)
             {
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
             }
             GA_Error.NewEvent(severity, message);
         }
