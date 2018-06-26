@@ -185,40 +185,6 @@ namespace GameAnalyticsSDK.Editor
                 }
             }
             {
-                PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/Mac/sqlite3.bundle") as PluginImporter;
-                if(importer != null && (importer.GetCompatibleWithAnyPlatform() ||
-#if UNITY_2017_3_OR_NEWER
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneOSX))
-#else
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel) ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64) ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal))
-#endif
-                    )
-                {
-                    importer.SetCompatibleWithAnyPlatform(false);
-                    importer.SetCompatibleWithEditor(false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
-#if UNITY_2017_3_OR_NEWER
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
-#else
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, true);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, true);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, true);
-#endif
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, false);
-                    importer.SaveAndReimport();
-                }
-            }
-            {
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/Plugins/Linux/sqlite3.so") as PluginImporter;
                 if(importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux) ||
                     !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux64) ||

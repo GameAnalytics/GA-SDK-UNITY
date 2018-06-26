@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**4.0.6**
+* removed mac sqlite library so local installed one is used (mac)
+
 **4.0.5**
 * fixes to not trying to send events if SDK has not been initialized yet
 
