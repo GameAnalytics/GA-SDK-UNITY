@@ -9,9 +9,9 @@ namespace GameAnalyticsSDK.Events
 	{
 		#region public methods
 
-		public static void NewEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId)
+		public static void NewEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId, IDictionary<string, object> fields)
 		{
-			GA_Wrapper.AddResourceEvent(flowType, currency, amount, itemType, itemId);
+			GA_Wrapper.AddResourceEvent(flowType, currency, amount, itemType, itemId, fields);
 		}
 
 		#endregion

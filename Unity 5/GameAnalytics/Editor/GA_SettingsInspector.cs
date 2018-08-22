@@ -1484,7 +1484,7 @@ namespace GameAnalyticsSDK.Editor
 			jsonTable["email_opt_out"] = signup.EmailOptIn;
 			jsonTable["accept_terms"] = signup.AcceptedTerms;
 
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.JsonEncode(jsonTable));
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
 
             WWW www = new WWW(_gaUrl + "user", data, GA_EditorUtilities.WWWHeaders());
 
@@ -1497,18 +1497,18 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-                Hashtable returnParam = null;
+                IDictionary<string, object> returnParam = null;
                 string error = "";
                 if(!string.IsNullOrEmpty(www.text))
                 {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+                    returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
                     if(returnParam.ContainsKey("errors"))
                     {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
+                        IList<object> errorList = returnParam["errors"] as IList<object>;
                         if(errorList != null && errorList.Count > 0)
                         {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if(errors.ContainsKey("msg"))
+                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
+							if(errors.ContainsKey("msg"))
                             {
                                 error = errors["msg"].ToString();
                             }
@@ -1526,8 +1526,8 @@ namespace GameAnalyticsSDK.Editor
                     }
                     else if(returnParam != null)
                     {
-                        ArrayList resultList = (ArrayList)returnParam["results"];
-                        Hashtable results = (Hashtable)resultList[0];
+                        IList<object> resultList = returnParam["results"] as IList<object>;
+                        IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
                         ga.TokenGA = results["token"].ToString();
                         ga.ExpireTime = results["exp"].ToString();
 
@@ -1563,7 +1563,7 @@ namespace GameAnalyticsSDK.Editor
             jsonTable["email"] = ga.EmailGA;
             jsonTable["password"] = ga.PasswordGA;
 
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.JsonEncode(jsonTable));
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
 
             WWW www = new WWW(_gaUrl + "token", data, GA_EditorUtilities.WWWHeaders());
             GA_ContinuationManager.StartCoroutine(LoginUserFrontend(www, ga), () => www.isDone);
@@ -1576,18 +1576,18 @@ namespace GameAnalyticsSDK.Editor
             try
             {
                 string error = "";
-                Hashtable returnParam = null;
+                IDictionary<string, object> returnParam = null;
                 if(!string.IsNullOrEmpty(www.text))
                 {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+                    returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
 
-                    if(returnParam.ContainsKey("errors"))
+					if(returnParam.ContainsKey("errors"))
                     {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
+                        IList<object> errorList = returnParam["errors"] as IList<object>;
                         if(errorList != null && errorList.Count > 0)
                         {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if(errors.ContainsKey("msg"))
+                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
+							if(errors.ContainsKey("msg"))
                             {
                                 error = errors["msg"].ToString();
                             }
@@ -1604,8 +1604,8 @@ namespace GameAnalyticsSDK.Editor
                     }
                     else if(returnParam != null)
                     {
-                        ArrayList resultList = (ArrayList)returnParam["results"];
-                        Hashtable results = (Hashtable)resultList[0];
+                        IList<object> resultList = returnParam["results"] as IList<object>;
+                        IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
                         ga.TokenGA = results["token"].ToString();
                         ga.ExpireTime = results["exp"].ToString();
 
@@ -1639,18 +1639,18 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-                Hashtable returnParam = null;
+                IDictionary<string, object> returnParam = null;
                 string error = "";
                 if(!string.IsNullOrEmpty(www.text))
                 {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if(returnParam.ContainsKey("errors"))
+                    returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
+					if(returnParam.ContainsKey("errors"))
                     {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
+                        IList<object> errorList = returnParam["errors"] as IList<object>;
                         if(errorList != null && errorList.Count > 0)
                         {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if(errors.ContainsKey("msg"))
+                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
+							if(errors.ContainsKey("msg"))
                             {
                                 error = errors["msg"].ToString();
                             }
@@ -1667,23 +1667,23 @@ namespace GameAnalyticsSDK.Editor
                     }
                     else if(returnParam != null)
                     {
-                        ArrayList resultList = (ArrayList)returnParam["results"];
-                        Hashtable results = (Hashtable)resultList[0];
-                        ArrayList studioList = (ArrayList)results["studios"];
+						IList<object> resultList = returnParam["results"] as IList<object>;
+						IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
+						IList<object> studioList = results["studios"] as IList<object>;
 
                         List<Studio> returnStudios = new List<Studio>();
 
                         for(int s = 0; s < studioList.Count; s++)
                         {
-                            Hashtable studio = (Hashtable)studioList[s];
-                            if(!studio.ContainsKey("demo") || !((bool)studio["demo"]))
+							IDictionary<string, object> studio = studioList[s] as IDictionary<string, object>;
+							if(!studio.ContainsKey("demo") || !((bool)studio["demo"]))
                             {
                                 List<Game> returnGames = new List<Game>();
 
-                                ArrayList gamesList = (ArrayList)studio["games"];
+                                List<object> gamesList = (List<object>)studio["games"];
                                 for(int g = 0; g < gamesList.Count; g++)
                                 {
-                                    Hashtable games = (Hashtable)gamesList[g];
+									IDictionary<string, object> games = gamesList[g] as IDictionary<string, object>;
                                     returnGames.Add(new Game(games["name"].ToString(), int.Parse(games["id"].ToString()), games["key"].ToString(), games["secret"].ToString()));
                                 }
 
@@ -1724,7 +1724,7 @@ namespace GameAnalyticsSDK.Editor
             }
             catch(Exception e)
             {
-                Debug.LogError("Failed to get user data: " + e);
+				Debug.LogError("Failed to get user data: " + e.ToString() + ", " + e.StackTrace);
                 SetLoginStatus("Failed to get data.", ga);
             }
         }
@@ -1747,7 +1747,7 @@ namespace GameAnalyticsSDK.Editor
                 jsonTable["store"] = null;
                 jsonTable["googleplay_key"] = string.IsNullOrEmpty(googlePlayPublicKey) ? null : googlePlayPublicKey;
             }
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.JsonEncode(jsonTable));
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
 
             string url = _gaUrl + "studios/" + ga.Studios[studioIndex].ID + "/games";
             WWW www = new WWW(url, data, GA_EditorUtilities.WWWHeadersWithAuthorization(ga.TokenGA));
@@ -1760,18 +1760,18 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-                Hashtable returnParam = null;
+                IDictionary<string, object> returnParam = null;
                 string error = "";
                 if(!string.IsNullOrEmpty(www.text))
                 {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if(returnParam.ContainsKey("errors"))
+                    returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
+					if(returnParam.ContainsKey("errors"))
                     {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
+                        IList<object> errorList = returnParam["errors"] as IList<object>;
                         if(errorList != null && errorList.Count > 0)
                         {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if(errors.ContainsKey("msg"))
+                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
+							if(errors.ContainsKey("msg"))
                             {
                                 error = errors["msg"].ToString();
                             }
@@ -1851,18 +1851,18 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-                Hashtable returnParam = null;
+                IDictionary<string, object> returnParam = null;
                 string error = "";
                 if(!string.IsNullOrEmpty(www.text))
                 {
-                    returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if(returnParam.ContainsKey("errors"))
+                    returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
+					if(returnParam.ContainsKey("errors"))
                     {
-                        ArrayList errorList = (ArrayList)returnParam["errors"];
+                        IList<object> errorList = returnParam["errors"] as IList<object>;
                         if(errorList != null && errorList.Count > 0)
                         {
-                            Hashtable errors = (Hashtable)errorList[0];
-                            if(errors.ContainsKey("msg"))
+                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
+							if(errors.ContainsKey("msg"))
                             {
                                 error = errors["msg"].ToString();
                             }
@@ -1879,12 +1879,12 @@ namespace GameAnalyticsSDK.Editor
                     }
                     else if(returnParam != null)
                     {
-                        ArrayList resultList = (ArrayList)returnParam["results"];
+                        IList<object> resultList = returnParam["results"] as IList<object>;
 
                         List<AppFiguresGame> appFiguresGames = new List<AppFiguresGame>();
                         for(int s = 0; s < resultList.Count; s++)
                         {
-                            Hashtable result = (Hashtable)resultList[s];
+                            IDictionary<string, object> result = resultList[s] as IDictionary<string, object>;
 
                             string name = result["title"].ToString();
                             string appID = result["store_id"].ToString();
@@ -1909,7 +1909,7 @@ namespace GameAnalyticsSDK.Editor
             }
             catch(Exception e)
             {
-                Debug.LogError("Failed to find app: " + e);
+				Debug.LogError("Failed to find app: " + e.ToString() + ", " + e.StackTrace);
                 SetLoginStatus("Failed to find app.", ga);
             }
         }
@@ -1997,13 +1997,13 @@ namespace GameAnalyticsSDK.Editor
             {
                 if(string.IsNullOrEmpty(www.error))
                 {
-                    Hashtable returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
-                    if(returnParam.ContainsKey("unity"))
+                    IDictionary<string, object> returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
+					if(returnParam.ContainsKey("unity"))
                     {
-                        Hashtable unityParam = (Hashtable)returnParam["unity"];
-                        if(unityParam.ContainsKey("version"))
+                        IDictionary<string, object> unityParam = returnParam["unity"] as IDictionary<string, object>;
+						if(unityParam.ContainsKey("version"))
                         {
-                            string newVersion = ((Hashtable)returnParam["unity"])["version"].ToString();
+                            string newVersion = (returnParam["unity"] as IDictionary<string, object>)["version"].ToString();
 
                             if(IsNewVersion(newVersion, Settings.VERSION))
                             {
@@ -2027,14 +2027,14 @@ namespace GameAnalyticsSDK.Editor
             {
                 if(string.IsNullOrEmpty(www.error))
                 {
-                    Hashtable returnParam = (Hashtable)GA_MiniJSON.JsonDecode(www.text);
+                    IDictionary<string, object> returnParam = GA_MiniJSON.Deserialize(www.text) as IDictionary<string, object>;
 
-                    ArrayList unity = ((ArrayList)returnParam["unity"]);
+                    IList<object> unity = (returnParam["unity"] as IList<object>);
                     string newChanges = "";
                     for (int i = 0; i < unity.Count; i++)
                     {
-                        Hashtable unityHash = (Hashtable)unity[i];
-                        ArrayList changes = ((ArrayList)unityHash["changes"]);
+                        IDictionary<string, object> unityHash = unity[i] as IDictionary<string, object>;
+                        IList<object> changes = (unityHash["changes"] as IList<object>);
 
                         if (unityHash["version"].ToString() == Settings.VERSION)
                         {

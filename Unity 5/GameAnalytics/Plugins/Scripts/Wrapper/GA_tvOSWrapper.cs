@@ -95,6 +95,21 @@ namespace GameAnalyticsSDK.Wrapper
 		[DllImport ("__Internal")]
 		private static extern void setBirthYear(int birthYear);
 
+		private static string getCommandCenterValueAsString(string key, string defaultValue)
+		{
+			return defaultValue;
+		}
+
+		private static bool isCommandCenterReady ()
+		{
+			return false;
+		}
+
+		private static string getConfigurationsContentAsString()
+		{
+			return "";
+		}
+
 		#endif
 	}
 }

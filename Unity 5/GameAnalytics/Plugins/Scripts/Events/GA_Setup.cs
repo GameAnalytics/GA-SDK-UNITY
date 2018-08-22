@@ -15,7 +15,7 @@ namespace GameAnalyticsSDK.Events
 		{
             if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions(customDimensions.ToArray()))
             {
-                string json = GA_MiniJSON.JsonEncode(customDimensions.ToArray());
+                string json = GA_MiniJSON.Serialize(customDimensions);
                 GA_Wrapper.SetAvailableCustomDimensions01(json);
             }
 		}
@@ -23,7 +23,7 @@ namespace GameAnalyticsSDK.Events
 		public static void SetAvailableCustomDimensions02 (List<string> customDimensions)
 		{
 			if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
-				string json = GA_MiniJSON.JsonEncode (customDimensions.ToArray ());
+				string json = GA_MiniJSON.Serialize(customDimensions);
 				GA_Wrapper.SetAvailableCustomDimensions02 (json);
 			}
         }
@@ -31,7 +31,7 @@ namespace GameAnalyticsSDK.Events
 		public static void SetAvailableCustomDimensions03 (List<string> customDimensions)
 		{
 			if (GameAnalyticsSDK.Validators.GAValidator.ValidateCustomDimensions (customDimensions.ToArray ())) {
-				string json = GA_MiniJSON.JsonEncode (customDimensions.ToArray ());
+				string json = GA_MiniJSON.Serialize(customDimensions);
 				GA_Wrapper.SetAvailableCustomDimensions03 (json);
 			}
         }
@@ -39,7 +39,7 @@ namespace GameAnalyticsSDK.Events
 		public static void SetAvailableResourceCurrencies (List<string> resourceCurrencies)
 		{
 			if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceCurrencies (resourceCurrencies.ToArray ())) {
-				string json = GA_MiniJSON.JsonEncode (resourceCurrencies.ToArray ());
+				string json = GA_MiniJSON.Serialize(resourceCurrencies);
 				GA_Wrapper.SetAvailableResourceCurrencies (json);
 			}
 		}
@@ -47,7 +47,7 @@ namespace GameAnalyticsSDK.Events
 		public static void SetAvailableResourceItemTypes (List<string> resourceItemTypes)
 		{
 			if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceItemTypes (resourceItemTypes.ToArray ())) {
-				string json = GA_MiniJSON.JsonEncode (resourceItemTypes.ToArray ());
+				string json = GA_MiniJSON.Serialize(resourceItemTypes);
 				GA_Wrapper.SetAvailableResourceItemTypes (json);
 			}
 		}

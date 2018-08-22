@@ -87,7 +87,7 @@ namespace GameAnalyticsSDK.Events
 				break;
 			}
 
-			GA_Error.NewEvent(severity, message);
+			GA_Error.NewEvent(severity, message, null);
 		}
 
 		/// <summary>

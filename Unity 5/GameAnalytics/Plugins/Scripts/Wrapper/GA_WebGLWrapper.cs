@@ -49,25 +49,25 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void setCustomDimension03(string customDimension);
 
         [DllImport ("__Internal")]
-        private static extern void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType);
+        private static extern void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId);
+        private static extern void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03);
+        private static extern void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score);
+        private static extern void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addDesignEvent(string eventId);
+        private static extern void addDesignEvent(string eventId, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addDesignEventWithValue(string eventId, float value);
+        private static extern void addDesignEventWithValue(string eventId, float value, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addErrorEvent(int severity, string message);
+        private static extern void addErrorEvent(int severity, string message, string fields);
 
         [DllImport ("__Internal")]
         private static extern void setEnabledInfoLog(bool enabled);
@@ -92,6 +92,15 @@ namespace GameAnalyticsSDK.Wrapper
 
         [DllImport ("__Internal")]
         private static extern void setBirthYear(int birthYear);
+
+        [DllImport ("__Internal")]
+        private static extern string getCommandCenterValueAsString(string key, string defaultValue);
+
+        [DllImport ("__Internal")]
+        private static extern bool isCommandCenterReady();
+
+        [DllImport ("__Internal")]
+        private static extern string getConfigurationsContentAsString();
 
         private static void gameAnalyticsStartSession()
         {

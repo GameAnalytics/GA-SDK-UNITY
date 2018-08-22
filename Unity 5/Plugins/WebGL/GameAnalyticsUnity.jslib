@@ -1,4 +1,10 @@
 var GameAnalyticsUnity = {
+    $listener: {
+        onCommandCenterUpdated: function()
+        {
+            SendMessage("GameAnalytics", "OnCommandCenterUpdated");
+        }
+    },
     configureAvailableCustomDimensions01: function(list)
     {
         gameanalytics.GameAnalytics.configureAvailableCustomDimensions01(JSON.parse(Pointer_stringify(list)));
@@ -37,6 +43,7 @@ var GameAnalyticsUnity = {
     },
     initialize: function(gamekey, gamesecret)
     {
+        gameanalytics.GameAnalytics.addCommandCenterListener(listener);
         gameanalytics.GameAnalytics.initialize(Pointer_stringify(gamekey), Pointer_stringify(gamesecret));
     },
     setCustomDimension01: function(customDimension)
@@ -51,33 +58,33 @@ var GameAnalyticsUnity = {
     {
         gameanalytics.GameAnalytics.setCustomDimension03(Pointer_stringify(customDimension));
     },
-    addBusinessEvent: function(currency, amount, itemType, itemId, cartType)
+    addBusinessEvent: function(currency, amount, itemType, itemId, cartType, fields)
     {
-        gameanalytics.GameAnalytics.addBusinessEvent(Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId), Pointer_stringify(cartType));
+        gameanalytics.GameAnalytics.addBusinessEvent(Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId), Pointer_stringify(cartType)/*, JSON.parse(Pointer_stringify(fields))*/);
     },
-    addResourceEvent: function(flowType, currency, amount, itemType, itemId)
+    addResourceEvent: function(flowType, currency, amount, itemType, itemId, fields)
     {
-        gameanalytics.GameAnalytics.addResourceEvent(flowType, Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId));
+        gameanalytics.GameAnalytics.addResourceEvent(flowType, Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId)/*, JSON.parse(Pointer_stringify(fields))*/);
     },
-    addProgressionEvent: function(progressionStatus, progression01, progression02, progression03)
+    addProgressionEvent: function(progressionStatus, progression01, progression02, progression03, fields)
     {
-        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03));
+        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03)/*, JSON.parse(Pointer_stringify(fields))*/);
     },
-    addProgressionEventWithScore: function(progressionStatus, progression01, progression02, progression03, score)
+    addProgressionEventWithScore: function(progressionStatus, progression01, progression02, progression03, score, fields)
     {
-        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03), score);
+        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03), score/*, JSON.parse(Pointer_stringify(fields))*/);
     },
-    addDesignEvent: function(eventId)
+    addDesignEvent: function(eventId, fields)
     {
-        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId));
+        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId)/*, JSON.parse(Pointer_stringify(fields))*/);
     },
-    addDesignEventWithValue: function(eventId, value)
+    addDesignEventWithValue: function(eventId, value, fields)
     {
-        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId), value);
+        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId), value/*, JSON.parse(Pointer_stringify(fields))*/);
     },
-    addErrorEvent: function(severity, message)
+    addErrorEvent: function(severity, message, fields)
     {
-        gameanalytics.GameAnalytics.addErrorEvent(severity, Pointer_stringify(message));
+        gameanalytics.GameAnalytics.addErrorEvent(severity, Pointer_stringify(message)/*, JSON.parse(Pointer_stringify(fields))*/);
     },
     setEnabledInfoLog: function(enabled)
     {
@@ -110,7 +117,26 @@ var GameAnalyticsUnity = {
     setBirthYear: function(birthYear)
     {
         gameanalytics.GameAnalytics.setBirthYear(birthYear);
+    },
+    getCommandCenterValueAsString: function(key, defaultValue)
+    {
+        var returnStr = gameanalytics.GameAnalytics.getCommandCenterValueAsString(Pointer_stringify(key), Pointer_stringify(defaultValue));
+        var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
+        writeStringToMemory(returnStr, buffer);
+        return buffer;
+    },
+    isCommandCenterReady: function()
+    {
+        return gameanalytics.GameAnalytics.isCommandCenterReady();
+    },
+    getConfigurationsContentAsString: function()
+    {
+        var returnStr = gameanalytics.GameAnalytics.getConfigurationsContentAsString();
+        var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
+        writeStringToMemory(returnStr, buffer);
+        return buffer;
     }
 };
 
+autoAddDeps(GameAnalyticsUnity, '$listener');
 mergeInto(LibraryManager.library, GameAnalyticsUnity);

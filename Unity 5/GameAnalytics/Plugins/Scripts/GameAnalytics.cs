@@ -261,7 +261,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType);
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null);
         }
 
 #if UNITY_IOS || UNITY_TVOS
@@ -281,7 +281,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, receipt, false);
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, receipt, false, null);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null, true);
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null, true, null);
         }
 
 #elif UNITY_ANDROID
@@ -320,7 +320,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Business.NewEventGooglePlay(currency, amount, itemType, itemId, cartType, receipt, signature);
+            GA_Business.NewEventGooglePlay(currency, amount, itemType, itemId, cartType, receipt, signature, null);
         }
 #endif
 
@@ -335,7 +335,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Design.NewEvent(eventName);
+            GA_Design.NewEvent(eventName, null);
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Design.NewEvent(eventName, eventValue);
+            GA_Design.NewEvent(eventName, eventValue, null);
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Progression.NewEvent(progressionStatus, progression01);
+            GA_Progression.NewEvent(progressionStatus, progression01, null);
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Progression.NewEvent(progressionStatus, progression01, progression02);
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, null);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03);
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, null);
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Progression.NewEvent(progressionStatus, progression01, score);
+            GA_Progression.NewEvent(progressionStatus, progression01, score, null);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Progression.NewEvent(progressionStatus, progression01, progression02, score);
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, score, null);
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, score);
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, score, null);
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Resource.NewEvent(flowType, currency, amount, itemType, itemId);
+            GA_Resource.NewEvent(flowType, currency, amount, itemType, itemId, null);
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace GameAnalyticsSDK
                 Debug.LogWarning("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Error.NewEvent(severity, message);
+            GA_Error.NewEvent(severity, message, null);
         }
 
         /// <summary>
@@ -573,6 +573,45 @@ namespace GameAnalyticsSDK
         {
             GA_Setup.SetCustomDimension03(customDimension);
         }
+
+        // ----------------------- COMMAND CENTER ---------------------- //
+		public static event Action OnCommandCenterUpdatedEvent;
+
+		public void OnCommandCenterUpdated()
+		{
+			if(OnCommandCenterUpdatedEvent != null)
+			{
+				OnCommandCenterUpdatedEvent();
+			}
+		}
+
+        public static void CommandCenterUpdated()
+        {
+            if (OnCommandCenterUpdatedEvent != null)
+            {
+                OnCommandCenterUpdatedEvent();
+            }
+        }
+
+        public static string GetCommandCenterValueAsString(string key)
+        {
+            return GetCommandCenterValueAsString(key, null);
+        }
+
+        public static string GetCommandCenterValueAsString(string key, string defaultValue)
+        {
+			return GA_Wrapper.GetCommandCenterValueAsString(key, defaultValue);
+        }
+
+        public static bool IsCommandCenterReady()
+        {
+			return GA_Wrapper.IsCommandCenterReady();
+        }
+
+		public static string GetConfigurationsContentAsString()
+		{
+			return GA_Wrapper.GetConfigurationsContentAsString();
+		}
 
         private static string GetUnityVersion()
         {

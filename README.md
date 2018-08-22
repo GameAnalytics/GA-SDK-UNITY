@@ -20,6 +20,10 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.0**
+* added command center functionality
+* fixed various bugs
+
 **4.0.6**
 * removed mac sqlite library so local installed one is used (mac)
 
