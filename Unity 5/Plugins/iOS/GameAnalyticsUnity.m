@@ -204,7 +204,7 @@ void addProgressionEventWithScore(int progressionStatus, const char *progression
                                               progression02:progression02String
                                               progression03:progression03String
                                                       score:score
-                                                     fields:fields_dict];
+                                                     /*fields:fields_dict*/];
 }
 
 void addDesignEvent(const char *eventId, const char *fields) {

@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.1**
+* fixed compile error for ios
+
 **5.0.0**
 * added command center functionality
 * fixed various bugs

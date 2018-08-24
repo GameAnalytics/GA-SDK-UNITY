@@ -1148,7 +1148,7 @@ var gameanalytics;
             };
             return GADevice;
         }());
-        GADevice.sdkWrapperVersion = "javascript 3.0.0";
+        GADevice.sdkWrapperVersion = "javascript 3.0.1";
         GADevice.osVersionPair = GADevice.matchItem([
             navigator.platform,
             navigator.userAgent,
@@ -2963,6 +2963,9 @@ var gameanalytics;
             GameAnalytics.methodMap['onResume'] = GameAnalytics.onResume;
             GameAnalytics.methodMap['addCommandCenterListener'] = GameAnalytics.addCommandCenterListener;
             GameAnalytics.methodMap['removeCommandCenterListener'] = GameAnalytics.removeCommandCenterListener;
+            GameAnalytics.methodMap['getCommandCenterValueAsString'] = GameAnalytics.getCommandCenterValueAsString;
+            GameAnalytics.methodMap['isCommandCenterReady'] = GameAnalytics.isCommandCenterReady;
+            GameAnalytics.methodMap['getConfigurationsContentAsString'] = GameAnalytics.getConfigurationsContentAsString;
             if (typeof window !== 'undefined' && typeof window['GameAnalytics'] !== 'undefined' && typeof window['GameAnalytics']['q'] !== 'undefined') {
                 var q = window['GameAnalytics']['q'];
                 for (var i in q) {
