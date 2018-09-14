@@ -14,20 +14,20 @@ namespace HutongGames.PlayMaker.Actions
 
 		[Tooltip("The severity of this event: critical, error, warning, info, debug")]
 		public GAErrorSeverity severityType ;
-		
+
 		[Tooltip("The message")]
 		[RequiredField]
 		public FsmString Message;
-		
+
 		public override void Reset()
 		{
 			severityType = GAErrorSeverity.Error;
 			Message = new FsmString() { UseVariable = false };
 		}
-		
+
 		public override void OnEnter()
 		{
-			GA_Error.NewEvent(severityType, Message.Value);
+			GA_Error.NewEvent(severityType, Message.Value, null);
 
 			Finish();
 		}

@@ -14,23 +14,23 @@ namespace HutongGames.PlayMaker.Actions
 		[RequiredField]
 		[Tooltip("The event ID")]
 		public FsmString EventID;
-		
+
 		[Tooltip("The event value")]
 		public FsmFloat EventValue;
-		
+
 		public override void Reset()
 		{
 			EventID = new FsmString() { UseVariable = false };
 			EventValue = new FsmFloat() { UseVariable = true };
 		}
-		
+
 		public override void OnEnter()
 		{
 			if (!EventValue.IsNone)
-				GA_Design.NewEvent(EventID.Value, EventValue.Value);
+				GA_Design.NewEvent(EventID.Value, EventValue.Value, null);
 			else
-				GA_Design.NewEvent(EventID.Value);
-			
+				GA_Design.NewEvent(EventID.Value, null);
+
 			Finish();
 		}
 	}

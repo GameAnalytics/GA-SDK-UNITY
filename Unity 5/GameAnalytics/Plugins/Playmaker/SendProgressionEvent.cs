@@ -38,28 +38,28 @@ namespace HutongGames.PlayMaker.Actions
 			Progression03 = new FsmString() { UseVariable = false };
 			Score = new FsmInt() { UseVariable = false };
 		}
-		
+
 		public override void OnEnter()
 		{
 			if (!Score.IsNone)
 			{
 				if (!Progression03.IsNone && !Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, Score.Value);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, Score.Value, null);
 				else if (!Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Score.Value);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Score.Value, null);
 				else
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Score.Value);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Score.Value, null);
 			}
 			else
 			{
 				if (!Progression03.IsNone && !Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, null);
 				else if (!Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, null);
 				else
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, null);
 			}
-			
+
 			Finish();
 		}
 	}

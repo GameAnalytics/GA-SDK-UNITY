@@ -16,7 +16,7 @@ namespace HutongGames.PlayMaker.Actions
 
 		[Tooltip("The resource flow type: add (source) or remove (sink) resource")]
 		public GAResourceFlowType ResourceFlowType;
-		
+
 		[RequiredField]
 		[Tooltip("Type of virtual currency used (E.g. gold, lives)")]
 		public FsmString ResourceCurrency;
@@ -24,15 +24,15 @@ namespace HutongGames.PlayMaker.Actions
 		[RequiredField]
 		[Tooltip("Amount of virtual currency used/gained in this event")]
 		public FsmFloat Amount;
-		
+
 		[RequiredField]
 		[Tooltip("Type of item purchased/used with virtual currency (E.g. boost, gameplay)")]
 		public FsmString ItemType;
-		
+
 		[RequiredField]
 		[Tooltip("Specific item purchased/used with virtual currency (E.g. rainbowboost, gamestart)")]
 		public FsmString ItemID;
-		
+
 		public override void Reset()
 		{
 			ResourceFlowType = GAResourceFlowType.Source;
@@ -41,11 +41,11 @@ namespace HutongGames.PlayMaker.Actions
 			ItemType = new FsmString() { UseVariable = false };
 			ItemID = new FsmString() { UseVariable = false };
 		}
-		
+
 		public override void OnEnter()
 		{
-			GA_Resource.NewEvent(ResourceFlowType, ResourceCurrency.Value, Amount.Value, ItemType.Value, ItemID.Value);
-			
+			GA_Resource.NewEvent(ResourceFlowType, ResourceCurrency.Value, Amount.Value, ItemType.Value, ItemID.Value, null);
+
 			Finish();
 		}
 	}
