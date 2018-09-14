@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.3**
+* fixed playmaker errors
+
 **5.0.2**
 * changed log warnings to log errors for when notifying the user about not having initialized the SDK before trying to send events
 
