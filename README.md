@@ -28,6 +28,7 @@ Changelog
 
 **5.0.2**
 * changed log warnings to log errors for when notifying the user about not having initialized the SDK before trying to send events
+* updated android google play libraries (android)
 
 **5.0.1**
 * fixed compile error for ios
