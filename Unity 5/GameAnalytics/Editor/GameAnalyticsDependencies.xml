@@ -1,0 +1,7 @@
+<dependencies>
+    <androidPackages>
+        <androidPackage spec="com.google.android.gms:play-services-ads-identifier:15.0.1" />
+        <androidPackage spec="com.google.android.gms:play-services-basement:15.0.1"/>
+        <androidPackage spec="com.android.support:appcompat-v7:27.1.1" />
+    </androidPackages>
+</dependencies>

@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.5**
+* added play services resolver
+
 **5.0.4**
 * added missing playmaker actions
 

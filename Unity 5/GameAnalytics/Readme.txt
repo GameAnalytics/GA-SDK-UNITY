@@ -8,10 +8,7 @@ Visit our website at:
 http://www.gameanalytics.com/
 
 Review the Unity SDK documentation at:
-https://github.com/GameAnalytics/GA-SDK-UNITY/wiki
-
-NOTE: This version of the SDK currently only works for
-iOS (version 6+)
+https://gameanalytics.com/docs/unity-sdk
 
 ------------------------------------------------------
 GETTING STARTED
@@ -26,7 +23,7 @@ Window > GameAnalytics > Select Settings
 The Settings resource allows you to create an account,
 studio and game, login to get your game key and secret
 key, and setup Custom Dimensions, Resource Types, and
-other advanced settings. When the Settings resource is 
+other advanced settings. When the Settings resource is
 selected you can also check what version of the SDK you
 are currently using.
 
@@ -37,19 +34,23 @@ iOS
 Xcode must be configured to work with GameAnalytics.
 
 For more information about the build process go here:
-https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20Xcode
+https://gameanalytics.com/docs/unity-sdk#ios-build
 
 ------------------------------------------------------
 Android
 ------------------------------------------------------
 
-Unity 5 can build the SDK for the Android platform without 
-any modification. To use the SDK on Unity 4.6.x+ please 
+Unity 5 can build the SDK for the Android platform without
+any modification.
+
+https://gameanalytics.com/docs/unity-sdk#android-build
+
+------------------------------------------------------
+
+To use the SDK on Unity 4.6.x+ please
 download the compatible SDK here:
 
-[download link]
-
-https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Android%20Build
+http://download.gameanalytics.com/unity/GA_SDK_UNITY_4.unitypackage
 
 ------------------------------------------------------
 
