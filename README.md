@@ -5,7 +5,7 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 
 
 > :information_source:
-> The Unity SDK include support for **Windows**, **Mac**, **Linux**, **WebGL**, **iOS**, **tvOS**, **UWP**, **Tizen**, **Universal Windows 8** and **Android**.   
+> The Unity SDK include support for **Windows**, **Mac**, **Linux**, **WebGL**, **iOS**, **tvOS**, **Tizen**, **UWP**, **Universal Windows 8** and **Android**.   
 >   
 > **Build size:**   
 > Note that download size differ from the actual build size.   
