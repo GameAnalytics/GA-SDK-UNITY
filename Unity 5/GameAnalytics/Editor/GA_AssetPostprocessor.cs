@@ -117,13 +117,13 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, true);
+                    importer.SetCompatibleWithPlatform(BuildTarget.Tizen, false);
 #endif
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.Tizen, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, true);
                     importer.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
                     importer.SetPlatformData(BuildTarget.WSAPlayer, "ScriptingBackend", "Il2Cpp");

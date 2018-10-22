@@ -22,7 +22,8 @@ namespace GameAnalyticsSDK.Setup
         {
             None,
             IncludeSystemSpecsHelp,
-            ProvideCustomUserID}
+            ProvideCustomUserID
+        }
 
         ;
 
@@ -31,7 +32,8 @@ namespace GameAnalyticsSDK.Setup
             None,
             Error,
             Info,
-            Warning}
+            Warning
+        }
 
         ;
 
@@ -51,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "5.0.5";
+        public static string VERSION = "5.0.6";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -97,8 +99,8 @@ namespace GameAnalyticsSDK.Setup
         public string Changes = "";
 
         public bool SignUpOpen = true;
-		public string StudioName = "";
-		public string GameName = "";
+        public string StudioName = "";
+        public string GameName = "";
         public string EmailGA = "";
 
         [System.NonSerialized]
@@ -172,7 +174,7 @@ namespace GameAnalyticsSDK.Setup
         [System.NonSerialized]
         public GUIStyle SignupButton;
 
-		public bool UsePlayerSettingsBuildNumber = false;
+        public bool UsePlayerSettingsBuildNumber = false;
         public bool SubmitErrors = true;
         public int MaxErrorCount = 10;
         public bool SubmitFpsAverage = true;
@@ -204,7 +206,7 @@ namespace GameAnalyticsSDK.Setup
         /// </param>
         public void SetCustomUserID(string customID)
         {
-            if(customID != string.Empty)
+            if (customID != string.Empty)
             {
                 // Set custom ID native
             }
@@ -212,7 +214,7 @@ namespace GameAnalyticsSDK.Setup
 
         public void RemovePlatformAtIndex(int index)
         {
-            if(index >= 0 && index < this.Platforms.Count)
+            if (index >= 0 && index < this.Platforms.Count)
             {
                 this.gameKey.RemoveAt(index);
                 this.secretKey.RemoveAt(index);
@@ -250,9 +252,12 @@ namespace GameAnalyticsSDK.Setup
             RuntimePlatform.tvOS,
             RuntimePlatform.WebGLPlayer,
             RuntimePlatform.WindowsPlayer,
-            RuntimePlatform.WSAPlayerARM,
-            //RuntimePlatform.SamsungTVPlayer,
-            RuntimePlatform.TizenPlayer
+            RuntimePlatform.WSAPlayerARM
+#if UNITY_2018_1_OR_NEWER
+
+#else
+            ,RuntimePlatform.TizenPlayer
+#endif
         };
 
         public string[] GetAvailablePlatforms()
@@ -417,7 +422,7 @@ namespace GameAnalyticsSDK.Setup
             // set keys native
         }
 
-        #endregion
+#endregion
     }
 
     //[System.Serializable]

@@ -103,10 +103,10 @@ void configureUserId(const char *userId) {
 void initialize(const char *gameKey, const char *gameSecret) {
     NSString *gameKeyString = gameKey != NULL ? [NSString stringWithUTF8String:gameKey] : nil;
     NSString *gameSecretString = gameSecret != NULL ? [NSString stringWithUTF8String:gameSecret] : nil;
-    
+
     ga_cc_delegate = [[GACommandCenterUnityDelegate alloc] init];
     [GameAnalytics setCommandCenterDelegate:ga_cc_delegate];
-    
+
     [GameAnalytics initializeWithGameKey:gameKeyString gameSecret:gameSecretString];
 }
 
@@ -122,14 +122,14 @@ void addBusinessEvent(const char *currency, int amount, const char *itemType, co
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
+
     [GameAnalytics addBusinessEventWithCurrency:currencyString
                                          amount:amountInteger
                                        itemType:itemTypeString
                                          itemId:itemIdString
                                        cartType:cartTypeString
                                         receipt:receiptString
-                                         fields:fields_dict];
+                                         /*fields:fields_dict*/];
 }
 
 void addBusinessEventAndAutoFetchReceipt(const char *currency, int amount, const char *itemType, const char *itemId, const char *cartType, const char *fields) {
@@ -143,14 +143,14 @@ void addBusinessEventAndAutoFetchReceipt(const char *currency, int amount, const
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
+
     [GameAnalytics addBusinessEventWithCurrency:currencyString
                                          amount:amountInteger
                                        itemType:itemTypeString
                                          itemId:itemIdString
                                        cartType:cartTypeString
                                autoFetchReceipt:TRUE
-                                         fields:fields_dict];
+                                         /*fields:fields_dict*/];
 }
 
 void addResourceEvent(int flowType, const char *currency, float amount, const char *itemType, const char *itemId, const char *fields) {
@@ -163,13 +163,13 @@ void addResourceEvent(int flowType, const char *currency, float amount, const ch
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
+
     [GameAnalytics addResourceEventWithFlowType:flowType
                                        currency:currencyString
                                          amount:amountNumber
                                        itemType:itemTypeString
                                          itemId:itemIdString
-                                         fields:fields_dict];
+                                         /*fields:fields_dict*/];
 }
 
 void addProgressionEvent(int progressionStatus, const char *progression01, const char *progression02, const char *progression03, const char *fields) {
@@ -181,12 +181,12 @@ void addProgressionEvent(int progressionStatus, const char *progression01, const
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
+
     [GameAnalytics addProgressionEventWithProgressionStatus:progressionStatus
                                               progression01:progression01String
                                               progression02:progression02String
                                               progression03:progression03String
-                                                     fields:fields_dict];
+                                                     /*fields:fields_dict*/];
 }
 
 void addProgressionEventWithScore(int progressionStatus, const char *progression01, const char *progression02, const char *progression03, int score, const char *fields) {
@@ -198,13 +198,13 @@ void addProgressionEventWithScore(int progressionStatus, const char *progression
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
+
     [GameAnalytics addProgressionEventWithProgressionStatus:progressionStatus
                                               progression01:progression01String
                                               progression02:progression02String
                                               progression03:progression03String
                                                       score:score
-                                                     fields:fields_dict];
+                                                     /*fields:fields_dict*/];
 }
 
 void addDesignEvent(const char *eventId, const char *fields) {
@@ -214,7 +214,7 @@ void addDesignEvent(const char *eventId, const char *fields) {
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
+
     [GameAnalytics addDesignEventWithEventId:eventIdString value:nil fields:fields_dict];
 }
 
@@ -226,8 +226,8 @@ void addDesignEventWithValue(const char *eventId, float value, const char *field
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
-    [GameAnalytics addDesignEventWithEventId:eventIdString value:valueNumber fields:fields_dict];
+
+    [GameAnalytics addDesignEventWithEventId:eventIdString value:valueNumber /*fields:fields_dict*/];
 }
 
 void addErrorEvent(int severity, const char *message, const char *fields) {
@@ -237,8 +237,8 @@ void addErrorEvent(int severity, const char *message, const char *fields) {
     if (fieldsString) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
-    
-    [GameAnalytics addErrorEventWithSeverity:severity message:messageString fields:fields_dict];
+
+    [GameAnalytics addErrorEventWithSeverity:severity message:messageString /*fields:fields_dict*/];
 }
 
 void setEnabledInfoLog(BOOL flag) {
@@ -295,10 +295,10 @@ char* cStringCopy(const char* string)
 {
     if (string == NULL)
         return NULL;
-    
+
     char* res = (char*)malloc(strlen(string) + 1);
     strcpy(res, string);
-    
+
     return res;
 }
 
@@ -306,7 +306,7 @@ char* getCommandCenterValueAsString(const char *key, const char *defaultValue) {
     NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
     NSString *defaultValueString = defaultValue != NULL ? [NSString stringWithUTF8String:defaultValue] : nil;
     NSString *result = [GameAnalytics getCommandCenterValueAsString:keyString defaultValue:defaultValueString];
-    
+
     return cStringCopy([result UTF8String]);
 }
 
