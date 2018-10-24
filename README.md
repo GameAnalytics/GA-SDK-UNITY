@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.7**
+* added gameanalytics android aar library file instead of jar file
+
 **5.0.6**
 * tvOS bug fixes
 
