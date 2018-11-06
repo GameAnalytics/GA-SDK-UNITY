@@ -110,10 +110,10 @@ namespace GameAnalyticsSDK
         void OnApplicationQuit()
         {
 #if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN)
-            if(!SettingsGA.UseManualSessionHandling)
-            {
-                GameAnalyticsSDK.Net.GameAnalytics.OnStop();
-            }
+            GameAnalyticsSDK.Net.GameAnalytics.OnQuit();
+#if UNITY_STANDALONE
+            System.Threading.Thread.Sleep(1500);
+#endif
 #endif
         }
 

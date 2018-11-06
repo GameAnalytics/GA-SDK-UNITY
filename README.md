@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.8**
+* fixed freeze bug on exit for desktop platforms
+
 **5.0.7**
 * added gameanalytics android aar library file instead of jar file
 
