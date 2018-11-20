@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.10**
+* fixed business event validation
+
 **5.0.9**
 * fixed json deserializing for desktop platforms
 
