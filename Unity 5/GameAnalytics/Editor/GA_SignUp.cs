@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 using GameAnalyticsSDK.Setup;
+#if UNITY_2018_3_OR_NEWER
+using UnityEngine.Networking;
+#endif
 
 namespace GameAnalyticsSDK.Editor
 {
@@ -12,7 +15,7 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _lastNameLabel = new GUIContent("Last name", "Your last name (surname).");
         private GUIContent _studioNameLabel = new GUIContent("Studio name", "Your studio's name. You can add more studios and games on the GameAnalytics website.");
         private GUIContent _gameNameLabel = new GUIContent("Game name", "Your game's name. You can add more studies and games on the GameAnalytics website.");
-        private GUIContent _passwordConfirmLabel    = new GUIContent("Confirm password", "Your GameAnalytics user account password.");
+        private GUIContent _passwordConfirmLabel = new GUIContent("Confirm password", "Your GameAnalytics user account password.");
         private GUIContent _emailOptInLabel = new GUIContent("Subscribe to release updates, news and tips and tricks.", "If enabled GameAnalytics may send you news about updates, cool tips and tricks, and other news to help you get the most out of our service.");
         private GUIContent _termsLabel = new GUIContent("I have read and agree with your");
         private GUIContent _emailLabel = new GUIContent("Email", "Your GameAnalytics user account email.");
@@ -22,10 +25,10 @@ namespace GameAnalyticsSDK.Editor
 
         public int TourStep = 0;
         public bool AcceptedTerms = false;
-		public string FirstName = "";
-		public string LastName = "";
-		public string PasswordConfirm = "";
-		public bool EmailOptIn = true;
+        public string FirstName = "";
+        public string LastName = "";
+        public string PasswordConfirm = "";
+        public bool EmailOptIn = true;
 
         private Vector2 _appScrollPos;
         private string _appFigName;
@@ -60,7 +63,7 @@ namespace GameAnalyticsSDK.Editor
 
         public void Opened()
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 _instance = this;
             }
@@ -72,7 +75,7 @@ namespace GameAnalyticsSDK.Editor
 
         void OnDisable()
         {
-            if(_instance == this)
+            if (_instance == this)
             {
                 _instance = null;
             }
@@ -80,7 +83,7 @@ namespace GameAnalyticsSDK.Editor
 
         void OnGUI()
         {
-            switch(TourStep)
+            switch (TourStep)
             {
                 #region sign up
                 case 0: // sign up
@@ -106,7 +109,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // first name
+                    // first name
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -122,7 +125,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // last name
+                    // last name
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -138,7 +141,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // e-mail
+                    // e-mail
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -154,7 +157,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // password
+                    // password
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -170,7 +173,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // confirm password
+                    // confirm password
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -186,7 +189,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // studio name
+                    // studio name
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -196,13 +199,13 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-					GameAnalytics.SettingsGA.StudioName = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.StudioName, GUILayout.Width(INPUT_WIDTH));
+                    GameAnalytics.SettingsGA.StudioName = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.StudioName, GUILayout.Width(INPUT_WIDTH));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
                     EditorGUILayout.Space();
 
-                // email opt in
+                    // email opt in
 
                     EditorGUILayout.Space();
 
@@ -215,7 +218,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // terms of service
+                    // terms of service
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -224,7 +227,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.Space(-5);
                     GUILayout.BeginVertical();
                     GUILayout.Space(2);
-                    if(GUILayout.Button("Terms of Service", EditorStyles.boldLabel, GUILayout.Width(105)))
+                    if (GUILayout.Button("Terms of Service", EditorStyles.boldLabel, GUILayout.Width(105)))
                     {
                         Application.OpenURL("http://www.gameanalytics.com/terms");
                     }
@@ -235,16 +238,16 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                // create account button
+                    // create account button
 
                     EditorGUILayout.Space();
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     GUI.enabled = !_signUpInProgress;
-                    if(AcceptedTerms)
+                    if (AcceptedTerms)
                     {
-                        if(GUILayout.Button("Create account", new GUILayoutOption[] {
+                        if (GUILayout.Button("Create account", new GUILayoutOption[] {
                             GUILayout.Width(200),
                             GUILayout.MaxHeight(30)
                         }))
@@ -299,7 +302,7 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // game name
+                    // game name
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -319,7 +322,7 @@ namespace GameAnalyticsSDK.Editor
                     });
                     GUI.skin.textField.fontSize = tmpFontSize;
                     GUI.skin.textField.contentOffset = tmpOffset;
-                    if(GUILayout.Button("Find your game", new GUILayoutOption[] {
+                    if (GUILayout.Button("Find your game", new GUILayoutOption[] {
                         GUILayout.Width(200),
                         GUILayout.MaxHeight(30)
                     }))
@@ -335,7 +338,7 @@ namespace GameAnalyticsSDK.Editor
 
                     GA_SettingsInspector.Splitter(new Color(0.35f, 0.35f, 0.35f), 1, 30);
 
-                    if(_appFiguresGames != null && _appFiguresGames.Count > 0)
+                    if (_appFiguresGames != null && _appFiguresGames.Count > 0)
                     {
                         EditorGUILayout.Space();
 
@@ -351,10 +354,10 @@ namespace GameAnalyticsSDK.Editor
                         GUILayout.FlexibleSpace();
                         _appScrollPos = GUILayout.BeginScrollView(_appScrollPos, GUI.skin.box, GUILayout.Width(571));
 
-                        for(int i = 0; i < _appFiguresGames.Count; i++)
+                        for (int i = 0; i < _appFiguresGames.Count; i++)
                         {
                             GUILayout.BeginHorizontal();
-                            if(_appFiguresGames[i].Icon != null)
+                            if (_appFiguresGames[i].Icon != null)
                             {
                                 GUILayout.Label(_appFiguresGames[i].Icon, new GUILayoutOption[] {
                                     GUILayout.Width(32),
@@ -381,7 +384,7 @@ namespace GameAnalyticsSDK.Editor
                             GA_SettingsInspector.Splitter(new Color(0.35f, 0.35f, 0.35f), 1, 10);
 
                             Rect appFigRect = new Rect(lastRect.x - 5, lastRect.y - 5, lastRect.width + 520, lastRect.height + 10);
-                            if(GUI.Button(appFigRect, "", GUIStyle.none))
+                            if (GUI.Button(appFigRect, "", GUIStyle.none))
                             {
                                 _appFiguresGame = _appFiguresGames[i];
                                 TourStep = 3;
@@ -408,11 +411,11 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // create new game button
+                    // create new game button
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    if(GUILayout.Button("Create new game", new GUILayoutOption[] {
+                    if (GUILayout.Button("Create new game", new GUILayoutOption[] {
                         GUILayout.Width(200),
                         GUILayout.Height(30)
                     }))
@@ -454,7 +457,7 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // game name
+                    // game name
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -493,12 +496,12 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
-                    if(this._selectedPlatform == RuntimePlatform.Android)
+                    if (this._selectedPlatform == RuntimePlatform.Android)
                     {
                         GUILayout.BeginHorizontal();
                         EditorGUILayout.HelpBox("PLEASE NOTICE: If you want to validate your Android in-app purchase please enter your Google Play License key (public key). Click here to learn more about the Google Play License key.", MessageType.Info);
 
-                        if(GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
+                        if (GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
                         {
                             //Application.OpenURL("https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20XCode");
                         }
@@ -518,12 +521,12 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // create game button
+                    // create game button
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     GUI.enabled = !_createGameInProgress;
-                    if(GUILayout.Button("Create game", new GUILayoutOption[] {
+                    if (GUILayout.Button("Create game", new GUILayoutOption[] {
                         GUILayout.Width(200),
                         GUILayout.MaxHeight(30)
                     }))
@@ -556,7 +559,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.EndVertical();
                     Rect r2 = GUILayoutUtility.GetLastRect();
                     Rect r3 = new Rect(r1.x, r1.y, r1.width + r2.width, r2.height);
-                    if(GUI.Button(r3, "", GUIStyle.none))
+                    if (GUI.Button(r3, "", GUIStyle.none))
                     {
                         TourStep = 1;
                     }
@@ -602,12 +605,12 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // game name
+                    // game name
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
 
-                    if(_appFiguresGame.Icon != null)
+                    if (_appFiguresGame.Icon != null)
                     {
                         GUILayout.Label(_appFiguresGame.Icon, new GUILayoutOption[] {
                             GUILayout.Width(100),
@@ -635,12 +638,12 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                    if(_appFiguresGame.Store.Equals("google_play"))
+                    if (_appFiguresGame.Store.Equals("google_play"))
                     {
                         GUILayout.BeginHorizontal();
                         EditorGUILayout.HelpBox("PLEASE NOTICE: If you want to validate your Android in-app purchase please enter your Google Play License key (public key). Click here to learn more about the Google Play License key.", MessageType.Info);
 
-                        if(GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
+                        if (GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
                         {
                             //Application.OpenURL("https://github.com/GameAnalytics/GA-SDK-UNITY/wiki/Configure%20XCode");
                         }
@@ -669,12 +672,12 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // create game button
+                    // create game button
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     GUI.enabled = !_createGameInProgress;
-                    if(GUILayout.Button("Add game", new GUILayoutOption[] {
+                    if (GUILayout.Button("Add game", new GUILayoutOption[] {
                         GUILayout.Width(200),
                         GUILayout.MaxHeight(30)
                     }))
@@ -701,7 +704,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.EndVertical();
                     Rect r22 = GUILayoutUtility.GetLastRect();
                     Rect r23 = new Rect(r21.x, r21.y, r21.width + r22.width, r22.height);
-                    if(GUI.Button(r23, "", GUIStyle.none))
+                    if (GUI.Button(r23, "", GUIStyle.none))
                     {
                         TourStep = 1;
                     }
@@ -729,11 +732,11 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // create new game button
+                    // create new game button
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    if(GUILayout.Button("Create new game", new GUILayoutOption[] {
+                    if (GUILayout.Button("Create new game", new GUILayoutOption[] {
                         GUILayout.Width(200),
                         GUILayout.MaxHeight(30)
                     }))
@@ -801,11 +804,11 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
 
-                // create game button
+                    // create game button
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    if(GUILayout.Button("Start guide", new GUILayoutOption[] {
+                    if (GUILayout.Button("Start guide", new GUILayoutOption[] {
                         GUILayout.Width(200),
                         GUILayout.MaxHeight(30)
                     }))
@@ -873,13 +876,13 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    if(guideStep == 10)
+                    if (guideStep == 10)
                         GUILayout.Label(GetGuideStepTitle(guideStep), EditorStyles.whiteLargeLabel, GUILayout.Width(464));
                     else
                         GUILayout.Label(GetGuideStepTitle(guideStep), EditorStyles.whiteLargeLabel, GUILayout.Width(470));
                     GUILayout.BeginVertical();
                     GUILayout.Space(7);
-                    if(guideStep == 10)
+                    if (guideStep == 10)
                         GUILayout.Label("STEP " + (guideStep) + " OF 10", GUILayout.Width(87));
                     else
                         GUILayout.Label("STEP " + (guideStep) + " OF 10", GUILayout.Width(80));
@@ -894,13 +897,13 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.FlexibleSpace();
                     GUILayout.BeginVertical();
                     StringWithType[] guideStepTexts = GetGuideStepText(guideStep);
-                    foreach(StringWithType s in guideStepTexts)
+                    foreach (StringWithType s in guideStepTexts)
                     {
-                        if(s.Type == StringType.Label)
+                        if (s.Type == StringType.Label)
                         {
                             GUILayout.Label(s.Text, EditorStyles.wordWrappedLabel, GUILayout.MaxWidth(550));
                         }
-                        else if(s.Type == StringType.TextBox)
+                        else if (s.Type == StringType.TextBox)
                         {
                             TextAnchor tmpA = GUI.skin.textField.alignment;
                             int tmpFS = GUI.skin.textField.fontSize;
@@ -915,11 +918,11 @@ namespace GameAnalyticsSDK.Editor
                             GUI.skin.textField.fontSize = tmpFS;
                             GUI.skin.textField.padding = new RectOffset(3, 3, 1, 2);
                         }
-                        else if(s.Type == StringType.Link)
+                        else if (s.Type == StringType.Link)
                         {
                             GUI.skin.label.fontStyle = FontStyle.Bold;
                             float sl = GUI.skin.button.CalcSize(new GUIContent(s.Text)).x;
-                            if(GUILayout.Button(s.Text, EditorStyles.whiteLabel, GUILayout.MaxWidth(sl)))
+                            if (GUILayout.Button(s.Text, EditorStyles.whiteLabel, GUILayout.MaxWidth(sl)))
                             {
                                 Application.OpenURL(s.Link);
                             }
@@ -938,38 +941,38 @@ namespace GameAnalyticsSDK.Editor
 
                     GA_SettingsInspector.Splitter(new Color(0.35f, 0.35f, 0.35f), 1, 30);
 
-                // create game button
+                    // create game button
 
                     string buttonText = "Next step";
-                    if(TourStep == 14)
+                    if (TourStep == 14)
                     {
                         buttonText = "Done";
                     }
 
                     GUI.BeginGroup(new Rect(0, 420, 640, 50));
-                //GUILayout.BeginHorizontal();
-                //GUILayout.FlexibleSpace();
-                //GUILayout.BeginVertical();
-                //GUILayout.Space(7);
+                    //GUILayout.BeginHorizontal();
+                    //GUILayout.FlexibleSpace();
+                    //GUILayout.BeginVertical();
+                    //GUILayout.Space(7);
                     GUI.Label(new Rect(43, 7, 500, 50), GetGuideStepNext(guideStep));
-                //GUILayout.EndVertical();
-                    if(guideStep > 1 && GUI.Button(new Rect(454, 0, 30, 30), "<"))
+                    //GUILayout.EndVertical();
+                    if (guideStep > 1 && GUI.Button(new Rect(454, 0, 30, 30), "<"))
                     {
                         TourStep--;
                     }
-                    if(GUI.Button(new Rect(489, 0, 100, 30), buttonText))
+                    if (GUI.Button(new Rect(489, 0, 100, 30), buttonText))
                     {
-                        if(TourStep < 14)
+                        if (TourStep < 14)
                             TourStep++;
                         else
                             Close();
                     }
-                //GUILayout.FlexibleSpace();
-                //GUILayout.EndHorizontal();
+                    //GUILayout.FlexibleSpace();
+                    //GUILayout.EndHorizontal();
                     GUI.EndGroup();
 
                     break;
-                #endregion // guide
+                    #endregion // guide
             }
         }
 
@@ -1013,7 +1016,7 @@ namespace GameAnalyticsSDK.Editor
 
         private string GetGuideStepTitle(int step)
         {
-            switch(step)
+            switch (step)
             {
                 case 1:
                     return "1. SETUP GAME KEYS";
@@ -1042,7 +1045,7 @@ namespace GameAnalyticsSDK.Editor
 
         private StringWithType[] GetGuideStepText(int step)
         {
-            switch(step)
+            switch (step)
             {
                 case 1:
                     return new StringWithType[] {
@@ -1216,7 +1219,7 @@ namespace GameAnalyticsSDK.Editor
 
         private string GetGuideStepNext(int step)
         {
-            switch(step)
+            switch (step)
             {
                 case 1:
                     return "In the next step we look at how to add the GameAnalytics object.";
@@ -1245,10 +1248,10 @@ namespace GameAnalyticsSDK.Editor
 
         private void PaintAppStoreIcon(string storeName)
         {
-            switch(storeName)
+            switch (storeName)
             {
                 case "amazon_appstore":
-                    if(GameAnalytics.SettingsGA.AmazonIcon != null)
+                    if (GameAnalytics.SettingsGA.AmazonIcon != null)
                     {
                         //GUILayout.Label("", GUILayout.Height(-20));
                         GUILayout.Label(GameAnalytics.SettingsGA.AmazonIcon, new GUILayoutOption[] {
@@ -1260,7 +1263,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.Label("Amazon", GUILayout.Width(80));
                     break;
                 case "google_play":
-                    if(GameAnalytics.SettingsGA.GooglePlayIcon != null)
+                    if (GameAnalytics.SettingsGA.GooglePlayIcon != null)
                     {
                         //GUILayout.Label("", GUILayout.Height(-20));
                         GUILayout.Label(GameAnalytics.SettingsGA.GooglePlayIcon, new GUILayoutOption[] {
@@ -1272,7 +1275,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.Label("Google Play", GUILayout.Width(80));
                     break;
                 case "apple":
-                    if(GameAnalytics.SettingsGA.iosIcon != null)
+                    if (GameAnalytics.SettingsGA.iosIcon != null)
                     {
                         //GUILayout.Label("", GUILayout.Height(-20));
                         GUILayout.Label(GameAnalytics.SettingsGA.iosIcon, new GUILayoutOption[] {
@@ -1284,7 +1287,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.Label("iOS", GUILayout.Width(80));
                     break;
                 case "apple:mac":
-                    if(GameAnalytics.SettingsGA.macIcon != null)
+                    if (GameAnalytics.SettingsGA.macIcon != null)
                     {
                         //GUILayout.Label("", GUILayout.Height(-20));
                         GUILayout.Label(GameAnalytics.SettingsGA.macIcon, new GUILayoutOption[] {
@@ -1296,7 +1299,7 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.Label("Mac", GUILayout.Width(80));
                     break;
                 case "windows_phone":
-                    if(GameAnalytics.SettingsGA.windowsPhoneIcon != null)
+                    if (GameAnalytics.SettingsGA.windowsPhoneIcon != null)
                     {
                         //GUILayout.Label("", GUILayout.Height(-20));
                         GUILayout.Label(GameAnalytics.SettingsGA.windowsPhoneIcon, new GUILayoutOption[] {
@@ -1313,30 +1316,62 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
+#if UNITY_2018_3_OR_NEWER
+        public IEnumerator GetAppStoreIconTexture(UnityWebRequest www, string storeName, GA_SignUp signup)
+#else
         public IEnumerator<WWW> GetAppStoreIconTexture(WWW www, string storeName, GA_SignUp signup)
+#endif
         {
+#if UNITY_2018_3_OR_NEWER
+            yield return www.SendWebRequest();
+#else
             yield return www;
+#endif
 
             try
             {
-                if(string.IsNullOrEmpty(www.error))
+#if UNITY_2018_3_OR_NEWER
+                if (!(www.isNetworkError || www.isHttpError))
+#else
+                if (string.IsNullOrEmpty(www.error))
+#endif
                 {
-                    switch(storeName)
+                    switch (storeName)
                     {
                         case "amazon_appstore":
+#if UNITY_2018_3_OR_NEWER
+                            GameAnalytics.SettingsGA.AmazonIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
+#else
                             GameAnalytics.SettingsGA.AmazonIcon = www.texture;
+#endif
                             break;
                         case "google_play":
+#if UNITY_2018_3_OR_NEWER
+                            GameAnalytics.SettingsGA.GooglePlayIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
+#else
                             GameAnalytics.SettingsGA.GooglePlayIcon = www.texture;
+#endif
                             break;
                         case "apple:ios":
+#if UNITY_2018_3_OR_NEWER
+                            GameAnalytics.SettingsGA.iosIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
+#else
                             GameAnalytics.SettingsGA.iosIcon = www.texture;
+#endif
                             break;
                         case "apple:mac":
+#if UNITY_2018_3_OR_NEWER
+                            GameAnalytics.SettingsGA.macIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
+#else
                             GameAnalytics.SettingsGA.macIcon = www.texture;
+#endif
                             break;
                         case "windows_phone":
+#if UNITY_2018_3_OR_NEWER
+                            GameAnalytics.SettingsGA.windowsPhoneIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
+#else
                             GameAnalytics.SettingsGA.windowsPhoneIcon = www.texture;
+#endif
                             break;
                     }
                     signup.Repaint();
@@ -1370,19 +1405,40 @@ namespace GameAnalyticsSDK.Editor
             Developer = developer;
             IconUrl = iconUrl;
 
+#if UNITY_2018_3_OR_NEWER
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(iconUrl);
+            GA_ContinuationManager.StartCoroutine(GetIconTexture(www, signup), () => www.isDone);
+#else
             WWW www = new WWW(iconUrl);
             GA_ContinuationManager.StartCoroutine(GetIconTexture(www, signup), () => www.isDone);
+#endif
         }
 
+#if UNITY_2018_3_OR_NEWER
+        private IEnumerator GetIconTexture(UnityWebRequest www, GA_SignUp signup)
+#else
         private IEnumerator<WWW> GetIconTexture(WWW www, GA_SignUp signup)
+#endif
         {
+#if UNITY_2018_3_OR_NEWER
+            yield return www.SendWebRequest();
+#else
             yield return www;
+#endif
 
             try
             {
-                if(string.IsNullOrEmpty(www.error))
+#if UNITY_2018_3_OR_NEWER
+                if (!(www.isNetworkError || www.isHttpError))
+#else
+                if (string.IsNullOrEmpty(www.error))
+#endif
                 {
+#if UNITY_2018_3_OR_NEWER
+                    Icon = ((DownloadHandlerTexture)www.downloadHandler).texture;
+#else
                     Icon = www.texture;
+#endif
                     signup.Repaint();
                 }
                 else
