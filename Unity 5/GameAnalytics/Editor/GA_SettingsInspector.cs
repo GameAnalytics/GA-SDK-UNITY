@@ -1490,14 +1490,17 @@ namespace GameAnalyticsSDK.Editor
             jsonTable["email_opt_out"] = signup.EmailOptIn;
             jsonTable["accept_terms"] = signup.AcceptedTerms;
 
-#if UNITY_2018_3_OR_NEWER
-            string data = GA_MiniJSON.Serialize(jsonTable);
-#else
             byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
-#endif
 
 #if UNITY_2018_3_OR_NEWER
-            UnityWebRequest www = UnityWebRequest.Post(_gaUrl + "user", UnityWebRequest.kHttpVerbPOST);
+            UnityWebRequest www = new UnityWebRequest(_gaUrl + "user", UnityWebRequest.kHttpVerbPOST);
+            UploadHandlerRaw uH = new UploadHandlerRaw(data)
+            {
+                contentType = "application/json"
+            };
+            www.uploadHandler = uH;
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.chunkedTransfer = false;
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeaders();
             foreach (KeyValuePair<string, string> entry in headers)
             {
@@ -1518,6 +1521,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -1599,14 +1604,18 @@ namespace GameAnalyticsSDK.Editor
             jsonTable["email"] = ga.EmailGA;
             jsonTable["password"] = ga.PasswordGA;
 
-#if UNITY_2018_3_OR_NEWER
-            string data = GA_MiniJSON.Serialize(jsonTable);
-#else
             byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
-#endif
 
 #if UNITY_2018_3_OR_NEWER
-            UnityWebRequest www = UnityWebRequest.Post(_gaUrl + "token", data);
+            UnityWebRequest www = new UnityWebRequest(_gaUrl + "token", UnityWebRequest.kHttpVerbPOST);
+            UploadHandlerRaw uH = new UploadHandlerRaw(data)
+            {
+                contentType = "application/json"
+            };
+            www.uploadHandler = uH;
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.chunkedTransfer = false;
+
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeaders();
             foreach (KeyValuePair<string, string> entry in headers)
             {
@@ -1626,6 +1635,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -1716,6 +1727,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -1839,15 +1852,19 @@ namespace GameAnalyticsSDK.Editor
                 jsonTable["store"] = null;
                 jsonTable["googleplay_key"] = string.IsNullOrEmpty(googlePlayPublicKey) ? null : googlePlayPublicKey;
             }
-#if UNITY_2018_3_OR_NEWER
-            string data = GA_MiniJSON.Serialize(jsonTable);
-#else
+
             byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
-#endif
 
             string url = _gaUrl + "studios/" + ga.Studios[studioIndex].ID + "/games";
 #if UNITY_2018_3_OR_NEWER
-            UnityWebRequest www = UnityWebRequest.Post(url, data);
+            UnityWebRequest www = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
+            UploadHandlerRaw uH = new UploadHandlerRaw(data)
+            {
+                contentType = "application/json"
+            };
+            www.uploadHandler = uH;
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.chunkedTransfer = false;
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeadersWithAuthorization(ga.TokenGA);
             foreach (KeyValuePair<string, string> entry in headers)
             {
@@ -1867,6 +1884,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -2010,6 +2029,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -2180,6 +2201,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -2228,6 +2251,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif

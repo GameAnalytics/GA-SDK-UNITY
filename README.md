@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.0.12**
+* UnityWebRequest fixes
+
 **5.0.11**
 * fixed 2018.3 www deprecated warnings
 

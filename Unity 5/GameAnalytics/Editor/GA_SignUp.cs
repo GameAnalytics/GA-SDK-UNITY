@@ -1324,6 +1324,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
@@ -1422,6 +1424,8 @@ namespace GameAnalyticsSDK.Editor
         {
 #if UNITY_2018_3_OR_NEWER
             yield return www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
 #else
             yield return www;
 #endif
