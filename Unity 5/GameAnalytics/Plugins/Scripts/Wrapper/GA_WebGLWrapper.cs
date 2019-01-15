@@ -7,7 +7,7 @@ namespace GameAnalyticsSDK.Wrapper
 {
     public partial class GA_Wrapper
     {
-        #if (UNITY_WEBGL) && (!UNITY_EDITOR)
+#if (UNITY_WEBGL) && (!UNITY_EDITOR)
 
         [DllImport ("__Internal")]
         private static extern void configureAvailableCustomDimensions01(string list);
@@ -79,6 +79,9 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void setManualSessionHandling(bool enabled);
 
         [DllImport ("__Internal")]
+        private static extern void setEventSubmission(bool enabled);
+
+        [DllImport ("__Internal")]
         private static extern void startSession();
 
         [DllImport ("__Internal")]
@@ -125,6 +128,6 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
-        #endif
+#endif
     }
 }

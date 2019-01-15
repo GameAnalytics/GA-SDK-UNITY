@@ -98,6 +98,10 @@ var GameAnalyticsUnity = {
     {
         gameanalytics.GameAnalytics.setEnabledManualSessionHandling(enabled);
     },
+    setEventSubmission: function(enabled)
+    {
+        gameanalytics.GameAnalytics.setEnabledEventSubmission(enabled);
+    },
     startSession: function()
     {
         gameanalytics.GameAnalytics.startSession();

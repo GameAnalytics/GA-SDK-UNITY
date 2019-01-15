@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.1.0**
+* added enable/disable event submission function
+
 **5.0.12**
 * UnityWebRequest fixes
 

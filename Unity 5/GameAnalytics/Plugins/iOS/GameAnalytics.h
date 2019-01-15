@@ -608,6 +608,19 @@ typedef enum GAErrorSeverity : NSInteger {
  */
 + (void)setEnabledErrorReporting:(BOOL)flag;
 
+/*!
+ @method
+ 
+ @abstract Enable/disable event submission.
+ When enabled this will allow events to be sent.
+ 
+ @param flag
+ Enable or disable event submission.
+ 
+ @availability Available since 3.2.0
+ 
+ */
++ (void)setEnabledEventSubmission:(BOOL)flag;
 
 /*!
  @method

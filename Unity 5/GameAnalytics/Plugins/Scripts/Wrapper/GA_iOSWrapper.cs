@@ -6,7 +6,7 @@ namespace GameAnalyticsSDK.Wrapper
 {
 	public partial class GA_Wrapper
 	{
-		#if (UNITY_IOS) && (!UNITY_EDITOR)
+#if (UNITY_IOS) && (!UNITY_EDITOR)
 
 		[DllImport ("__Internal")]
 		private static extern void configureAvailableCustomDimensions01(string list);
@@ -80,6 +80,9 @@ namespace GameAnalyticsSDK.Wrapper
 		[DllImport ("__Internal")]
 		private static extern void setManualSessionHandling(bool enabled);
 
+        [DllImport ("__Internal")]
+        private static extern void setEventSubmission(bool enabled);
+
 		[DllImport ("__Internal")]
 		private static extern void gameAnalyticsStartSession();
 
@@ -106,6 +109,6 @@ namespace GameAnalyticsSDK.Wrapper
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		private static extern string getConfigurationsContentAsString();
 
-		#endif
-	}
+#endif
+    }
 }

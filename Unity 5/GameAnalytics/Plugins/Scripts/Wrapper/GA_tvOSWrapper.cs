@@ -80,6 +80,9 @@ namespace GameAnalyticsSDK.Wrapper
 		[DllImport ("__Internal")]
 		private static extern void setManualSessionHandling(bool enabled);
 
+        [DllImport ("__Internal")]
+        private static extern void setEventSubmission(bool enabled);
+
 		[DllImport ("__Internal")]
 		private static extern void gameAnalyticsStartSession();
 

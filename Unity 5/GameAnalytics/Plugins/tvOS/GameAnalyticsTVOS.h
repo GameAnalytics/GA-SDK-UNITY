@@ -335,37 +335,6 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
- @abstract Add new business event with receipt and custom fields
- 
- @param currency
- Currency code in ISO 4217 format. (e.g. USD)
- @param amount
- Amount in cents (int). (e.g. 99)
- @param itemType
- Item Type bought. (e.g. Gold Pack)
- @param itemId
- Item bought. (e.g. 1000 gold)
- @param receipt
- Transaction receipt string. (Optional, can be nil)
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 2.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addBusinessEventWithCurrency:(NSString *)currency
-                              amount:(NSInteger)amount
-                            itemType:(NSString *)itemType
-                              itemId:(NSString *)itemId
-                            cartType:(NSString *)cartType
-                             receipt:(NSString *)receipt
-                              fields:(NSDictionary *)fields;
-
-
-/*!
- @method
 
  @abstract Add new business event
  
@@ -390,37 +359,6 @@ typedef enum GAErrorSeverity : NSInteger {
                               itemId:(NSString *)itemId
                             cartType:(NSString *)cartType
                     autoFetchReceipt:(BOOL)autoFetchReceipt;
-
-/*!
- @method
- 
- @abstract Add new business event with custom fields
- 
- @param currency
- Currency code in ISO 4217 format. (e.g. USD)
- @param amount
- (Integer) Amount in cents. (e.g. 99)
- @param itemType
- Item Type bought. (e.g. Gold Pack)
- @param itemId
- Item bought. (e.g. 1000 gold)
- @param autoFetchReceipt
- Should the SDK automatically fetch the transaction receipt and add it to the event
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 1.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addBusinessEventWithCurrency:(NSString *)currency
-                              amount:(NSInteger)amount
-                            itemType:(NSString *)itemType
-                              itemId:(NSString *)itemId
-                            cartType:(NSString *)cartType
-                    autoFetchReceipt:(BOOL)autoFetchReceipt
-                              fields:(NSDictionary *)fields;
-
 
 /*!
  @method
@@ -451,36 +389,6 @@ typedef enum GAErrorSeverity : NSInteger {
 /*!
  @method
  
- @abstract Add new resource event with custom fields
- 
- @param flowType
- Add or substract resource.<br> (See. GAResourceFlowType)
- @param currency
- One of the available currencies set in configureAvailableResourceCurrencies
- @param amount
- Amount sourced or sinked
- @param itemType
- One of the available item types set in configureAvailableResourceItemTypes
- @param itemId
- Item id (string max length=32)
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 2.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addResourceEventWithFlowType:(GAResourceFlowType)flowType
-                            currency:(NSString *)currency
-                              amount:(NSNumber *)amount
-                            itemType:(NSString *)itemType
-                              itemId:(NSString *)itemId
-                              fields:(NSDictionary *)fields;
-
-
-/*!
- @method
- 
  @abstract Add new progression event
  
  @param progressionStatus
@@ -500,32 +408,6 @@ typedef enum GAErrorSeverity : NSInteger {
                                    progression01:(NSString *)progression01
                                    progression02:(NSString *)progression02
                                    progression03:(NSString *)progression03;
-
-/*!
- @method
- 
- @abstract Add new progression event with custom fields
- 
- @param progressionStatus
- Status of added progression.<br> (See. GAProgressionStatus)
- @param progression01
- 1st progression (e.g. world01)
- @param progression02
- 2nd progression (e.g. level01)
- @param progression03
- 3rd progression (e.g. phase01)
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 1.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addProgressionEventWithProgressionStatus:(GAProgressionStatus)progressionStatus
-                                   progression01:(NSString *)progression01
-                                   progression02:(NSString *)progression02
-                                   progression03:(NSString *)progression03
-                                          fields:(NSDictionary *)fields;
 
 /*!
  @method
@@ -554,35 +436,6 @@ typedef enum GAErrorSeverity : NSInteger {
 /*!
  @method
  
- @abstract Add new progression event with score and custom fields
- 
- @param progressionStatus
- Status of added progression.<br> (See. GAProgressionStatus)
- @param progression01
- 1st progression (e.g. world01)
- @param progression02
- 2nd progression (e.g. level01)
- @param progression03
- 3rd progression (e.g. phase01)
- @param score
- Player score.
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 2.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addProgressionEventWithProgressionStatus:(GAProgressionStatus)progressionStatus
-                                   progression01:(NSString *)progression01
-                                   progression02:(NSString *)progression02
-                                   progression03:(NSString *)progression03
-                                           score:(NSInteger)score
-                                          fields:(NSDictionary *)fields;
-
-/*!
- @method
- 
  @abstract Add new design event without a value
  
  @param eventId
@@ -595,25 +448,6 @@ typedef enum GAErrorSeverity : NSInteger {
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addDesignEventWithEventId:(NSString *)eventId;
-
-/*!
- @method
- 
- @abstract Add new design event without a value and with custom fields
- 
- @param eventId
- String can consist of 1 to 5 segments.<br>
- Segments are seperated by ':' and segments can have a max length of 32.<br>
- (e.g. segment1:anotherSegment:gold)
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 2.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addDesignEventWithEventId:(NSString *)eventId
-                           fields:(NSDictionary *)fields;
 
 /*!
  @method
@@ -634,28 +468,6 @@ typedef enum GAErrorSeverity : NSInteger {
 + (void)addDesignEventWithEventId:(NSString *)eventId
                             value:(NSNumber *)value;
 
-/*!
- @method
- 
- @abstract Add new design event with a value and custom fields
- 
- @param eventId
- String can consist of 1 to 5 segments.<br>
- segments are seperated by ':' and segments can have a max length of 32.<br>
- (e.g. segment1:anotherSegment:gold)
- @param value
- Number value of event
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 2.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addDesignEventWithEventId:(NSString *)eventId
-                            value:(NSNumber *)value
-                           fields:(NSDictionary *)fields;
-
 
 /*!
  @method
@@ -674,25 +486,6 @@ typedef enum GAErrorSeverity : NSInteger {
 + (void)addErrorEventWithSeverity:(GAErrorSeverity)severity
                           message:(NSString *)message;
 
-/*!
- @method
- 
- @abstract Add new error event with custom fields
- 
- @param severity
- Severity of error (See. GAErrorSeverity)
- @param message
- Error message (Optional, can be nil)
- @param fields
- Custom fields. (Optional, can be nil)
- 
- @availability Available since 2.0.0
- 
- @attribute Note! This method cannot be called before initialize method has been triggered
- */
-+ (void)addErrorEventWithSeverity:(GAErrorSeverity)severity
-                          message:(NSString *)message
-                           fields:(NSDictionary *)fields;
 /*!
  @method
  
@@ -801,6 +594,33 @@ typedef enum GAErrorSeverity : NSInteger {
  */
 + (void)setEnabledManualSessionHandling:(BOOL)flag;
 
+/*!
+ @method
+ 
+ @abstract Enable error reporting.
+ When enabled this will automatic send error events for uncaught exceptions.
+ 
+ @param flag
+ Enable or disable error reporting.
+ 
+ @availability Available since 3.1.0
+ 
+ */
++ (void)setEnabledErrorReporting:(BOOL)flag;
+
+/*!
+ @method
+ 
+ @abstract Enable/disable event submission.
+ When enabled this will allow events to be sent.
+ 
+ @param flag
+ Enable or disable event submission.
+ 
+ @availability Available since 3.2.0
+ 
+ */
++ (void)setEnabledEventSubmission:(BOOL)flag;
 
 /*!
  @method

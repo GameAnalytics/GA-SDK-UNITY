@@ -225,6 +225,13 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
+        private static void setEventSubmission (bool enabled)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor) {
+                Debug.Log ("setEventSubmission(" + enabled + ")");
+            }
+        }
+
         private static void setUsePlayerSettingsBundleVersionForBuild (bool enabled)
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
@@ -333,6 +340,11 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetEnabledManualSessionHandling (bool enabled)
         {
             setManualSessionHandling (enabled);
+        }
+
+        public static void SetEnabledEventSubmission (bool enabled)
+        {
+            setEventSubmission (enabled);
         }
 
         public static void StartSession ()

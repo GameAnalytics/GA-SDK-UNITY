@@ -77,6 +77,9 @@ namespace GameAnalyticsSDK.Wrapper
 		[DllImport ("__Internal")]
 		private static extern void setEnabledManualSessionHandling(bool enabled);
 
+        [DllImport ("__Internal")]
+        private static extern void setEnabledEventSubmission(bool enabled);
+
 		[DllImport ("__Internal")]
 		private static extern void gameAnalyticsStartSession();
 
@@ -95,6 +98,11 @@ namespace GameAnalyticsSDK.Wrapper
         private static void setManualSessionHandling(bool enabled)
         {
             setEnabledManualSessionHandling(enabled);
+        }
+
+        private static void setEventSubmission(bool enabled)
+        {
+            setEnabledEventSubmission(enabled);
         }
 
 		private static string getCommandCenterValueAsString(string key, string defaultValue)

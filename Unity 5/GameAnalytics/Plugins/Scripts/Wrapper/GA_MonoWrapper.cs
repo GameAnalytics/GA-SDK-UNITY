@@ -165,6 +165,11 @@ namespace GameAnalyticsSDK.Wrapper
             GameAnalyticsSDK.Net.GameAnalytics.SetEnabledManualSessionHandling(enabled);
         }
 
+        private static void setEventSubmission(bool enabled)
+        {
+            GameAnalyticsSDK.Net.GameAnalytics.SetEnabledManualSessionHandling(enabled);
+        }
+
         private static void gameAnalyticsStartSession()
         {
             GameAnalyticsSDK.Net.GameAnalytics.StartSession();

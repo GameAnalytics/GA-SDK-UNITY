@@ -196,6 +196,11 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("setEnabledManualSessionHandling", enabled);
         }
 
+        private static void setEventSubmission(bool enabled)
+        {
+            GA.CallStatic("setEnabledEventSubmission", enabled);
+        }
+
         private static void gameAnalyticsStartSession()
         {
             GA.CallStatic("startSession");
