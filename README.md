@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.1.1**
+* ios and tvos wrapper fixes
+
 **5.1.0**
 * added enable/disable event submission function
 
