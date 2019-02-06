@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.1.2**
+* fixes to events not being sent for desktop platforms
+
 **5.1.1**
 * ios and tvos wrapper fixes
 
