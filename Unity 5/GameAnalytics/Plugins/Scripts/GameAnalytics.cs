@@ -79,8 +79,6 @@ namespace GameAnalyticsSDK
             DontDestroyOnLoad(gameObject);
 
             Application.logMessageReceived += GA_Debug.HandleLog;
-
-            InternalInitialize();
         }
 
         void OnDestroy()
@@ -217,6 +215,7 @@ namespace GameAnalyticsSDK
 
         public static void Initialize ()
         {
+            InternalInitialize();
             int platformIndex = GetPlatformIndex();
 
             if(platformIndex >= 0)
