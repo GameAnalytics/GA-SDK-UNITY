@@ -20,6 +20,9 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.1.4**
+* small correction for logging for desktop
+
 **5.1.3**
 * small timing fix for initialization
 
