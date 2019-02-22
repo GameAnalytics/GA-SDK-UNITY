@@ -3,6 +3,7 @@ GameAnalytics Unity SDK.
 
 Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 
+If you have any issues or feedback regarding the SDK, please contact our friendly support team [here](https://gameanalytics.com/contact).
 
 > :information_source:
 > The Unity SDK include support for **Windows**, **Mac**, **Linux**, **WebGL**, **iOS**, **tvOS**, **Tizen**, **UWP**, **Universal Windows 8** and **Android**.   
