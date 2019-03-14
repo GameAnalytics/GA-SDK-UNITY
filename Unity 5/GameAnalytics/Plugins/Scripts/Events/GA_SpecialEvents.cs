@@ -77,12 +77,12 @@ namespace GameAnalyticsSDK.Events
 			//average FPS
 			if (GameAnalytics.SettingsGA.SubmitFpsAverage)
 			{
-				float timeSinceUpdate = Time.time - _lastUpdateAvg;
+				float timeSinceUpdate = Time.unscaledTime - _lastUpdateAvg;
 				
 				if (timeSinceUpdate > 1.0f)
 				{
 					float fpsSinceUpdate = _frameCountAvg / timeSinceUpdate;
-					_lastUpdateAvg = Time.time;
+					_lastUpdateAvg = Time.unscaledTime;
 					_frameCountAvg = 0;
 					
 					if (fpsSinceUpdate > 0)
@@ -107,12 +107,12 @@ namespace GameAnalyticsSDK.Events
 			//critical FPS
 			if (GameAnalytics.SettingsGA.SubmitFpsCritical)
 			{
-				float timeSinceUpdate = Time.time - _lastUpdateCrit;
+				float timeSinceUpdate = Time.unscaledTime - _lastUpdateCrit;
 				
 				if (timeSinceUpdate >= 1.0f)
 				{
 					float fpsSinceUpdate = _frameCountCrit / timeSinceUpdate;
-					_lastUpdateCrit = Time.time;
+					_lastUpdateCrit = Time.unscaledTime;
 					_frameCountCrit = 0;
 					
 					if (fpsSinceUpdate <= GameAnalytics.SettingsGA.FpsCriticalThreshold)
