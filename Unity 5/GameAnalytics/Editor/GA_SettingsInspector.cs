@@ -2100,7 +2100,7 @@ namespace GameAnalyticsSDK.Editor
                 else
                 {
                     // expired tokens / not signed in
-                    if (www.responseHeaders["staus"] != null && www.responseHeaders["staus"].Contains("401"))
+                    if (www.responseHeaders["status"] != null && www.responseHeaders["status"].Contains("401"))
                     {
                         Selection.objects = new UnityEngine.Object[] { AssetDatabase.LoadAssetAtPath("Assets/Resources/GameAnalytics/Settings.asset", typeof(Settings)) };
                         ga.CurrentInspectorState = Settings.InspectorStates.Account;
