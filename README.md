@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.1.10**
+* fixed compile error in GA_SettingsInspector script
+
 **5.1.9**
 * fixed typo in editor script
 
