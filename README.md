@@ -22,6 +22,9 @@ Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
 **5.1.11**
+* fixed import bug for 2019.2
+
+**5.1.11**
 * fixed import bug 2019.2
 
 **5.1.10**
