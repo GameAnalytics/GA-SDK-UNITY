@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e185dadd9acc8487d8d4bb2936a243cc
-timeCreated: 1474664995
+timeCreated: 1565687809
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -8,76 +8,43 @@ PluginImporter:
   executionOrder: {}
   isPreloaded: 0
   platformData:
-    Android:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
     Any:
       enabled: 0
       settings: {}
     Editor:
       enabled: 0
       settings:
-        CPU: AnyCPU
         DefaultValueInitialized: true
-        OS: AnyOS
     Linux:
       enabled: 1
-      settings:
-        CPU: x86
+      settings: {}
     Linux64:
       enabled: 1
-      settings:
-        CPU: x86_64
+      settings: {}
     LinuxUniversal:
       enabled: 1
-      settings:
-        CPU: None
+      settings: {}
     OSXIntel:
       enabled: 1
-      settings:
-        CPU: AnyCPU
+      settings: {}
     OSXIntel64:
       enabled: 1
-      settings:
-        CPU: AnyCPU
+      settings: {}
     OSXUniversal:
       enabled: 1
-      settings:
-        CPU: None
-    SamsungTV:
-      enabled: 0
-      settings:
-        STV_MODEL: STANDARD_13
-    Tizen:
-      enabled: 0
       settings: {}
     Win:
       enabled: 1
-      settings:
-        CPU: AnyCPU
+      settings: {}
     Win64:
       enabled: 1
-      settings:
-        CPU: AnyCPU
+      settings: {}
     WindowsStoreApps:
       enabled: 1
       settings:
         CPU: AnyCPU
-        DontProcess: False
-        PlaceholderPath: 
         SDK: UWP
         ScriptingBackend: Il2Cpp
-    iOS:
-      enabled: 0
-      settings:
-        CompileFlags: 
-        FrameworkDependencies: 
-    tvOS:
-      enabled: 0
-      settings:
-        CompileFlags: 
-        FrameworkDependencies: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

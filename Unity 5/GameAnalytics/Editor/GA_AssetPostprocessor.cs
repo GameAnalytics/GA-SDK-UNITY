@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 
 namespace GameAnalyticsSDK.Editor
 {
@@ -14,9 +14,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -40,9 +43,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -66,9 +72,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -89,9 +98,13 @@ namespace GameAnalyticsSDK.Editor
             #region General
             {
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/GameAnalytics/Plugins/GameAnalytics.dll") as PluginImporter;
-                if(importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux) ||
+                if(importer != null && (importer.GetCompatibleWithAnyPlatform() ||
                     !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux64) ||
+#if UNITY_2019_2_OR_NEWER
+#else
+                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux) ||
                     !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal) ||
+#endif
 #if UNITY_2017_3_OR_NEWER
                     !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneOSX) ||
 #else
@@ -108,9 +121,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, true);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, true);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
 #else
@@ -139,9 +155,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -165,9 +184,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -186,16 +208,24 @@ namespace GameAnalyticsSDK.Editor
             }
             {
                 PluginImporter importer = AssetImporter.GetAtPath("Assets/GameAnalytics/Plugins/Linux/sqlite3.so") as PluginImporter;
-                if(importer != null && (importer.GetCompatibleWithAnyPlatform() || !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux) ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux64) ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal)))
+                if(importer != null && (importer.GetCompatibleWithAnyPlatform() ||
+                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux64)
+#if UNITY_2019_2_OR_NEWER
+#else
+                    || !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux) ||
+                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal)
+#endif
+                ))
                 {
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, true);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, true);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, true);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -221,9 +251,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -247,9 +280,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -273,9 +309,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -299,9 +338,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -325,9 +367,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -355,9 +400,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -384,9 +432,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -412,9 +463,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -441,9 +495,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -471,9 +528,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
@@ -501,9 +561,12 @@ namespace GameAnalyticsSDK.Editor
                     importer.SetCompatibleWithAnyPlatform(false);
                     importer.SetCompatibleWithEditor(false);
                     importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+#if UNITY_2019_2_OR_NEWER
+#else
+                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, false);
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, false);
+#endif
 #if UNITY_2017_3_OR_NEWER
                     importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
