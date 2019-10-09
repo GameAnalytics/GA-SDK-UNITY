@@ -21,6 +21,11 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.2.0**
+* improved device identifier flow (android)
+* removed google play services dependency
+* OPS refactored IMEI code out into a seperate library, please check the documentation page for how to use it now (android, only relevant for apps using IMEI ids)
+
 **5.1.11**
 * fixed import bug for 2019.2
 
