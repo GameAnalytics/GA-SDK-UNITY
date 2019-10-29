@@ -7,17 +7,7 @@ namespace GameAnalyticsSDK.Wrapper
 {
     public partial class GA_Wrapper
     {
-#if (UNITY_STANDALONE || UNITY_WSA || UNITY_WP_8_1 || UNITY_SAMSUNGTV) && (!UNITY_EDITOR)
-
-        private class UnityCommandCenterListener : GameAnalyticsSDK.Net.ICommandCenterListener
-        {
-            public void OnCommandCenterUpdated()
-            {
-                GameAnalytics.CommandCenterUpdated();
-            }
-        }
-
-        private static readonly UnityCommandCenterListener unityCommandCenterListener = new UnityCommandCenterListener();
+#if (UNITY_STANDALONE || UNITY_WP_8_1 || UNITY_SAMSUNGTV) && (!UNITY_EDITOR)
 
         private static void configureAvailableCustomDimensions01(string list)
         {

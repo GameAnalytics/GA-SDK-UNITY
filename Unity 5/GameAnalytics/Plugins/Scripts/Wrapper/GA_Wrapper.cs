@@ -551,7 +551,11 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static bool IsCommandCenterReady()
         {
+#if (UNITY_WSA) && (!UNITY_EDITOR)
+            return isCommandCenterReady() != 0;
+#else
             return isCommandCenterReady();
+#endif
         }
 
         public static string GetConfigurationsContentAsString()

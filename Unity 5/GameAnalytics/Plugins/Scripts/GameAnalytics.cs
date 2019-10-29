@@ -6,6 +6,7 @@ using GameAnalyticsSDK.Events;
 using GameAnalyticsSDK.Setup;
 using GameAnalyticsSDK.Wrapper;
 using GameAnalyticsSDK.State;
+using System.Runtime.InteropServices;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -90,10 +91,19 @@ namespace GameAnalyticsSDK
                 _instance = null;
         }
 
+#if (!UNITY_EDITOR && UNITY_WSA)
+        [DllImport("GameAnalytics.UWP.dll")]
+        private static extern void onQuit();
+#endif
+
         void OnApplicationQuit()
         {
 #if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN)
+#if (UNITY_WSA)
+            onQuit();
+#else
             GameAnalyticsSDK.Net.GameAnalytics.OnQuit();
+# endif
 #if UNITY_STANDALONE
             System.Threading.Thread.Sleep(1500);
 #endif

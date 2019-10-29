@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e185dadd9acc8487d8d4bb2936a243cc
-timeCreated: 1565687809
+timeCreated: 1572358580
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -40,11 +40,9 @@ PluginImporter:
       enabled: 1
       settings: {}
     WindowsStoreApps:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: AnyCPU
-        SDK: UWP
-        ScriptingBackend: Il2Cpp
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.2.1**
+* fixed uwp compile errors
+
 **5.2.0**
 * improved device identifier flow (android)
 * removed google play services dependency

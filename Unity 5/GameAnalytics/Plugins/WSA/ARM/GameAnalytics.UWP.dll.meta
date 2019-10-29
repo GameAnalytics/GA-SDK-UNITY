@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 609d6badf2786ed4498758420c9f21bf
-timeCreated: 1474451506
+guid: 22fd93fe611b3394290b35e003b17628
+timeCreated: 1572358580
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -18,8 +18,9 @@ PluginImporter:
     WindowsStoreApps:
       enabled: 1
       settings:
-        CPU: AnyCPU
-        SDK: PhoneSDK81
+        CPU: ARM
+        SDK: UWP
+        ScriptingBackend: Il2Cpp
   userData: 
   assetBundleName: 
   assetBundleVariant: 
