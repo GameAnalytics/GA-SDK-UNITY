@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**5.2.2**
+* compile error fixes for windows builds
+
 **5.2.1**
 * fixed uwp compile errors
 

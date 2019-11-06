@@ -9,6 +9,16 @@ namespace GameAnalyticsSDK.Wrapper
     {
 #if (UNITY_STANDALONE || UNITY_WP_8_1 || UNITY_SAMSUNGTV) && (!UNITY_EDITOR)
 
+        private class UnityCommandCenterListener : GameAnalyticsSDK.Net.ICommandCenterListener
+        {
+            public void OnCommandCenterUpdated()
+            {
+                GameAnalytics.CommandCenterUpdated();
+            }
+        }
+
+        private static readonly UnityCommandCenterListener unityCommandCenterListener = new UnityCommandCenterListener();
+
         private static void configureAvailableCustomDimensions01(string list)
         {
             IList<object> iList = GA_MiniJSON.Deserialize(list) as IList<object>;
