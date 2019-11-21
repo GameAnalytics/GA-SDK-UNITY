@@ -228,7 +228,32 @@ namespace GameAnalyticsSDK.Validators
 			return true;
 		}
 
-		public static bool ValidateSdkErrorEvent(string gameKey, string gameSecret, GAErrorSeverity type)
+        public static bool ValidateAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement)
+        {
+            if (adAction == GAAdAction.Undefined)
+            {
+                Debug.Log("Validation fail - ad event - adAction: Ad action was unsupported value.");
+                return false;
+            }
+            if (adType == GAAdType.Undefined)
+            {
+                Debug.Log("Validation fail - ad event - adType: Ad type was unsupported value.");
+                return false;
+            }
+            if (!ValidateShortString(adSdkName, false))
+            {
+                Debug.Log("Validation fail - ad event - message: Ad SDK name cannot be above 32 characters.");
+                return false;
+            }
+            if (!ValidateString(adPlacement, false))
+            {
+                Debug.Log("Validation fail - ad event - message: Ad placement cannot be above 64 characters.");
+                return false;
+            }
+            return true;
+        }
+
+        public static bool ValidateSdkErrorEvent(string gameKey, string gameSecret, GAErrorSeverity type)
 		{
 			if(!ValidateKeys(gameKey, gameSecret))
 			{

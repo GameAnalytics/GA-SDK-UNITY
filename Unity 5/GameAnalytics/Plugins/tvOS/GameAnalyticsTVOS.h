@@ -9,7 +9,7 @@
 
 /*!
  @enum
- @discussion 
+ @discussion
  This enum is used to specify flow in resource events
  @constant GAResourceFlowTypeSource
  Used when adding to a resource currency
@@ -58,10 +58,10 @@ typedef enum GAErrorSeverity : NSInteger {
     GAErrorSeverityCritical = 5
 } GAErrorSeverity;
 
-//Similar to ICommandCenterListener in the GameAnalytics Android library
-@protocol GACommandCenterDelegate <NSObject>
+//Similar to IRemoteConfigsListener in the GameAnalytics Android library
+@protocol GARemoteConfigsDelegate <NSObject>
 @optional
-- (void) onCommandCenterUpdated; // Updated everytime when configurations are added
+- (void) onRemoteConfigsUpdated; // Updated everytime when configurations are added
 @end
 
 
@@ -73,124 +73,124 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Define available 1st custom dimensions
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  NSArray *dimensionArray = @[@"dimA", @"dimB", @"dimC"];<br>
  [GameAnalytics configureAvailableCustomDimensions01:dimensionArray];
  </code></pre>
- 
+
  @param customDimensions
    Must be an array of strings.<br>
    Array max length=20, String max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureAvailableCustomDimensions01:(NSArray *)customDimensions;
 
 /*!
  @method
- 
+
  @abstract Set available 2nd custom dimensions
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  NSArray *available = @[@"dimD", @"dimE", @"dimF"];<br>
  [GameAnalytics configureAvailableCustomDimensions02:dimensionArray;
  </code></pre>
- 
+
  @param customDimensions
    Must be an array of strings.<br>
    (Array max length=20, String max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureAvailableCustomDimensions02:(NSArray *)customDimensions;
 
 /*!
  @method
- 
+
  @abstract Set available 3rd custom dimensions
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  NSArray *available = @[@"dimA", @"dimB", @"dimC"];<br>
  [GameAnalytics configureAvailableCustomDimensions03:dimensionArray];
  </code></pre>
- 
+
  @param customDimensions
     Must be an array of strings.<br>
     (Array max length=20, String max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureAvailableCustomDimensions03:(NSArray *)customDimensions;
 
 /*!
  @method
- 
+
  @abstract Set available resource currencies
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  NSArray *availableCurrencies = @[@"gems", @"gold"];<br>
  [GameAnalytics configureAvailableResourceCurrencies:availableCurrencies];
  </code></pre>
- 
+
  @param resourceCurrencies
     Must be an array of strings.<br>
     (Array max length=20, String max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureAvailableResourceCurrencies:(NSArray *)resourceCurrencies;
 
 /*!
  @method
- 
+
  @abstract Set available resource item types
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  NSArray *availableItemTypes = @[@"upgrades", @"powerups"];<br>
  [GameAnalytics configureAvailableResourceItemTypes:availableItemTypes];
  </code></pre>
- 
+
  @param resourceItemTypes
     Must be an array of strings.<br>
     (Array max length=20, String max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureAvailableResourceItemTypes:(NSArray *)resourceItemTypes;
 
 /*!
  @method
- 
+
  @abstract Set app build version
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  [GameAnalytics configureBuild:@"0.0.1"];
  </code></pre>
- 
+
  @param build
     (String max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureBuild:(NSString *)build;
@@ -217,7 +217,7 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /* @IF WRAPPER */
 
-/* 
+/*
  Used ONLY by GameAnalytics wrapper SDK's (for example Unity).
  Never call this manually!
  */
@@ -226,19 +226,19 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Set app engine version
- 
+
  @discussion <i>Example usage:</i>
  <pre><code>
  [GameAnalytics configureEngineVersion:@"unreal 4.8.1"];
  </code></pre>
- 
+
  @param engineVersion
  (String)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureEngineVersion:(NSString *)engineVersion;
@@ -269,7 +269,7 @@ typedef enum GAErrorSeverity : NSInteger {
  @method
 
  @abstract Initialize GameAnalytics SDK
- 
+
  @discussion
  <i>Example usage:</i>
  <pre><code>
@@ -280,7 +280,7 @@ typedef enum GAErrorSeverity : NSInteger {
     (String)
  @param gameSecret
     (String)
- 
+
  @availability Available since 2.0.0
  */
 + (void)initializeWithGameKey:(NSString *)gameKey
@@ -310,7 +310,7 @@ typedef enum GAErrorSeverity : NSInteger {
  @method
 
  @abstract Add new business event with receipt
- 
+
  @param currency
     Currency code in ISO 4217 format. (e.g. USD)
  @param amount
@@ -321,9 +321,9 @@ typedef enum GAErrorSeverity : NSInteger {
     Item bought. (e.g. 1000 gold)
  @param receipt
     Transaction receipt string. (Optional, can be nil)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addBusinessEventWithCurrency:(NSString *)currency
@@ -337,7 +337,7 @@ typedef enum GAErrorSeverity : NSInteger {
  @method
 
  @abstract Add new business event
- 
+
  @param currency
     Currency code in ISO 4217 format. (e.g. USD)
  @param amount
@@ -348,9 +348,9 @@ typedef enum GAErrorSeverity : NSInteger {
     Item bought. (e.g. 1000 gold)
  @param autoFetchReceipt
     Should the SDK automatically fetch the transaction receipt and add it to the event
- 
+
  @availability Available since 1.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addBusinessEventWithCurrency:(NSString *)currency
@@ -362,9 +362,9 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new resource event
- 
+
  @param flowType
     Add or substract resource.<br> (See. GAResourceFlowType)
  @param currency
@@ -375,9 +375,9 @@ typedef enum GAErrorSeverity : NSInteger {
     One of the available item types set in configureAvailableResourceItemTypes
  @param itemId
     Item id (string max length=32)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addResourceEventWithFlowType:(GAResourceFlowType)flowType
@@ -388,9 +388,9 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new progression event
- 
+
  @param progressionStatus
     Status of added progression.<br> (See. GAProgressionStatus)
  @param progression01
@@ -399,9 +399,9 @@ typedef enum GAErrorSeverity : NSInteger {
     2nd progression (e.g. level01)
  @param progression03
     3rd progression (e.g. phase01)
- 
+
  @availability Available since 1.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addProgressionEventWithProgressionStatus:(GAProgressionStatus)progressionStatus
@@ -411,9 +411,9 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new progression event with score
- 
+
  @param progressionStatus
  Status of added progression.<br> (See. GAProgressionStatus)
  @param progression01
@@ -422,9 +422,9 @@ typedef enum GAErrorSeverity : NSInteger {
  2nd progression (e.g. level01)
  @param progression03
  3rd progression (e.g. phase01)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addProgressionEventWithProgressionStatus:(GAProgressionStatus)progressionStatus
@@ -435,34 +435,34 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new design event without a value
- 
+
  @param eventId
     String can consist of 1 to 5 segments.<br>
     Segments are seperated by ':' and segments can have a max length of 32.<br>
     (e.g. segment1:anotherSegment:gold)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addDesignEventWithEventId:(NSString *)eventId;
 
 /*!
  @method
- 
+
  @abstract Add new design event with a value
- 
+
  @param eventId
     String can consist of 1 to 5 segments.<br>
     segments are seperated by ':' and segments can have a max length of 32.<br>
     (e.g. segment1:anotherSegment:gold)
  @param value
     Number value of event
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addDesignEventWithEventId:(NSString *)eventId
@@ -471,16 +471,16 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new error event
- 
+
  @param severity
     Severity of error (See. GAErrorSeverity)
  @param message
     Error message (Optional, can be nil)
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addErrorEventWithSeverity:(GAErrorSeverity)severity
@@ -488,67 +488,67 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
- @abstract Get command center value as string
- 
+
+ @abstract Get remote configs value as string
+
  @param key
  The key declared in the webtool
- 
+
  @availability Available since (TBD)
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
-+ (NSString *)getCommandCenterValueAsString:(NSString*) key;
++ (NSString *)getRemoteConfigsValueAsString:(NSString*) key;
 
 
 /*!
  @method
- 
- @abstract Get command center value as string
- 
+
+ @abstract Get remote configs value as string
+
  @param key
  The key declared in the webtool
- 
+
  @param defaultValue
  Fallback default value for when the method does not find a value under the specified key
- 
+
  @availability Available since (TBD)
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
-+ (NSString *) getCommandCenterValueAsString:(NSString *) key
++ (NSString *) getRemoteConfigsValueAsString:(NSString *) key
                                 defaultValue:(NSString *)defaultValue;
 
 /*!
  @method
- 
- @abstract Get command center configurations
- 
+
+ @abstract Get remote configs configurations
+
  @availability Available since (TBD)
- 
+
  @attribute For internal use.
  */
-+ (NSString *) getCommandCenterConfigurations;
++ (NSString *) getRemoteConfigsConfigurations;
 
 /*!
  @method
- 
+
  @abstract Use this to set the delegate for the Command Center to retreive information about the status of loading configurations
- 
+
  @availability Available since (TBD)
  */
-+ (void) setCommandCenterDelegate:(id)newDelegate;
++ (void) setRemoteConfigsDelegate:(id)newDelegate;
 
 /*!
  @method
- 
- @abstract Call for checking if command center values are loaded and ready
- 
+
+ @abstract Call for checking if remote configs values are loaded and ready
+
  @availability Available since (TBD)
- 
+
  @attribute Note! This method should not be called before initialize method has been triggered
  */
-+ (BOOL) isCommandCenterReady;
++ (BOOL) isRemoteConfigsReady;
 
 /*!
  @method
@@ -566,14 +566,14 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Enable verbose info logging of analytics. Will output event JSON data to console.
- 
+
  @param flag
  Enable or disable verbose info log mode
- 
+
  @availability Available since 2.0.0
- 
+
  */
 + (void)setEnabledVerboseLog:(BOOL)flag;
 
@@ -596,29 +596,29 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Enable error reporting.
  When enabled this will automatic send error events for uncaught exceptions.
- 
+
  @param flag
  Enable or disable error reporting.
- 
+
  @availability Available since 3.1.0
- 
+
  */
 + (void)setEnabledErrorReporting:(BOOL)flag;
 
 /*!
  @method
- 
+
  @abstract Enable/disable event submission.
  When enabled this will allow events to be sent.
- 
+
  @param flag
  Enable or disable event submission.
- 
+
  @availability Available since 3.2.0
- 
+
  */
 + (void)setEnabledEventSubmission:(BOOL)flag;
 
@@ -653,82 +653,82 @@ typedef enum GAErrorSeverity : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Set 1st custom dimension
- 
+
  @param dimension01
     One of the available dimension values set in configureAvailableCustomDimensions01<br>
     Will persist cross session. Set to nil to reset.
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! Must be called after setAvailableCustomDimensions01WithCustomDimensions
  */
 + (void)setCustomDimension01:(NSString *)dimension01;
 
 /*!
  @method
- 
+
  @abstract Set 2nd custom dimension
- 
+
  @param dimension02
  One of the available dimension values set in configureAvailableCustomDimensions02<br>
  Will persist cross session. Set to nil to reset.
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! Must be called after setAvailableCustomDimensions02
  */
 + (void)setCustomDimension02:(NSString *)dimension02;
 
 /*!
  @method
- 
+
  @abstract Set 3rd custom dimension
- 
+
  @param dimension03
  One of the available dimension values set in configureAvailableCustomDimensions03<br>
  Will persist cross session. Set to nil to reset.
- 
+
  @availability Available since 2.0.0
- 
+
  @attribute Note! Must be called after setAvailableCustomDimensions03W
  */
 + (void)setCustomDimension03:(NSString *)dimension03;
 
 /*!
  @method
- 
+
  @abstract Set user facebook id
- 
+
  @param facebookId
     Facebook id of user (Persists cross session)
- 
+
  @availability Available since 2.0.0
  */
 + (void)setFacebookId:(NSString *)facebookId;
 
 /*!
  @method
- 
+
  @abstract Set user gender
- 
+
  @param gender
     Gender of user (Persists cross session)<br>
     Must be one of (male / female)
- 
+
  @availability Available since 2.0.0
  */
 + (void)setGender:(NSString *)gender;
 
 /*!
  @method
- 
+
  @abstract Set user birth year
- 
+
  @param birthYear
     Birth year of user (Persists cross session)
- 
+
  @availability Available since 2.0.0
  */
 + (void)setBirthYear:(NSInteger)birthYear;

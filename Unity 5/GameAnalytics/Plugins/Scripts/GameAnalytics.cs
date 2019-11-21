@@ -480,6 +480,59 @@ namespace GameAnalyticsSDK
         }
 
         /// <summary>
+        /// Track fill-rate of you ads.
+        /// </summary>
+        /// <param name="adAction">Action of ad (for example loaded, show).</param>
+        /// <param name="adType">Type of ad (for video, interstitial).</param>
+        /// <param name="adSdkName">Name of ad SDK.</param>
+        /// <param name="adPlacement">Placement of ad or identifier of the ad in the app</param>
+        /// <param name="duration">Duration of ad video</param>
+        public static void NewAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, long duration)
+        {
+            if(!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, duration);
+        }
+
+        /// <summary>
+        /// Track fill-rate of you ads.
+        /// </summary>
+        /// <param name="adAction">Action of ad (for example loaded, show).</param>
+        /// <param name="adType">Type of ad (for video, interstitial).</param>
+        /// <param name="adSdkName">Name of ad SDK.</param>
+        /// <param name="adPlacement">Placement of ad or identifier of the ad in the app</param>
+        /// <param name="noAdReason">Error reason for no ad available</param>
+        public static void NewAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, GAAdError noAdReason)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, noAdReason);
+        }
+
+        /// <summary>
+        /// Track fill-rate of you ads.
+        /// </summary>
+        /// <param name="adAction">Action of ad (for example loaded, show).</param>
+        /// <param name="adType">Type of ad (for video, interstitial).</param>
+        /// <param name="adSdkName">Name of ad SDK.</param>
+        /// <param name="adPlacement">Placement of ad or identifier of the ad in the app</param>
+        public static void NewAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement);
+        }
+
+        /// <summary>
         /// Set user facebook id.
         /// </summary>
         /// <param name="facebookId">Facebook id of user (Persists cross session).</param>
@@ -577,44 +630,64 @@ namespace GameAnalyticsSDK
             GA_Setup.SetCustomDimension03(customDimension);
         }
 
-        // ----------------------- COMMAND CENTER ---------------------- //
-		public static event Action OnCommandCenterUpdatedEvent;
+        // ----------------------- REMOTE CONFIGS ---------------------- //
+		public static event Action OnRemoteConfigsUpdatedEvent;
 
-		public void OnCommandCenterUpdated()
+		public void OnRemoteConfigsUpdated()
 		{
-			if(OnCommandCenterUpdatedEvent != null)
+			if(OnRemoteConfigsUpdatedEvent != null)
 			{
-				OnCommandCenterUpdatedEvent();
+				OnRemoteConfigsUpdatedEvent();
 			}
 		}
 
-        public static void CommandCenterUpdated()
+        public static void RemoteConfigsUpdated()
         {
-            if (OnCommandCenterUpdatedEvent != null)
+            if (OnRemoteConfigsUpdatedEvent != null)
             {
-                OnCommandCenterUpdatedEvent();
+                OnRemoteConfigsUpdatedEvent();
             }
         }
 
-        public static string GetCommandCenterValueAsString(string key)
+        public static string GetRemoteConfigsValueAsString(string key)
         {
-            return GetCommandCenterValueAsString(key, null);
+            return GetRemoteConfigsValueAsString(key, null);
         }
 
-        public static string GetCommandCenterValueAsString(string key, string defaultValue)
+        public static string GetRemoteConfigsValueAsString(string key, string defaultValue)
         {
-			return GA_Wrapper.GetCommandCenterValueAsString(key, defaultValue);
+			return GA_Wrapper.GetRemoteConfigsValueAsString(key, defaultValue);
         }
 
-        public static bool IsCommandCenterReady()
+        public static bool IsRemoteConfigsReady()
         {
-			return GA_Wrapper.IsCommandCenterReady();
+			return GA_Wrapper.IsRemoteConfigsReady();
         }
 
-		public static string GetConfigurationsContentAsString()
+		public static string GetRemoteConfigsContentAsString()
 		{
-			return GA_Wrapper.GetConfigurationsContentAsString();
+			return GA_Wrapper.GetRemoteConfigsContentAsString();
 		}
+
+        public static void StartTimer(string key)
+        {
+            GA_Wrapper.StartTimer(key);
+        }
+
+        public static void PauseTimer(string key)
+        {
+            GA_Wrapper.PauseTimer(key);
+        }
+
+        public static void ResumeTimer(string key)
+        {
+            GA_Wrapper.ResumeTimer(key);
+        }
+
+        public static long StopTimer(string key)
+        {
+            return GA_Wrapper.StopTimer(key);
+        }
 
         private static string GetUnityVersion()
         {

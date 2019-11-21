@@ -1,8 +1,8 @@
 var GameAnalyticsUnity = {
     $listener: {
-        onCommandCenterUpdated: function()
+        onRemoteConfigsUpdated: function()
         {
-            SendMessage("GameAnalytics", "OnCommandCenterUpdated");
+            SendMessage("GameAnalytics", "OnRemoteConfigsUpdated");
         }
     },
     configureAvailableCustomDimensions01: function(list)
@@ -43,7 +43,7 @@ var GameAnalyticsUnity = {
     },
     initialize: function(gamekey, gamesecret)
     {
-        gameanalytics.GameAnalytics.addCommandCenterListener(listener);
+        gameanalytics.GameAnalytics.addRemoteConfigsListener(listener);
         gameanalytics.GameAnalytics.initialize(Pointer_stringify(gamekey), Pointer_stringify(gamesecret));
     },
     setCustomDimension01: function(customDimension)
@@ -122,20 +122,20 @@ var GameAnalyticsUnity = {
     {
         gameanalytics.GameAnalytics.setBirthYear(birthYear);
     },
-    getCommandCenterValueAsString: function(key, defaultValue)
+    getRemoteConfigsValueAsString: function(key, defaultValue)
     {
-        var returnStr = gameanalytics.GameAnalytics.getCommandCenterValueAsString(Pointer_stringify(key), Pointer_stringify(defaultValue));
+        var returnStr = gameanalytics.GameAnalytics.getRemoteConfigsValueAsString(Pointer_stringify(key), Pointer_stringify(defaultValue));
         var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
         writeStringToMemory(returnStr, buffer);
         return buffer;
     },
-    isCommandCenterReady: function()
+    isRemoteConfigsReady: function()
     {
-        return gameanalytics.GameAnalytics.isCommandCenterReady();
+        return gameanalytics.GameAnalytics.isRemoteConfigsReady();
     },
-    getConfigurationsContentAsString: function()
+    getRemoteConfigsContentAsString: function()
     {
-        var returnStr = gameanalytics.GameAnalytics.getConfigurationsContentAsString();
+        var returnStr = gameanalytics.GameAnalytics.getRemoteConfigsContentAsString();
         var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
         writeStringToMemory(returnStr, buffer);
         return buffer;

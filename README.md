@@ -21,6 +21,11 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.0.0**
+* command center is now called remote configs
+* A/B testing support added
+* ad event added (ios, android only)
+
 **5.2.2**
 * compile error fixes for windows builds
 

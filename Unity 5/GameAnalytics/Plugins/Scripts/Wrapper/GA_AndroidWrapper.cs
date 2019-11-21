@@ -169,6 +169,21 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("addErrorEventWithSeverity", severity, message/*, fields*/);
         }
 
+        private static void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration)
+        {
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, duration);
+        }
+
+        private static void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason)
+        {
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, noAdReason);
+        }
+
+        private static void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement)
+        {
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement);
+        }
+
         private static void setEnabledInfoLog(bool enabled)
         {
             GA.CallStatic("setEnabledInfoLog", enabled);
@@ -223,19 +238,39 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("endSession");
         }
 
-        private static string getCommandCenterValueAsString(string key, string defaultValue)
+        private static string getRemoteConfigsValueAsString(string key, string defaultValue)
         {
-            return GA.CallStatic<string>("getCommandCenterValueAsString", key, defaultValue);
+            return GA.CallStatic<string>("getRemoteConfigsValueAsString", key, defaultValue);
         }
 
-        private static bool isCommandCenterReady ()
+        private static bool isRemoteConfigsReady ()
         {
-            return GA.CallStatic<bool>("isCommandCenterReady");
+            return GA.CallStatic<bool>("isRemoteConfigsReady");
         }
 
-        private static string getConfigurationsContentAsString()
+        private static string getRemoteConfigsContentAsString()
         {
-            return GA.CallStatic<string>("getConfigurationsContentAsString");
+            return GA.CallStatic<string>("getRemoteConfigsContentAsString");
+        }
+
+        private static void startTimer(string key)
+        {
+            GA.CallStatic("startTimer", key);
+        }
+
+        private static void pauseTimer(string key)
+        {
+            GA.CallStatic("pauseTimer", key);
+        }
+
+        private static void resumeTimer(string key)
+        {
+            GA.CallStatic("resumeTimer", key);
+        }
+
+        private static long stopTimer(string key)
+        {
+            return GA.CallStatic<long>("stopTimer", key);
         }
 #endif
     }

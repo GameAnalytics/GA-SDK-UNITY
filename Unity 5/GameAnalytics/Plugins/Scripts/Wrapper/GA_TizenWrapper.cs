@@ -67,7 +67,7 @@ namespace GameAnalyticsSDK.Wrapper
 
 		[DllImport ("__Internal")]
 		private static extern void addErrorEvent(int severity, string message, string fields);
-		
+
 		[DllImport ("__Internal")]
 		private static extern void setEnabledInfoLog(bool enabled);
 
@@ -105,17 +105,17 @@ namespace GameAnalyticsSDK.Wrapper
             setEnabledEventSubmission(enabled);
         }
 
-		private static string getCommandCenterValueAsString(string key, string defaultValue)
+		private static string getRemoteConfigsValueAsString(string key, string defaultValue)
 		{
 			return defaultValue;
 		}
 
-		private static bool isCommandCenterReady ()
+		private static bool isRemoteConfigsReady ()
 		{
 			return false;
 		}
 
-		private static string getConfigurationsContentAsString()
+		private static string getRemoteConfigsContentAsString()
 		{
 			return "";
 		}

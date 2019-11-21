@@ -243,22 +243,22 @@ namespace GameAnalyticsSDK.Wrapper
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
-		private static extern void getCommandCenterValueAsStringWithDefaultValueUWP([MarshalAs(UnmanagedType.LPWStr)]string key, [MarshalAs(UnmanagedType.LPWStr)]string defaultValue, StringBuilder outResult);
+		private static extern void getRemoteConfigsValueAsStringWithDefaultValueUWP([MarshalAs(UnmanagedType.LPWStr)]string key, [MarshalAs(UnmanagedType.LPWStr)]string defaultValue, StringBuilder outResult);
 
-        private static string getCommandCenterValueAsString(string key, string defaultValue)
+        private static string getRemoteConfigsValueAsString(string key, string defaultValue)
         {
             StringBuilder buffer = new StringBuilder(255);
-            getCommandCenterValueAsStringWithDefaultValueUWP(key, defaultValue, buffer);
+            getRemoteConfigsValueAsStringWithDefaultValueUWP(key, defaultValue, buffer);
             return buffer.ToString();
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
-		private static extern double isCommandCenterReady();
+		private static extern double isRemoteConfigsReady();
 
         [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void getConfigurationsContentAsStringUWP(StringBuilder outResult);
 
-        private static string getConfigurationsContentAsString()
+        private static string getRemoteConfigsContentAsString()
         {
             StringBuilder buffer = new StringBuilder(8192);
             getConfigurationsContentAsStringUWP(buffer);

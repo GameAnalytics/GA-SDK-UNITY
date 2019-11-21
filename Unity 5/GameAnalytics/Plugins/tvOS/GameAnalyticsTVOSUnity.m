@@ -7,23 +7,23 @@
 
 #import "GameAnalyticsTVOS.h"
 
-@interface GACommandCenterUnityDelegate : NSObject<GACommandCenterDelegate>
+@interface GARemoteConfigsUnityDelegate : NSObject<GARemoteConfigsDelegate>
 {
 }
 
-- (void) onCommandCenterUpdated;
+- (void) onRemoteConfigsUpdated;
 
 @end
 
-@implementation GACommandCenterUnityDelegate
+@implementation GARemoteConfigsUnityDelegate
 
-- (void)onCommandCenterUpdated {
-    UnitySendMessage("GameAnalytics", "OnCommandCenterUpdated","");
+- (void)onRemoteConfigsUpdated {
+    UnitySendMessage("GameAnalytics", "OnRemoteConfigsUpdated","");
 }
 
 @end
 
-GACommandCenterUnityDelegate* ga_cc_delegate = nil;
+GARemoteConfigsUnityDelegate* ga_rc_delegate = nil;
 
 void configureAvailableCustomDimensions01(const char *list) {
     NSString *list_string = list != NULL ? [NSString stringWithUTF8String:list] : nil;
@@ -104,8 +104,8 @@ void initialize(const char *gameKey, const char *gameSecret) {
     NSString *gameKeyString = gameKey != NULL ? [NSString stringWithUTF8String:gameKey] : nil;
     NSString *gameSecretString = gameSecret != NULL ? [NSString stringWithUTF8String:gameSecret] : nil;
 
-    ga_cc_delegate = [[GACommandCenterUnityDelegate alloc] init];
-    [GameAnalytics setCommandCenterDelegate:ga_cc_delegate];
+    ga_rc_delegate = [[GARemoteConfigsUnityDelegate alloc] init];
+    [GameAnalytics setRemoteConfigsDelegate:ga_rc_delegate];
 
     [GameAnalytics setEnabledErrorReporting:NO];
     [GameAnalytics initializeWithGameKey:gameKeyString gameSecret:gameSecretString];
@@ -307,19 +307,19 @@ char* cStringCopy(const char* string)
     return res;
 }
 
-char* getCommandCenterValueAsString(const char *key, const char *defaultValue) {
+char* getRemoteConfigsValueAsString(const char *key, const char *defaultValue) {
     NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
     NSString *defaultValueString = defaultValue != NULL ? [NSString stringWithUTF8String:defaultValue] : nil;
-    NSString *result = [GameAnalytics getCommandCenterValueAsString:keyString defaultValue:defaultValueString];
+    NSString *result = [GameAnalytics getRemoteConfigsValueAsString:keyString defaultValue:defaultValueString];
 
     return cStringCopy([result UTF8String]);
 }
 
-BOOL isCommandCenterReady() {
-    return [GameAnalytics isCommandCenterReady];
+BOOL isRemoteConfigsReady() {
+    return [GameAnalytics isRemoteConfigsReady];
 }
 
-char* getConfigurationsContentAsString() {
-    NSString *result = [GameAnalytics getCommandCenterConfigurations];
+char* getRemoteConfigsContentAsString() {
+    NSString *result = [GameAnalytics getRemoteConfigsConfigurations];
     return cStringCopy([result UTF8String]);
 }
