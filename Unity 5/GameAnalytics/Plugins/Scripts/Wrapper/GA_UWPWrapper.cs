@@ -256,12 +256,12 @@ namespace GameAnalyticsSDK.Wrapper
 		private static extern double isRemoteConfigsReady();
 
         [DllImport ("GameAnalytics.UWP.dll")]
-		private static extern void getConfigurationsContentAsStringUWP(StringBuilder outResult);
+		private static extern void getRemoteConfigsContentAsStringUWP(StringBuilder outResult);
 
         private static string getRemoteConfigsContentAsString()
         {
             StringBuilder buffer = new StringBuilder(8192);
-            getConfigurationsContentAsStringUWP(buffer);
+            getRemoteConfigsContentAsStringUWP(buffer);
             return buffer.ToString();
         }
 #endif

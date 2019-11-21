@@ -21,8 +21,11 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.0.1**
+* small fixes
+
 **6.0.0**
-* command center is now called remote configs
+* Remote Config calls have been updated and the old calls have deprecated. Please see GA documentation for the new SDK calls and migration guide
 * A/B testing support added
 * ad event added (ios, android only)
 
