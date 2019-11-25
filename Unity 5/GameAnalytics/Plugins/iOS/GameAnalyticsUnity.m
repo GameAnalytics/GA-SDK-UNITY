@@ -356,7 +356,7 @@ BOOL isRemoteConfigsReady() {
 }
 
 char* getRemoteConfigsContentAsString() {
-    NSString *result = [GameAnalytics getRemoteConfigsConfigurations];
+    NSString *result = [GameAnalytics getRemoteConfigsContentAsString];
     return cStringCopy([result UTF8String]);
 }
 
