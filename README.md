@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.0.4**
+* fixed ios events bug
+
 **6.0.3**
 * fixed ios build error
 
