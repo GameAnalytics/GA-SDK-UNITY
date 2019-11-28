@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.0.6**
+* remote configs fixes
+
 **6.0.5**
 * fixed javascript events bug
 

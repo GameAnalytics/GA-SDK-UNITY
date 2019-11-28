@@ -834,6 +834,14 @@ var gameanalytics;
                         return null;
                     }
                     try {
+                        var configs_hash = initResponse["configs_hash"];
+                        validatedDict["configs_hash"] = configs_hash;
+                    }
+                    catch (e) {
+                        GALogger.w("validateInitRequestResponse failed - invalid type in 'configs_hash' field. type=" + typeof initResponse["configs_hash"] + ", value=" + initResponse["configs_hash"] + ", " + e);
+                        return null;
+                    }
+                    try {
                         var ab_id = initResponse["ab_id"];
                         validatedDict["ab_id"] = ab_id;
                     }
@@ -1162,7 +1170,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.0.2";
+            GADevice.sdkWrapperVersion = "javascript 4.0.4";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -1930,6 +1938,12 @@ var gameanalytics;
                 initAnnotations["sdk_version"] = GADevice.getRelevantSdkVersion();
                 initAnnotations["os_version"] = GADevice.osVersion;
                 initAnnotations["platform"] = GADevice.buildPlatform;
+                if (GAState.getBuild()) {
+                    initAnnotations["build"] = GAState.getBuild();
+                }
+                else {
+                    initAnnotations["build"] = null;
+                }
                 initAnnotations["random_salt"] = GAState.getSessionNum();
                 return initAnnotations;
             };
@@ -3456,6 +3470,9 @@ var gameanalytics;
                     if (currentSdkConfig["configs"]) {
                         initResponseDict["configs"] = currentSdkConfig["configs"];
                     }
+                    if (currentSdkConfig["configs_hash"]) {
+                        initResponseDict["configs_hash"] = currentSdkConfig["configs_hash"];
+                    }
                     if (currentSdkConfig["ab_id"]) {
                         initResponseDict["ab_id"] = currentSdkConfig["ab_id"];
                     }
@@ -3463,6 +3480,9 @@ var gameanalytics;
                         initResponseDict["ab_variant_id"] = currentSdkConfig["ab_variant_id"];
                     }
                 }
+                GAState.instance.configsHash = initResponseDict["configs_hash"] ? initResponseDict["configs_hash"] : "";
+                GAState.instance.abId = initResponseDict["ab_id"] ? initResponseDict["ab_id"] : "";
+                GAState.instance.abVariantId = initResponseDict["ab_variant_id"] ? initResponseDict["ab_variant_id"] : "";
                 GAStore.setItem(GAState.SdkConfigCachedKey, GAUtilities.encode64(JSON.stringify(initResponseDict)));
                 GAState.instance.sdkConfigCached = initResponseDict;
                 GAState.instance.sdkConfig = initResponseDict;
