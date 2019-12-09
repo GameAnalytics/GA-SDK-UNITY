@@ -1794,23 +1794,23 @@ namespace GameAnalyticsSDK.Editor
                         IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
                         IList<object> studioList = results["studios"] as IList<object>;
 
-                        List<Studio> returnStudios = new List<Studio>();
+                        List<GameAnalyticsSDK.Setup.Studio> returnStudios = new List<Studio>();
 
                         for (int s = 0; s < studioList.Count; s++)
                         {
                             IDictionary<string, object> studio = studioList[s] as IDictionary<string, object>;
                             if (!studio.ContainsKey("demo") || !((bool)studio["demo"]))
                             {
-                                List<Game> returnGames = new List<Game>();
+                                List<GameAnalyticsSDK.Setup.Game> returnGames = new List<GameAnalyticsSDK.Setup.Game>();
 
                                 List<object> gamesList = (List<object>)studio["games"];
                                 for (int g = 0; g < gamesList.Count; g++)
                                 {
                                     IDictionary<string, object> games = gamesList[g] as IDictionary<string, object>;
-                                    returnGames.Add(new Game(games["name"].ToString(), int.Parse(games["id"].ToString()), games["key"].ToString(), games["secret"].ToString()));
+                                    returnGames.Add(new GameAnalyticsSDK.Setup.Game(games["name"].ToString(), int.Parse(games["id"].ToString()), games["key"].ToString(), games["secret"].ToString()));
                                 }
 
-                                returnStudios.Add(new Studio(studio["name"].ToString(), studio["id"].ToString(), returnGames));
+                                returnStudios.Add(new GameAnalyticsSDK.Setup.Studio(studio["name"].ToString(), studio["id"].ToString(), returnGames));
                             }
                         }
                         ga.Studios = returnStudios;
@@ -2365,12 +2365,20 @@ namespace GameAnalyticsSDK.Editor
 
         private static void OpenUpdateWindow()
         {
-            // TODO: possible to close existing window if already there?
-            //GA_UpdateWindow updateWindow = ScriptableObject.CreateInstance<GA_UpdateWindow> ();
-            GA_UpdateWindow updateWindow = (GA_UpdateWindow)EditorWindow.GetWindow(typeof(GA_UpdateWindow), utility: true);
-            updateWindow.position = new Rect(150, 150, 415, 340);
-            updateWindow.titleContent = new GUIContent("An update for GameAnalytics is available!");
-            updateWindow.Show();
+#if UNITY_2018_2_OR_NEWER
+            if(!Application.isBatchMode)
+#else
+            string commandLineOptions = System.Environment.CommandLine;
+            if (!commandLineOptions.Contains("-batchmode"))
+#endif
+            {
+                // TODO: possible to close existing window if already there?
+                //GA_UpdateWindow updateWindow = ScriptableObject.CreateInstance<GA_UpdateWindow> ();
+                GA_UpdateWindow updateWindow = (GA_UpdateWindow)EditorWindow.GetWindow(typeof(GA_UpdateWindow), utility: true);
+                updateWindow.position = new Rect(150, 150, 415, 340);
+                updateWindow.titleContent = new GUIContent("An update for GameAnalytics is available!");
+                updateWindow.Show();
+            }
         }
 
         public static void Splitter(Color rgb, float thickness = 1, int margin = 0)

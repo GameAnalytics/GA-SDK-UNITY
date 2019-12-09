@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "6.0.7";
+        public static string VERSION = "6.0.8";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -119,7 +119,7 @@ namespace GameAnalyticsSDK.Setup
         public bool IntroScreen = true;
 
         [System.NonSerialized]
-        public List<Studio> Studios;
+        public List<GameAnalyticsSDK.Setup.Studio> Studios;
 
         public bool InfoLogEditor = true;
         public bool InfoLogBuild = true;
@@ -434,16 +434,16 @@ namespace GameAnalyticsSDK.Setup
         public string ID { get; private set; }
 
         //[SerializeField]
-        public List<Game> Games { get; private set; }
+        public List<GameAnalyticsSDK.Setup.Game> Games { get; private set; }
 
-        public Studio(string name, string id, List<Game> games)
+        public Studio(string name, string id, List<GameAnalyticsSDK.Setup.Game> games)
         {
             Name = name;
             ID = id;
             Games = games;
         }
 
-        public static string[] GetStudioNames(List<Studio> studios, bool addFirstEmpty = true)
+        public static string[] GetStudioNames(List<GameAnalyticsSDK.Setup.Studio> studios, bool addFirstEmpty = true)
         {
             if(studios == null)
             {
@@ -479,7 +479,7 @@ namespace GameAnalyticsSDK.Setup
             }
         }
 
-        public static string[] GetGameNames(int index, List<Studio> studios)
+        public static string[] GetGameNames(int index, List<GameAnalyticsSDK.Setup.Studio> studios)
         {
             if(studios == null || studios[index].Games == null)
             {
