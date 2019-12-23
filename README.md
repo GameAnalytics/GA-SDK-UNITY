@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.0.9**
+* A/B testing fixes
+
 **6.0.8**
 * namespace bug fix
 * batchmode bug fix

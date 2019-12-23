@@ -59,6 +59,16 @@ namespace GameAnalyticsSDK
         {
             EditorApplication.hierarchyWindowItemOnGUI -= GameAnalytics.HierarchyWindowCallback;
         }
+        #else
+        void OnEnable()
+        {
+            Application.logMessageReceived += GA_Debug.HandleLog;
+        }
+
+        void OnDisable()
+        {
+            Application.logMessageReceived -= GA_Debug.HandleLog;
+        }
         #endif
 
         public void Awake()
@@ -78,8 +88,6 @@ namespace GameAnalyticsSDK
             _instance = this;
 
             DontDestroyOnLoad(gameObject);
-
-            Application.logMessageReceived += GA_Debug.HandleLog;
         }
 
         void OnDestroy()
