@@ -12,12 +12,12 @@ namespace GameAnalyticsSDK.State
 	internal static class GAState
 	{
 
-		private static Settings _settings;
+		private static GameAnalyticsSDK.Setup.Settings _settings;
 
 		public static void Init ()
 		{
 			try {
-				_settings = (Settings)Resources.Load ("GameAnalytics/Settings", typeof(Settings));
+				_settings = (GameAnalyticsSDK.Setup.Settings)Resources.Load ("GameAnalytics/Settings", typeof(GameAnalyticsSDK.Setup.Settings));
 			} catch (Exception ex) {
 				Debug.Log ("Could not get Settings during event validation \n" + ex.ToString ());
 			}

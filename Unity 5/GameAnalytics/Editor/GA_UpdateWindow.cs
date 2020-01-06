@@ -26,7 +26,7 @@ namespace GameAnalyticsSDK.Editor
 			
 			EditorGUILayout.Space();
 			
-			GUILayout.Label("Currently installed version: " + Settings.VERSION);
+			GUILayout.Label("Currently installed version: " + GameAnalyticsSDK.Setup.Settings.VERSION);
 			GUILayout.Label("Latest version: " + GameAnalytics.SettingsGA.NewVersion);
 			
 			EditorGUILayout.Space();

@@ -48,15 +48,15 @@ namespace GameAnalyticsSDK.Editor
 	        }
 		}
 		
-		private MessageType ConvertMessageType(Settings.MessageTypes msgType)
+		private MessageType ConvertMessageType(GameAnalyticsSDK.Setup.Settings.MessageTypes msgType)
 		{
 			switch (msgType)
 			{
-				case Settings.MessageTypes.Error:
+				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Error:
 					return MessageType.Error;
-				case Settings.MessageTypes.Info:
+				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Info:
 					return MessageType.Info;
-				case Settings.MessageTypes.Warning:
+				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Warning:
 					return MessageType.Warning;
 				default:
 					return MessageType.None;
