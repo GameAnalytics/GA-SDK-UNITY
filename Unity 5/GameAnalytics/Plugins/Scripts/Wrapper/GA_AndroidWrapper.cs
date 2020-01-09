@@ -99,7 +99,7 @@ namespace GameAnalyticsSDK.Wrapper
                 {
                     GA_IMEI.CallStatic("readImei");
                 }
-                catch(Exception e)
+                catch(Exception)
                 {
                 }
             }
