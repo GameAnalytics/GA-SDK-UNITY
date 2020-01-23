@@ -88,15 +88,6 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void endSession();
 
         [DllImport ("__Internal")]
-        private static extern void setFacebookId(string facebookId);
-
-        [DllImport ("__Internal")]
-        private static extern void setGender(int gender);
-
-        [DllImport ("__Internal")]
-        private static extern void setBirthYear(int birthYear);
-
-        [DllImport ("__Internal")]
         private static extern string getRemoteConfigsValueAsString(string key, string defaultValue);
 
         [DllImport ("__Internal")]
@@ -115,17 +106,9 @@ namespace GameAnalyticsSDK.Wrapper
             endSession();
         }
 
-        private static void setGender(string gender)
+        private static void configureAutoDetectAppVersion (bool flag)
         {
-            switch(gender)
-            {
-                case "male":
-                    setGender(1);
-                    break;
-                case "female":
-                    setGender(2);
-                    break;
-            }
+            // not supported
         }
 
 #endif

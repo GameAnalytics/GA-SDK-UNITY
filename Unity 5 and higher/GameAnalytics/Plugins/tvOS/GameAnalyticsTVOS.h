@@ -696,41 +696,4 @@ typedef enum GAErrorSeverity : NSInteger {
  */
 + (void)setCustomDimension03:(NSString *)dimension03;
 
-/*!
- @method
-
- @abstract Set user facebook id
-
- @param facebookId
-    Facebook id of user (Persists cross session)
-
- @availability Available since 2.0.0
- */
-+ (void)setFacebookId:(NSString *)facebookId;
-
-/*!
- @method
-
- @abstract Set user gender
-
- @param gender
-    Gender of user (Persists cross session)<br>
-    Must be one of (male / female)
-
- @availability Available since 2.0.0
- */
-+ (void)setGender:(NSString *)gender;
-
-/*!
- @method
-
- @abstract Set user birth year
-
- @param birthYear
-    Birth year of user (Persists cross session)
-
- @availability Available since 2.0.0
- */
-+ (void)setBirthYear:(NSInteger)birthYear;
-
 @end

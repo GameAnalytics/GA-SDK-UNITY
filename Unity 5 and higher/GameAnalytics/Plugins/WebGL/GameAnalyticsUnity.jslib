@@ -110,18 +110,6 @@ var GameAnalyticsUnity = {
     {
         gameanalytics.GameAnalytics.endSession();
     },
-    setFacebookId: function(facebookId)
-    {
-        gameanalytics.GameAnalytics.setFacebookId(Pointer_stringify(facebookId));
-    },
-    setGender: function(gender)
-    {
-        gameanalytics.GameAnalytics.setGender(gender);
-    },
-    setBirthYear: function(birthYear)
-    {
-        gameanalytics.GameAnalytics.setBirthYear(birthYear);
-    },
     getRemoteConfigsValueAsString: function(key, defaultValue)
     {
         var returnStr = gameanalytics.GameAnalytics.getRemoteConfigsValueAsString(Pointer_stringify(key), Pointer_stringify(defaultValue));

@@ -61,13 +61,9 @@ namespace GameAnalyticsSDK.Editor
                 "/GameAnalytics/Plugins/Playmaker/SendErrorEvent.cs",
                 "/GameAnalytics/Plugins/Playmaker/SendProgressionEvent.cs",
                 "/GameAnalytics/Plugins/Playmaker/SendResourceEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SetBirthYear.cs",
-                "/GameAnalytics/Plugins/Playmaker/SetFacebookID.cs",
-                "/GameAnalytics/Plugins/Playmaker/SetGender.cs",
                 "/GameAnalytics/Plugins/Playmaker/SetCustomDimension.cs",
                 "/GameAnalytics/Plugins/Playmaker/Editor/SendProgressionEventActionEditor.cs",
-                "/GameAnalytics/Plugins/Playmaker/Editor/SendResourceEventActionEditor.cs",
-                "/GameAnalytics/Plugins/Playmaker/Editor/SetGenderActionEditor.cs"
+                "/GameAnalytics/Plugins/Playmaker/Editor/SendResourceEventActionEditor.cs"
             };
 
             foreach(string _file in _files)

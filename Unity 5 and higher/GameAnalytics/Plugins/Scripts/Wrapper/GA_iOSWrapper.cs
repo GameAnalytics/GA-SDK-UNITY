@@ -35,6 +35,9 @@ namespace GameAnalyticsSDK.Wrapper
 		[DllImport ("__Internal")]
 		private static extern void configureUserId(string userId);
 
+        [DllImport ("__Internal")]
+        private static extern void configureAutoDetectAppVersion(bool flag);
+
 		[DllImport ("__Internal")]
 		private static extern void initialize(string gamekey, string gamesecret);
 
@@ -97,15 +100,6 @@ namespace GameAnalyticsSDK.Wrapper
 
 		[DllImport ("__Internal")]
 		private static extern void gameAnalyticsEndSession();
-
-		[DllImport ("__Internal")]
-		private static extern void setFacebookId(string facebookId);
-
-		[DllImport ("__Internal")]
-		private static extern void setGender(string gender);
-
-		[DllImport ("__Internal")]
-		private static extern void setBirthYear(int birthYear);
 
 		[DllImport ("__Internal")]
 		[return: MarshalAs(UnmanagedType.LPStr)]

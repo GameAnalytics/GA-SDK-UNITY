@@ -100,6 +100,10 @@ void configureUserId(const char *userId) {
     [GameAnalytics configureUserId:userIdString];
 }
 
+void configureAutoDetectAppVersion(BOOL flag) {
+    [GameAnalytics configureAutoDetectAppVersion:flag];
+}
+
 void initialize(const char *gameKey, const char *gameSecret) {
     NSString *gameKeyString = gameKey != NULL ? [NSString stringWithUTF8String:gameKey] : nil;
     NSString *gameSecretString = gameSecret != NULL ? [NSString stringWithUTF8String:gameSecret] : nil;
@@ -242,12 +246,48 @@ void addErrorEvent(int severity, const char *message, const char *fields) {
     [GameAnalytics addErrorEventWithSeverity:severity message:messageString /*fields:fields_dict*/];
 }
 
+void addAdEventWithDuration(int adAction, int adType, const char *adSdkName, const char *adPlacement, long duration) {
+    NSString *adSdkNameString = adSdkName != NULL ? [NSString stringWithUTF8String:adSdkName] : nil;
+    NSString *adPlacementString = adPlacement != NULL ? [NSString stringWithUTF8String:adPlacement] : nil;
+
+    [GameAnalytics addAdEventWithAction:adAction
+                                 adType:adType
+                              adSdkName:adSdkNameString
+                            adPlacement:adPlacementString
+                               duration:duration];
+}
+
+void addAdEventWithReason(int adAction, int adType, const char *adSdkName, const char *adPlacement, int noAdReason) {
+    NSString *adSdkNameString = adSdkName != NULL ? [NSString stringWithUTF8String:adSdkName] : nil;
+    NSString *adPlacementString = adPlacement != NULL ? [NSString stringWithUTF8String:adPlacement] : nil;
+
+    [GameAnalytics addAdEventWithAction:adAction
+                                 adType:adType
+                              adSdkName:adSdkNameString
+                            adPlacement:adPlacementString
+                               noAdReason:noAdReason];
+}
+
+void addAdEvent(int adAction, int adType, const char *adSdkName, const char *adPlacement) {
+    NSString *adSdkNameString = adSdkName != NULL ? [NSString stringWithUTF8String:adSdkName] : nil;
+    NSString *adPlacementString = adPlacement != NULL ? [NSString stringWithUTF8String:adPlacement] : nil;
+
+    [GameAnalytics addAdEventWithAction:adAction
+                                 adType:adType
+                              adSdkName:adSdkNameString
+                            adPlacement:adPlacementString];
+}
+
 void setEnabledInfoLog(BOOL flag) {
     [GameAnalytics setEnabledInfoLog:flag];
 }
 
 void setEnabledVerboseLog(BOOL flag) {
     [GameAnalytics setEnabledVerboseLog:flag];
+}
+
+void setEnabledWarningLog(BOOL flag) {
+    [GameAnalytics setEnabledWarningLog:flag];
 }
 
 void setManualSessionHandling(BOOL flag) {
@@ -281,21 +321,6 @@ void setCustomDimension03(const char *customDimension) {
     [GameAnalytics setCustomDimension03:customDimensionString];
 }
 
-void setFacebookId(const char *facebookId) {
-    NSString *facebookIdString = facebookId != NULL ? [NSString stringWithUTF8String:facebookId] : nil;
-    [GameAnalytics setFacebookId:facebookIdString];
-}
-
-void setGender(const char *gender) {
-    NSString *genderString = gender != NULL ? [NSString stringWithUTF8String:gender] : nil;
-    [GameAnalytics setGender:genderString];
-}
-
-void setBirthYear(int birthYear) {
-    NSInteger birthYearInteger = birthYear != 0 ? (NSInteger)birthYear : 0;
-    [GameAnalytics setBirthYear:birthYearInteger];
-}
-
 char* cStringCopy(const char* string)
 {
     if (string == NULL)
@@ -320,6 +345,26 @@ BOOL isRemoteConfigsReady() {
 }
 
 char* getRemoteConfigsContentAsString() {
-    NSString *result = [GameAnalytics getRemoteConfigsConfigurations];
+    NSString *result = [GameAnalytics getRemoteConfigsContentAsString];
     return cStringCopy([result UTF8String]);
+}
+
+void startTimer(const char *key) {
+    NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
+    [GameAnalytics startTimer:keyString];
+}
+
+void pauseTimer(const char *key) {
+    NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
+    [GameAnalytics pauseTimer:keyString];
+}
+
+void resumeTimer(const char *key) {
+    NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
+    [GameAnalytics resumeTimer:keyString];
+}
+
+long stopTimer(const char *key) {
+    NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
+    return [GameAnalytics stopTimer:keyString];
 }

@@ -35,13 +35,6 @@ namespace GameAnalyticsSDK
 		Sink = 2
 	}
 
-	public enum GAGender
-	{
-		Undefined = 0,
-		male = 1,
-		female = 2
-	}
-
     public enum GAAdAction
     {
         Undefined = 0,

@@ -196,8 +196,19 @@ namespace GameAnalyticsSDK
                             GameAnalytics.SettingsGA.Build [i] = Application.version;
                         }
                     }
+                    if (GameAnalytics.SettingsGA.Platforms [platformIndex] == RuntimePlatform.Android || GameAnalytics.SettingsGA.Platforms [platformIndex] == RuntimePlatform.IPhonePlayer)
+                    {
+                        GA_Wrapper.SetAutoDetectAppVersion(true);
+                    }
+                    else
+                    {
+                        GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
+                    }
                 }
-                GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
+                else
+                {
+                    GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
+                }
             }
 
             if(SettingsGA.CustomDimensions01.Count > 0)
@@ -538,33 +549,6 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement);
-        }
-
-        /// <summary>
-        /// Set user facebook id.
-        /// </summary>
-        /// <param name="facebookId">Facebook id of user (Persists cross session).</param>
-        public static void SetFacebookId(string facebookId)
-        {
-            GA_Setup.SetFacebookId(facebookId);
-        }
-
-        /// <summary>
-        /// Set user gender.
-        /// </summary>
-        /// <param name="gender">Gender of user (Persists cross session).</param>
-        public static void SetGender(GAGender gender)
-        {
-            GA_Setup.SetGender(gender);
-        }
-
-        /// <summary>
-        /// Set user birth year.
-        /// </summary>
-        /// <param name="birthYear">Birth year of user (Persists cross session).</param>
-        public static void SetBirthYear(int birthYear)
-        {
-            GA_Setup.SetBirthYear(birthYear);
         }
 
         /// <summary>

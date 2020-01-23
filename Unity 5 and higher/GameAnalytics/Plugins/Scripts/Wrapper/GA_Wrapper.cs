@@ -73,6 +73,12 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
+        private static void configureAutoDetectAppVersion (bool flag)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor) {
+                Debug.Log ("configureAutoDetectAppVersion(" + flag + ")");
+            }
+        }
 
         private static void initialize (string gamekey, string gamesecret)
         {
@@ -218,27 +224,6 @@ namespace GameAnalyticsSDK.Wrapper
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
                 Debug.Log ("GameAnalytics setVerboseLog(" + enabled + ")");
-            }
-        }
-
-        private static void setFacebookId (string facebookId)
-        {
-            if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("setFacebookId(" + facebookId + ")");
-            }
-        }
-
-        private static void setGender (string gender)
-        {
-            if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("setGender(" + gender + ")");
-            }
-        }
-
-        private static void setBirthYear (int birthYear)
-        {
-            if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("setBirthYear(" + birthYear + ")");
             }
         }
 
@@ -390,6 +375,11 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetEnabledEventSubmission (bool enabled)
         {
             setEventSubmission (enabled);
+        }
+
+        public static void SetAutoDetectAppVersion (bool flag)
+        {
+            configureAutoDetectAppVersion (flag);
         }
 
         public static void StartSession ()
@@ -589,39 +579,6 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetVerboseLog (bool enabled)
         {
             setEnabledVerboseLog (enabled);
-        }
-
-        public static void SetFacebookId (string facebookId)
-        {
-#if UNITY_EDITOR
-            if (GAValidator.ValidateFacebookId (facebookId)) {
-                setFacebookId (facebookId);
-            }
-#else
-                setFacebookId (facebookId);
-#endif
-        }
-
-        public static void SetGender (string gender)
-        {
-#if UNITY_EDITOR
-            if (GAValidator.ValidateGender (gender)) {
-                setGender (gender);
-            }
-#else
-                setGender (gender);
-#endif
-        }
-
-        public static void SetBirthYear (int birthYear)
-        {
-#if UNITY_EDITOR
-            if (GAValidator.ValidateBirthyear (birthYear)) {
-                setBirthYear (birthYear);
-            }
-#else
-                setBirthYear (birthYear);
-#endif
         }
 
         // ----------------------- REMOTE CONFIGS ---------------------- //

@@ -100,6 +100,10 @@ void configureUserId(const char *userId) {
     [GameAnalytics configureUserId:userIdString];
 }
 
+void configureAutoDetectAppVersion(BOOL flag) {
+    [GameAnalytics configureAutoDetectAppVersion:flag];
+}
+
 void initialize(const char *gameKey, const char *gameSecret) {
     NSString *gameKeyString = gameKey != NULL ? [NSString stringWithUTF8String:gameKey] : nil;
     NSString *gameSecretString = gameSecret != NULL ? [NSString stringWithUTF8String:gameSecret] : nil;
@@ -315,21 +319,6 @@ void setCustomDimension02(const char *customDimension) {
 void setCustomDimension03(const char *customDimension) {
     NSString *customDimensionString = customDimension != NULL ? [NSString stringWithUTF8String:customDimension] : nil;
     [GameAnalytics setCustomDimension03:customDimensionString];
-}
-
-void setFacebookId(const char *facebookId) {
-    NSString *facebookIdString = facebookId != NULL ? [NSString stringWithUTF8String:facebookId] : nil;
-    [GameAnalytics setFacebookId:facebookIdString];
-}
-
-void setGender(const char *gender) {
-    NSString *genderString = gender != NULL ? [NSString stringWithUTF8String:gender] : nil;
-    [GameAnalytics setGender:genderString];
-}
-
-void setBirthYear(int birthYear) {
-    NSInteger birthYearInteger = birthYear != 0 ? (NSInteger)birthYear : 0;
-    [GameAnalytics setBirthYear:birthYearInteger];
 }
 
 char* cStringCopy(const char* string)

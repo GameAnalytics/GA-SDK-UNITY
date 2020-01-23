@@ -62,28 +62,6 @@ namespace GameAnalyticsSDK.Events
 			GA_Wrapper.SetVerboseLog (enabled);
 		}
 
-		public static void SetFacebookId (string facebookId)
-		{
-			GA_Wrapper.SetFacebookId (facebookId);
-		}
-
-		public static void SetGender (GAGender gender)
-		{
-			switch (gender) {
-			case GAGender.male:
-				GA_Wrapper.SetGender (GAGender.male.ToString ());
-				break;
-			case GAGender.female:
-				GA_Wrapper.SetGender (GAGender.female.ToString ());
-				break;
-			}
-		}
-
-		public static void SetBirthYear (int birthYear)
-		{
-			GA_Wrapper.SetBirthYear (birthYear);
-		}
-
 		public static void SetCustomDimension01 (string customDimension)
 		{
 			GA_Wrapper.SetCustomDimension01 (customDimension);

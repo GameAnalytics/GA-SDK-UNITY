@@ -341,12 +341,6 @@ var gameanalytics;
         EGAErrorSeverity[EGAErrorSeverity["Error"] = 4] = "Error";
         EGAErrorSeverity[EGAErrorSeverity["Critical"] = 5] = "Critical";
     })(EGAErrorSeverity = gameanalytics.EGAErrorSeverity || (gameanalytics.EGAErrorSeverity = {}));
-    var EGAGender;
-    (function (EGAGender) {
-        EGAGender[EGAGender["Undefined"] = 0] = "Undefined";
-        EGAGender[EGAGender["Male"] = 1] = "Male";
-        EGAGender[EGAGender["Female"] = 2] = "Female";
-    })(EGAGender = gameanalytics.EGAGender || (gameanalytics.EGAGender = {}));
     var EGAProgressionStatus;
     (function (EGAProgressionStatus) {
         EGAProgressionStatus[EGAProgressionStatus["Undefined"] = 0] = "Undefined";
@@ -384,7 +378,6 @@ var gameanalytics;
     })(http = gameanalytics.http || (gameanalytics.http = {}));
 })(gameanalytics || (gameanalytics = {}));
 var EGAErrorSeverity = gameanalytics.EGAErrorSeverity;
-var EGAGender = gameanalytics.EGAGender;
 var EGAProgressionStatus = gameanalytics.EGAProgressionStatus;
 var EGAResourceFlowType = gameanalytics.EGAResourceFlowType;
 var gameanalytics;
@@ -999,35 +992,6 @@ var gameanalytics;
                 }
                 return true;
             };
-            GAValidator.validateFacebookId = function (facebookId) {
-                if (!GAValidator.validateString(facebookId, false)) {
-                    GALogger.w("Validation fail - facebook id: id cannot be (null), empty or above 64 characters.");
-                    return false;
-                }
-                return true;
-            };
-            GAValidator.validateGender = function (gender) {
-                if (isNaN(Number(gameanalytics.EGAGender[gender]))) {
-                    if (gender == gameanalytics.EGAGender.Undefined || !(gender == gameanalytics.EGAGender.Male || gender == gameanalytics.EGAGender.Female)) {
-                        GALogger.w("Validation fail - gender: Has to be 'male' or 'female'. Was: " + gender);
-                        return false;
-                    }
-                }
-                else {
-                    if (gender == gameanalytics.EGAGender[gameanalytics.EGAGender.Undefined] || !(gender == gameanalytics.EGAGender[gameanalytics.EGAGender.Male] || gender == gameanalytics.EGAGender[gameanalytics.EGAGender.Female])) {
-                        GALogger.w("Validation fail - gender: Has to be 'male' or 'female'. Was: " + gender);
-                        return false;
-                    }
-                }
-                return true;
-            };
-            GAValidator.validateBirthyear = function (birthYear) {
-                if (birthYear < 0 || birthYear > 9999) {
-                    GALogger.w("Validation fail - birthYear: Cannot be (null) or invalid range.");
-                    return false;
-                }
-                return true;
-            };
             GAValidator.validateClientTs = function (clientTs) {
                 if (clientTs < (-4294967295 + 1) || clientTs > (4294967295 - 1)) {
                     return false;
@@ -1170,7 +1134,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.0.5";
+            GADevice.sdkWrapperVersion = "javascript 4.0.6";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -1806,21 +1770,6 @@ var gameanalytics;
                 GAStore.setItem(GAState.Dimension03Key, dimension);
                 GALogger.i("Set custom03 dimension value: " + dimension);
             };
-            GAState.setFacebookId = function (facebookId) {
-                GAState.instance.facebookId = facebookId;
-                GAStore.setItem(GAState.FacebookIdKey, facebookId);
-                GALogger.i("Set facebook id: " + facebookId);
-            };
-            GAState.setGender = function (gender) {
-                GAState.instance.gender = isNaN(Number(gameanalytics.EGAGender[gender])) ? gameanalytics.EGAGender[gender].toString().toLowerCase() : gameanalytics.EGAGender[gameanalytics.EGAGender[gender]].toString().toLowerCase();
-                GAStore.setItem(GAState.GenderKey, GAState.instance.gender);
-                GALogger.i("Set gender: " + GAState.instance.gender);
-            };
-            GAState.setBirthYear = function (birthYear) {
-                GAState.instance.birthYear = birthYear;
-                GAStore.setItem(GAState.BirthYearKey, birthYear.toString());
-                GALogger.i("Set birth year: " + birthYear);
-            };
             GAState.incrementSessionNum = function () {
                 var sessionNumInt = GAState.getSessionNum() + 1;
                 GAState.instance.sessionNum = sessionNumInt;
@@ -1903,15 +1852,6 @@ var gameanalytics;
                 if (GAState.instance.build) {
                     annotations["build"] = GAState.instance.build;
                 }
-                if (GAState.instance.facebookId) {
-                    annotations[GAState.FacebookIdKey] = GAState.instance.facebookId;
-                }
-                if (GAState.instance.gender) {
-                    annotations[GAState.GenderKey] = GAState.instance.gender;
-                }
-                if (GAState.instance.birthYear != 0) {
-                    annotations[GAState.BirthYearKey] = GAState.instance.birthYear;
-                }
                 return annotations;
             };
             GAState.getSdkErrorEventAnnotations = function () {
@@ -1979,30 +1919,6 @@ var gameanalytics;
                 instance.setDefaultId(GAStore.getItem(GAState.DefaultUserIdKey) != null ? GAStore.getItem(GAState.DefaultUserIdKey) : GAUtilities.createGuid());
                 instance.sessionNum = GAStore.getItem(GAState.SessionNumKey) != null ? Number(GAStore.getItem(GAState.SessionNumKey)) : 0.0;
                 instance.transactionNum = GAStore.getItem(GAState.TransactionNumKey) != null ? Number(GAStore.getItem(GAState.TransactionNumKey)) : 0.0;
-                if (instance.facebookId) {
-                    GAStore.setItem(GAState.FacebookIdKey, instance.facebookId);
-                }
-                else {
-                    instance.facebookId = GAStore.getItem(GAState.FacebookIdKey) != null ? GAStore.getItem(GAState.FacebookIdKey) : "";
-                    if (instance.facebookId) {
-                    }
-                }
-                if (instance.gender) {
-                    GAStore.setItem(GAState.GenderKey, instance.gender);
-                }
-                else {
-                    instance.gender = GAStore.getItem(GAState.GenderKey) != null ? GAStore.getItem(GAState.GenderKey) : "";
-                    if (instance.gender) {
-                    }
-                }
-                if (instance.birthYear && instance.birthYear != 0) {
-                    GAStore.setItem(GAState.BirthYearKey, instance.birthYear.toString());
-                }
-                else {
-                    instance.birthYear = GAStore.getItem(GAState.BirthYearKey) != null ? Number(GAStore.getItem(GAState.BirthYearKey)) : 0;
-                    if (instance.birthYear != 0) {
-                    }
-                }
                 if (instance.currentCustomDimension01) {
                     GAStore.setItem(GAState.Dimension01Key, instance.currentCustomDimension01);
                 }
@@ -2168,9 +2084,6 @@ var gameanalytics;
             GAState.DefaultUserIdKey = "default_user_id";
             GAState.SessionNumKey = "session_num";
             GAState.TransactionNumKey = "transaction_num";
-            GAState.FacebookIdKey = "facebook_id";
-            GAState.GenderKey = "gender";
-            GAState.BirthYearKey = "birth_year";
             GAState.Dimension01Key = "dimension01";
             GAState.Dimension02Key = "dimension02";
             GAState.Dimension03Key = "dimension03";
@@ -3056,9 +2969,6 @@ var gameanalytics;
             GameAnalytics.methodMap['setCustomDimension01'] = GameAnalytics.setCustomDimension01;
             GameAnalytics.methodMap['setCustomDimension02'] = GameAnalytics.setCustomDimension02;
             GameAnalytics.methodMap['setCustomDimension03'] = GameAnalytics.setCustomDimension03;
-            GameAnalytics.methodMap['setFacebookId'] = GameAnalytics.setFacebookId;
-            GameAnalytics.methodMap['setGender'] = GameAnalytics.setGender;
-            GameAnalytics.methodMap['setBirthYear'] = GameAnalytics.setBirthYear;
             GameAnalytics.methodMap['setEventProcessInterval'] = GameAnalytics.setEventProcessInterval;
             GameAnalytics.methodMap['startSession'] = GameAnalytics.startSession;
             GameAnalytics.methodMap['endSession'] = GameAnalytics.endSession;
@@ -3353,30 +3263,6 @@ var gameanalytics;
                     return;
                 }
                 GAState.setCustomDimension03(dimension);
-            });
-        };
-        GameAnalytics.setFacebookId = function (facebookId) {
-            if (facebookId === void 0) { facebookId = ""; }
-            GAThreading.performTaskOnGAThread(function () {
-                if (GAValidator.validateFacebookId(facebookId)) {
-                    GAState.setFacebookId(facebookId);
-                }
-            });
-        };
-        GameAnalytics.setGender = function (gender) {
-            if (gender === void 0) { gender = gameanalytics.EGAGender.Undefined; }
-            GAThreading.performTaskOnGAThread(function () {
-                if (GAValidator.validateGender(gender)) {
-                    GAState.setGender(gender);
-                }
-            });
-        };
-        GameAnalytics.setBirthYear = function (birthYear) {
-            if (birthYear === void 0) { birthYear = 0; }
-            GAThreading.performTaskOnGAThread(function () {
-                if (GAValidator.validateBirthyear(birthYear)) {
-                    GAState.setBirthYear(birthYear);
-                }
             });
         };
         GameAnalytics.setEventProcessInterval = function (intervalInSeconds) {

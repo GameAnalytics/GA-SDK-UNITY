@@ -180,29 +180,6 @@ namespace GameAnalyticsSDK.Wrapper
             GameAnalyticsSDK.Net.GameAnalytics.EndSession();
         }
 
-        private static void setFacebookId(string facebookId)
-        {
-            GameAnalyticsSDK.Net.GameAnalytics.SetFacebookId(facebookId);
-        }
-
-        private static void setGender(string gender)
-        {
-            switch(gender)
-            {
-                case "male":
-                    GameAnalyticsSDK.Net.GameAnalytics.SetGender(GameAnalyticsSDK.Net.EGAGender.Male);
-                    break;
-                case "female":
-                    GameAnalyticsSDK.Net.GameAnalytics.SetGender(GameAnalyticsSDK.Net.EGAGender.Female);
-                    break;
-            }
-        }
-
-        private static void setBirthYear(int birthYear)
-        {
-            GameAnalyticsSDK.Net.GameAnalytics.SetBirthYear(birthYear);
-        }
-
         private static string getRemoteConfigsValueAsString(string key, string defaultValue)
         {
             return GameAnalyticsSDK.Net.GameAnalytics.GetRemoteConfigsValueAsString(key, defaultValue);
@@ -216,6 +193,11 @@ namespace GameAnalyticsSDK.Wrapper
         private static string getRemoteConfigsContentAsString()
         {
             return GameAnalyticsSDK.Net.GameAnalytics.GetRemoteConfigsAsString();
+        }
+
+        private static void configureAutoDetectAppVersion (bool flag)
+        {
+            // not supported
         }
 #endif
     }

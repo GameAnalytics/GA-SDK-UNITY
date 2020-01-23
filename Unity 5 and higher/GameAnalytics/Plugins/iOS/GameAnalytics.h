@@ -306,6 +306,25 @@ typedef enum GAAdError : NSInteger {
 /*!
  @method
 
+ @abstract Enable auto detect of app version to use for build field
+
+ @discussion <i>Example usage:</i>
+ <pre><code>
+ [GameAnalytics configureAutoDetectAppVersion:YES];
+ </code></pre>
+
+ @param flag
+ (String)
+
+ @availability Available since 4.1.0
+
+ @attribute Note! This method must be called before initializing the SDK
+ */
++ (void)configureAutoDetectAppVersion:(BOOL)flag;
+
+/*!
+ @method
+
  @abstract Configure the game key and secret key before initializing. Used by certain frameworks (like Frabric.io) needing to set the keys during configure phase.
 
  @discussion
@@ -855,43 +874,6 @@ typedef enum GAAdError : NSInteger {
  @attribute Note! Must be called after setAvailableCustomDimensions03W
  */
 + (void)setCustomDimension03:(NSString *)dimension03;
-
-/*!
- @method
-
- @abstract Set user facebook id
-
- @param facebookId
-    Facebook id of user (Persists cross session)
-
- @availability Available since 2.0.0
- */
-+ (void)setFacebookId:(NSString *)facebookId;
-
-/*!
- @method
-
- @abstract Set user gender
-
- @param gender
-    Gender of user (Persists cross session)<br>
-    Must be one of (male / female)
-
- @availability Available since 2.0.0
- */
-+ (void)setGender:(NSString *)gender;
-
-/*!
- @method
-
- @abstract Set user birth year
-
- @param birthYear
-    Birth year of user (Persists cross session)
-
- @availability Available since 2.0.0
- */
-+ (void)setBirthYear:(NSInteger)birthYear;
 
 /*!
  @method

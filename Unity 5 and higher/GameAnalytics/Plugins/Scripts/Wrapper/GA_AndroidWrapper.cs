@@ -91,6 +91,11 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("configureUserId", userId);
         }
 
+        private static void configureAutoDetectAppVersion(bool flag)
+        {
+            GA.CallStatic("configureAutoDetectAppVersion", flag);
+        }
+
         private static void initialize(string gamekey, string gamesecret)
         {
             if(GameAnalytics.SettingsGA.UseIMEI)
@@ -192,30 +197,6 @@ namespace GameAnalyticsSDK.Wrapper
         private static void setEnabledVerboseLog(bool enabled)
         {
             GA.CallStatic("setEnabledVerboseLog", enabled);
-        }
-
-        private static void setFacebookId(string facebookId)
-        {
-            GA.CallStatic("setFacebookId", facebookId);
-        }
-
-        private static void setGender(string gender)
-        {
-            switch(gender)
-            {
-                case "male":
-                    GA.CallStatic("setGender", 1);
-                    break;
-                case "female":
-                    GA.CallStatic("setGender", 2);
-                    break;
-            }
-
-        }
-
-        private static void setBirthYear(int birthYear)
-        {
-            GA.CallStatic("setBirthYear", birthYear);
         }
 
         private static void setManualSessionHandling(bool enabled)

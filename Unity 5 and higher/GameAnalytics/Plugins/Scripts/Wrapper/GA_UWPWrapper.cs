@@ -211,38 +211,6 @@ namespace GameAnalyticsSDK.Wrapper
 		private static extern void gameAnalyticsEndSession();
 
         [DllImport ("GameAnalytics.UWP.dll")]
-		private static extern void setFacebookIdUWP([MarshalAs(UnmanagedType.LPWStr)]string facebookId);
-
-        private static void setFacebookId(string facebookId)
-        {
-            setFacebookIdUWP(facebookId);
-        }
-
-        [DllImport ("GameAnalytics.UWP.dll")]
-		private static extern void setGender(double gender);
-
-        private static void setGender(string gender)
-        {
-            switch(gender)
-            {
-                case "male":
-                    setGender(1);
-                    break;
-                case "female":
-                    setGender(2);
-                    break;
-            }
-        }
-
-        [DllImport ("GameAnalytics.UWP.dll")]
-		private static extern void setBirthYear(double birthYear);
-
-        private static void setBirthYear(int birthYear)
-        {
-            setBirthYear((double)birthYear);
-        }
-
-        [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void getRemoteConfigsValueAsStringWithDefaultValueUWP([MarshalAs(UnmanagedType.LPWStr)]string key, [MarshalAs(UnmanagedType.LPWStr)]string defaultValue, StringBuilder outResult);
 
         private static string getRemoteConfigsValueAsString(string key, string defaultValue)
@@ -263,6 +231,11 @@ namespace GameAnalyticsSDK.Wrapper
             StringBuilder buffer = new StringBuilder(8192);
             getRemoteConfigsContentAsStringUWP(buffer);
             return buffer.ToString();
+        }
+
+        private static void configureAutoDetectAppVersion (bool flag)
+        {
+            // not supported
         }
 #endif
     }

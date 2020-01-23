@@ -23,10 +23,10 @@ namespace GameAnalyticsSDK.Validators
 			{
 				return false;
 			}
-		
+
 			return Regex.IsMatch(s, pattern);
 		}
-			
+
 		public static bool ValidateBusinessEvent(string currency, int amount, string cartType, string itemType, string itemId)
 		{
 			// validate currency
@@ -556,36 +556,6 @@ namespace GameAnalyticsSDK.Validators
 					Debug.Log(arrayTag + " validation failed: a string exceeded max allowed length (which is: " + maxStringLength + "). String was: " + arrayString);
 					return false;
 				}
-			}
-			return true;
-		}
-
-		public static bool ValidateFacebookId(string facebookId)
-		{
-			if (!ValidateString(facebookId, false))
-			{
-				Debug.Log("Validation fail - facebook id: id cannot be (null), empty or above 64 characters.");
-				return false;
-			}
-			return true;
-		}
-
-		public static bool ValidateGender(string gender)
-		{
-			if (gender == "" || !(gender == GAGender.male.ToString() || gender == GAGender.female.ToString()))
-			{
-				Debug.Log("Validation fail - gender: Has to be 'male' or 'female'." + "Given gender:" + gender);
-				return false;
-			}
-			return true;
-		}
-
-		public static bool ValidateBirthyear(int birthYear)
-		{
-			if (birthYear < 0 || birthYear > 9999)
-			{
-				Debug.Log("Validation fail - birthYear: Cannot be (null) or invalid range.");
-				return false;
 			}
 			return true;
 		}
