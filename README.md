@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.0.12**
+* hiding archived games bug fix in editor
+
 **6.0.11**
 * removed facebook, gender and birthyear methods
 

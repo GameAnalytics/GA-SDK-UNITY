@@ -1799,18 +1799,26 @@ namespace GameAnalyticsSDK.Editor
                         for (int s = 0; s < studioList.Count; s++)
                         {
                             IDictionary<string, object> studio = studioList[s] as IDictionary<string, object>;
-                            if (!studio.ContainsKey("demo") || !((bool)studio["demo"]))
+
+                            if ((!studio.ContainsKey("demo") || !((bool)studio["demo"])) && (!studio.ContainsKey("archived") || !((bool)studio["archived"])))
                             {
                                 List<GameAnalyticsSDK.Setup.Game> returnGames = new List<GameAnalyticsSDK.Setup.Game>();
 
                                 List<object> gamesList = (List<object>)studio["games"];
                                 for (int g = 0; g < gamesList.Count; g++)
                                 {
-                                    IDictionary<string, object> games = gamesList[g] as IDictionary<string, object>;
-                                    returnGames.Add(new GameAnalyticsSDK.Setup.Game(games["name"].ToString(), int.Parse(games["id"].ToString()), games["key"].ToString(), games["secret"].ToString()));
+                                    IDictionary<string, object> game = gamesList[g] as IDictionary<string, object>;
+
+                                    if ((!game.ContainsKey("archived") || !((bool)game["archived"])) && (!game.ContainsKey("disabled") || !((bool)game["disabled"])))
+                                    {
+                                        returnGames.Add(new GameAnalyticsSDK.Setup.Game(game["name"].ToString(), int.Parse(game["id"].ToString()), game["key"].ToString(), game["secret"].ToString()));
+                                    }
                                 }
 
-                                returnStudios.Add(new GameAnalyticsSDK.Setup.Studio(studio["name"].ToString(), studio["id"].ToString(), returnGames));
+                                if(returnGames.Count > 0)
+                                {
+                                    returnStudios.Add(new GameAnalyticsSDK.Setup.Studio(studio["name"].ToString(), studio["id"].ToString(), returnGames));
+                                }
                             }
                         }
                         ga.Studios = returnStudios;
