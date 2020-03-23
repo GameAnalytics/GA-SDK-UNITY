@@ -93,7 +93,7 @@ Changelog
 * session fixes for desktop platforms
 
 **5.1.7**
-* bug fix for special events script
+* bug fix for special events script: changed script to Time.unscaledTime instead of Time.time to calculate FPS. This might affect your FPS metrics if your game is using fast motion or slow motion effects in your game in other words if you change time scale frequently during your game.
 
 **5.1.6**
 * thread bug fix for desktop
