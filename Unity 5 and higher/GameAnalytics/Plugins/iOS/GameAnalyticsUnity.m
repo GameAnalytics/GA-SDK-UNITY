@@ -278,6 +278,23 @@ void addAdEvent(int adAction, int adType, const char *adSdkName, const char *adP
                             adPlacement:adPlacementString];
 }
 
+void addImpressionEvent(const char* adNetworkName, const char *json) {
+    NSString *jsonString = json != NULL ? [NSString stringWithUTF8String:json] : nil;
+    NSString *adNetworkNameString = adNetworkName != NULL ? [NSString stringWithUTF8String:adNetworkName] : nil;
+
+    if(jsonString != nil && adNetworkNameString != nil) {
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+
+        NSDictionary *impressionData = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (error != nil) {
+            return;
+        }
+
+        [GameAnalytics addImpressionEventWithAdNetworkName:adNetworkNameString impressionData:impressionData];
+    }
+}
+
 void setEnabledInfoLog(BOOL flag) {
     [GameAnalytics setEnabledInfoLog:flag];
 }

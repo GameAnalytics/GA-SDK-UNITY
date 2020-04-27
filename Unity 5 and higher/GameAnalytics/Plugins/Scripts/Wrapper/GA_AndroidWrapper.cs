@@ -234,6 +234,16 @@ namespace GameAnalyticsSDK.Wrapper
             return GA.CallStatic<string>("getRemoteConfigsContentAsString");
         }
 
+        private static void subscribeMoPubImpressions()
+        {
+            GAMopubIntegration.ListenForImpressions(ImpressionHandler);
+        }
+
+        private static void ImpressionHandler(string json)
+        {
+            GA.CallStatic("addImpressionMoPubEvent", json);
+        }
+
         private static void startTimer(string key)
         {
             GA.CallStatic("startTimer", key);

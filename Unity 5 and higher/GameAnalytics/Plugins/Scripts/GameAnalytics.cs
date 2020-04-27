@@ -623,15 +623,15 @@ namespace GameAnalyticsSDK
         }
 
         // ----------------------- REMOTE CONFIGS ---------------------- //
-		public static event Action OnRemoteConfigsUpdatedEvent;
+        public static event Action OnRemoteConfigsUpdatedEvent;
 
-		public void OnRemoteConfigsUpdated()
-		{
-			if(OnRemoteConfigsUpdatedEvent != null)
-			{
-				OnRemoteConfigsUpdatedEvent();
-			}
-		}
+        public void OnRemoteConfigsUpdated()
+        {
+            if(OnRemoteConfigsUpdatedEvent != null)
+            {
+                OnRemoteConfigsUpdatedEvent();
+            }
+        }
 
         public static void RemoteConfigsUpdated()
         {
@@ -648,18 +648,24 @@ namespace GameAnalyticsSDK
 
         public static string GetRemoteConfigsValueAsString(string key, string defaultValue)
         {
-			return GA_Wrapper.GetRemoteConfigsValueAsString(key, defaultValue);
+            return GA_Wrapper.GetRemoteConfigsValueAsString(key, defaultValue);
         }
 
         public static bool IsRemoteConfigsReady()
         {
-			return GA_Wrapper.IsRemoteConfigsReady();
+            return GA_Wrapper.IsRemoteConfigsReady();
         }
 
-		public static string GetRemoteConfigsContentAsString()
-		{
-			return GA_Wrapper.GetRemoteConfigsContentAsString();
-		}
+        public static string GetRemoteConfigsContentAsString()
+        {
+            return GA_Wrapper.GetRemoteConfigsContentAsString();
+        }
+
+        // ----------------------- MOPUB AD IMPRESSIONS ---------------------- //
+        public static void SubscribeMoPubImpressions()
+        {
+            GA_Wrapper.SubscribeMoPubImpressions();
+        }
 
         public static void StartTimer(string key)
         {
