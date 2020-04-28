@@ -100,7 +100,7 @@ namespace GameAnalyticsSDK.Editor
 #if UNITY_IOS || UNITY_TVOS
                 string projPath = UnityEditor.iOS.Xcode.PBXProject.GetPBXProjectPath(path);
 
-                PBXProject proj = new UnityEditor.iOS.Xcode.PBXProject();
+                UnityEditor.iOS.Xcode.PBXProject proj = new UnityEditor.iOS.Xcode.PBXProject();
                 proj.ReadFromString(File.ReadAllText(projPath));
 
 #if UNITY_2019_3_OR_NEWER
