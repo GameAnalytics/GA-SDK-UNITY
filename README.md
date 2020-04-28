@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.1.1**
+* added missing instant app dependency (android)
+
 **6.1.0**
 * added new impression event, see documentation page for more info (android, ios)
 
