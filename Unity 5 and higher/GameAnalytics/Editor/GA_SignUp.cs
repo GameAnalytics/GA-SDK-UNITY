@@ -14,6 +14,8 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _firstNameLabel = new GUIContent("First name", "Your first name.");
         private GUIContent _lastNameLabel = new GUIContent("Last name", "Your last name (surname).");
         private GUIContent _studioNameLabel = new GUIContent("Studio name", "Your studio's name. You can add more studios and games on the GameAnalytics website.");
+        private GUIContent _organizationNameLabel = new GUIContent("Organization name", "Your organization's name. You can add more studios and games under your organization on the GameAnalytics website.");
+        private GUIContent _organizationIdentifierLabel = new GUIContent("Organization identifier", "Your organization's identifier to be used in url. Must be unique. Can only contain lowercase letters, digits and hyphens");
         private GUIContent _gameNameLabel = new GUIContent("Game name", "Your game's name. You can add more studies and games on the GameAnalytics website.");
         private GUIContent _passwordConfirmLabel = new GUIContent("Confirm password", "Your GameAnalytics user account password.");
         private GUIContent _emailOptInLabel = new GUIContent("Subscribe to release updates, news and tips and tricks.", "If enabled GameAnalytics may send you news about updates, cool tips and tricks, and other news to help you get the most out of our service.");
@@ -44,6 +46,7 @@ namespace GameAnalyticsSDK.Editor
         private bool _createGameInProgress = false;
         private string _googlePlayPublicKey = "";
         private RuntimePlatform _selectedPlatform;
+        private int _selectedOrganization;
         private int _selectedStudio;
 
         private enum StringType
@@ -200,6 +203,38 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     GameAnalytics.SettingsGA.StudioName = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.StudioName, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    EditorGUILayout.Space();
+
+                    // organization name
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GUILayout.Label(_organizationNameLabel, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GameAnalytics.SettingsGA.OrganizationName = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.OrganizationName, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    EditorGUILayout.Space();
+
+                    // organization identifier
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GUILayout.Label(_organizationIdentifierLabel, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GameAnalytics.SettingsGA.OrganizationIdentifier = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.OrganizationIdentifier, GUILayout.Width(INPUT_WIDTH));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
@@ -485,7 +520,13 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, Studio.GetStudioNames(GameAnalytics.SettingsGA.Studios, false), GUILayout.Width(200));
+                    this._selectedOrganization = EditorGUILayout.Popup("", this._selectedOrganization, Organization.GetOrganizationNames(GameAnalytics.SettingsGA.Organizations, false), GUILayout.Width(200));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, this._selectedOrganization > 0 ? Studio.GetStudioNames(GameAnalytics.SettingsGA.Organizations[this._selectedOrganization - 1].Studios, false) : new string[0], GUILayout.Width(200));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
@@ -532,7 +573,7 @@ namespace GameAnalyticsSDK.Editor
                     }))
                     {
                         _createGameInProgress = true;
-                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedStudio, GameAnalytics.SettingsGA.GameName, this._googlePlayPublicKey, this._selectedPlatform, null);
+                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedOrganization, this._selectedStudio, GameAnalytics.SettingsGA.GameName, this._googlePlayPublicKey, this._selectedPlatform, null);
                     }
                     GUI.enabled = true;
                     GUILayout.FlexibleSpace();
@@ -665,7 +706,13 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, Studio.GetStudioNames(GameAnalytics.SettingsGA.Studios, false), GUILayout.Width(200));
+                    this._selectedOrganization = EditorGUILayout.Popup("", this._selectedOrganization, Organization.GetOrganizationNames(GameAnalytics.SettingsGA.Organizations, false), GUILayout.Width(200));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, this._selectedOrganization > 0 ? Studio.GetStudioNames(GameAnalytics.SettingsGA.Organizations[this._selectedOrganization - 1].Studios, false) : new string[0], GUILayout.Width(200));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
@@ -684,7 +731,7 @@ namespace GameAnalyticsSDK.Editor
                     {
                         _createGameInProgress = true;
                         this._selectedPlatform = _appFiguresGame.Store.Equals("google_play") || _appFiguresGame.Store.Equals("amazon_appstore") ? RuntimePlatform.Android : RuntimePlatform.IPhonePlayer;
-                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedStudio, _appFiguresGame.Name, this._googlePlayPublicKey, this._selectedPlatform, _appFiguresGame);
+                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedOrganization, this._selectedStudio, _appFiguresGame.Name, this._googlePlayPublicKey, this._selectedPlatform, _appFiguresGame);
                     }
                     GUI.enabled = true;
                     GUILayout.FlexibleSpace();

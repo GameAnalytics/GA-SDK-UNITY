@@ -38,7 +38,7 @@ namespace GameAnalyticsSDK.Editor
 					platformId == PlatformID.Win32Windows ||
 					platformId == PlatformID.WinCE) {
 
-					platform = EPlatform.Mac;
+					platform = EPlatform.Windows;
 				}
 
 				return platform.ToString ();

@@ -25,6 +25,7 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _privateKeyLabel = new GUIContent("Secret Key", "Your GameAnalytics Secret Key - copy/paste from the GA website.");
         private GUIContent _emailLabel = new GUIContent("Email", "Your GameAnalytics user account email.");
         private GUIContent _passwordLabel = new GUIContent("Password", "Your GameAnalytics user account password. Must be at least 8 characters in length.");
+        private GUIContent _organizationsLabel = new GUIContent("Org.", "Organizations tied to your GameAnalytics user account.");
         private GUIContent _studiosLabel = new GUIContent("Studio", "Studios tied to your GameAnalytics user account.");
         private GUIContent _gamesLabel = new GUIContent("Game", "Games tied to the selected GameAnalytics studio.");
         private GUIContent _build = new GUIContent("Build", "The current version of the game. Updating the build name for each test version of the game will allow you to filter by build when viewing your data on the GA website.");
@@ -95,42 +96,42 @@ namespace GameAnalyticsSDK.Editor
 
             if (ga.UpdateIcon == null)
             {
-                ga.UpdateIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/update_orange.png", typeof(Texture2D));
+                ga.UpdateIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/update_orange.png", typeof(Texture2D));
             }
 
             if (ga.DeleteIcon == null)
             {
-                ga.DeleteIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/delete.png", typeof(Texture2D));
+                ga.DeleteIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/delete.png", typeof(Texture2D));
             }
 
             if (ga.GameIcon == null)
             {
-                ga.GameIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/game.png", typeof(Texture2D));
+                ga.GameIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/game.png", typeof(Texture2D));
             }
 
             if (ga.HomeIcon == null)
             {
-                ga.HomeIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/home.png", typeof(Texture2D));
+                ga.HomeIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/home.png", typeof(Texture2D));
             }
 
             if (ga.InfoIcon == null)
             {
-                ga.InfoIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/info.png", typeof(Texture2D));
+                ga.InfoIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/info.png", typeof(Texture2D));
             }
 
             if (ga.InstrumentIcon == null)
             {
-                ga.InstrumentIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/instrument.png", typeof(Texture2D));
+                ga.InstrumentIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/instrument.png", typeof(Texture2D));
             }
 
             if (ga.QuestionIcon == null)
             {
-                ga.QuestionIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/question.png", typeof(Texture2D));
+                ga.QuestionIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/question.png", typeof(Texture2D));
             }
 
             if (ga.UserIcon == null)
             {
-                ga.UserIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/user.png", typeof(Texture2D));
+                ga.UserIcon = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/user.png", typeof(Texture2D));
             }
 
             if (_gameSetupIcon == null)
@@ -180,7 +181,7 @@ namespace GameAnalyticsSDK.Editor
 
             if (ga.Logo == null)
             {
-                ga.Logo = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/gaLogo.png", typeof(Texture2D));
+                ga.Logo = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/gaLogo.png", typeof(Texture2D));
             }
         }
 
@@ -194,8 +195,8 @@ namespace GameAnalyticsSDK.Editor
             if (ga.SignupButton == null)
             {
                 GUIStyle signupButton = new GUIStyle(GUI.skin.button);
-                signupButton.normal.background = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/default.png", typeof(Texture2D));
-                signupButton.active.background = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Gizmos/GameAnalytics/Images/active.png", typeof(Texture2D));
+                signupButton.normal.background = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/default.png", typeof(Texture2D));
+                signupButton.active.background = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/GameAnalytics/Gizmos/GameAnalytics/Images/active.png", typeof(Texture2D));
                 signupButton.normal.textColor = Color.white;
                 signupButton.active.textColor = Color.white;
                 signupButton.fontSize = 14;
@@ -253,7 +254,7 @@ namespace GameAnalyticsSDK.Editor
 
                 GUILayout.Label(updateStatus, _orangeUpdateLabelStyle);
 
-                if (ga.Studios == null)
+                if (ga.Organizations == null)
                 {
                     GUILayout.EndHorizontal();
                     GUILayout.Space(2);
@@ -261,7 +262,7 @@ namespace GameAnalyticsSDK.Editor
             }
             else
             {
-                if (ga.Studios != null)
+                if (ga.Organizations != null)
                 {
                     GUILayout.BeginHorizontal();
                 }
@@ -271,7 +272,7 @@ namespace GameAnalyticsSDK.Editor
                 }
             }
 
-            if (ga.Studios != null)
+            if (ga.Organizations != null)
             {
                 GUILayout.FlexibleSpace();
 
@@ -286,7 +287,7 @@ namespace GameAnalyticsSDK.Editor
 
                 if (GUILayout.Button("Log out", GUILayout.MaxWidth(67)))
                 {
-                    ga.Studios = null;
+                    ga.Organizations = null;
                     SetLoginStatus("Not logged in.", ga);
                 }
 
@@ -400,7 +401,7 @@ namespace GameAnalyticsSDK.Editor
                         ga.SignUpOpen = false;
                         ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Account;
 
-                        ga.Studios = null;
+                        ga.Organizations = null;
                         SetLoginStatus("Contacting Server..", ga);
                         LoginUser(ga);
                     }
@@ -451,7 +452,7 @@ namespace GameAnalyticsSDK.Editor
 
                 GUIStyle basicTabStyle = ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic ? activeTabStyleLeft : inactiveTabStyleLeft;
 
-                if (ga.Studios == null)
+                if (ga.Organizations == null)
                 {
                     if (GUILayout.Button(_account, ga.CurrentInspectorState == GameAnalyticsSDK.Setup.Settings.InspectorStates.Account ? activeTabStyleLeft : inactiveTabStyleLeft))
                     {
@@ -512,7 +513,7 @@ namespace GameAnalyticsSDK.Editor
 
                     EditorGUILayout.Space();
 
-                    if (ga.Studios == null)
+                    if (ga.Organizations == null)
                     {
                         GUILayout.Label(_emailLabel, GUILayout.Width(75));
                         GUILayout.BeginHorizontal();
@@ -537,7 +538,7 @@ namespace GameAnalyticsSDK.Editor
                             GUILayout.MaxHeight(40)
                         }))
                         {
-                            ga.Studios = null;
+                            ga.Organizations = null;
                             SetLoginStatus("Contacting Server..", ga);
                             LoginUser(ga);
                         }
@@ -566,8 +567,8 @@ namespace GameAnalyticsSDK.Editor
                         }))
                         {
                             GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp>();
-                            signup.maxSize = new Vector2(640, 520);
-                            signup.minSize = new Vector2(640, 520);
+                            signup.maxSize = new Vector2(640, 600);
+                            signup.minSize = new Vector2(640, 600);
                             signup.titleContent = new GUIContent("GameAnalytics - Sign up for FREE");
                             signup.ShowUtility();
                             signup.Opened();
@@ -673,8 +674,8 @@ namespace GameAnalyticsSDK.Editor
                         if (GUILayout.Button("Add game"))
                         {
                             GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp>();
-                            signup.maxSize = new Vector2(640, 520);
-                            signup.minSize = new Vector2(640, 520);
+                            signup.maxSize = new Vector2(640, 600);
+                            signup.minSize = new Vector2(640, 600);
                             signup.TourStep = 1;
                             signup.titleContent = new GUIContent("GameAnalytics - Sign up for FREE");
                             signup.ShowUtility();
@@ -696,66 +697,97 @@ namespace GameAnalyticsSDK.Editor
 
                         if (ga.PlatformFoldOut[i])
                         {
-                            if (ga.Studios != null && ga.Studios.Count > 0)
+                            if (ga.Organizations != null && ga.Organizations.Count > 0)
                             {
                                 EditorGUILayout.Space();
                                 //Splitter(new Color(0.35f, 0.35f, 0.35f));
 
                                 GUILayout.BeginHorizontal();
                                 //GUILayout.Label("", GUILayout.Width(7));
-                                GUILayout.Label(_studiosLabel, GUILayout.Width(50));
-                                string[] studioNames = Studio.GetStudioNames(ga.Studios);
-                                if (ga.SelectedStudio[i] >= studioNames.Length)
+                                GUILayout.Label(_organizationsLabel, GUILayout.Width(50));
+                                string[] organizationNames = Organization.GetOrganizationNames(ga.Organizations);
+                                if (i >= ga.SelectedOrganization.Count && ga.SelectedOrganization[i] >= organizationNames.Length)
+                                {
+                                    ga.SelectedOrganization[i] = 0;
+                                }
+                                int tmpSelectedOrganization = ga.SelectedOrganization[i];
+                                ga.SelectedOrganization[i] = EditorGUILayout.Popup("", ga.SelectedOrganization[i], organizationNames);
+                                if (tmpSelectedOrganization != ga.SelectedOrganization[i])
                                 {
                                     ga.SelectedStudio[i] = 0;
-                                }
-                                int tmpSelectedStudio = ga.SelectedStudio[i];
-                                ga.SelectedStudio[i] = EditorGUILayout.Popup("", ga.SelectedStudio[i], studioNames);
-                                if (tmpSelectedStudio != ga.SelectedStudio[i])
-                                {
                                     ga.SelectedGame[i] = 0;
                                 }
                                 GUILayout.EndHorizontal();
 
-                                if (ga.SelectedStudio[i] > 0)
+                                if (ga.SelectedOrganization[i] > 0)
                                 {
-                                    if (tmpSelectedStudio != ga.SelectedStudio[i])
+                                    if (tmpSelectedOrganization != ga.SelectedOrganization[i])
                                     {
-                                        SelectStudio(ga.SelectedStudio[i], ga, i);
+                                        SelectOrganization(ga.SelectedOrganization[i], ga, i);
                                     }
 
                                     GUILayout.BeginHorizontal();
                                     //GUILayout.Label("", GUILayout.Width(7));
-                                    GUILayout.Label(_gamesLabel, GUILayout.Width(50));
-                                    string[] gameNames = Studio.GetGameNames(ga.SelectedStudio[i] - 1, ga.Studios);
-                                    if (ga.SelectedGame[i] >= gameNames.Length)
+                                    GUILayout.Label(_studiosLabel, GUILayout.Width(50));
+                                    string[] studioNames = Studio.GetStudioNames(ga.Organizations[ga.SelectedOrganization[i] - 1].Studios);
+                                    if (ga.SelectedStudio[i] >= studioNames.Length)
                                     {
-                                        ga.SelectedGame[i] = 0;
+                                        ga.SelectedStudio[i] = 0;
                                     }
-                                    int tmpSelectedGame = ga.SelectedGame[i];
-                                    ga.SelectedGame[i] = EditorGUILayout.Popup("", ga.SelectedGame[i], gameNames);
+                                    int tmpSelectedStudio = ga.SelectedStudio[i];
+                                    ga.SelectedStudio[i] = EditorGUILayout.Popup("", ga.SelectedStudio[i], studioNames);
                                     GUILayout.EndHorizontal();
 
-                                    if (ga.SelectedStudio[i] > 0 && tmpSelectedGame != ga.SelectedGame[i])
+                                    if (ga.SelectedStudio[i] > 0)
                                     {
-                                        SelectGame(ga.SelectedGame[i], ga, i);
+                                        if (tmpSelectedStudio != ga.SelectedStudio[i])
+                                        {
+                                            SelectStudio(ga.SelectedStudio[i], ga, i);
+                                        }
+
+                                        GUILayout.BeginHorizontal();
+                                        //GUILayout.Label("", GUILayout.Width(7));
+                                        GUILayout.Label(_gamesLabel, GUILayout.Width(50));
+                                        string[] gameNames = Studio.GetGameNames(ga.SelectedStudio[i] - 1, ga.Organizations[ga.SelectedOrganization[i] - 1].Studios);
+                                        if (ga.SelectedGame[i] >= gameNames.Length)
+                                        {
+                                            ga.SelectedGame[i] = 0;
+                                        }
+                                        int tmpSelectedGame = ga.SelectedGame[i];
+                                        ga.SelectedGame[i] = EditorGUILayout.Popup("", ga.SelectedGame[i], gameNames);
+                                        GUILayout.EndHorizontal();
+
+                                        if (ga.SelectedStudio[i] > 0 && tmpSelectedGame != ga.SelectedGame[i])
+                                        {
+                                            SelectGame(ga.SelectedGame[i], ga, i);
+                                        }
+                                    }
+                                    else if (tmpSelectedStudio != ga.SelectedStudio[i])
+                                    {
+                                        SetLoginStatus("Please select studio..", ga);
                                     }
                                 }
-                                else if (tmpSelectedStudio != ga.SelectedStudio[i])
+                                else if (tmpSelectedOrganization != ga.SelectedOrganization[i])
                                 {
-                                    SetLoginStatus("Please select studio..", ga);
+                                    SetLoginStatus("Please select organization..", ga);
                                 }
                             }
                             else
                             {
                                 GUILayout.BeginHorizontal();
-                                GUILayout.Label("Studio", GUILayout.Width(85));
+                                GUILayout.Label(_organizationsLabel, GUILayout.Width(85));
+                                GUILayout.Space(-10);
+                                GUILayout.Label(!string.IsNullOrEmpty(ga.SelectedPlatformOrganization[i]) ? ga.SelectedPlatformOrganization[i] : "N/A");
+                                GUILayout.EndHorizontal();
+
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label(_studiosLabel, GUILayout.Width(85));
                                 GUILayout.Space(-10);
                                 GUILayout.Label(!string.IsNullOrEmpty(ga.SelectedPlatformStudio[i]) ? ga.SelectedPlatformStudio[i] : "N/A");
                                 GUILayout.EndHorizontal();
 
                                 GUILayout.BeginHorizontal();
-                                GUILayout.Label("Game", GUILayout.Width(85));
+                                GUILayout.Label(_gamesLabel, GUILayout.Width(85));
                                 GUILayout.Space(-10);
                                 GUILayout.Label(!string.IsNullOrEmpty(ga.SelectedPlatformGame[i]) ? ga.SelectedPlatformGame[i] : "N/A");
                                 GUILayout.EndHorizontal();
@@ -769,6 +801,7 @@ namespace GameAnalyticsSDK.Editor
 
                             if (!tmpGameKey.Equals(beforeGameKey))
                             {
+                                ga.SelectedPlatformOrganization[i] = "";
                                 ga.SelectedPlatformStudio[i] = "";
                                 ga.SelectedPlatformGame[i] = "";
                             }
@@ -785,6 +818,7 @@ namespace GameAnalyticsSDK.Editor
 
                             if (!tmpSecretKey.Equals(beforeSecretKey))
                             {
+                                ga.SelectedPlatformOrganization[i] = "";
                                 ga.SelectedPlatformStudio[i] = "";
                                 ga.SelectedPlatformGame[i] = "";
                             }
@@ -919,7 +953,7 @@ namespace GameAnalyticsSDK.Editor
 
 #elif UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WP_8_1 || UNITY_TIZEN || UNITY_SAMSUNGTV
 
-                    // TODO: Add something here if needed specific for these platforms
+                    // Do nothing
 
 #else
 
@@ -1505,6 +1539,8 @@ namespace GameAnalyticsSDK.Editor
             jsonTable["first_name"] = signup.FirstName;
             jsonTable["last_name"] = signup.LastName;
             jsonTable["studio_name"] = ga.StudioName;
+            jsonTable["org_name"] = ga.OrganizationName;
+            jsonTable["org_identifier"] = ga.OrganizationIdentifier;
             jsonTable["email_opt_out"] = signup.EmailOptIn;
             jsonTable["accept_terms"] = signup.AcceptedTerms;
 
@@ -1518,7 +1554,6 @@ namespace GameAnalyticsSDK.Editor
             };
             www.uploadHandler = uH;
             www.downloadHandler = new DownloadHandlerBuffer();
-            www.chunkedTransfer = false;
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeaders();
             foreach (KeyValuePair<string, string> entry in headers)
             {
@@ -1594,7 +1629,7 @@ namespace GameAnalyticsSDK.Editor
 
                         //ga.SignUpOpen = false;
 
-                        ga.Studios = null;
+                        ga.Organizations = null;
                         SetLoginStatus("Signed up. Getting data.", ga);
 
                         GetUserData(ga);
@@ -1632,7 +1667,6 @@ namespace GameAnalyticsSDK.Editor
             };
             www.uploadHandler = uH;
             www.downloadHandler = new DownloadHandlerBuffer();
-            www.chunkedTransfer = false;
 
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeaders();
             foreach (KeyValuePair<string, string> entry in headers)
@@ -1792,9 +1826,18 @@ namespace GameAnalyticsSDK.Editor
                     {
                         IList<object> resultList = returnParam["results"] as IList<object>;
                         IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
+                        IDictionary<string, object> orgs = results["organizations"] as IDictionary<string, object>;
                         IList<object> studioList = results["studios"] as IList<object>;
 
-                        List<GameAnalyticsSDK.Setup.Studio> returnStudios = new List<Studio>();
+                        Dictionary<string, GameAnalyticsSDK.Setup.Organization> organizationMap = new Dictionary<string, GameAnalyticsSDK.Setup.Organization>();
+                        List<GameAnalyticsSDK.Setup.Organization> returnOrganizations = new List<GameAnalyticsSDK.Setup.Organization>();
+                        foreach(KeyValuePair<string, object> pair in orgs)
+                        {
+                            IDictionary<string, object> organization = pair.Value as IDictionary<string, object>;
+                            GameAnalyticsSDK.Setup.Organization o = new GameAnalyticsSDK.Setup.Organization(organization["name"].ToString(), organization["id"].ToString());
+                            returnOrganizations.Add(o);
+                            organizationMap.Add(o.ID, o);
+                        }
 
                         for (int s = 0; s < studioList.Count; s++)
                         {
@@ -1815,15 +1858,13 @@ namespace GameAnalyticsSDK.Editor
                                     }
                                 }
 
-                                if(returnGames.Count > 0)
-                                {
-                                    returnStudios.Add(new GameAnalyticsSDK.Setup.Studio(studio["name"].ToString(), studio["id"].ToString(), returnGames));
-                                }
+                                GameAnalyticsSDK.Setup.Studio st = new GameAnalyticsSDK.Setup.Studio(studio["name"].ToString(), studio["id"].ToString(), studio["org_id"].ToString(), returnGames);
+                                organizationMap[st.OrganizationID].Studios.Add(st);
                             }
                         }
-                        ga.Studios = returnStudios;
+                        ga.Organizations = returnOrganizations;
 
-                        if (ga.Studios.Count == 1)
+                        if (ga.Organizations.Count == 1 && ga.Organizations[0].Studios.Count == 1)
                         {
                             bool autoSelectedPlatform = false;
                             for (int i = 0; i < GameAnalytics.SettingsGA.Platforms.Count; ++i)
@@ -1832,7 +1873,7 @@ namespace GameAnalyticsSDK.Editor
 
                                 if (platform == ga.LastCreatedGamePlatform)
                                 {
-                                    SelectStudio(1, ga, i);
+                                    SelectOrganization(1, ga, i);
                                     autoSelectedPlatform = true;
                                 }
                             }
@@ -1860,7 +1901,7 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-        public static void CreateGame(GameAnalyticsSDK.Setup.Settings ga, GA_SignUp signup, int studioIndex, string gameTitle, string googlePlayPublicKey, RuntimePlatform platform, AppFiguresGame appFiguresGame)
+        public static void CreateGame(GameAnalyticsSDK.Setup.Settings ga, GA_SignUp signup, int organizationIndex, int studioIndex, string gameTitle, string googlePlayPublicKey, RuntimePlatform platform, AppFiguresGame appFiguresGame)
         {
             Hashtable jsonTable = new Hashtable();
 
@@ -1881,7 +1922,7 @@ namespace GameAnalyticsSDK.Editor
 
             byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
 
-            string url = _gaUrl + "studios/" + ga.Studios[studioIndex].ID + "/games";
+            string url = _gaUrl + "studios/" + ga.Organizations[organizationIndex].Studios[studioIndex].ID + "/games";
 #if UNITY_2018_3_OR_NEWER
             UnityWebRequest www = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
             UploadHandlerRaw uH = new UploadHandlerRaw(data)
@@ -1890,7 +1931,6 @@ namespace GameAnalyticsSDK.Editor
             };
             www.uploadHandler = uH;
             www.downloadHandler = new DownloadHandlerBuffer();
-            www.chunkedTransfer = false;
             Dictionary<string, string> headers = GA_EditorUtilities.WWWHeadersWithAuthorization(ga.TokenGA);
             foreach (KeyValuePair<string, string> entry in headers)
             {
@@ -2152,13 +2192,26 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
+        private static void SelectOrganization(int index, GameAnalyticsSDK.Setup.Settings ga, int platform)
+        {
+            ga.SelectedOrganization[platform] = index;
+            if (ga.Organizations[index - 1].Studios.Count == 1)
+            {
+                SelectStudio(1, ga, platform);
+            }
+            else
+            {
+                SetLoginStatus("Please select studio..", ga);
+            }
+        }
+
         private static void SelectStudio(int index, GameAnalyticsSDK.Setup.Settings ga, int platform)
         {
             ga.SelectedStudio[platform] = index;
-            if (ga.Studios[index - 1].Games.Count == 1)
+            if (ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[index - 1].Games.Count == 1)
             {
-                if (ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[0].GameKey) &&
-                   ga.IsSecretKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[0].SecretKey))
+                if (ga.IsGameKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[0].GameKey) &&
+                   ga.IsSecretKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[0].SecretKey))
                 {
                     SelectGame(1, ga, platform);
                 }
@@ -2178,24 +2231,29 @@ namespace GameAnalyticsSDK.Editor
                 ga.UpdateGameKey(platform, "");
                 ga.UpdateSecretKey(platform, "");
             }
-            else if (ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey) &&
-               ga.IsSecretKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
+            else if (ga.IsGameKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey) &&
+               ga.IsSecretKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
             {
-                ga.SelectedPlatformStudio[platform] = ga.Studios[ga.SelectedStudio[platform] - 1].Name;
-                ga.SelectedPlatformGame[platform] = ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].Name;
-                ga.SelectedPlatformGameID[platform] = ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].ID;
-                ga.UpdateGameKey(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey);
-                ga.UpdateSecretKey(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey);
+                foreach(var o in ga.Organizations)
+                {
+                    Debug.Log(o.Name + ", " + o.ID);
+                }
+                ga.SelectedPlatformOrganization[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Name;
+                ga.SelectedPlatformStudio[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Name;
+                ga.SelectedPlatformGame[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].Name;
+                ga.SelectedPlatformGameID[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].ID;
+                ga.UpdateGameKey(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey);
+                ga.UpdateSecretKey(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey);
                 SetLoginStatus("Received keys. Ready to go!", ga);
             }
             else
             {
-                if (!ga.IsGameKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey))
+                if (!ga.IsGameKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey))
                 {
                     Debug.LogError("[GameAnalytics] Game key already exists for another platform. Platforms can't use the same key.");
                     ga.SelectedGame[platform] = 0;
                 }
-                else if (!ga.IsSecretKeyValid(platform, ga.Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
+                else if (!ga.IsSecretKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
                 {
                     Debug.LogError("[GameAnalytics] Secret key already exists for another platform. Platforms can't use the same key.");
                     ga.SelectedGame[platform] = 0;
@@ -2508,8 +2566,8 @@ namespace GameAnalyticsSDK.Editor
             ga.SignUpOpen = true;
 
             GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp>();
-            signup.maxSize = new Vector2(640, 520);
-            signup.minSize = new Vector2(640, 520);
+            signup.maxSize = new Vector2(640, 600);
+            signup.minSize = new Vector2(640, 600);
             signup.titleContent = new GUIContent("GameAnalytics - Sign up for FREE");
             signup.ShowUtility();
             signup.Opened();
@@ -2522,8 +2580,8 @@ namespace GameAnalyticsSDK.Editor
         private static void OpenSignUpSwitchToGuideStep()
         {
             GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp>();
-            signup.maxSize = new Vector2(640, 480);
-            signup.minSize = new Vector2(640, 480);
+            signup.maxSize = new Vector2(640, 600);
+            signup.minSize = new Vector2(640, 600);
             signup.titleContent = new GUIContent("GameAnalytics - Sign up for FREE");
             signup.ShowUtility();
             signup.Opened();
