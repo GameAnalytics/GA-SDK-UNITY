@@ -24,6 +24,7 @@ Changelog
 **6.1.3**
 * fixed sign up function
 * added organizations to games overview
+* you might need to delete the settings.asset file and set the keys again for the different platforms
 
 **6.1.2**
 * fixed ios compile error (ios)
