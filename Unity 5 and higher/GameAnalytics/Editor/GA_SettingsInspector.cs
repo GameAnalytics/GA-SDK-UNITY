@@ -691,6 +691,29 @@ namespace GameAnalyticsSDK.Editor
 
                     Splitter(new Color(0.35f, 0.35f, 0.35f));
 
+                    // sanity check
+                    if(ga.SelectedPlatformOrganization.Count != GameAnalytics.SettingsGA.Platforms.Count)
+                    {
+                        int diff = ga.SelectedPlatformOrganization.Count - GameAnalytics.SettingsGA.Platforms.Count;
+
+                        if(diff < 0)
+                        {
+                            int absDiff = Mathf.Abs(diff);
+
+                            for(int i = 0; i < absDiff; ++i)
+                            {
+                                ga.SelectedPlatformOrganization.Add("");
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < diff; ++i)
+                            {
+                                ga.SelectedPlatformOrganization.RemoveAt(ga.SelectedPlatformOrganization.Count - 1);
+                            }
+                        }
+                    }
+
                     for (int i = 0; i < GameAnalytics.SettingsGA.Platforms.Count; ++i)
                     {
                         ga.PlatformFoldOut[i] = EditorGUILayout.Foldout(ga.PlatformFoldOut[i], PlatformToString(GameAnalytics.SettingsGA.Platforms[i]));
