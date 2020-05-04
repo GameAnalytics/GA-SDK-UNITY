@@ -26,6 +26,7 @@ Changelog
 
 **6.1.4**
 * fixed instant app bug(android)
+* remember to update your proguard file (https://gameanalytics.com/docs/item/unity-sdk#proguard-only-android)
 
 **6.1.3**
 * fixed sign up function
