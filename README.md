@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.2.0**
+* exposed functions to get AB testing id and variant id
+
 **6.1.5**
 * fixed bug in ui for settings.asset
 

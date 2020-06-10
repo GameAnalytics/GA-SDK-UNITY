@@ -96,6 +96,12 @@ namespace GameAnalyticsSDK.Wrapper
         [DllImport ("__Internal")]
         private static extern string getRemoteConfigsContentAsString();
 
+        [DllImport ("__Internal")]
+        private static extern string getABTestingId();
+
+        [DllImport ("__Internal")]
+        private static extern string getABTestingVariantId();
+
         private static void gameAnalyticsStartSession()
         {
             startSession();

@@ -661,6 +661,17 @@ namespace GameAnalyticsSDK
             return GA_Wrapper.GetRemoteConfigsContentAsString();
         }
 
+        // ----------------------- A/B TESTING ---------------------- //
+        public static string GetABTestingId()
+        {
+            return GA_Wrapper.GetABTestingId();
+        }
+
+        public static string GetABTestingVariantId()
+        {
+            return GA_Wrapper.GetABTestingVariantId();
+        }
+
         // ----------------------- MOPUB AD IMPRESSIONS ---------------------- //
         public static void SubscribeMoPubImpressions()
         {

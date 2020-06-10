@@ -234,6 +234,16 @@ namespace GameAnalyticsSDK.Wrapper
             return GA.CallStatic<string>("getRemoteConfigsContentAsString");
         }
 
+        private static string getABTestingId()
+        {
+            return GA.CallStatic<string>("getABTestingId");
+        }
+
+        private static string getABTestingVariantId()
+        {
+            return GA.CallStatic<string>("getABTestingVariantId");
+        }
+
         private static void subscribeMoPubImpressions()
         {
             GAMopubIntegration.ListenForImpressions(ImpressionHandler);

@@ -111,6 +111,16 @@ namespace GameAnalyticsSDK.Wrapper
 			return "";
 		}
 
+        private static string getABTestingId()
+		{
+			return "";
+		}
+
+        private static string getABTestingVariantId()
+		{
+			return "";
+		}
+
         private static void configureAutoDetectAppVersion (bool flag)
         {
             // not supported

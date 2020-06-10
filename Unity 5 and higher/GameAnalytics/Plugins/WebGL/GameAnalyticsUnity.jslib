@@ -127,6 +127,20 @@ var GameAnalyticsUnity = {
         var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
         writeStringToMemory(returnStr, buffer);
         return buffer;
+    },
+    getABTestingId: function()
+    {
+        var returnStr = gameanalytics.GameAnalytics.getABTestingId();
+        var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
+        writeStringToMemory(returnStr, buffer);
+        return buffer;
+    },
+    getABTestingVariantId: function()
+    {
+        var returnStr = gameanalytics.GameAnalytics.getABTestingVariantId();
+        var buffer = _malloc(lengthBytesUTF8(returnStr) + 1);
+        writeStringToMemory(returnStr, buffer);
+        return buffer;
     }
 };
 

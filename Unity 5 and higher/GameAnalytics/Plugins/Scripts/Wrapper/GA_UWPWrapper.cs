@@ -233,6 +233,26 @@ namespace GameAnalyticsSDK.Wrapper
             return buffer.ToString();
         }
 
+        [DllImport ("GameAnalytics.UWP.dll")]
+		private static extern void getABTestingIdUWP(StringBuilder outResult);
+
+        private static string getABTestingId()
+        {
+            StringBuilder buffer = new StringBuilder(8192);
+            getABTestingIdUWP(buffer);
+            return buffer.ToString();
+        }
+
+        [DllImport ("GameAnalytics.UWP.dll")]
+		private static extern void getABTestingVariantIdUWP(StringBuilder outResult);
+
+        private static string getABTestingVariantId()
+        {
+            StringBuilder buffer = new StringBuilder(8192);
+            getABTestingVariantIdUWP(buffer);
+            return buffer.ToString();
+        }
+
         private static void configureAutoDetectAppVersion (bool flag)
         {
             // not supported

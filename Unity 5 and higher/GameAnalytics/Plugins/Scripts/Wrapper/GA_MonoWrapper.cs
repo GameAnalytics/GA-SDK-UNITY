@@ -195,6 +195,16 @@ namespace GameAnalyticsSDK.Wrapper
             return GameAnalyticsSDK.Net.GameAnalytics.GetRemoteConfigsAsString();
         }
 
+        private static string getABTestingId()
+        {
+            return GameAnalyticsSDK.Net.GameAnalytics.GetABTestingId();
+        }
+
+        private static string getABTestingVariantId()
+        {
+            return GameAnalyticsSDK.Net.GameAnalytics.GetABTestingVariantId();
+        }
+
         private static void configureAutoDetectAppVersion (bool flag)
         {
             // not supported

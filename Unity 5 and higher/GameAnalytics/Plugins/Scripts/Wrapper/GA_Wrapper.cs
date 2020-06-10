@@ -287,6 +287,24 @@ namespace GameAnalyticsSDK.Wrapper
             return "";
         }
 
+        private static string getABTestingId()
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("getABTestingId()");
+            }
+            return "";
+        }
+
+        private static string getABTestingVariantId()
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("getABTestingVariantId()");
+            }
+            return "";
+        }
+
         private static void subscribeMoPubImpressions()
         {
             Debug.Log("subscribeMoPubImpressions()");
@@ -604,6 +622,16 @@ namespace GameAnalyticsSDK.Wrapper
         public static string GetRemoteConfigsContentAsString()
         {
             return getRemoteConfigsContentAsString();
+        }
+
+        public static string GetABTestingId()
+        {
+            return getABTestingId();
+        }
+
+        public static string GetABTestingVariantId()
+        {
+            return getABTestingVariantId();
         }
 
         private static string DictionaryToJsonString(IDictionary<string, object> dict)

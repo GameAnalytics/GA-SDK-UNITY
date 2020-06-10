@@ -116,6 +116,14 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern string getRemoteConfigsContentAsString();
 
         [DllImport ("__Internal")]
+        [return: MarshalAs(UnmanagedType.LPStr)]
+        private static extern string getABTestingId();
+
+        [DllImport ("__Internal")]
+        [return: MarshalAs(UnmanagedType.LPStr)]
+        private static extern string getABTestingVariantId();
+
+        [DllImport ("__Internal")]
         private static extern void startTimer(string key);
 
         [DllImport ("__Internal")]

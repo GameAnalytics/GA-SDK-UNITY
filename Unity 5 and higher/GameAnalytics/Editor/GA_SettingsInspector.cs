@@ -2257,10 +2257,6 @@ namespace GameAnalyticsSDK.Editor
             else if (ga.IsGameKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].GameKey) &&
                ga.IsSecretKeyValid(platform, ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
             {
-                foreach(var o in ga.Organizations)
-                {
-                    Debug.Log(o.Name + ", " + o.ID);
-                }
                 ga.SelectedPlatformOrganization[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Name;
                 ga.SelectedPlatformStudio[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Name;
                 ga.SelectedPlatformGame[platform] = ga.Organizations[ga.SelectedOrganization[platform] - 1].Studios[ga.SelectedStudio[platform] - 1].Games[index - 1].Name;
