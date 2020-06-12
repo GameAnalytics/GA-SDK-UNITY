@@ -1659,6 +1659,14 @@ namespace GameAnalyticsSDK.Editor
                         signup.SignUpComplete();
                     }
                 }
+#if UNITY_5_4_OR_NEWER
+                else if(www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                {
+                    Debug.LogError("Failed to sign up. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
+                    SetLoginStatus("Failed to sign up. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", ga);
+                    signup.SignUpFailed();
+                }
+#endif
                 else
                 {
                     Debug.LogError("Failed to sign up: " + www.error + " " + error);
@@ -1766,6 +1774,13 @@ namespace GameAnalyticsSDK.Editor
                         GetUserData(ga);
                     }
                 }
+#if UNITY_5_4_OR_NEWER
+                else if (www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                {
+                    Debug.LogError("Failed to login. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
+                    SetLoginStatus("Failed to login. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", ga);
+                }
+#endif
                 else
                 {
                     Debug.LogError("Failed to login: " + www.error + " " + error);
@@ -1911,6 +1926,13 @@ namespace GameAnalyticsSDK.Editor
                         ga.CurrentInspectorState = GameAnalyticsSDK.Setup.Settings.InspectorStates.Basic;
                     }
                 }
+#if UNITY_5_4_OR_NEWER
+                else if (www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                {
+                    Debug.LogError("Failed to get data. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
+                    SetLoginStatus("Failed to get data. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", ga);
+                }
+#endif
                 else
                 {
                     Debug.LogError("Failed to get user data: " + www.error + " " + error);
@@ -2024,6 +2046,13 @@ namespace GameAnalyticsSDK.Editor
                         signup.CreateGameComplete();
                     }
                 }
+#if UNITY_5_4_OR_NEWER
+                else if (www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                {
+                    Debug.LogError("Failed to create game. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
+                    SetLoginStatus("Failed to create game. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", ga);
+                }
+#endif
                 else
                 {
                     Debug.LogError("Failed to create game: " + www.error + " " + error);
@@ -2201,6 +2230,13 @@ namespace GameAnalyticsSDK.Editor
                         SetLoginStatus(message, ga);
                         Debug.LogError(message);
                     }
+#if UNITY_5_4_OR_NEWER
+                    else if (www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                    {
+                        Debug.LogError("Failed to find app. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
+                        SetLoginStatus("Failed to find app. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", ga);
+                    }
+#endif
                     else
                     {
                         Debug.LogError("Failed to find app: " + www.error + " " + text);
