@@ -349,6 +349,16 @@ char* getRemoteConfigsContentAsString() {
     return cStringCopy([result UTF8String]);
 }
 
+char* getABTestingId() {
+    NSString *result = [GameAnalytics getABTestingId];
+    return cStringCopy([result UTF8String]);
+}
+
+char* getABTestingVariantId() {
+    NSString *result = [GameAnalytics getABTestingVariantId];
+    return cStringCopy([result UTF8String]);
+}
+
 void startTimer(const char *key) {
     NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
     [GameAnalytics startTimer:keyString];

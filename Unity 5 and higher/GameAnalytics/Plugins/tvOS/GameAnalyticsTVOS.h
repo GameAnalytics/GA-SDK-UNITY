@@ -25,7 +25,7 @@ typedef enum GAResourceFlowType : NSInteger {
 /*!
  @enum
  @discussion
- his enum is used to specify status for progression event
+ This enum is used to specify status for progression event
  @constant GAProgressionStatusStart
  User started progression
  @constant GAProgressionStatusComplete
@@ -43,7 +43,7 @@ typedef enum GAProgressionStatus : NSInteger {
 /*!
  @enum
  @discussion
- his enum is used to specify severity of an error event
+ This enum is used to specify severity of an error event
  @constant GAErrorSeverityDebug
  @constant GAErrorSeverityInfo
  @constant GAErrorSeverityWarning
@@ -57,6 +57,66 @@ typedef enum GAErrorSeverity : NSInteger {
     GAErrorSeverityError = 4,
     GAErrorSeverityCritical = 5
 } GAErrorSeverity;
+
+/*!
+ @enum
+ @discussion
+ This enum is used to specify action of an ad event
+ @constant GAAdActionClicked
+ @constant GAAdActionShow
+ @constant GAAdActionFailedShow
+ @constant GAAdActionRewardReceived
+ @constant GAAdActionRequest
+ @constant GAAdActionLoaded
+ */
+typedef enum GAAdAction : NSInteger {
+    GAAdActionClicked = 1,
+    GAAdActionShow = 2,
+    GAAdActionFailedShow = 3,
+    GAAdActionRewardReceived = 4,
+    GAAdActionRequest = 5,
+    GAAdActionLoaded = 6
+} GAAdAction;
+
+/*!
+ @enum
+ @discussion
+ This enum is used to specify type of an ad event
+ @constant GAAdTypeVideo
+ @constant GAAdTypeRewardedVideo
+ @constant GAAdTypePlayable
+ @constant GAAdTypeInterstitial
+ @constant GAAdTypeOfferWall
+ @constant GAAdTypeBanner
+ */
+typedef enum GAAdType : NSInteger {
+    GAAdTypeVideo = 1,
+    GAAdTypeRewardedVideo = 2,
+    GAAdTypePlayable = 3,
+    GAAdTypeInterstitial = 4,
+    GAAdTypeOfferWall = 5,
+    GAAdTypeBanner = 6
+} GAAdType;
+
+/*!
+ @enum
+ @discussion
+ This enum is used to specify error reason of an ad event
+ @constant GAAdErrorUnknown
+ @constant GAAdErrorOffline
+ @constant GAAdErrorNoFill
+ @constant GAAdErrorInternalError
+ @constant GAAdErrorInvalidRequest
+ @constant GAAdErrorUnableToPrecache
+ */
+typedef enum GAAdError : NSInteger {
+    GAAdErrorUnknown = 1,
+    GAAdErrorOffline = 2,
+    GAAdErrorNoFill = 3,
+    GAAdErrorInternalError = 4,
+    GAAdErrorInvalidRequest = 5,
+    GAAdErrorUnableToPrecache = 6
+} GAAdError;
 
 //Similar to IRemoteConfigsListener in the GameAnalytics Android library
 @protocol GARemoteConfigsDelegate <NSObject>
@@ -242,6 +302,25 @@ typedef enum GAErrorSeverity : NSInteger {
  @attribute Note! This method must be called before initializing the SDK
  */
 + (void)configureEngineVersion:(NSString *)engineVersion;
+
+/*!
+ @method
+
+ @abstract Enable auto detect of app version to use for build field
+
+ @discussion <i>Example usage:</i>
+ <pre><code>
+ [GameAnalytics configureAutoDetectAppVersion:YES];
+ </code></pre>
+
+ @param flag
+ (String)
+
+ @availability Available since 4.1.0
+
+ @attribute Note! This method must be called before initializing the SDK
+ */
++ (void)configureAutoDetectAppVersion:(BOOL)flag;
 
 /*!
  @method
@@ -489,6 +568,103 @@ typedef enum GAErrorSeverity : NSInteger {
 /*!
  @method
 
+ @abstract Add new ad event
+
+ @param action
+ Action of ad (See. GAAdAction)
+ @param adType
+ Type of ad (See. GAAdType)
+ @param adSdkName
+ Name of ad SDK
+ @param adPlacement
+ Placement of ad (ad identifier)
+ @param duration
+ Duration the user watched ad video
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addAdEventWithAction:(GAAdAction)action
+                      adType:(GAAdType)adType
+                   adSdkName:(NSString *)adSdkName
+                 adPlacement:(NSString *)adPlacement
+                    duration:(NSInteger)duration;
+
+/*!
+ @method
+
+ @abstract Add new ad event
+
+ @param action
+ Action of ad (See. GAAdAction)
+ @param adType
+ Type of ad (See. GAAdType)
+ @param adSdkName
+ Name of ad SDK
+ @param adPlacement
+ Placement of ad (ad identifier)
+ @param noAdReason
+ Error reason of ad
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addAdEventWithAction:(GAAdAction)action
+                      adType:(GAAdType)adType
+                   adSdkName:(NSString *)adSdkName
+                 adPlacement:(NSString *)adPlacement
+                    noAdReason:(GAAdError)noAdReason;
+
+/*!
+ @method
+
+ @abstract Add new ad event
+
+ @param action
+ Action of ad (See. GAAdAction)
+ @param adType
+ Type of ad (See. GAAdType)
+ @param adSdkName
+ Name of ad SDK
+ @param adPlacement
+ Placement of ad (ad identifier)
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addAdEventWithAction:(GAAdAction)action
+                      adType:(GAAdType)adType
+                   adSdkName:(NSString *)adSdkName
+                 adPlacement:(NSString *)adPlacement;
+
+/*!
+ @method
+
+ @abstract Add new mopub impression event
+
+ @param impressionData
+ Ad impression data
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addImpressionMopubEventWithImpressionData:(NSDictionary *)impressionData;
+
+/*!
+ @method
+
+ @abstract Add new impression event
+
+ @param adNetworkName
+ Name of ad network
+ @param impressionData
+ Ad impression data
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addImpressionEventWithAdNetworkName:(NSString *)adNetworkName
+                   impressionData:(NSDictionary *)impressionData;
+
+
+/*!
+ @method
+
  @abstract Get remote configs value as string
 
  @param key
@@ -528,12 +704,12 @@ typedef enum GAErrorSeverity : NSInteger {
 
  @attribute For internal use.
  */
-+ (NSString *) getRemoteConfigsConfigurations;
++ (NSString *) getRemoteConfigsContentAsString;
 
 /*!
  @method
 
- @abstract Use this to set the delegate for the Command Center to retreive information about the status of loading configurations
+ @abstract Use this to set the delegate for the Remote Configs to retreive information about the status of loading configurations
 
  @availability Available since (TBD)
  */
@@ -549,6 +725,24 @@ typedef enum GAErrorSeverity : NSInteger {
  @attribute Note! This method should not be called before initialize method has been triggered
  */
 + (BOOL) isRemoteConfigsReady;
+
+/*!
+ @method
+
+ @abstract Get A/B testing id
+
+ @availability Available since (TBD)
+ */
++ (NSString *) getABTestingId;
+
+/*!
+ @method
+
+ @abstract Get A/B testing variant id
+
+ @availability Available since (TBD)
+ */
++ (NSString *) getABTestingVariantId;
 
 /*!
  @method
@@ -576,6 +770,19 @@ typedef enum GAErrorSeverity : NSInteger {
 
  */
 + (void)setEnabledVerboseLog:(BOOL)flag;
+
+/*!
+ @method
+
+ @abstract Enable wanrning logging of analytics.
+
+ @param flag
+ Enable or disable watning log mode
+
+ @availability Available since 3.2.1
+
+ */
++ (void)setEnabledWarningLog:(BOOL)flag;
 
 
 /*!
@@ -695,5 +902,49 @@ typedef enum GAErrorSeverity : NSInteger {
  @attribute Note! Must be called after setAvailableCustomDimensions03W
  */
 + (void)setCustomDimension03:(NSString *)dimension03;
+
+/*!
+ @method
+
+ @abstract Start timer for specified key
+
+ @param key
+ Key to use to relate to the timer
+
+ */
++ (void)startTimer:(NSString *)key;
+
+/*!
+ @method
+
+ @abstract Pause timer for specified key
+
+ @param key
+ Key to use to relate to the timer
+
+ */
++ (void)pauseTimer:(NSString *)key;
+
+/*!
+ @method
+
+ @abstract Resume timer for specified key
+
+ @param key
+ Key to use to relate to the timer
+
+ */
++ (void)resumeTimer:(NSString *)key;
+
+/*!
+ @method
+
+ @abstract Stop timer for specified key
+
+ @param key
+ Key to use to relate to the timer
+
+ */
++ (NSInteger)stopTimer:(NSString *)key;
 
 @end
