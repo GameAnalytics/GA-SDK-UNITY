@@ -720,7 +720,7 @@ namespace GameAnalyticsSDK.Editor
 
                         if (ga.PlatformFoldOut[i])
                         {
-                            if (ga.Organizations != null && ga.Organizations.Count > 0)
+                            if (ga.Organizations != null && ga.Organizations.Count > 0 && i < ga.SelectedOrganization.Count)
                             {
                                 EditorGUILayout.Space();
                                 //Splitter(new Color(0.35f, 0.35f, 0.35f));
@@ -729,7 +729,7 @@ namespace GameAnalyticsSDK.Editor
                                 //GUILayout.Label("", GUILayout.Width(7));
                                 GUILayout.Label(_organizationsLabel, GUILayout.Width(50));
                                 string[] organizationNames = Organization.GetOrganizationNames(ga.Organizations);
-                                if (i >= ga.SelectedOrganization.Count && ga.SelectedOrganization[i] >= organizationNames.Length)
+                                if (ga.SelectedOrganization[i] >= organizationNames.Length)
                                 {
                                     ga.SelectedOrganization[i] = 0;
                                 }
