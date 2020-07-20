@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.0**
+* updated user identifier flow to prepare for iOS 14 IDFA changes (ios)
+
 **6.2.4**
 * fixed progression events with scores (android)
 
