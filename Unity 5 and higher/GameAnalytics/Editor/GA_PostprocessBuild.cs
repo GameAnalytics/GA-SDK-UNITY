@@ -43,16 +43,20 @@ namespace GameAnalyticsSDK.Editor
             foreach (var group in groups)
             {
                 var defines = new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
-
+                var edited = false;
                 if (enabled && !defines.Contains(entry))
                 {
                     defines.Add(entry);
+                    edited = true;
                 }
                 else if (!enabled && defines.Contains(entry))
                 {
                     defines.Remove(entry);
+                    edited = true;
                 }
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines.ToArray()));
+                if (edited) {
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines.ToArray()));
+                }
             }
         }
 
