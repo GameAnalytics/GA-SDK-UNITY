@@ -1274,7 +1274,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.1.0";
+            GADevice.sdkWrapperVersion = "javascript 4.1.2";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -1290,7 +1290,8 @@ var gameanalytics;
                 new NameValueVersion("blackBerry", "BlackBerry", "/"),
                 new NameValueVersion("mac_osx", "Mac", "OS X"),
                 new NameValueVersion("tizen", "Tizen", "Tizen"),
-                new NameValueVersion("linux", "Linux", "rv")
+                new NameValueVersion("linux", "Linux", "rv"),
+                new NameValueVersion("kai_os", "KAIOS", "KAIOS")
             ]);
             GADevice.buildPlatform = GADevice.runtimePlatformToString();
             GADevice.deviceModel = GADevice.getDeviceModel();

@@ -640,11 +640,23 @@ typedef enum GAAdError : NSInteger {
  @abstract Add new mopub impression event
 
  @param impressionData
- Ad impression data
+ Impression data
 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionMopubEventWithImpressionData:(NSDictionary *)impressionData;
+
+/*!
+ @method
+
+ @abstract Add new fyber impression event
+
+ @param impressionData
+ Impression data
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addImpressionFyberEventWithImpressionData:(NSDictionary *)impressionData;
 
 /*!
  @method
@@ -654,7 +666,7 @@ typedef enum GAAdError : NSInteger {
  @param adNetworkName
  Name of ad network
  @param impressionData
- Ad impression data
+ Impression data
 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */

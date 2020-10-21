@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 using GameAnalyticsSDK.Setup;
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
 using UnityEngine.Networking;
 #endif
 
@@ -1363,13 +1363,13 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
         public IEnumerator GetAppStoreIconTexture(UnityWebRequest www, string storeName, GA_SignUp signup)
 #else
         public IEnumerator<WWW> GetAppStoreIconTexture(WWW www, string storeName, GA_SignUp signup)
 #endif
         {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
             yield return www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
@@ -1381,7 +1381,7 @@ namespace GameAnalyticsSDK.Editor
             {
 #if UNITY_2020_1_OR_NEWER
                 if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
-#elif UNITY_2018_3_OR_NEWER
+#elif UNITY_2017_1_OR_NEWER
                 if (!(www.isNetworkError || www.isHttpError))
 #else
                 if (string.IsNullOrEmpty(www.error))
@@ -1390,35 +1390,35 @@ namespace GameAnalyticsSDK.Editor
                     switch (storeName)
                     {
                         case "amazon_appstore":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.AmazonIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.AmazonIcon = www.texture;
 #endif
                             break;
                         case "google_play":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.GooglePlayIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.GooglePlayIcon = www.texture;
 #endif
                             break;
                         case "apple:ios":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.iosIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.iosIcon = www.texture;
 #endif
                             break;
                         case "apple:mac":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.macIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.macIcon = www.texture;
 #endif
                             break;
                         case "windows_phone":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.windowsPhoneIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.windowsPhoneIcon = www.texture;
@@ -1456,7 +1456,7 @@ namespace GameAnalyticsSDK.Editor
             Developer = developer;
             IconUrl = iconUrl;
 
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
             UnityWebRequest www = UnityWebRequestTexture.GetTexture(iconUrl);
             GA_ContinuationManager.StartCoroutine(GetIconTexture(www, signup), () => www.isDone);
 #else
@@ -1465,13 +1465,13 @@ namespace GameAnalyticsSDK.Editor
 #endif
         }
 
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
         private IEnumerator GetIconTexture(UnityWebRequest www, GA_SignUp signup)
 #else
         private IEnumerator<WWW> GetIconTexture(WWW www, GA_SignUp signup)
 #endif
         {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
             yield return www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
@@ -1481,13 +1481,13 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                 if (!(www.isNetworkError || www.isHttpError))
 #else
                 if (string.IsNullOrEmpty(www.error))
 #endif
                 {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                     Icon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                     Icon = www.texture;

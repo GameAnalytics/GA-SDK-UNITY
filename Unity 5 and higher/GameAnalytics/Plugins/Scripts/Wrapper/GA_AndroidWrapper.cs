@@ -244,16 +244,6 @@ namespace GameAnalyticsSDK.Wrapper
             return GA.CallStatic<string>("getABTestingVariantId");
         }
 
-        private static void subscribeMoPubImpressions()
-        {
-            GAMopubIntegration.ListenForImpressions(ImpressionHandler);
-        }
-
-        private static void ImpressionHandler(string json)
-        {
-            GA.CallStatic("addImpressionMoPubEvent", json);
-        }
-
         private static void startTimer(string key)
         {
             GA.CallStatic("startTimer", key);
@@ -272,6 +262,26 @@ namespace GameAnalyticsSDK.Wrapper
         private static long stopTimer(string key)
         {
             return GA.CallStatic<long>("stopTimer", key);
+        }
+
+        private static void subscribeMoPubImpressions()
+        {
+            GAMopubIntegration.ListenForImpressions(MopubImpressionHandler);
+        }
+
+        private static void MopubImpressionHandler(string json)
+        {
+            GA.CallStatic("addImpressionMoPubEvent", json);
+        }
+
+        private static void subscribeFyberImpressions()
+        {
+            GAFyberIntegration.ListenForImpressions(FyberImpressionHandler);
+        }
+
+        private static void FyberImpressionHandler(string json)
+        {
+            GA.CallStatic("addImpressionFyberEvent", json);
         }
 #endif
     }

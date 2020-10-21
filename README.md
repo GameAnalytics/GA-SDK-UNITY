@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.2**
+* fixed www build errors on unity 2017
+
 **6.3.1**
 * improved user identifer flow for ios (ios)
 

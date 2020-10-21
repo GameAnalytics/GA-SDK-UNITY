@@ -137,14 +137,27 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void subscribeMoPubImpressions()
         {
-            GAMopubIntegration.ListenForImpressions(ImpressionHandler);
+            GAMopubIntegration.ListenForImpressions(MopubImpressionHandler);
         }
 
-        private static void ImpressionHandler(string json)
+        private static void MopubImpressionHandler(string json)
         {
             if(!string.IsNullOrEmpty(json))
             {
                 addImpressionEvent("mopub", json);
+            }
+        }
+
+        private static void subscribeFyberImpressions()
+        {
+            GAMopubIntegration.ListenForImpressions(FyberImpressionHandler);
+        }
+
+        private static void FyberImpressionHandler(string json)
+        {
+            if(!string.IsNullOrEmpty(json))
+            {
+                addImpressionEvent("fyber", json);
             }
         }
 #endif
