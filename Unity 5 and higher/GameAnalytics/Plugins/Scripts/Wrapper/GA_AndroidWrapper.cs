@@ -14,6 +14,9 @@ namespace GameAnalyticsSDK.Wrapper
         private static readonly AndroidJavaClass GA = new AndroidJavaClass("com.gameanalytics.sdk.GameAnalytics");
         private static readonly AndroidJavaClass UNITY_GA = new AndroidJavaClass("com.gameanalytics.sdk.unity.UnityGameAnalytics");
         private static readonly AndroidJavaClass GA_IMEI = new AndroidJavaClass("com.gameanalytics.sdk.imei.GAImei");
+#if gameanalytics_mopub_enabled
+        private static readonly AndroidJavaClass MoPubClass = new AndroidJavaClass("com.mopub.unity.MoPubUnityPlugin");
+#endif
 
         private static void configureAvailableCustomDimensions01(string list)
         {
@@ -271,7 +274,9 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void MopubImpressionHandler(string json)
         {
-            GA.CallStatic("addImpressionMoPubEvent", json);
+#if gameanalytics_mopub_enabled
+            GA.CallStatic("addImpressionMoPubEvent", MoPubClass.CallStatic<string>("getSDKVersion"), json);
+#endif
         }
 
         private static void subscribeFyberImpressions()
@@ -281,7 +286,9 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void FyberImpressionHandler(string json)
         {
-            GA.CallStatic("addImpressionFyberEvent", json);
+#if gameanalytics_fyber_enabled
+            GA.CallStatic("addImpressionFyberEvent", Fyber.FairBid.Version, json);
+#endif
         }
 #endif
     }

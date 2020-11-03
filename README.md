@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.3**
+* updated impression events
+
 **6.3.2**
 * fixed www build errors on unity 2017
 

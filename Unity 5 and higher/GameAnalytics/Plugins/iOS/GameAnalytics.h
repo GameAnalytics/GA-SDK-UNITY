@@ -567,9 +567,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
-
+ 
  @abstract Add new ad event
-
+ 
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -580,7 +580,7 @@ typedef enum GAAdError : NSInteger {
  Placement of ad (ad identifier)
  @param duration
  Duration the user watched ad video
-
+ 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -591,9 +591,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
-
+ 
  @abstract Add new ad event
-
+ 
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -604,7 +604,7 @@ typedef enum GAAdError : NSInteger {
  Placement of ad (ad identifier)
  @param noAdReason
  Error reason of ad
-
+ 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -615,9 +615,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
-
+ 
  @abstract Add new ad event
-
+ 
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -626,7 +626,7 @@ typedef enum GAAdError : NSInteger {
  Name of ad SDK
  @param adPlacement
  Placement of ad (ad identifier)
-
+ 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -636,49 +636,72 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
-
+ 
  @abstract Add new mopub impression event
-
+ 
+ @param adNetworkVersion
+ Name of ad network version
  @param impressionData
  Impression data
-
+ 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
-+ (void)addImpressionMopubEventWithImpressionData:(NSDictionary *)impressionData;
++ (void)addImpressionMopubEventWithAdNetworkVersion:(NSString *)adNetworkVersion
+                            impressionData:(NSDictionary *)impressionData;
 
 /*!
  @method
-
+ 
  @abstract Add new fyber impression event
-
+ 
+ @param adNetworkVersion
+ Name of ad network version
  @param impressionData
  Impression data
-
+ 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
-+ (void)addImpressionFyberEventWithImpressionData:(NSDictionary *)impressionData;
++ (void)addImpressionFyberEventWithAdNetworkVersion:(NSString *)adNetworkVersion
+                            impressionData:(NSDictionary *)impressionData;
 
 /*!
  @method
+ 
+ @abstract Add new iron source impression event
+ 
+ @param adNetworkVersion
+ Name of ad network version
+ @param impressionData
+ Impression data
+ 
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addImpressionIronSourceEventWithAdNetworkVersion:(NSString *)adNetworkVersion
+                            impressionData:(NSDictionary *)impressionData;
 
+
+/*!
+ @method
+ 
  @abstract Add new impression event
-
+ 
  @param adNetworkName
  Name of ad network
  @param impressionData
  Impression data
-
+ 
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionEventWithAdNetworkName:(NSString *)adNetworkName
-                   impressionData:(NSDictionary *)impressionData;
+                              adNetworkVersion:(NSString *)adNetworkVersion
+                             impressionData:(NSDictionary *)impressionData;
 
 
 /*!
  @method
-
+ 
  @abstract Get remote configs value as string
-
+ 
  @param key
  The key declared in the webtool
 
@@ -917,45 +940,45 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
-
+ 
  @abstract Start timer for specified key
-
+ 
  @param key
  Key to use to relate to the timer
-
+ 
  */
 + (void)startTimer:(NSString *)key;
 
 /*!
  @method
-
+ 
  @abstract Pause timer for specified key
-
+ 
  @param key
  Key to use to relate to the timer
-
+ 
  */
 + (void)pauseTimer:(NSString *)key;
 
 /*!
  @method
-
+ 
  @abstract Resume timer for specified key
-
+ 
  @param key
  Key to use to relate to the timer
-
+ 
  */
 + (void)resumeTimer:(NSString *)key;
 
 /*!
  @method
-
+ 
  @abstract Stop timer for specified key
-
+ 
  @param key
  Key to use to relate to the timer
-
+ 
  */
 + (NSInteger)stopTimer:(NSString *)key;
 
