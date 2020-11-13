@@ -22,7 +22,7 @@ namespace GameAnalyticsSDK
 			public Func<bool> Done {get; private set;}
 			public Action ContinueWith { get; private set; }
 		}
-			
+
 		private static readonly List<EditorCoroutine> jobs = new List<EditorCoroutine>();
 
 		public static void StartCoroutine(IEnumerator routine,Func<bool> done)
@@ -39,7 +39,7 @@ namespace GameAnalyticsSDK
 			for (int i = jobs.Count-1; i>=0; --i)
 			{
 				var jobIt = jobs[i];
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                 if (!jobIt.Routine.MoveNext()) //movenext is false if coroutine completed
                 {
                     jobs.RemoveAt(i);
