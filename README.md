@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.6**
+* updated validator for impression events (android, ios)
+
 **6.3.5**
 * fixed user log in function in editor for unity 2017
 
