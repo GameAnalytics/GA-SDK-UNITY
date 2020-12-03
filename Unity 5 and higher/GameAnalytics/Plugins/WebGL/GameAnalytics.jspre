@@ -1274,7 +1274,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.1.3";
+            GADevice.sdkWrapperVersion = "javascript 4.1.4";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -3109,7 +3109,7 @@ var gameanalytics;
                     return "failed_show";
                 }
                 else if (value == gameanalytics.EGAAdAction.RewardReceived || value == gameanalytics.EGAAdAction[gameanalytics.EGAAdAction.RewardReceived]) {
-                    return "reward_recevied";
+                    return "reward_received";
                 }
                 else {
                     return "";
