@@ -23,6 +23,7 @@ Changelog
 <!--(CHANGELOG_TOP)-->
 **6.3.8**
 * removed memory info from automatic crash reports
+* updated sqlite lib
 
 **6.3.7**
 * corrected ad event annotation
