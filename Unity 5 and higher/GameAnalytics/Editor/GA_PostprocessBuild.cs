@@ -15,6 +15,7 @@ namespace GameAnalyticsSDK.Editor
     {
         private static string gameanalytics_mopub = "gameanalytics_mopub_enabled";
         private static string gameanalytics_fyber = "gameanalytics_fyber_enabled";
+        private static string gameanalytics_ironsource = "gameanalytics_ironsource_enabled";
 
 #if UNITY_2018_1_OR_NEWER
         public int callbackOrder
@@ -38,6 +39,7 @@ namespace GameAnalyticsSDK.Editor
         {
             UpdateMoPub();
             UpdateFyber();
+            UpdateIronSource();
         }
 
         private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
@@ -93,6 +95,22 @@ namespace GameAnalyticsSDK.Editor
             else
             {
                 UpdateDefines(gameanalytics_fyber, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if Fyber classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateIronSource()
+        {
+            var fyberTypes = new string[] { "IronSourceEvents", "IronSource" };
+            if (TypeExists(fyberTypes))
+            {
+                UpdateDefines(gameanalytics_ironsource, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_ironsource, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
         }
 

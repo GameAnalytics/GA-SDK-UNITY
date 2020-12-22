@@ -704,6 +704,12 @@ namespace GameAnalyticsSDK
             GA_Wrapper.SubscribeFyberImpressions();
         }
 
+        // ----------------------- IRON SOURCE AD IMPRESSIONS ---------------------- //
+        public static void SubscribeIronSourceImpressions()
+        {
+            GA_Wrapper.SubscribeIronSourceImpressions();
+        }
+
         private static string GetUnityVersion()
         {
             string unityVersion = "";

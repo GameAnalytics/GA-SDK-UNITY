@@ -290,6 +290,27 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("addImpressionFyberEvent", Fyber.FairBid.Version, json);
 #endif
         }
+
+        private static void subscribeIronSourceImpressions()
+        {
+            GAIronSourceIntegration.ListenForImpressions(IronSourceImpressionHandler);
+        }
+
+        private static void IronSourceImpressionHandler(string json)
+        {
+#if gameanalytics_ironsource_enabled
+
+            // Remove potential label/tag from version number
+            string v = IronSource.pluginVersion();
+            int index = v.IndexOf("-");
+            if(index >= 0)
+            {
+                v = v.Substring(0, index);
+            }
+
+            GA.CallStatic("addImpressionIronSourceEvent", v, json);
+#endif
+        }
 #endif
     }
 }

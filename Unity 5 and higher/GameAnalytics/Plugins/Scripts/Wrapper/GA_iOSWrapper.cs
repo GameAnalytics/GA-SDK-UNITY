@@ -169,6 +169,30 @@ namespace GameAnalyticsSDK.Wrapper
 #endif
             }
         }
+
+        private static void subscribeIronSourceImpressions()
+        {
+            GAIronSourceIntegration.ListenForImpressions(IronSourceImpressionHandler);
+        }
+
+        private static void IronSourceImpressionHandler(string json)
+        {
+            if(!string.IsNullOrEmpty(json))
+            {
+#if gameanalytics_ironsource_enabled
+
+                // Remove potential label/tag from version number
+                string v = IronSource.pluginVersion();
+                int index = v.IndexOf("-");
+                if(index >= 0)
+                {
+                    v = v.Substring(0, index);
+                }
+
+                addImpressionEvent("ironsource", v, json);
+#endif
+            }
+        }
 #endif
     }
 }

@@ -336,6 +336,11 @@ namespace GameAnalyticsSDK.Wrapper
             Debug.Log("subscribeFyberImpressions()");
         }
 
+        private static void subscribeIronSourceImpressions()
+        {
+            Debug.Log("subscribeIronSourceImpressions()");
+        }
+
 #endif
 
         public static void SetAvailableCustomDimensions01 (string list)
@@ -706,6 +711,15 @@ namespace GameAnalyticsSDK.Wrapper
             subscribeFyberImpressions();
 #elif UNITY_IOS || UNITY_ANDROID
             subscribeFyberImpressions();
+#endif
+        }
+
+        public static void SubscribeIronSourceImpressions()
+        {
+#if UNITY_EDITOR
+            subscribeIronSourceImpressions();
+#elif UNITY_IOS || UNITY_ANDROID
+            subscribeIronSourceImpressions();
 #endif
         }
     }

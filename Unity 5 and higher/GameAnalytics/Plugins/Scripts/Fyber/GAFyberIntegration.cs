@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GAFyberIntegration
 {
-#if gameanalytics_fyber_enabled
+#if gameanalytics_fyber_enabled && !(UNITY_EDITOR)
     private static bool _subscribed = false;
     private class GAInterstitialListener : Fyber.InterstitialListener
     {
@@ -85,7 +85,7 @@ public class GAFyberIntegration
 
     public static void ListenForImpressions(Action<string> callback)
     {
-#if gameanalytics_fyber_enabled
+#if gameanalytics_fyber_enabled && !(UNITY_EDITOR)
         if (_subscribed)
         {
             Debug.Log("Ignoring duplicate gameanalytics subscription");
