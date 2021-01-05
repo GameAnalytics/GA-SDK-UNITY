@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.9**
+* fixed ironsource impression event compile error
+
 **6.3.8**
 * removed memory info from automatic crash reports
 * updated sqlite lib
