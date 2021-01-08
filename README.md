@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.10**
+* fix to mopub impression events, require min. mopub v5.14.0
+
 **6.3.9**
 * fixed ironsource impression event compile error
 

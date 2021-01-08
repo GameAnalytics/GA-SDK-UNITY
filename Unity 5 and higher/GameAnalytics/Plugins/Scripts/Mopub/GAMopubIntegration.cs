@@ -16,7 +16,7 @@ public class GAMopubIntegration
             return;
         }
 
-        MoPubManager.OnImpressionTrackedEvent += (arg1, arg2) => callback(arg2.JsonRepresentation);
+        MoPubManager.OnImpressionTrackedEventBg += (arg1, arg2) => callback(arg2.JsonRepresentation);
         _subscribed = true;
 #endif
     }
