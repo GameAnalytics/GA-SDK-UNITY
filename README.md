@@ -23,6 +23,7 @@ Changelog
 <!--(CHANGELOG_TOP)-->
 **6.3.10**
 * fix to mopub impression events, require min. mopub v5.14.0
+* REMEMBER to update to this version of the SDK if you use MoPub impression events and you have min. v5.14.0 of MoPub SDK inatalled or else the SDK will not send MoPub impression event for you any more
 
 **6.3.9**
 * fixed ironsource impression event compile error
