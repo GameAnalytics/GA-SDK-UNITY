@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.11**
+* fixed dependencies for iOS (min. XCode 12 required)
+
 **6.3.10**
 * fix to mopub impression events, require min. mopub v5.14.0
 * REMEMBER to update to this version of the SDK if you use MoPub impression events and you have min. v5.14.0 of MoPub SDK inatalled or else the SDK will not send MoPub impression event for you any more

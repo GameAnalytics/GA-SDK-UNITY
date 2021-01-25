@@ -153,6 +153,7 @@ namespace GameAnalyticsSDK.Editor
                 proj.AddFileToBuild(target, proj.AddFile("usr/lib/libsqlite3.dylib", "Frameworks/libsqlite3.dylib", UnityEditor.iOS.Xcode.PBXSourceTree.Sdk));
                 proj.AddFileToBuild(target, proj.AddFile("usr/lib/libz.dylib", "Frameworks/libz.dylib", UnityEditor.iOS.Xcode.PBXSourceTree.Sdk));
                 proj.AddFileToBuild(target, proj.AddFile("Frameworks/AdSupport.framework", "Frameworks/AdSupport.framework", UnityEditor.iOS.Xcode.PBXSourceTree.Sdk));
+                proj.AddFileToBuild(target, proj.AddFile("Frameworks/AppTrackingTransparency.framework", "Frameworks/AppTrackingTransparency.framework", UnityEditor.iOS.Xcode.PBXSourceTree.Sdk));
                 //proj.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
 
                 File.WriteAllText(projPath, proj.WriteToString());
