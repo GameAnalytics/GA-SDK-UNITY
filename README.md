@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.12**
+* changed AppTrackingTransparency dependency to be optional for iOS
+
 **6.3.11**
 * fixed dependencies for iOS (min. XCode 12 required)
 
