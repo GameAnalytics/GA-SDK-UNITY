@@ -21,7 +21,7 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
-**6.3.12**
+**6.3.13**
 * fixed compiler errors for 2017.1
 * updated client ts validator
 
