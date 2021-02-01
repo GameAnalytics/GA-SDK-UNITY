@@ -1594,7 +1594,12 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1717,7 +1722,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1818,7 +1827,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1998,7 +2011,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -2152,7 +2169,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -2363,7 +2384,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -2415,7 +2440,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else

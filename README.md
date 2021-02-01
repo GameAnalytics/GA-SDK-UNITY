@@ -22,6 +22,10 @@ Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
 **6.3.12**
+* fixed compiler errors for 2017.1
+* updated client ts validator
+
+**6.3.12**
 * changed AppTrackingTransparency dependency to be optional for iOS
 
 **6.3.11**

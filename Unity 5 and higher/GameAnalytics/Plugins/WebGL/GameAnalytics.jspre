@@ -1133,7 +1133,7 @@ var gameanalytics;
                 return true;
             };
             GAValidator.validateClientTs = function (clientTs) {
-                if (clientTs < (-4294967295 + 1) || clientTs > (4294967295 - 1)) {
+                if (clientTs < (0) || clientTs > (99999999999)) {
                     return false;
                 }
                 return true;
@@ -1274,7 +1274,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.1.4";
+            GADevice.sdkWrapperVersion = "javascript 4.1.6";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -2898,6 +2898,10 @@ var gameanalytics;
                         var ev = events[i];
                         var eventDict = JSON.parse(GAUtilities.decode64(ev["event"]));
                         if (eventDict.length != 0) {
+                            var clientTs = eventDict["client_ts"];
+                            if (clientTs && !GAValidator.validateClientTs(clientTs)) {
+                                delete eventDict["client_ts"];
+                            }
                             payloadArray.push(eventDict);
                         }
                     }
@@ -3340,6 +3344,21 @@ var gameanalytics;
     var GameAnalytics = (function () {
         function GameAnalytics() {
         }
+        GameAnalytics.getGlobalObject = function () {
+            if (typeof globalThis !== 'undefined') {
+                return globalThis;
+            }
+            if (typeof self !== 'undefined') {
+                return self;
+            }
+            if (typeof window !== 'undefined') {
+                return window;
+            }
+            if (typeof global !== 'undefined') {
+                return global;
+            }
+            return undefined;
+        };
         GameAnalytics.init = function () {
             GADevice.touch();
             GameAnalytics.methodMap['configureAvailableCustomDimensions01'] = GameAnalytics.configureAvailableCustomDimensions01;
@@ -3375,8 +3394,8 @@ var gameanalytics;
             GameAnalytics.methodMap['getRemoteConfigsValueAsString'] = GameAnalytics.getRemoteConfigsValueAsString;
             GameAnalytics.methodMap['isRemoteConfigsReady'] = GameAnalytics.isRemoteConfigsReady;
             GameAnalytics.methodMap['getRemoteConfigsContentAsString'] = GameAnalytics.getRemoteConfigsContentAsString;
-            if (typeof window !== 'undefined' && typeof window['GameAnalytics'] !== 'undefined' && typeof window['GameAnalytics']['q'] !== 'undefined') {
-                var q = window['GameAnalytics']['q'];
+            if (typeof GameAnalytics.getGlobalObject() !== 'undefined' && typeof GameAnalytics.getGlobalObject()['GameAnalytics'] !== 'undefined' && typeof GameAnalytics.getGlobalObject()['GameAnalytics']['q'] !== 'undefined') {
+                var q = GameAnalytics.getGlobalObject()['GameAnalytics']['q'];
                 for (var i in q) {
                     GameAnalytics.gaCommand.apply(null, q[i]);
                 }

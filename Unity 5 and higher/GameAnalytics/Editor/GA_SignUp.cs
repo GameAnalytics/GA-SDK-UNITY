@@ -1370,7 +1370,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1472,7 +1476,11 @@ namespace GameAnalyticsSDK.Editor
 #endif
         {
 #if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1481,7 +1489,9 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-#if UNITY_2017_1_OR_NEWER
+#if UNITY_2020_1_OR_NEWER
+                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
+#elif UNITY_2017_1_OR_NEWER
                 if (!(www.isNetworkError || www.isHttpError))
 #else
                 if (string.IsNullOrEmpty(www.error))
