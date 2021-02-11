@@ -791,10 +791,12 @@ namespace GameAnalyticsSDK
 #if UNITY_SAMSUNGTV
             return "";
 #else
-            string[] assets = { Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar};
-            FileInfo[] myFile = new DirectoryInfo ("Assets").GetFiles (_file, SearchOption.AllDirectories);
+            bool isCustomPackage = false;
+            string rootFolder = isCustomPackage ? "Packages" : "Assets";
+            string[] assets = { Path.DirectorySeparatorChar + rootFolder + Path.DirectorySeparatorChar};
+            FileInfo[] myFile = new DirectoryInfo (rootFolder).GetFiles (_file, SearchOption.AllDirectories);
             string[] temp = myFile [0].ToString ().Split (assets, 2, System.StringSplitOptions.None);
-            return "Assets" + Path.DirectorySeparatorChar + temp [1];
+            return rootFolder + Path.DirectorySeparatorChar + temp [1];
 #endif
         }
 

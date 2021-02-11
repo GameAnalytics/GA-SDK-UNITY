@@ -21,6 +21,9 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.3.14**
+* fixed playmaker scripts
+
 **6.3.13**
 * fixed compiler errors for 2017.1
 * updated client ts validator
