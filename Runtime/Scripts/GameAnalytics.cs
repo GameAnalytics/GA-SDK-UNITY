@@ -791,7 +791,7 @@ namespace GameAnalyticsSDK
 #if UNITY_SAMSUNGTV
             return "";
 #else
-            bool isCustomPackage = false;
+            bool isCustomPackage = true;
             string rootFolder = isCustomPackage ? "Packages" : "Assets";
             string[] assets = { Path.DirectorySeparatorChar + rootFolder + Path.DirectorySeparatorChar};
             FileInfo[] myFile = new DirectoryInfo (rootFolder).GetFiles (_file, SearchOption.AllDirectories);

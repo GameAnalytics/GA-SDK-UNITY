@@ -21,7 +21,7 @@ namespace GameAnalyticsSDK.Editor
     [CustomEditor(typeof(GameAnalyticsSDK.Setup.Settings))]
     public class GA_SettingsInspector : UnityEditor.Editor
     {
-        public const bool IsCustomPackage = false;
+        public const bool IsCustomPackage = true;
         private const string AssetsPrependPath = IsCustomPackage ? "Packages/com.gameanalytics.sdk" : "Assets/GameAnalytics";
 
         private GUIContent _publicKeyLabel = new GUIContent("Game Key", "Your GameAnalytics Game Key - copy/paste from the GA website.");
