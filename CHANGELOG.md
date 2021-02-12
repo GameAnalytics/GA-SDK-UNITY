@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.4.0**
+* added support for unity package manager
+
 **6.3.14**
 * fixed playmaker scripts
 
