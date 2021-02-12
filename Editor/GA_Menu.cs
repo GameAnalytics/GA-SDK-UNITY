@@ -32,7 +32,7 @@ namespace GameAnalyticsSDK.Editor
         {
             if (Object.FindObjectOfType (typeof(GameAnalytics)) == null)
             {
-                GameObject go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath(GameAnalytics.WhereIs("GameAnalytics.prefab"), typeof(GameObject))) as GameObject;
+                GameObject go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath(GameAnalytics.WhereIs("GameAnalytics.prefab", "Prefab"), typeof(GameObject))) as GameObject;
                 go.name = "GameAnalytics";
                 Selection.activeObject = go;
                 Undo.RegisterCreatedObjectUndo(go, "Created GameAnalytics Object");
