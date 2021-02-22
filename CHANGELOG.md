@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.4.1**
+* added idfa consent status field to events (ios)
+
 **6.4.0**
 * added support for unity package manager
 
