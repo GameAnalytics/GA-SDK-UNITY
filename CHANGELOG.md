@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.0**
+* added app tracking transparency request function (ios)
+
 **6.4.1**
 * added idfa consent status field to events (ios)
 

@@ -13,7 +13,9 @@ using UnityEditor;
 using System.IO;
 #endif
 
-
+#if UNITY_IOS
+using GameAnalyticsSDK.iOS;
+#endif
 
 namespace GameAnalyticsSDK
 {
@@ -708,6 +710,14 @@ namespace GameAnalyticsSDK
         public static void SubscribeIronSourceImpressions()
         {
             GA_Wrapper.SubscribeIronSourceImpressions();
+        }
+
+        // ----------------------- IOS 14+ APP TRACKING TRANSPARENCY ---------------------- //
+        public static void RequestTrackingAuthorization(IGameAnalyticsATTListener listener)
+        {
+#if UNITY_IOS
+            GameAnalyticsATTClient.Instance.RequestTrackingAuthorization(listener);
+#endif
         }
 
         private static string GetUnityVersion()
