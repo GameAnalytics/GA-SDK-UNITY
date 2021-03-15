@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.1**
+* added support for OAID (android)
+
 **6.5.0**
 * added app tracking transparency request function (ios)
 
