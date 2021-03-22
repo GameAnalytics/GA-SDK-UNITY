@@ -5,7 +5,7 @@ Documentation can be found [here](https://gameanalytics.com/docs/unity-sdk).
 
 If you have any issues or feedback regarding the SDK, please contact our friendly support team [here](https://gameanalytics.com/contact).
 
-This is a custom package used with [Unity Package Manager](https://docs.unity3d.com/Manual/Packages.html) if you want the usual .unitypackage you can download it [here](http://download.gameanalytics.com/unity/GA_SDK_UNITY.unitypackage).
+This is a custom package used with [Unity Package Manager](https://docs.unity3d.com/Manual/Packages.html) if you want the usual .unitypackage you can download it [here](https://download.gameanalytics.com/unity/GA_SDK_UNITY.unitypackage).
 
 > :information_source:
 > The Unity SDK include support for **Windows**, **Mac**, **Linux**, **WebGL**, **iOS**, **tvOS**, **Tizen**, **UWP**, **Universal Windows 8** and **Android**.
