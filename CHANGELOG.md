@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.2**
+* fixed crashes for android devices without google play API (android)
+
 **6.5.1**
 * added support for OAID (android)
 * added missing export function for UWP lib (uwp)
