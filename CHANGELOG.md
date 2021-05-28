@@ -3,6 +3,7 @@ Changelog
 <!--(CHANGELOG_TOP)-->
 **6.5.3**
 * added support for max in impression events
+* fixed dupplicate symbol on ios
 
 **6.5.2**
 * fixed crashes for android devices without google play API (android)
