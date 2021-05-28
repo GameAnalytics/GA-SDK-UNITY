@@ -221,7 +221,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void subscribeMaxImpressions()
         {
-            GAMaxIntegration.ListenForImpressions(MaxnImpressionHandler);
+            GAMaxIntegration.ListenForImpressions(MaxImpressionHandler);
         }
 
         private static void MaxImpressionHandler(string json)
