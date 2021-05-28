@@ -65,8 +65,8 @@ namespace GameAnalyticsSDK.Editor
                 "/GameAnalytics/Plugins/Playmaker/SendProgressionEvent.cs",
                 "/GameAnalytics/Plugins/Playmaker/SendResourceEvent.cs",
                 "/GameAnalytics/Plugins/Playmaker/SetCustomDimension.cs",
-                "/GameAnalytics/Plugins/Playmaker/Editor/SendProgressionEventActionEditor.cs",
-                "/GameAnalytics/Plugins/Playmaker/Editor/SendResourceEventActionEditor.cs"
+                "/GameAnalytics/Editor/Playmaker/SendProgressionEventActionEditor.cs",
+                "/GameAnalytics/Editor/Playmaker/SendResourceEventActionEditor.cs"
             };
 
             foreach(string _file in _files)
