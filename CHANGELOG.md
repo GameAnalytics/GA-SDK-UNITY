@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.4**
+* fixed typo error
+
 **6.5.3**
 * added support for max in impression events
 * fixed dupplicate symbol on ios
