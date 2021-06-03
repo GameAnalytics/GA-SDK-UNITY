@@ -57,7 +57,7 @@ namespace GameAnalyticsSDK.Events
 
                 string _message = lString + " " + sTrace;
                 if (_message.Length > 8192) {
-                    _message = _message.Substring (0, 8191);
+                    _message = _message.Substring (8192);
                 }
 
                 SubmitError(_message, type);

@@ -341,16 +341,6 @@ namespace GameAnalyticsSDK.Wrapper
             Debug.Log("subscribeIronSourceImpressions()");
         }
 
-        private static void subscribeTopOnImpressions()
-        {
-            Debug.Log("subscribeTopOnImpressions()");
-        }
-
-        private static void subscribeMaxImpressions()
-        {
-            Debug.Log("subscribeMaxImpressions()");
-        }
-
 #endif
 
         public static void SetAvailableCustomDimensions01 (string list)
@@ -730,24 +720,6 @@ namespace GameAnalyticsSDK.Wrapper
             subscribeIronSourceImpressions();
 #elif UNITY_IOS || UNITY_ANDROID
             subscribeIronSourceImpressions();
-#endif
-        }
-
-        public static void SubscribeTopOnImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeTopOnImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeTopOnImpressions();
-#endif
-        }
-
-        public static void SubscribeMaxImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeMaxImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeMaxImpressions();
 #endif
         }
     }

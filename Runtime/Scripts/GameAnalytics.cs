@@ -712,18 +712,6 @@ namespace GameAnalyticsSDK
             GA_Wrapper.SubscribeIronSourceImpressions();
         }
 
-        // ----------------------- TOPON AD IMPRESSIONS ---------------------- //
-        public static void SubscribeTopOnImpressions()
-        {
-            GA_Wrapper.SubscribeTopOnImpressions();
-        }
-
-        // ----------------------- MAX AD IMPRESSIONS ---------------------- //
-        public static void SubscribeMaxImpressions()
-        {
-            GA_Wrapper.SubscribeMaxImpressions();
-        }
-
         // ----------------------- IOS 14+ APP TRACKING TRANSPARENCY ---------------------- //
         public static void RequestTrackingAuthorization(IGameAnalyticsATTListener listener)
         {

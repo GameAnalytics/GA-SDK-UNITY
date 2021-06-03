@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.5**
+* reverted back to v6.5.2 as crashes happen for ios which have not been narrowed down to what is causing this yet
+
 **6.5.4**
 * fixed typo error
 

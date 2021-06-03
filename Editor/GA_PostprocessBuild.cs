@@ -16,8 +16,6 @@ namespace GameAnalyticsSDK.Editor
         private static string gameanalytics_mopub = "gameanalytics_mopub_enabled";
         private static string gameanalytics_fyber = "gameanalytics_fyber_enabled";
         private static string gameanalytics_ironsource = "gameanalytics_ironsource_enabled";
-        private static string gameanalytics_topon = "gameanalytics_topon_enabled";
-        private static string gameanalytics_max = "gameanalytics_max_enabled";
 
 #if UNITY_2018_1_OR_NEWER
         public int callbackOrder
@@ -42,8 +40,6 @@ namespace GameAnalyticsSDK.Editor
             UpdateMoPub();
             UpdateFyber();
             UpdateIronSource();
-            UpdateTopOn();
-            UpdateMax();
         }
 
         private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
@@ -103,50 +99,18 @@ namespace GameAnalyticsSDK.Editor
         }
 
         /// <summary>
-        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if IronSource classes are detected within the Unity project
+        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if Fyber classes are detected within the Unity project
         /// </summary>
         private static void UpdateIronSource()
         {
-            var ironSourceTypes = new string[] { "IronSourceEvents", "IronSource" };
-            if (TypeExists(ironSourceTypes))
+            var fyberTypes = new string[] { "IronSourceEvents", "IronSource" };
+            if (TypeExists(fyberTypes))
             {
                 UpdateDefines(gameanalytics_ironsource, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
             else
             {
                 UpdateDefines(gameanalytics_ironsource, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-            }
-        }
-
-        /// <summary>
-        /// Sets the scripting define symbol `gameanalytics_topon_enabled` to true if TopOn classes are detected within the Unity project
-        /// </summary>
-        private static void UpdateTopOn()
-        {
-            var topOnTypes = new string[] { "AnyThinkAds.Api.ATBannerAd", "AnyThinkAds.Api.ATInterstitialAd", "AnyThinkAds.Api.ATRewardedVideo", "AnyThinkAds.Api.ATNativeAd" };
-            if (TypeExists(topOnTypes))
-            {
-                UpdateDefines(gameanalytics_topon, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-            }
-            else
-            {
-                UpdateDefines(gameanalytics_topon, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-            }
-        }
-
-        /// <summary>
-        /// Sets the scripting define symbol `gameanalytics_max_enabled` to true if Max classes are detected within the Unity project
-        /// </summary>
-        private static void UpdateMax()
-        {
-            var topOnTypes = new string[] { "MaxSdkCallbacks", "MaxSdk", "MaxSdkBase.AdInfo" };
-            if (TypeExists(topOnTypes))
-            {
-                UpdateDefines(gameanalytics_max, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-            }
-            else
-            {
-                UpdateDefines(gameanalytics_max, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
         }
 
@@ -191,12 +155,6 @@ namespace GameAnalyticsSDK.Editor
                 proj.AddFrameworkToProject(target, "AdSupport.framework", false);
                 proj.AddFrameworkToProject(target, "AppTrackingTransparency.framework", true);
                 //proj.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
-#if gameanalytics_topon_enabled
-                string toponHelperFilePath = Path.Combine(path, "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsTopOnHelper.m");
-                string contents = File.ReadAllText(toponHelperFilePath);
-                contents = contents.Replace("#if gameanalytics_topon_enabled", "").Replace("#endif", "");
-                File.WriteAllText(toponHelperFilePath, contents);
-#endif
 
                 File.WriteAllText(projPath, proj.WriteToString());
 #endif

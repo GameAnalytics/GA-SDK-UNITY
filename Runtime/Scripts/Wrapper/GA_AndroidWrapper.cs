@@ -17,9 +17,6 @@ namespace GameAnalyticsSDK.Wrapper
 #if gameanalytics_mopub_enabled
         private static readonly AndroidJavaClass MoPubClass = new AndroidJavaClass("com.mopub.unity.MoPubUnityPlugin");
 #endif
-#if gameanalytics_topon_enabled
-        private static readonly AndroidJavaClass TopOnClass = new AndroidJavaClass("com.anythink.core.api.ATSDK");
-#endif
 
         private static void configureAvailableCustomDimensions01(string list)
         {
@@ -312,30 +309,6 @@ namespace GameAnalyticsSDK.Wrapper
             }
 
             GA.CallStatic("addImpressionIronSourceEvent", v, json);
-#endif
-        }
-
-        private static void subscribeTopOnImpressions()
-        {
-            GATopOnIntegration.ListenForImpressions(TopOnImpressionHandler);
-        }
-
-        private static void TopOnImpressionHandler(string json)
-        {
-#if gameanalytics_topon_enabled
-            GA.CallStatic("addImpressionTopOnEvent", TopOnClass.CallStatic<string>("getSDKVersionName").Replace("UA_", ""), json);
-#endif
-        }
-
-        private static void subscribeMaxImpressions()
-        {
-            GAMaxIntegration.ListenForImpressions(MaxImpressionHandler);
-        }
-
-        private static void MaxImpressionHandler(string json)
-        {
-#if gameanalytics_max_enabled
-            GA.CallStatic("addImpressionMaxEvent", MaxSdk.Version, json);
 #endif
         }
 #endif
