@@ -104,7 +104,7 @@ void configureAutoDetectAppVersion(BOOL flag) {
     [GameAnalytics configureAutoDetectAppVersion:flag];
 }
 
-void initialize(const char *gameKey, const char *gameSecret) {
+void gaInitialize(const char *gameKey, const char *gameSecret) {
     NSString *gameKeyString = gameKey != NULL ? [NSString stringWithUTF8String:gameKey] : nil;
     NSString *gameSecretString = gameSecret != NULL ? [NSString stringWithUTF8String:gameSecret] : nil;
 
@@ -323,6 +323,8 @@ void gameAnalyticsStartSession() {
 void gameAnalyticsEndSession() {
     [GameAnalytics endSession];
 }
+
+
 
 void setCustomDimension01(const char *customDimension) {
     NSString *customDimensionString = customDimension != NULL ? [NSString stringWithUTF8String:customDimension] : nil;
