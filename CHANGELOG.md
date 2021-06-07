@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.7**
+* added missing architectures of ios libraries
+
 **6.5.6**
 * fixed crash bug for ios
 
