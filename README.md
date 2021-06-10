@@ -7,6 +7,8 @@ If you have any issues or feedback regarding the SDK, please contact our friendl
 
 This is a custom package used with [Unity Package Manager](https://docs.unity3d.com/Manual/Packages.html) if you want the usual .unitypackage you can download it [here](https://download.gameanalytics.com/unity/GA_SDK_UNITY.unitypackage).
 
+OBS: If you want to use ILRD with the SDK and you are getting the SDK via UPM you need to download this .unitypackage [here](https://download.gameanalytics.com/unity/GA_ILRD_UNITY.unitypackage). This has to do with some dependency issues with the Ad SDKs which are not on UPM yet.
+
 > :information_source:
 > The Unity SDK include support for **Windows**, **Mac**, **Linux**, **WebGL**, **iOS**, **tvOS**, **Tizen**, **UWP**, **Universal Windows 8** and **Android**.
 >
