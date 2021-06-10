@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.5.8**
+* fixed compile issues when using ILRD with SDK from UPM (now you have to download a seperate .unitypackage when using ILRD with SDK from UPM)
+
 **6.5.7**
 * added missing architectures of ios libraries
 
