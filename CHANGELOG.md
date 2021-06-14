@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.6.0**
+* more fixes for using ILRD when using SDK from UPM
+* OBS now you need to use GameAnalyticsILRD class to subscribe to ILRD impression events (also download latest GA ILRD .unitypackage to get it to work if using SDK from UPM, see docs for more info)
+
 **6.5.8**
 * fixed compile issues when using ILRD with SDK from UPM (now you have to download a seperate .unitypackage when using ILRD with SDK from UPM)
 

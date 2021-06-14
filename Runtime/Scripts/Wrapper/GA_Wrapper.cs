@@ -326,31 +326,6 @@ namespace GameAnalyticsSDK.Wrapper
             return 0;
         }
 
-        private static void subscribeMoPubImpressions()
-        {
-            Debug.Log("subscribeMoPubImpressions()");
-        }
-
-        private static void subscribeFyberImpressions()
-        {
-            Debug.Log("subscribeFyberImpressions()");
-        }
-
-        private static void subscribeIronSourceImpressions()
-        {
-            Debug.Log("subscribeIronSourceImpressions()");
-        }
-
-        private static void subscribeTopOnImpressions()
-        {
-            Debug.Log("subscribeTopOnImpressions()");
-        }
-
-        private static void subscribeMaxImpressions()
-        {
-            Debug.Log("subscribeMaxImpressions()");
-        }
-
 #endif
 
         public static void SetAvailableCustomDimensions01 (string list)
@@ -703,51 +678,6 @@ namespace GameAnalyticsSDK.Wrapper
             return stopTimer(key);
 #else
             return 0;
-#endif
-        }
-
-        public static void SubscribeMoPubImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeMoPubImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeMoPubImpressions();
-#endif
-        }
-
-        public static void SubscribeFyberImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeFyberImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeFyberImpressions();
-#endif
-        }
-
-        public static void SubscribeIronSourceImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeIronSourceImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeIronSourceImpressions();
-#endif
-        }
-
-        public static void SubscribeTopOnImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeTopOnImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeTopOnImpressions();
-#endif
-        }
-
-        public static void SubscribeMaxImpressions()
-        {
-#if UNITY_EDITOR
-            subscribeMaxImpressions();
-#elif UNITY_IOS || UNITY_ANDROID
-            subscribeMaxImpressions();
 #endif
         }
     }

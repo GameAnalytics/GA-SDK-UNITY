@@ -694,36 +694,6 @@ namespace GameAnalyticsSDK
             return GA_Wrapper.StopTimer(key);
         }
 
-        // ----------------------- MOPUB AD IMPRESSIONS ---------------------- //
-        public static void SubscribeMoPubImpressions()
-        {
-            GA_Wrapper.SubscribeMoPubImpressions();
-        }
-
-        // ----------------------- FYBER AD IMPRESSIONS ---------------------- //
-        public static void SubscribeFyberImpressions()
-        {
-            GA_Wrapper.SubscribeFyberImpressions();
-        }
-
-        // ----------------------- IRON SOURCE AD IMPRESSIONS ---------------------- //
-        public static void SubscribeIronSourceImpressions()
-        {
-            GA_Wrapper.SubscribeIronSourceImpressions();
-        }
-
-        // ----------------------- TOPON AD IMPRESSIONS ---------------------- //
-        public static void SubscribeTopOnImpressions()
-        {
-            GA_Wrapper.SubscribeTopOnImpressions();
-        }
-
-        // ----------------------- MAX AD IMPRESSIONS ---------------------- //
-        public static void SubscribeMaxImpressions()
-        {
-            GA_Wrapper.SubscribeMaxImpressions();
-        }
-
         // ----------------------- IOS 14+ APP TRACKING TRANSPARENCY ---------------------- //
         public static void RequestTrackingAuthorization(IGameAnalyticsATTListener listener)
         {
