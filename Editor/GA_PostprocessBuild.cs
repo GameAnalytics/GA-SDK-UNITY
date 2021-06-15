@@ -18,6 +18,7 @@ namespace GameAnalyticsSDK.Editor
         private static string gameanalytics_ironsource = "gameanalytics_ironsource_enabled";
         private static string gameanalytics_topon = "gameanalytics_topon_enabled";
         private static string gameanalytics_max = "gameanalytics_max_enabled";
+        private static string gameanalytics_aequus = "gameanalytics_aequus_enabled";
 
 #if UNITY_2018_1_OR_NEWER
         public int callbackOrder
@@ -44,6 +45,7 @@ namespace GameAnalyticsSDK.Editor
             UpdateIronSource();
             UpdateTopOn();
             UpdateMax();
+            UpdateAequus();
         }
 
         private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
@@ -139,14 +141,30 @@ namespace GameAnalyticsSDK.Editor
         /// </summary>
         private static void UpdateMax()
         {
-            var topOnTypes = new string[] { "MaxSdkCallbacks", "MaxSdk", "MaxSdkBase.AdInfo" };
-            if (TypeExists(topOnTypes))
+            var maxTypes = new string[] { "MaxSdkCallbacks", "MaxSdk", "MaxSdkBase.AdInfo" };
+            if (TypeExists(maxTypes))
             {
                 UpdateDefines(gameanalytics_max, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
             else
             {
                 UpdateDefines(gameanalytics_max, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_aequus_enabled` to true if Aequus classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateAequus()
+        {
+            var aequusTypes = new string[] { "Mobi.Aequus.Sdk.Aequus", "Mobi.Aequus.Sdk.AequusILRDListener", "Mobi.Aequus.Sdk.ImpressionData" };
+            if (TypeExists(aequusTypes))
+            {
+                UpdateDefines(gameanalytics_aequus, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_aequus, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
         }
 
