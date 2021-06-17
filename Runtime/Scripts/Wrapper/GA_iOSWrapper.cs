@@ -134,6 +134,12 @@ namespace GameAnalyticsSDK.Wrapper
 
         [DllImport ("__Internal")]
         private static extern long stopTimer(string key);
+
+        private static void initialize(string gamekey, string gamesecret)
+        {
+            gaInitialize(gamekey, gamesecret);
+        }
+
 #endif
     }
 }

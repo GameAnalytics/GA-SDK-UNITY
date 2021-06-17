@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.6.2**
+* fixed ios compile errors
+* fixed ILRD related compile error
+
 **6.6.1**
 * added ILRD support for Aequus SDK
 * fixed ILRD related bug
