@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.6.3**
+* removed unnecessary append of stacktrace when stacktrace is missing from warning/error messages sent to GA backend
+
 **6.6.2**
 * fixed ios compile errors
 * fixed ILRD related compile error

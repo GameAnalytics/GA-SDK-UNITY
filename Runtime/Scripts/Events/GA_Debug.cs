@@ -46,9 +46,7 @@ namespace GameAnalyticsSDK.Events
             if (GameAnalytics.SettingsGA != null && GameAnalytics.SettingsGA.SubmitErrors && _errorCount < MaxErrorCount && type != LogType.Log)
             {
                 if (string.IsNullOrEmpty (stackTrace)) {
-#if !UNITY_WSA && !UNITY_WP_8_1
-                    stackTrace = (new System.Diagnostics.StackTrace()).ToString ();
-#endif
+                    stackTrace = "";
                 }
                 _errorCount++;
 
