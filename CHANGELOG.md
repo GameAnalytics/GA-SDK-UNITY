@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.6.4**
+* prepared for google advertising identifier changes (will not use google advertising identifier when user has opted out) (android)
+
 **6.6.3**
 * removed unnecessary append of stacktrace when stacktrace is missing from warning/error messages sent to GA backend
 
