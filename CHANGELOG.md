@@ -10,6 +10,7 @@ Changelog
 **6.6.2**
 * fixed ios compile errors
 * fixed ILRD related compile error
+* added ios_testflight to events coming from testflight builds
 
 **6.6.1**
 * added ILRD support for Aequus SDK
