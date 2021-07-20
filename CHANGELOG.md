@@ -3,6 +3,7 @@ Changelog
 <!--(CHANGELOG_TOP)-->
 **6.6.4**
 * prepared for google advertising identifier changes (will not use google advertising identifier when user has opted out) (android)
+* it should now be possible to not show idfa consent dialog if you don't have any third party code that needs to use idfa
 
 **6.6.3**
 * removed unnecessary append of stacktrace when stacktrace is missing from warning/error messages sent to GA backend
