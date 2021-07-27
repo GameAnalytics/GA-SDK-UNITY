@@ -39,7 +39,7 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void configureAutoDetectAppVersion(bool flag);
 
         [DllImport ("__Internal")]
-        private static extern void gaInitialize(string gamekey, string gamesecret);
+        private static extern void gaInitialize(string gamekey, string gamesecret, bool nativeErrorReporting);
 
         [DllImport ("__Internal")]
         private static extern void setCustomDimension01(string customDimension);
@@ -137,7 +137,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void initialize(string gamekey, string gamesecret)
         {
-            gaInitialize(gamekey, gamesecret);
+            gaInitialize(gamekey, gamesecret, GameAnalytics.SettingsGA.NativeErrorReporting);
         }
 
 #endif

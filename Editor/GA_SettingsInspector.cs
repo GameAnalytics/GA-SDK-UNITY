@@ -55,6 +55,7 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _gaFpsCritical = new GUIContent("Submit Critical FPS", "Submit a message whenever the frames per second falls below a certain threshold. The location of the Track Target will be used for critical FPS events.");
         private GUIContent _gaFpsCriticalThreshold = new GUIContent("FPS <", "Frames per second threshold.");
         private GUIContent _gaSubmitErrors = new GUIContent("Submit Errors", "Submit error and exception messages to the GameAnalytics server. Useful for getting relevant data when the game crashes, etc.");
+        private GUIContent _gaNativeErrorReporting = new GUIContent("Native error reporting (Android, iOS)", "Submit error and exception messages from native errors and exceptions to the GameAnalytics server. Useful for getting relevant data when the game crashes, etc. from native code.");
 
         private GUIContent _gameSetupIcon;
         private bool _gameSetupIconOpen = false;
@@ -1413,6 +1414,14 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.Label("", GUILayout.Width(-18));
                     ga.SubmitErrors = EditorGUILayout.Toggle("", ga.SubmitErrors, GUILayout.Width(35));
                     GUILayout.Label(_gaSubmitErrors);
+                    GUILayout.EndHorizontal();
+
+                    EditorGUILayout.Space();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("", GUILayout.Width(-18));
+                    ga.NativeErrorReporting = EditorGUILayout.Toggle("", ga.NativeErrorReporting, GUILayout.Width(35));
+                    GUILayout.Label(_gaNativeErrorReporting);
                     GUILayout.EndHorizontal();
 
                     EditorGUILayout.Space();

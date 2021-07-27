@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.7.0**
+* added option to enable native exceptions error reporting for android and ios
+
 **6.6.4**
 * prepared for google advertising identifier changes (will not use google advertising identifier when user has opted out) (android)
 * it should now be possible to not show idfa consent dialog if you don't have any third party code that needs to use idfa

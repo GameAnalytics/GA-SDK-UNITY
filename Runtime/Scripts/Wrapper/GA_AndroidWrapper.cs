@@ -119,7 +119,7 @@ namespace GameAnalyticsSDK.Wrapper
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
 
-            GA.CallStatic("setEnabledErrorReporting", false);
+            GA.CallStatic("setEnabledErrorReporting", GameAnalytics.SettingsGA.NativeErrorReporting);
             AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
             ga.CallStatic("initialize", activity);
             GA.CallStatic("initialize", gamekey, gamesecret);
