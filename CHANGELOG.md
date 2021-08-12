@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**6.7.1**
+* fixes to max irld integration
+
 **6.7.0**
 * added option to enable native exceptions error reporting for android and ios
 
