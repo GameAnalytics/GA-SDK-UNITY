@@ -19,6 +19,7 @@ namespace GameAnalyticsSDK.Editor
         private static string gameanalytics_topon = "gameanalytics_topon_enabled";
         private static string gameanalytics_max = "gameanalytics_max_enabled";
         private static string gameanalytics_aequus = "gameanalytics_aequus_enabled";
+        private static string gameanalytics_hyperbid = "gameanalytics_hyperbid_enabled";
 
 #if UNITY_2018_1_OR_NEWER
         public int callbackOrder
@@ -46,6 +47,7 @@ namespace GameAnalyticsSDK.Editor
             UpdateTopOn();
             UpdateMax();
             UpdateAequus();
+            UpdateHyperBid();
         }
 
         private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
@@ -168,6 +170,22 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_hyperbid_enabled` to true if HyperBid classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateHyperBid()
+        {
+            var topOnTypes = new string[] { "HyperBid.Api.HBBannerAd", "HyperBid.Api.HBInterstitialAd", "HyperBid.Api.HBRewardedVideo", "HyperBid.Api.HBNativeAd" };
+            if (TypeExists(topOnTypes))
+            {
+                UpdateDefines(gameanalytics_hyperbid, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_hyperbid, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
         private static bool TypeExists(params string[] types)
         {
             if (types == null || types.Length == 0)
@@ -211,9 +229,15 @@ namespace GameAnalyticsSDK.Editor
                 //proj.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
 #if gameanalytics_topon_enabled
                 string toponHelperFilePath = Path.Combine(path, "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsTopOnHelper.m");
-                string contents = File.ReadAllText(toponHelperFilePath);
-                contents = contents.Replace("#if gameanalytics_topon_enabled", "").Replace("#endif", "");
-                File.WriteAllText(toponHelperFilePath, contents);
+                string topOncontents = File.ReadAllText(toponHelperFilePath);
+                topOncontents = topOncontents.Replace("#if gameanalytics_topon_enabled", "").Replace("#endif", "");
+                File.WriteAllText(toponHelperFilePath, topOncontents);
+#endif
+#if gameanalytics_hyperbid_enabled
+                string hyperbidHelperFilePath = Path.Combine(path, "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsHyperBidHelper.m");
+                string hyperbidContents = File.ReadAllText(hyperbidHelperFilePath);
+                hyperbidContents = hyperbidContents.Replace("#if gameanalytics_hyperbid_enabled", "").Replace("#endif", "");
+                File.WriteAllText(hyperbidHelperFilePath, hyperbidContents);
 #endif
 
                 File.WriteAllText(projPath, proj.WriteToString());
