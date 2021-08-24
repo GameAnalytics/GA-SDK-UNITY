@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.0.2**
+* fixes to ILRD integrations
+
 **7.0.1**
 * updated ILRD integrations
 

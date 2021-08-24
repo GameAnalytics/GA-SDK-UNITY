@@ -228,13 +228,33 @@ namespace GameAnalyticsSDK.Editor
                 proj.AddFrameworkToProject(target, "AppTrackingTransparency.framework", true);
                 //proj.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
 #if gameanalytics_topon_enabled
-                string toponHelperFilePath = Path.Combine(path, "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsTopOnHelper.m");
+                string toponSubPath = "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsTopOnHelper.m";
+                string[] topOnGuids = AssetDatabase.FindAssets("GameAnalyticsTopOnHelper", null);
+                if (topOnGuids.Length > 0)
+                {
+                    string[] p = AssetDatabase.GUIDToAssetPath(topOnGuids[0]).Split(new char[] { '/' }, 2);
+                    if(p.Length > 1)
+                    {
+                        toponSubPath = "Libraries/" + p[1];
+                    }
+                }
+                string toponHelperFilePath = Path.Combine(path, toponSubPath);
                 string topOncontents = File.ReadAllText(toponHelperFilePath);
                 topOncontents = topOncontents.Replace("#if gameanalytics_topon_enabled", "").Replace("#endif", "");
                 File.WriteAllText(toponHelperFilePath, topOncontents);
 #endif
 #if gameanalytics_hyperbid_enabled
-                string hyperbidHelperFilePath = Path.Combine(path, "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsHyperBidHelper.m");
+                string hyperbidSubPath = "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsHyperBidHelper.m";
+                string[] hyperBidGuids = AssetDatabase.FindAssets("GameAnalyticsHyperBidHelper", null);
+                if (hyperBidGuids.Length > 0)
+                {
+                    string[] p = AssetDatabase.GUIDToAssetPath(hyperBidGuids[0]).Split(new char[] { '/' }, 2);
+                    if(p.Length > 1)
+                    {
+                        hyperbidSubPath = "Libraries/" + p[1];
+                    }
+                }
+                string hyperbidHelperFilePath = Path.Combine(path, hyperbidSubPath);
                 string hyperbidContents = File.ReadAllText(hyperbidHelperFilePath);
                 hyperbidContents = hyperbidContents.Replace("#if gameanalytics_hyperbid_enabled", "").Replace("#endif", "");
                 File.WriteAllText(hyperbidHelperFilePath, hyperbidContents);
