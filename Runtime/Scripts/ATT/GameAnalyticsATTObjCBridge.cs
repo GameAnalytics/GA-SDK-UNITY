@@ -11,7 +11,7 @@ namespace GameAnalyticsSDK.iOS
         internal delegate void GameAnalyticsATTListenerAuthorized();
 
         [DllImport("__Internal")]
-        internal static extern void RequestTrackingAuthorization(
+        internal static extern void GameAnalyticsRequestTrackingAuthorization(
             GameAnalyticsATTListenerNotDetermined gameAnalyticsATTListenerNotDetermined,
             GameAnalyticsATTListenerRestricted gameAnalyticsATTListenerRestricted,
             GameAnalyticsATTListenerDenied gameAnalyticsATTListenerDenied,

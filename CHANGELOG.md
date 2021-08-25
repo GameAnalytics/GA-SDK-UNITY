@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.0.3**
+* renamed ATT method name to avoid dupplicate symbols
+
 **7.0.2**
 * fixes to ILRD integrations
 
