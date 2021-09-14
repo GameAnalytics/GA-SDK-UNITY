@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.0.5**
+* updated hyperbid ilrd integration
+
 **7.0.4**
 * added ios part for aequus ilrd integration
 
