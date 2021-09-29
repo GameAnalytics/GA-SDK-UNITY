@@ -75,16 +75,16 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void addErrorEvent(int severity, string message, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration);
+        private static extern void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason);
+        private static extern void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement);
+        private static extern void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement, string fields);
 
         [DllImport ("__Internal")]
-        private static extern void addImpressionEvent(string adNetworkName, string adNetworkVersion, string impressionData);
+        private static extern void addImpressionEvent(string adNetworkName, string adNetworkVersion, string impressionData, string fields);
 
         [DllImport ("__Internal")]
         private static extern void setEnabledInfoLog(bool enabled);

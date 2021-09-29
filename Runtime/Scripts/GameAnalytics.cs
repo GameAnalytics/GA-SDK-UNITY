@@ -279,6 +279,25 @@ namespace GameAnalyticsSDK
             GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null);
         }
 
+        /// <summary>
+        /// Track any real money transaction in-game.
+        /// </summary>
+        /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
+        /// <param name="amount">Amount in cents (int). (e.g. 99).</param>
+        /// <param name="itemType">Item Type bought. (e.g. Gold Pack).</param>
+        /// <param name="itemId">Item bought. (e.g. 1000 gold).</param>
+        /// <param name="cartType">Cart type.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, IDictionary<string, object> customFields)
+        {
+            if(!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, customFields);
+        }
+
 #if UNITY_IOS || UNITY_TVOS
         /// <summary>
         /// Track any real money transaction in-game (iOS version).
@@ -300,6 +319,26 @@ namespace GameAnalyticsSDK
         }
 
         /// <summary>
+        /// Track any real money transaction in-game (iOS version).
+        /// </summary>
+        /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
+        /// <param name="amount">Amount in cents (int). (e.g. 99).</param>
+        /// <param name="itemType">Item Type bought. (e.g. Gold Pack).</param>
+        /// <param name="itemId">Item bought. (e.g. 1000 gold).</param>
+        /// <param name="cartType">Cart type.</param>
+        /// <param name="receipt">Transaction receipt string.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewBusinessEventIOS(string currency, int amount, string itemType, string itemId, string cartType, string receipt, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, receipt, false, customFields);
+        }
+
+        /// <summary>
         /// Track any real money transaction in-game (iOS version). Additionally fetch and attach the in-app purchase receipt.
         /// </summary>
         /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
@@ -315,6 +354,25 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null, true, null);
+        }
+
+        /// <summary>
+        /// Track any real money transaction in-game (iOS version). Additionally fetch and attach the in-app purchase receipt.
+        /// </summary>
+        /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
+        /// <param name="amount">Amount in cents (int). (e.g. 99).</param>
+        /// <param name="itemType">Item Type bought. (e.g. Gold Pack).</param>
+        /// <param name="itemId">Item bought. (e.g. 1000 gold).</param>
+        /// <param name="cartType">Cart type.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewBusinessEventIOSAutoFetchReceipt(string currency, int amount, string itemType, string itemId, string cartType, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, null, true, customFields);
         }
 
 #elif UNITY_ANDROID
@@ -337,6 +395,27 @@ namespace GameAnalyticsSDK
             }
             GA_Business.NewEventGooglePlay(currency, amount, itemType, itemId, cartType, receipt, signature, null);
         }
+
+        /// <summary>
+        /// Track any real money transaction in-game (Google Play version).
+        /// </summary>
+        /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
+        /// <param name="amount">Amount in cents (int). (e.g. 99).</param>
+        /// <param name="itemType">Item Type bought. (e.g. Gold Pack).</param>
+        /// <param name="itemId">Item bought. (e.g. 1000 gold).</param>
+        /// <param name="cartType">Cart type.</param>
+        /// <param name="receipt">Transaction receipt string.</param>
+        /// <param name="signature">Signature of transaction.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewBusinessEventGooglePlay(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string signature, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Business.NewEventGooglePlay(currency, amount, itemType, itemId, cartType, receipt, signature, customFields);
+        }
 #endif
 
         /// <summary>
@@ -357,6 +436,21 @@ namespace GameAnalyticsSDK
         /// Track any type of design event that you want to measure i.e. GUI elements or tutorial steps. Custom dimensions are not supported.
         /// </summary>
         /// <param name="eventName">String can consist of 1 to 5 segments. Segments are seperated by ':' and segments can have a max length of 16. (e.g. segment1:anotherSegment:gold).</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewDesignEvent(string eventName, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Design.NewEvent(eventName, customFields);
+        }
+
+        /// <summary>
+        /// Track any type of design event that you want to measure i.e. GUI elements or tutorial steps. Custom dimensions are not supported.
+        /// </summary>
+        /// <param name="eventName">String can consist of 1 to 5 segments. Segments are seperated by ':' and segments can have a max length of 16. (e.g. segment1:anotherSegment:gold).</param>
         /// <param name="eventValue">Number value of event.</param>
         public static void NewDesignEvent(string eventName, float eventValue)
         {
@@ -366,6 +460,22 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Design.NewEvent(eventName, eventValue, null);
+        }
+
+        /// <summary>
+        /// Track any type of design event that you want to measure i.e. GUI elements or tutorial steps. Custom dimensions are not supported.
+        /// </summary>
+        /// <param name="eventName">String can consist of 1 to 5 segments. Segments are seperated by ':' and segments can have a max length of 16. (e.g. segment1:anotherSegment:gold).</param>
+        /// <param name="eventValue">Number value of event.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewDesignEvent(string eventName, float eventValue, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Design.NewEvent(eventName, eventValue, customFields);
         }
 
         /// <summary>
@@ -381,6 +491,22 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, null);
+        }
+
+        /// <summary>
+        /// Measure player progression in the game. It follows a 3 hierarchy structure (world, level and phase) to indicate a player's path or place.
+        /// </summary>
+        /// <param name="progressionStatus">Status of added progression.</param>
+        /// <param name="progression01">1st progression (e.g. world01).</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Progression.NewEvent(progressionStatus, progression01, customFields);
         }
 
         /// <summary>
@@ -405,6 +531,23 @@ namespace GameAnalyticsSDK
         /// <param name="progressionStatus">Status of added progression.</param>
         /// <param name="progression01">1st progression (e.g. world01).</param>
         /// <param name="progression02">2nd progression (e.g. level01).</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, customFields);
+        }
+
+        /// <summary>
+        /// Measure player progression in the game. It follows a 3 hierarchy structure (world, level and phase) to indicate a player's path or place.
+        /// </summary>
+        /// <param name="progressionStatus">Status of added progression.</param>
+        /// <param name="progression01">1st progression (e.g. world01).</param>
+        /// <param name="progression02">2nd progression (e.g. level01).</param>
         /// <param name="progression03">3rd progression (e.g. phase01).</param>
         public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03)
         {
@@ -421,7 +564,25 @@ namespace GameAnalyticsSDK
         /// </summary>
         /// <param name="progressionStatus">Status of added progression.</param>
         /// <param name="progression01">1st progression (e.g. world01).</param>
-        /// /// <param name="score">The player's score.</param>
+        /// <param name="progression02">2nd progression (e.g. level01).</param>
+        /// <param name="progression03">3rd progression (e.g. phase01).</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, customFields);
+        }
+
+        /// <summary>
+        /// Measure player progression in the game. It follows a 3 hierarchy structure (world, level and phase) to indicate a player's path or place.
+        /// </summary>
+        /// <param name="progressionStatus">Status of added progression.</param>
+        /// <param name="progression01">1st progression (e.g. world01).</param>
+        /// <param name="score">The player's score.</param>
         public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, int score)
         {
             if(!GameAnalytics._hasInitializeBeenCalled)
@@ -430,6 +591,23 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, score, null);
+        }
+
+        /// <summary>
+        /// Measure player progression in the game. It follows a 3 hierarchy structure (world, level and phase) to indicate a player's path or place.
+        /// </summary>
+        /// <param name="progressionStatus">Status of added progression.</param>
+        /// <param name="progression01">1st progression (e.g. world01).</param>
+        /// <param name="score">The player's score.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, int score, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Progression.NewEvent(progressionStatus, progression01, score, customFields);
         }
 
         /// <summary>
@@ -455,6 +633,24 @@ namespace GameAnalyticsSDK
         /// <param name="progressionStatus">Status of added progression.</param>
         /// <param name="progression01">1st progression (e.g. world01).</param>
         /// <param name="progression02">2nd progression (e.g. level01).</param>
+        /// <param name="score">The player's score.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, int score, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, score, customFields);
+        }
+
+        /// <summary>
+        /// Measure player progression in the game. It follows a 3 hierarchy structure (world, level and phase) to indicate a player's path or place.
+        /// </summary>
+        /// <param name="progressionStatus">Status of added progression.</param>
+        /// <param name="progression01">1st progression (e.g. world01).</param>
+        /// <param name="progression02">2nd progression (e.g. level01).</param>
         /// <param name="progression03">3rd progression (e.g. phase01).</param>
         /// <param name="score">The player's score.</param>
         public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score)
@@ -465,6 +661,25 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, score, null);
+        }
+
+        /// <summary>
+        /// Measure player progression in the game. It follows a 3 hierarchy structure (world, level and phase) to indicate a player's path or place.
+        /// </summary>
+        /// <param name="progressionStatus">Status of added progression.</param>
+        /// <param name="progression01">1st progression (e.g. world01).</param>
+        /// <param name="progression02">2nd progression (e.g. level01).</param>
+        /// <param name="progression03">3rd progression (e.g. phase01).</param>
+        /// <param name="score">The player's score.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewProgressionEvent(GAProgressionStatus progressionStatus, string progression01, string progression02, string progression03, int score, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Progression.NewEvent(progressionStatus, progression01, progression02, progression03, score, customFields);
         }
 
         /// <summary>
@@ -486,6 +701,25 @@ namespace GameAnalyticsSDK
         }
 
         /// <summary>
+        /// Analyze your in-game economy (virtual currencies). You will be able to see the flow (sink/source) for each virtual currency.
+        /// </summary>
+        /// <param name="flowType">Add or substract resource.</param>
+        /// <param name="currency">One of the available currencies set in Settings (Setup tab).</param>
+        /// <param name="amount">Amount sourced or sinked.</param>
+        /// <param name="itemType">One of the available currencies set in Settings (Setup tab).</param>
+        /// <param name="itemId">Item id (string max length=16).</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewResourceEvent(GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Resource.NewEvent(flowType, currency, amount, itemType, itemId, customFields);
+        }
+
+        /// <summary>
         /// Set up custom error events in the game. You can group the events by severity level and attach a message.
         /// </summary>
         /// <param name="severity">Severity of error.</param>
@@ -498,6 +732,22 @@ namespace GameAnalyticsSDK
                 return;
             }
             GA_Error.NewEvent(severity, message, null);
+        }
+
+        /// <summary>
+        /// Set up custom error events in the game. You can group the events by severity level and attach a message.
+        /// </summary>
+        /// <param name="severity">Severity of error.</param>
+        /// <param name="message">Error message (Optional, can be nil).</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewErrorEvent(GAErrorSeverity severity, string message, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Error.NewEvent(severity, message, customFields);
         }
 
         /// <summary>
@@ -515,7 +765,26 @@ namespace GameAnalyticsSDK
                 Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, duration);
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, duration, null);
+        }
+
+        /// <summary>
+        /// Track fill-rate of you ads.
+        /// </summary>
+        /// <param name="adAction">Action of ad (for example loaded, show).</param>
+        /// <param name="adType">Type of ad (for video, interstitial).</param>
+        /// <param name="adSdkName">Name of ad SDK.</param>
+        /// <param name="adPlacement">Placement of ad or identifier of the ad in the app</param>
+        /// <param name="duration">Duration of ad video</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, long duration, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, duration, customFields);
         }
 
         /// <summary>
@@ -533,7 +802,26 @@ namespace GameAnalyticsSDK
                 Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, noAdReason);
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, noAdReason, null);
+        }
+
+        /// <summary>
+        /// Track fill-rate of you ads.
+        /// </summary>
+        /// <param name="adAction">Action of ad (for example loaded, show).</param>
+        /// <param name="adType">Type of ad (for video, interstitial).</param>
+        /// <param name="adSdkName">Name of ad SDK.</param>
+        /// <param name="adPlacement">Placement of ad or identifier of the ad in the app</param>
+        /// <param name="noAdReason">Error reason for no ad available</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, GAAdError noAdReason, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, noAdReason, customFields);
         }
 
         /// <summary>
@@ -550,7 +838,25 @@ namespace GameAnalyticsSDK
                 Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
                 return;
             }
-            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement);
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, null);
+        }
+
+        /// <summary>
+        /// Track fill-rate of you ads.
+        /// </summary>
+        /// <param name="adAction">Action of ad (for example loaded, show).</param>
+        /// <param name="adType">Type of ad (for video, interstitial).</param>
+        /// <param name="adSdkName">Name of ad SDK.</param>
+        /// <param name="adPlacement">Placement of ad or identifier of the ad in the app</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, IDictionary<string, object> customFields)
+        {
+            if (!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Ads.NewEvent(adAction, adType, adSdkName, adPlacement, customFields);
         }
 
         /// <summary>

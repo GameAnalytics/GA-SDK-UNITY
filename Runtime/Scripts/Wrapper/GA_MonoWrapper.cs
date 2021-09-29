@@ -117,37 +117,37 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddBusinessEvent(currency, amount, itemType, itemId, cartType/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddBusinessEvent(currency, amount, itemType, itemId, cartType, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddResourceEvent((GameAnalyticsSDK.Net.EGAResourceFlowType)flowType, currency, amount, itemType, itemId/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddResourceEvent((GameAnalyticsSDK.Net.EGAResourceFlowType)flowType, currency, amount, itemType, itemId, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Net.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Net.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Net.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03, score/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddProgressionEvent((GameAnalyticsSDK.Net.EGAProgressionStatus)progressionStatus, progression01, progression02, progression03, score, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void addDesignEvent(string eventId, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddDesignEvent(eventId/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddDesignEvent(eventId, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void addDesignEventWithValue(string eventId, float value, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddDesignEvent(eventId, value/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddDesignEvent(eventId, value, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void addErrorEvent(int severity, string message, string fields)
         {
-            GameAnalyticsSDK.Net.GameAnalytics.AddErrorEvent((GameAnalyticsSDK.Net.EGAErrorSeverity)severity, message/*, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>*/);
+            GameAnalyticsSDK.Net.GameAnalytics.AddErrorEvent((GameAnalyticsSDK.Net.EGAErrorSeverity)severity, message, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
         }
 
         private static void setEnabledInfoLog(bool enabled)

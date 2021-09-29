@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.1.0**
+* added custom event fields feature
+
 **7.0.5**
 * updated hyperbid ilrd integration
 

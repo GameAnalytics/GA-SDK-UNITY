@@ -134,7 +134,7 @@ void addBusinessEvent(const char *currency, int amount, const char *itemType, co
                                          itemId:itemIdString
                                        cartType:cartTypeString
                                         receipt:receiptString
-                                         /*fields:fields_dict*/];
+                                   customFields:fields_dict];
 }
 
 void addBusinessEventAndAutoFetchReceipt(const char *currency, int amount, const char *itemType, const char *itemId, const char *cartType, const char *fields) {
@@ -155,7 +155,7 @@ void addBusinessEventAndAutoFetchReceipt(const char *currency, int amount, const
                                          itemId:itemIdString
                                        cartType:cartTypeString
                                autoFetchReceipt:TRUE
-                                         /*fields:fields_dict*/];
+                                   customFields:fields_dict];
 }
 
 void addResourceEvent(int flowType, const char *currency, float amount, const char *itemType, const char *itemId, const char *fields) {
@@ -174,7 +174,7 @@ void addResourceEvent(int flowType, const char *currency, float amount, const ch
                                          amount:amountNumber
                                        itemType:itemTypeString
                                          itemId:itemIdString
-                                         /*fields:fields_dict*/];
+                                   customFields:fields_dict];
 }
 
 void addProgressionEvent(int progressionStatus, const char *progression01, const char *progression02, const char *progression03, const char *fields) {
@@ -191,7 +191,7 @@ void addProgressionEvent(int progressionStatus, const char *progression01, const
                                               progression01:progression01String
                                               progression02:progression02String
                                               progression03:progression03String
-                                                     /*fields:fields_dict*/];
+                                               customFields:fields_dict];
 }
 
 void addProgressionEventWithScore(int progressionStatus, const char *progression01, const char *progression02, const char *progression03, int score, const char *fields) {
@@ -209,7 +209,7 @@ void addProgressionEventWithScore(int progressionStatus, const char *progression
                                               progression02:progression02String
                                               progression03:progression03String
                                                       score:score
-                                                     /*fields:fields_dict*/];
+                                               customFields:fields_dict];
 }
 
 void addDesignEvent(const char *eventId, const char *fields) {
@@ -220,7 +220,7 @@ void addDesignEvent(const char *eventId, const char *fields) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
 
-    [GameAnalytics addDesignEventWithEventId:eventIdString value:nil /*fields:fields_dict*/];
+    [GameAnalytics addDesignEventWithEventId:eventIdString value:nil customFields:fields_dict];
 }
 
 void addDesignEventWithValue(const char *eventId, float value, const char *fields) {
@@ -232,7 +232,7 @@ void addDesignEventWithValue(const char *eventId, float value, const char *field
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
 
-    [GameAnalytics addDesignEventWithEventId:eventIdString value:valueNumber /*fields:fields_dict*/];
+    [GameAnalytics addDesignEventWithEventId:eventIdString value:valueNumber customFields:fields_dict];
 }
 
 void addErrorEvent(int severity, const char *message, const char *fields) {
@@ -243,45 +243,68 @@ void addErrorEvent(int severity, const char *message, const char *fields) {
         fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
     }
 
-    [GameAnalytics addErrorEventWithSeverity:severity message:messageString /*fields:fields_dict*/];
+    [GameAnalytics addErrorEventWithSeverity:severity message:messageString customFields:fields_dict];
 }
 
-void addAdEventWithDuration(int adAction, int adType, const char *adSdkName, const char *adPlacement, long duration) {
+void addAdEventWithDuration(int adAction, int adType, const char *adSdkName, const char *adPlacement, long duration, const char *fields) {
     NSString *adSdkNameString = adSdkName != NULL ? [NSString stringWithUTF8String:adSdkName] : nil;
     NSString *adPlacementString = adPlacement != NULL ? [NSString stringWithUTF8String:adPlacement] : nil;
+    NSString *fieldsString = fields != NULL ? [NSString stringWithUTF8String:fields] : nil;
+    NSDictionary *fields_dict = nil;
+    if (fieldsString) {
+        fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+    }
 
     [GameAnalytics addAdEventWithAction:adAction
                                  adType:adType
                               adSdkName:adSdkNameString
                             adPlacement:adPlacementString
-                               duration:duration];
+                               duration:duration
+                           customFields:fields_dict];
 }
 
-void addAdEventWithReason(int adAction, int adType, const char *adSdkName, const char *adPlacement, int noAdReason) {
+void addAdEventWithReason(int adAction, int adType, const char *adSdkName, const char *adPlacement, int noAdReason, const char *fields) {
     NSString *adSdkNameString = adSdkName != NULL ? [NSString stringWithUTF8String:adSdkName] : nil;
     NSString *adPlacementString = adPlacement != NULL ? [NSString stringWithUTF8String:adPlacement] : nil;
+    NSString *fieldsString = fields != NULL ? [NSString stringWithUTF8String:fields] : nil;
+    NSDictionary *fields_dict = nil;
+    if (fieldsString) {
+        fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+    }
 
     [GameAnalytics addAdEventWithAction:adAction
                                  adType:adType
                               adSdkName:adSdkNameString
                             adPlacement:adPlacementString
-                               noAdReason:noAdReason];
+                             noAdReason:noAdReason
+                           customFields:fields_dict];
 }
 
-void addAdEvent(int adAction, int adType, const char *adSdkName, const char *adPlacement) {
+void addAdEvent(int adAction, int adType, const char *adSdkName, const char *adPlacement, const char *fields) {
     NSString *adSdkNameString = adSdkName != NULL ? [NSString stringWithUTF8String:adSdkName] : nil;
     NSString *adPlacementString = adPlacement != NULL ? [NSString stringWithUTF8String:adPlacement] : nil;
+    NSString *fieldsString = fields != NULL ? [NSString stringWithUTF8String:fields] : nil;
+    NSDictionary *fields_dict = nil;
+    if (fieldsString) {
+        fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+    }
 
     [GameAnalytics addAdEventWithAction:adAction
                                  adType:adType
                               adSdkName:adSdkNameString
-                            adPlacement:adPlacementString];
+                            adPlacement:adPlacementString
+                           customFields:fields_dict];
 }
 
-void addImpressionEvent(const char* adNetworkName, const char* adNetworkVersion, const char *json) {
+void addImpressionEvent(const char* adNetworkName, const char* adNetworkVersion, const char *json, const char *fields) {
     NSString *jsonString = json != NULL ? [NSString stringWithUTF8String:json] : nil;
     NSString *adNetworkNameString = adNetworkName != NULL ? [NSString stringWithUTF8String:adNetworkName] : nil;
     NSString *adNetworkVersionString = adNetworkVersion != NULL ? [NSString stringWithUTF8String:adNetworkVersion] : nil;
+    NSString *fieldsString = fields != NULL ? [NSString stringWithUTF8String:fields] : nil;
+    NSDictionary *fields_dict = nil;
+    if (fieldsString) {
+        fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+    }
 
     if(jsonString != nil && adNetworkNameString != nil && adNetworkVersionString != nil) {
         NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -292,7 +315,7 @@ void addImpressionEvent(const char* adNetworkName, const char* adNetworkVersion,
             return;
         }
 
-        [GameAnalytics addImpressionEventWithAdNetworkName:adNetworkNameString adNetworkVersion:adNetworkVersionString impressionData:impressionData];
+        [GameAnalytics addImpressionEventWithAdNetworkName:adNetworkNameString adNetworkVersion:adNetworkVersionString impressionData:impressionData customFields:fields_dict];
     }
 }
 
@@ -323,8 +346,6 @@ void gameAnalyticsStartSession() {
 void gameAnalyticsEndSession() {
     [GameAnalytics endSession];
 }
-
-
 
 void setCustomDimension01(const char *customDimension) {
     NSString *customDimensionString = customDimension != NULL ? [NSString stringWithUTF8String:customDimension] : nil;

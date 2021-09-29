@@ -142,57 +142,57 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields)
         {
-            GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType/*, fields*/);
+            GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, fields);
         }
 
         private static void addBusinessEventWithReceipt(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string store, string signature, string fields)
         {
-            GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, receipt, store, signature/*, fields*/);
+            GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, receipt, store, signature, fields);
         }
 
         private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields)
         {
-            GA.CallStatic("addResourceEvent", flowType, currency, amount, itemType, itemId/*, fields*/);
+            GA.CallStatic("addResourceEvent", flowType, currency, amount, itemType, itemId, fields);
         }
 
         private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields)
         {
-            GA.CallStatic("addProgressionEvent", progressionStatus, progression01, progression02, progression03/*, fields*/);
+            GA.CallStatic("addProgressionEvent", progressionStatus, progression01, progression02, progression03, fields);
         }
 
         private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields)
         {
-            GA.CallStatic("addProgressionEvent", progressionStatus, progression01, progression02, progression03, (double)score/*, fields*/);
+            GA.CallStatic("addProgressionEvent", progressionStatus, progression01, progression02, progression03, (double)score, fields);
         }
 
         private static void addDesignEvent(string eventId, string fields)
         {
-            GA.CallStatic("addDesignEvent", eventId/*, fields*/);
+            GA.CallStatic("addDesignEvent", eventId, fields);
         }
 
         private static void addDesignEventWithValue(string eventId, float value, string fields)
         {
-            GA.CallStatic("addDesignEvent", eventId, (double)value/*, fields*/);
+            GA.CallStatic("addDesignEvent", eventId, (double)value, fields);
         }
 
         private static void addErrorEvent(int severity, string message, string fields)
         {
-            GA.CallStatic("addErrorEvent", severity, message/*, fields*/);
+            GA.CallStatic("addErrorEvent", severity, message, fields);
         }
 
-        private static void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration)
+        private static void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration, string fields)
         {
-            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, duration);
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, duration, fields);
         }
 
-        private static void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason)
+        private static void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason, string fields)
         {
-            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, noAdReason);
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, noAdReason, fields);
         }
 
-        private static void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement)
+        private static void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement, string fields)
         {
-            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement);
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, fields);
         }
 
         private static void setEnabledInfoLog(bool enabled)
