@@ -60,31 +60,45 @@ var GameAnalyticsUnity = {
     },
     addBusinessEvent: function(currency, amount, itemType, itemId, cartType, fields)
     {
-        gameanalytics.GameAnalytics.addBusinessEvent(Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId), Pointer_stringify(cartType), JSON.parse(Pointer_stringify(fields)));
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addBusinessEvent(Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId), Pointer_stringify(cartType), JSON.parse(fieldsString));
     },
     addResourceEvent: function(flowType, currency, amount, itemType, itemId, fields)
     {
-        gameanalytics.GameAnalytics.addResourceEvent(flowType, Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId), JSON.parse(Pointer_stringify(fields)));
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addResourceEvent(flowType, Pointer_stringify(currency), amount, Pointer_stringify(itemType), Pointer_stringify(itemId), JSON.parse(fieldsString));
     },
     addProgressionEvent: function(progressionStatus, progression01, progression02, progression03, fields)
     {
-        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03), JSON.parse(Pointer_stringify(fields)));
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03), JSON.parse(fieldsString));
     },
     addProgressionEventWithScore: function(progressionStatus, progression01, progression02, progression03, score, fields)
     {
-        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03), score, JSON.parse(Pointer_stringify(fields)));
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addProgressionEvent(progressionStatus, Pointer_stringify(progression01), Pointer_stringify(progression02), Pointer_stringify(progression03), score, JSON.parse(fieldsString));
     },
     addDesignEvent: function(eventId, fields)
     {
-        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId), JSON.parse(Pointer_stringify(fields)));
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId), JSON.parse(fieldsString));
     },
     addDesignEventWithValue: function(eventId, value, fields)
     {
-        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId), value/*, JSON.parse(Pointer_stringify(fields))*/);
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addDesignEvent(Pointer_stringify(eventId), value, JSON.parse(fieldsString));
     },
     addErrorEvent: function(severity, message, fields)
     {
-        gameanalytics.GameAnalytics.addErrorEvent(severity, Pointer_stringify(message), JSON.parse(Pointer_stringify(fields)));
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addErrorEvent(severity, Pointer_stringify(message), JSON.parse(fieldsString));
     },
     setEnabledInfoLog: function(enabled)
     {

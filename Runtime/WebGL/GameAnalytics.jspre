@@ -1274,7 +1274,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.3.0";
+            GADevice.sdkWrapperVersion = "javascript 4.3.1";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -2026,6 +2026,7 @@ var gameanalytics;
                 if (!GAState.getIdentifier()) {
                     GAState.cacheIdentifier();
                 }
+                GAStore.setItem(GAState.getGameKey(), GAState.LastUsedIdentifierKey, GAState.getIdentifier());
                 initAnnotations["user_id"] = GAState.getIdentifier();
                 initAnnotations["sdk_version"] = GADevice.getRelevantSdkVersion();
                 initAnnotations["os_version"] = GADevice.osVersion;
@@ -2097,6 +2098,13 @@ var gameanalytics;
                 if (sdkConfigCachedString) {
                     var sdkConfigCached = JSON.parse(GAUtilities.decode64(sdkConfigCachedString));
                     if (sdkConfigCached) {
+                        var lastUsedIdentifier = GAStore.getItem(GAState.getGameKey(), GAState.LastUsedIdentifierKey);
+                        if (lastUsedIdentifier != null && lastUsedIdentifier != GAState.getIdentifier()) {
+                            GALogger.w("New identifier spotted compared to last one used, clearing cached configs hash!!");
+                            if (sdkConfigCached["configs_hash"]) {
+                                delete sdkConfigCached["configs_hash"];
+                            }
+                        }
                         instance.sdkConfigCached = sdkConfigCached;
                     }
                 }
@@ -2256,6 +2264,7 @@ var gameanalytics;
             GAState.Dimension02Key = "dimension02";
             GAState.Dimension03Key = "dimension03";
             GAState.SdkConfigCachedKey = "sdk_config_cached";
+            GAState.LastUsedIdentifierKey = "last_used_identifier";
             return GAState;
         }());
         state.GAState = GAState;

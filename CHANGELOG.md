@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.1.1**
+* fixed build errors for desktop platforms
+
 **7.1.0**
 * added custom event fields feature
 
