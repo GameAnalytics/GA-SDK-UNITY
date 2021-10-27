@@ -20,6 +20,7 @@ namespace GameAnalyticsSDK.Editor
         private static string gameanalytics_max = "gameanalytics_max_enabled";
         private static string gameanalytics_aequus = "gameanalytics_aequus_enabled";
         private static string gameanalytics_hyperbid = "gameanalytics_hyperbid_enabled";
+        private static string gameanalytics_admob = "gameanalytics_admob_enabled";
 
 #if UNITY_2018_1_OR_NEWER
         public int callbackOrder
@@ -48,6 +49,7 @@ namespace GameAnalyticsSDK.Editor
             UpdateMax();
             UpdateAequus();
             UpdateHyperBid();
+            UpdateAdMob();
         }
 
         private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
@@ -183,6 +185,22 @@ namespace GameAnalyticsSDK.Editor
             else
             {
                 UpdateDefines(gameanalytics_hyperbid, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_admob_enabled` to true if AdMob classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateAdMob()
+        {
+            var topOnTypes = new string[] { "GoogleMobileAds.Api.AdRequest", "GoogleMobileAds.Api.BannerView", "GoogleMobileAds.Api.InterstitialAd", "GoogleMobileAds.Api.RewardedAd", "GoogleMobileAds.Api.RewardedInterstitialAd" };
+            if (TypeExists(topOnTypes))
+            {
+                UpdateDefines(gameanalytics_admob, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_admob, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
         }
 

@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.2.0**
+* added support for admob impression events
+
 **7.1.1**
 * fixed build errors for desktop platforms
 
