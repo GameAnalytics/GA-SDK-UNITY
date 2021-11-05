@@ -140,6 +140,11 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("setCustomDimension03", customDimension);
         }
 
+        private static void setGlobalCustomEventFields(string customFields)
+        {
+            GA.CallStatic("setGlobalCustomEventFields", customFields);
+        }
+
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields)
         {
             GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, fields);

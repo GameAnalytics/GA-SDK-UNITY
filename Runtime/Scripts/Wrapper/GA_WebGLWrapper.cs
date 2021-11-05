@@ -49,6 +49,9 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void setCustomDimension03(string customDimension);
 
         [DllImport ("__Internal")]
+        private static extern void setGlobalCustomEventFields(string customFields);
+
+        [DllImport ("__Internal")]
         private static extern void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields);
 
         [DllImport ("__Internal")]

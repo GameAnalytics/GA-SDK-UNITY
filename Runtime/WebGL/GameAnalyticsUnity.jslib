@@ -58,6 +58,10 @@ var GameAnalyticsUnity = {
     {
         gameanalytics.GameAnalytics.setCustomDimension03(Pointer_stringify(customDimension));
     },
+    setGlobalCustomEventFields: function(customFields)
+    {
+        gameanalytics.GameAnalytics.setGlobalCustomEventFields(JSON.parse(customFields));
+    },
     addBusinessEvent: function(currency, amount, itemType, itemId, cartType, fields)
     {
         var fieldsString = Pointer_stringify(fields);

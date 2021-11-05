@@ -930,6 +930,15 @@ namespace GameAnalyticsSDK
             GA_Setup.SetCustomDimension03(customDimension);
         }
 
+        /// <summary>
+        /// Set global custom event fields.
+        /// </summary>
+        /// <param name="customFields">Set of key-value pairs to be used as global custom event fields to be added to all events. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void SetGlobalCustomEventFields(IDictionary<string, object> customFields)
+        {
+            GA_Setup.SetGlobalCustomEventFields(customFields);
+        }
+
         // ----------------------- REMOTE CONFIGS ---------------------- //
         public static event Action OnRemoteConfigsUpdatedEvent;
 

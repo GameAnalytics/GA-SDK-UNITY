@@ -117,6 +117,14 @@ namespace GameAnalyticsSDK.Wrapper
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
+		private static extern void setGlobalCustomEventFieldsUWP([MarshalAs(UnmanagedType.LPWStr)]string customfields);
+
+        private static void setGlobalCustomEventFields(string customfields)
+        {
+            setGlobalCustomEventFieldsUWP(customfields);
+        }
+
+        [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void addBusinessEventUWP([MarshalAs(UnmanagedType.LPWStr)]string currency, double amount, [MarshalAs(UnmanagedType.LPWStr)]string itemType, [MarshalAs(UnmanagedType.LPWStr)]string itemId, [MarshalAs(UnmanagedType.LPWStr)]string cartType);
 
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields)

@@ -108,6 +108,14 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
+        private static void setGlobalCustomEventFields(string customFields)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("setGlobalCustomEventFields(" + customFields + ")");
+            }
+        }
+
 #if UNITY_IOS || UNITY_TVOS
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string fields)
         {
@@ -443,6 +451,12 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetCustomDimension03 (string customDimension)
         {
             setCustomDimension03 (customDimension);
+        }
+
+        public static void SetGlobalCustomEventFields(IDictionary<string, object> customFields)
+        {
+            string fieldsAsString = DictionaryToJsonString(customFields);
+            setGlobalCustomEventFields(fieldsAsString);
         }
 
 #if UNITY_IOS || UNITY_TVOS

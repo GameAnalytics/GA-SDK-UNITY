@@ -1274,7 +1274,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.3.1";
+            GADevice.sdkWrapperVersion = "javascript 4.4.0";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -1737,6 +1737,7 @@ var gameanalytics;
                 this.availableCustomDimensions01 = [];
                 this.availableCustomDimensions02 = [];
                 this.availableCustomDimensions03 = [];
+                this.currentGlobalCustomEventFields = {};
                 this.availableResourceCurrencies = [];
                 this.availableResourceItemTypes = [];
                 this.configurations = {};
@@ -2697,6 +2698,8 @@ var gameanalytics;
                 GAState.incrementSessionNum();
                 GAStore.setItem(GAState.getGameKey(), GAState.SessionNumKey, GAState.getSessionNum().toString());
                 GAEvents.addDimensionsToEvent(eventDict);
+                var fieldsToUse = GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GAEvents.addEventToStore(eventDict);
                 GALogger.i("Add SESSION START event");
                 GAEvents.processEvents(GAEvents.CategorySessionStart, false);
@@ -2716,6 +2719,8 @@ var gameanalytics;
                 eventDict["category"] = GAEvents.CategorySessionEnd;
                 eventDict["length"] = sessionLength;
                 GAEvents.addDimensionsToEvent(eventDict);
+                var fieldsToUse = GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GAEvents.addEventToStore(eventDict);
                 GALogger.i("Add SESSION END event.");
                 GAEvents.processEvents("", false);
@@ -2742,7 +2747,8 @@ var gameanalytics;
                     eventDict["cart_type"] = cartType;
                 }
                 GAEvents.addDimensionsToEvent(eventDict);
-                GAEvents.addFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fields));
+                var fieldsToUse = fields && Object.keys(fields).length > 0 ? fields : GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GALogger.i("Add BUSINESS event: {currency:" + currency + ", amount:" + amount + ", itemType:" + itemType + ", itemId:" + itemId + ", cartType:" + cartType + "}");
                 GAEvents.addEventToStore(eventDict);
             };
@@ -2764,7 +2770,8 @@ var gameanalytics;
                 eventDict["category"] = GAEvents.CategoryResource;
                 eventDict["amount"] = amount;
                 GAEvents.addDimensionsToEvent(eventDict);
-                GAEvents.addFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fields));
+                var fieldsToUse = fields && Object.keys(fields).length > 0 ? fields : GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GALogger.i("Add RESOURCE event: {currency:" + currency + ", amount:" + amount + ", itemType:" + itemType + ", itemId:" + itemId + "}");
                 GAEvents.addEventToStore(eventDict);
             };
@@ -2805,7 +2812,8 @@ var gameanalytics;
                     GAState.clearProgressionTries(progressionIdentifier);
                 }
                 GAEvents.addDimensionsToEvent(eventDict);
-                GAEvents.addFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fields));
+                var fieldsToUse = fields && Object.keys(fields).length > 0 ? fields : GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventDict, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GALogger.i("Add PROGRESSION event: {status:" + progressionStatusString + ", progression01:" + progression01 + ", progression02:" + progression02 + ", progression03:" + progression03 + ", score:" + score + ", attempt:" + attempt_num + "}");
                 GAEvents.addEventToStore(eventDict);
             };
@@ -2825,7 +2833,8 @@ var gameanalytics;
                     eventData["value"] = value;
                 }
                 GAEvents.addDimensionsToEvent(eventData);
-                GAEvents.addFieldsToEvent(eventData, GAState.validateAndCleanCustomFields(fields));
+                var fieldsToUse = fields && Object.keys(fields).length > 0 ? fields : GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventData, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GALogger.i("Add DESIGN event: {eventId:" + eventId + ", value:" + value + "}");
                 GAEvents.addEventToStore(eventData);
             };
@@ -2844,7 +2853,8 @@ var gameanalytics;
                 eventData["severity"] = severityString;
                 eventData["message"] = message;
                 GAEvents.addDimensionsToEvent(eventData);
-                GAEvents.addFieldsToEvent(eventData, GAState.validateAndCleanCustomFields(fields));
+                var fieldsToUse = fields && Object.keys(fields).length > 0 ? fields : GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventData, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GALogger.i("Add ERROR event: {severity:" + severityString + ", message:" + message + "}");
                 GAEvents.addEventToStore(eventData);
             };
@@ -2873,7 +2883,8 @@ var gameanalytics;
                     eventData["ad_duration"] = duration;
                 }
                 GAEvents.addDimensionsToEvent(eventData);
-                GAEvents.addFieldsToEvent(eventData, GAState.validateAndCleanCustomFields(fields));
+                var fieldsToUse = fields && Object.keys(fields).length > 0 ? fields : GAState.instance.currentGlobalCustomEventFields;
+                GAEvents.addCustomFieldsToEvent(eventData, GAState.validateAndCleanCustomFields(fieldsToUse));
                 GALogger.i("Add AD event: {ad_sdk_name:" + adSdkName + ", ad_placement:" + adPlacement + ", ad_type:" + adTypeString + ", ad_action:" + adActionString + ((adAction == gameanalytics.EGAAdAction.FailedShow && noAdReasonString.length > 0) ? (", ad_fail_show_reason:" + noAdReasonString) : "") + ((sendDuration && (adType == gameanalytics.EGAAdType.RewardedVideo || adType == gameanalytics.EGAAdType.Video)) ? (", ad_duration:" + duration) : "") + "}");
                 GAEvents.addEventToStore(eventData);
             };
@@ -3056,7 +3067,11 @@ var gameanalytics;
                     var values = {};
                     values["session_id"] = GAState.instance.sessionId;
                     values["timestamp"] = GAState.getSessionStart();
-                    values["event"] = GAUtilities.encode64(JSON.stringify(GAState.getEventAnnotations()));
+                    var ev = GAState.getEventAnnotations();
+                    GAEvents.addDimensionsToEvent(ev);
+                    var fieldsToUse = GAState.instance.currentGlobalCustomEventFields;
+                    GAEvents.addCustomFieldsToEvent(ev, GAState.validateAndCleanCustomFields(fieldsToUse));
+                    values["event"] = GAUtilities.encode64(JSON.stringify(ev));
                     GAStore.insert(EGAStore.Sessions, values, true, "session_id");
                     if (GAStore.isStorageAvailable()) {
                         GAStore.save(GAState.getGameKey());
@@ -3077,7 +3092,7 @@ var gameanalytics;
                     eventData["custom_03"] = GAState.getCurrentCustomDimension03();
                 }
             };
-            GAEvents.addFieldsToEvent = function (eventData, fields) {
+            GAEvents.addCustomFieldsToEvent = function (eventData, fields) {
                 if (!eventData) {
                     return;
                 }
@@ -3412,6 +3427,7 @@ var gameanalytics;
             GameAnalytics.methodMap['setCustomDimension01'] = GameAnalytics.setCustomDimension01;
             GameAnalytics.methodMap['setCustomDimension02'] = GameAnalytics.setCustomDimension02;
             GameAnalytics.methodMap['setCustomDimension03'] = GameAnalytics.setCustomDimension03;
+            GameAnalytics.methodMap['setGlobalCustomEventFields'] = GameAnalytics.setGlobalCustomEventFields;
             GameAnalytics.methodMap['setEventProcessInterval'] = GameAnalytics.setEventProcessInterval;
             GameAnalytics.methodMap['startSession'] = GameAnalytics.startSession;
             GameAnalytics.methodMap['endSession'] = GameAnalytics.endSession;
@@ -3638,9 +3654,6 @@ var gameanalytics;
                         return;
                     }
                     var sendScore = typeof score === "number";
-                    if (typeof score === "object") {
-                        customFields = score;
-                    }
                     GAEvents.addProgressionEvent(progressionStatus, progression01, progression02, progression03, sendScore ? score : 0, sendScore, customFields);
                 });
             }
@@ -3649,9 +3662,6 @@ var gameanalytics;
                     return;
                 }
                 var sendScore = typeof score === "number";
-                if (typeof score === "object") {
-                    customFields = score;
-                }
                 GAEvents.addProgressionEvent(progressionStatus, progression01, progression02, progression03, sendScore ? score : 0, sendScore, customFields);
             }
         };
@@ -3664,9 +3674,6 @@ var gameanalytics;
                         return;
                     }
                     var sendValue = typeof value === "number";
-                    if (typeof value === "object") {
-                        customFields = value;
-                    }
                     GAEvents.addDesignEvent(eventId, sendValue ? value : 0, sendValue, customFields);
                 });
             }
@@ -3675,9 +3682,6 @@ var gameanalytics;
                     return;
                 }
                 var sendValue = typeof value === "number";
-                if (typeof value === "object") {
-                    customFields = value;
-                }
                 GAEvents.addDesignEvent(eventId, sendValue ? value : 0, sendValue, customFields);
             }
         };
@@ -3842,6 +3846,13 @@ var gameanalytics;
                     return;
                 }
                 GAState.setCustomDimension03(dimension);
+            });
+        };
+        GameAnalytics.setGlobalCustomEventFields = function (customFields) {
+            if (customFields === void 0) { customFields = {}; }
+            GAThreading.performTaskOnGAThread(function () {
+                GALogger.i("Set global custom event fields: " + JSON.stringify(customFields));
+                GAState.instance.currentGlobalCustomEventFields = customFields;
             });
         };
         GameAnalytics.setEventProcessInterval = function (intervalInSeconds) {

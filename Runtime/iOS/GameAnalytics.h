@@ -745,9 +745,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new ad event
- 
+
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -758,7 +758,7 @@ typedef enum GAAdError : NSInteger {
  Placement of ad (ad identifier)
  @param duration
  Duration the user watched ad video
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -769,9 +769,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new ad event
- 
+
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -784,7 +784,7 @@ typedef enum GAAdError : NSInteger {
  Duration the user watched ad video
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -796,9 +796,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new ad event
- 
+
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -809,7 +809,7 @@ typedef enum GAAdError : NSInteger {
  Placement of ad (ad identifier)
  @param noAdReason
  Error reason of ad
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -820,9 +820,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new ad event
- 
+
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -835,7 +835,7 @@ typedef enum GAAdError : NSInteger {
  Error reason of ad
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -847,9 +847,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new ad event
- 
+
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -858,7 +858,7 @@ typedef enum GAAdError : NSInteger {
  Name of ad SDK
  @param adPlacement
  Placement of ad (ad identifier)
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -868,9 +868,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new ad event
- 
+
  @param action
  Action of ad (See. GAAdAction)
  @param adType
@@ -881,7 +881,7 @@ typedef enum GAAdError : NSInteger {
  Placement of ad (ad identifier)
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addAdEventWithAction:(GAAdAction)action
@@ -892,14 +892,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new mopub impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionMopubEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -907,16 +907,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new mopub impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionMopubEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -925,14 +925,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new fyber impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionFyberEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -940,16 +940,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new fyber impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionFyberEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -958,14 +958,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new iron source impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionIronSourceEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -973,16 +973,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new iron source impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionIronSourceEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -991,14 +991,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new topon impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionTopOnEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1006,16 +1006,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new topon impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionTopOnEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1024,14 +1024,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new hyperbid impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionHyperBidEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1039,16 +1039,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new hyperbid impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionHyperBidEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1057,14 +1057,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new max impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionMaxEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1072,16 +1072,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new max impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionMaxEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1090,14 +1090,14 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new aequus impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionAequusEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1105,16 +1105,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new aequus impression event
- 
+
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionAequusEventWithAdNetworkVersion:(NSString *)adNetworkVersion
@@ -1123,16 +1123,16 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new impression event
- 
+
  @param adNetworkName
  Name of ad network
  @param adNetworkVersion
  Version of ad network
  @param impressionData
  Impression data
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionEventWithAdNetworkName:(NSString *)adNetworkName
@@ -1141,9 +1141,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Add new impression event
- 
+
  @param adNetworkName
  Name of ad network
  @param adNetworkVersion
@@ -1152,7 +1152,7 @@ typedef enum GAAdError : NSInteger {
  Impression data
  @param customFields
     Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
- 
+
  @attribute Note! This method cannot be called before initialize method has been triggered
  */
 + (void)addImpressionEventWithAdNetworkName:(NSString *)adNetworkName
@@ -1163,9 +1163,9 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
  @abstract Get remote configs value as string
- 
+
  @param key
  The key declared in the webtool
 
@@ -1404,45 +1404,55 @@ typedef enum GAAdError : NSInteger {
 
 /*!
  @method
- 
+
+ @abstract Set global custom event fields
+
+ @param customFields
+ Custom event fields to use as global ones
+ */
++ (void)setGlobalCustomEventFields:(NSDictionary *)customFields;
+
+/*!
+ @method
+
  @abstract Start timer for specified key
- 
+
  @param key
  Key to use to relate to the timer
- 
+
  */
 + (void)startTimer:(NSString *)key;
 
 /*!
  @method
- 
+
  @abstract Pause timer for specified key
- 
+
  @param key
  Key to use to relate to the timer
- 
+
  */
 + (void)pauseTimer:(NSString *)key;
 
 /*!
  @method
- 
+
  @abstract Resume timer for specified key
- 
+
  @param key
  Key to use to relate to the timer
- 
+
  */
 + (void)resumeTimer:(NSString *)key;
 
 /*!
  @method
- 
+
  @abstract Stop timer for specified key
- 
+
  @param key
  Key to use to relate to the timer
- 
+
  */
 + (NSInteger)stopTimer:(NSString *)key;
 

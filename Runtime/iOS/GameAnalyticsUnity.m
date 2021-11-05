@@ -362,6 +362,15 @@ void setCustomDimension03(const char *customDimension) {
     [GameAnalytics setCustomDimension03:customDimensionString];
 }
 
+void setGlobalCustomEventFields(const char *fields) {
+    NSString *fieldsString = fields != NULL ? [NSString stringWithUTF8String:fields] : nil;
+    NSDictionary *fields_dict = nil;
+    if (fieldsString) {
+        fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+    }
+    [GameAnalytics setGlobalCustomEventFields:fields_dict];
+}
+
 char* cStringCopy(const char* string)
 {
     if (string == NULL)

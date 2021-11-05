@@ -115,6 +115,11 @@ namespace GameAnalyticsSDK.Wrapper
             GameAnalyticsSDK.Net.GameAnalytics.SetCustomDimension03(customDimension);
         }
 
+        private static void setGlobalCustomEventFields(string customFields)
+        {
+            GameAnalyticsSDK.Net.GameAnalytics.SetGlobalCustomEventFields(GA_MiniJSON.Deserialize(customFields) as IDictionary<string, object>);
+        }
+
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields)
         {
             GameAnalyticsSDK.Net.GameAnalytics.AddBusinessEvent(currency, amount, itemType, itemId, cartType, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>);
