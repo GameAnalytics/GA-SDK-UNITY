@@ -780,6 +780,7 @@ namespace GameAnalyticsSDK.Editor
                                         {
                                             ga.SelectedGame[i] = 0;
                                         }
+
                                         int tmpSelectedGame = ga.SelectedGame[i];
                                         ga.SelectedGame[i] = EditorGUILayout.Popup("", ga.SelectedGame[i], gameNames);
                                         GUILayout.EndHorizontal();

@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "7.3.0";
+        public static string VERSION = "7.3.1";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -519,11 +519,10 @@ namespace GameAnalyticsSDK.Setup
                 string[] names = new string[studios.Count + 1];
                 names[0] = "-";
 
-                string spaceAdd = "";
                 for(int i = 0; i < studios.Count; i++)
                 {
-                    names[i + 1] = studios[i].Name + spaceAdd;
-                    spaceAdd += " ";
+                    int j = i + 1;
+                    names[j] = j + ". " + studios[i].Name;
                 }
 
                 return names;
@@ -532,11 +531,10 @@ namespace GameAnalyticsSDK.Setup
             {
                 string[] names = new string[studios.Count];
 
-                string spaceAdd = "";
                 for(int i = 0; i < studios.Count; i++)
                 {
-                    names[i] = studios[i].Name + spaceAdd;
-                    spaceAdd += " ";
+                    int j = i + 1;
+                    names[i] = j + ". " + studios[i].Name;
                 }
 
                 return names;
@@ -553,11 +551,10 @@ namespace GameAnalyticsSDK.Setup
             string[] names = new string[studios[index].Games.Count + 1];
             names[0] = "-";
 
-            string spaceAdd = "";
             for(int i = 0; i < studios[index].Games.Count; i++)
             {
-                names[i + 1] = studios[index].Games[i].Name + spaceAdd;
-                spaceAdd += " ";
+                int j = i + 1;
+                names[j] = j + ". " + studios[index].Games[i].Name;
             }
 
             return names;

@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.1**
+* fixed editor ui bug with games with the same name
+
 **7.3.0**
 * added global custom event fields function to allow to add custom fields to events sent automatically by the SDK
 
