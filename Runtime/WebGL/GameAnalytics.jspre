@@ -1274,7 +1274,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.4.0";
+            GADevice.sdkWrapperVersion = "javascript 4.4.1";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -3029,7 +3029,6 @@ var gameanalytics;
                         return;
                     }
                     var ev = GAState.getEventAnnotations();
-                    var jsonDefaults = GAUtilities.encode64(JSON.stringify(ev));
                     for (var e in eventData) {
                         ev[e] = eventData[e];
                     }
@@ -3046,11 +3045,7 @@ var gameanalytics;
                         GAStore["delete"](EGAStore.Sessions, [["session_id", EGAStoreArgsOperator.Equal, ev["session_id"]]]);
                     }
                     else {
-                        values = {};
-                        values["session_id"] = ev["session_id"];
-                        values["timestamp"] = GAState.getSessionStart();
-                        values["event"] = jsonDefaults;
-                        GAStore.insert(EGAStore.Sessions, values, true, "session_id");
+                        GAEvents.updateSessionStore();
                     }
                     if (GAStore.isStorageAvailable()) {
                         GAStore.save(GAState.getGameKey());

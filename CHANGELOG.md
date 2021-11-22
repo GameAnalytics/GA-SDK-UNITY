@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.2**
+* fixed missing custom event fields for when trying to fix missing session end events
+
 **7.3.1**
 * fixed editor ui bug with games with the same name
 
