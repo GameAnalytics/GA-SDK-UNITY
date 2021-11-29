@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.3**
+* playmaker fixes
+
 **7.3.2**
 * fixed missing custom event fields for when trying to fix missing session end events
 

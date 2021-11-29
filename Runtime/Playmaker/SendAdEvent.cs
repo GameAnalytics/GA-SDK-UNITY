@@ -46,15 +46,15 @@ namespace HutongGames.PlayMaker.Actions
 		{
 			if(!Duration.IsNone)
             {
-				GA_Ads.NewEvent(AdAction, AdType, AdSdkName.Value, AdPlacement.Value, Duration.Value);
+				GA_Ads.NewEvent(AdAction, AdType, AdSdkName.Value, AdPlacement.Value, Duration.Value, null);
 			}
 			else if (AdErrorReason != GAAdError.Undefined)
 			{
-				GA_Ads.NewEvent(AdAction, AdType, AdSdkName.Value, AdPlacement.Value, AdErrorReason);
+				GA_Ads.NewEvent(AdAction, AdType, AdSdkName.Value, AdPlacement.Value, AdErrorReason, null);
 			}
 			else
             {
-				GA_Ads.NewEvent(AdAction, AdType, AdSdkName.Value, AdPlacement.Value);
+				GA_Ads.NewEvent(AdAction, AdType, AdSdkName.Value, AdPlacement.Value, null);
 			}
 
 			Finish();
