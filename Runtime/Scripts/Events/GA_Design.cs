@@ -21,9 +21,9 @@ namespace GameAnalyticsSDK.Events
         /// A value of the event
         /// </param>
         /// <param name="fields">Custom fields.</param>
-        public static void NewEvent(string eventName, float eventValue, IDictionary<string, object> fields)
+        public static void NewEvent(string eventName, float eventValue, IDictionary<string, object> fields, bool mergeFields)
 		{
-			CreateNewEvent(eventName, eventValue, fields);
+			CreateNewEvent(eventName, eventValue, fields, mergeFields);
 		}
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace GameAnalyticsSDK.Events
         /// A event string you define
         /// </param>
         /// <param name="fields">Custom fields.</param>
-        public static void NewEvent(string eventName, IDictionary<string, object> fields)
+        public static void NewEvent(string eventName, IDictionary<string, object> fields, bool mergeFields)
 		{
-			CreateNewEvent(eventName, null, fields);
+			CreateNewEvent(eventName, null, fields, mergeFields);
 		}
 
         #endregion
@@ -52,15 +52,15 @@ namespace GameAnalyticsSDK.Events
         /// A value relevant to the event. F.x. if the player picks up some shotgun ammo the eventName could be "PickedUpAmmo" and this value could be "Shotgun". This can be null <see cref="System.Nullable<System.Single>"/>
         /// </param>
         /// <param name="fields">Custom fields.</param>
-        private static void CreateNewEvent(string eventName, float? eventValue, IDictionary<string, object> fields)
+        private static void CreateNewEvent(string eventName, float? eventValue, IDictionary<string, object> fields, bool mergeFields)
 		{
 			if(eventValue.HasValue)
 			{
-				GA_Wrapper.AddDesignEvent(eventName, eventValue.Value, fields);
+				GA_Wrapper.AddDesignEvent(eventName, eventValue.Value, fields, mergeFields);
 			}
 			else
 			{
-				GA_Wrapper.AddDesignEvent(eventName, fields);
+				GA_Wrapper.AddDesignEvent(eventName, fields, mergeFields);
 			}
 		}
 

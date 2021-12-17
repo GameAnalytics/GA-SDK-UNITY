@@ -54,28 +54,28 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void setGlobalCustomEventFields(string customFields);
 
         [DllImport ("__Internal")]
-        private static extern void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string fields);
+        private static extern void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addBusinessEventAndAutoFetchReceipt(string currency, int amount, string itemType, string itemId, string cartType, string fields);
+        private static extern void addBusinessEventAndAutoFetchReceipt(string currency, int amount, string itemType, string itemId, string cartType, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields);
+        private static extern void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields);
+        private static extern void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields);
+        private static extern void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addDesignEvent(string eventId, string fields);
+        private static extern void addDesignEvent(string eventId, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addDesignEventWithValue(string eventId, float value, string fields);
+        private static extern void addDesignEventWithValue(string eventId, float value, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
-        private static extern void addErrorEvent(int severity, string message, string fields);
+        private static extern void addErrorEvent(int severity, string message, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
         private static extern void setEnabledInfoLog(bool enabled);

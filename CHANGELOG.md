@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.4**
+* added error events to be sent for invalid custom event fields used
+* added optional mergeFields argument to event methods to merge with global custom fields instead of overwrite them
+
 **7.3.3**
 * playmaker fixes
 

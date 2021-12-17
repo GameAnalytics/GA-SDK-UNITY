@@ -14,18 +14,18 @@ namespace GameAnalyticsSDK.Events
 	{
 		#region public methods
 
-		public static void NewEvent(GAErrorSeverity severity, string message, IDictionary<string, object> fields)
+		public static void NewEvent(GAErrorSeverity severity, string message, IDictionary<string, object> fields, bool mergeFields)
 		{
-			CreateNewEvent(severity, message, fields);
+			CreateNewEvent(severity, message, fields, mergeFields);
 		}
 
 		#endregion
 
 		#region private methods
 
-		private static void CreateNewEvent(GAErrorSeverity severity, string message, IDictionary<string, object> fields)
+		private static void CreateNewEvent(GAErrorSeverity severity, string message, IDictionary<string, object> fields, bool mergeFields = false)
 		{
-			GA_Wrapper.AddErrorEvent(severity, message, fields);
+			GA_Wrapper.AddErrorEvent(severity, message, fields, mergeFields);
 		}
 
 		#endregion
