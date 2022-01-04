@@ -53,26 +53,26 @@ namespace GameAnalyticsSDK.Editor
             string replaceText = "#if true";
 
             string[] _files = new string[] {
-                "/GameAnalytics/Plugins/Playmaker/GAInitialize.cs",
-                "/GameAnalytics/Plugins/Playmaker/GetABTestingId.cs",
-                "/GameAnalytics/Plugins/Playmaker/GetABTestingVariantId.cs",
-                "/GameAnalytics/Plugins/Playmaker/GetRemoteConfigsValueAsString.cs",
-                "/GameAnalytics/Plugins/Playmaker/IsRemoteConfigsReady.cs",
-                "/GameAnalytics/Plugins/Playmaker/SendAdEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SendBusinessEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SendDesignEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SendErrorEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SendProgressionEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SendResourceEvent.cs",
-                "/GameAnalytics/Plugins/Playmaker/SetCustomDimension.cs",
-                "/GameAnalytics/Editor/Playmaker/SendProgressionEventActionEditor.cs",
-                "/GameAnalytics/Editor/Playmaker/SendResourceEventActionEditor.cs"
+                "GAInitialize.cs",
+                "GetABTestingId.cs",
+                "GetABTestingVariantId.cs",
+                "GetRemoteConfigsValueAsString.cs",
+                "IsRemoteConfigsReady.cs",
+                "SendAdEvent.cs",
+                "SendBusinessEvent.cs",
+                "SendDesignEvent.cs",
+                "SendErrorEvent.cs",
+                "SendProgressionEvent.cs",
+                "SendResourceEvent.cs",
+                "SetCustomDimension.cs",
+                "SendProgressionEventActionEditor.cs",
+                "SendResourceEventActionEditor.cs"
             };
 
             foreach(string _file in _files)
             {
                 try {
-                    enabled = ReplaceInFile (Application.dataPath + _file, searchText, replaceText);
+                    enabled = ReplaceInFile (GameAnalytics.WhereIs(_file, "Script"), searchText, replaceText);
                 } catch {
                     Debug.Log("Failed to toggle "+_file);
                     fail = true;

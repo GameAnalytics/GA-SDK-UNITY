@@ -44,20 +44,20 @@ namespace HutongGames.PlayMaker.Actions
 			if (!Score.IsNone)
 			{
 				if (!Progression03.IsNone && !Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, Score.Value, null);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, Score.Value, null, false);
 				else if (!Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Score.Value, null);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Score.Value, null, false);
 				else
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Score.Value, null);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Score.Value, null, false);
 			}
 			else
 			{
 				if (!Progression03.IsNone && !Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, null);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, Progression03.Value, null, false);
 				else if (!Progression02.IsNone)
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, null);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, Progression02.Value, null, false);
 				else
-					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, null);
+					GA_Progression.NewEvent(ProgressionStatus, Progression01.Value, null, false);
 			}
 
 			Finish();

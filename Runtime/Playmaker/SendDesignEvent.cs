@@ -27,9 +27,9 @@ namespace HutongGames.PlayMaker.Actions
 		public override void OnEnter()
 		{
 			if (!EventValue.IsNone)
-				GA_Design.NewEvent(EventID.Value, EventValue.Value, null);
+				GA_Design.NewEvent(EventID.Value, EventValue.Value, null, false);
 			else
-				GA_Design.NewEvent(EventID.Value, null);
+				GA_Design.NewEvent(EventID.Value, null, false);
 
 			Finish();
 		}

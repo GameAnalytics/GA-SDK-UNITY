@@ -27,7 +27,7 @@ namespace HutongGames.PlayMaker.Actions
 
 		public override void OnEnter()
 		{
-			GA_Error.NewEvent(severityType, Message.Value, null);
+			GA_Error.NewEvent(severityType, Message.Value, null, false);
 
 			Finish();
 		}

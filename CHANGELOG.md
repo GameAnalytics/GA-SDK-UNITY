@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.6**
+* fixed playmaker bugs
+
 **7.3.5**
 * changed settings to have FPS events turned off by default
 
