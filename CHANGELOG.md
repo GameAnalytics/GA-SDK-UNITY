@@ -3,6 +3,7 @@ Changelog
 <!--(CHANGELOG_TOP)-->
 **7.3.10**
 * adding missing .meta file for upm release
+* switched to using openupm for scoped registry when using upm
 
 **7.3.9**
 * fixed upm package.json
