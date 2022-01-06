@@ -1,3 +1,6 @@
+[![openupm](https://img.shields.io/npm/v/com.gameanalytics.sdk?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.gameanalytics.sdk/)
+
+
 # GA-SDK-UNITY
 GameAnalytics Unity SDK.
 
