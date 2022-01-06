@@ -5,7 +5,7 @@
     "description": "GameAnalytics collects and stores your data with no limits.  You can then view your core KPI's in order to see what areas of your game need to improvements.  If you want to find out more about how gamers play, then add in funnels, progression events and resource tracking. ",
     "unity": "2018.1",
     "dependencies": {
-        "io.elhan.play-services-resolver": "https://github.com/oae/unity-package-play-services-resolver.git#0.1.0"
+        "io.elhan.play-services-resolver": "0.1.0"
     },
     "keywords": [
         "data",
