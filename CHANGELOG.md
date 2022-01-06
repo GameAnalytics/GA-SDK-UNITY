@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.8**
+* fixed upm dependecy
+
 **7.3.7**
 * added depedencies.xml for upm release
 
