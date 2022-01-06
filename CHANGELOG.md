@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.10**
+* adding missing .meta file for upm release
+
 **7.3.9**
 * fixed upm package.json
 
