@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.9**
+* fixed upm package.json
+
 **7.3.8**
 * fixed upm dependecy
 
