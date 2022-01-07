@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.11**
+* updated dependency to external dependency resolver
+
 **7.3.10**
 * adding missing .meta file for upm release
 * switched to using openupm for scoped registry when using upm, please update the upm setup for the unity sdk
