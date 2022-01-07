@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.12**
+* removed imei identifiers and other alternative identifiers from user identifier logic (android)
+
 **7.3.11**
 * updated dependency to external dependency resolver
 
