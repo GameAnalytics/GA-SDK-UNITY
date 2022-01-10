@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.14**
+* small fix
+
 **7.3.13**
 * fixed crash for android builds
 

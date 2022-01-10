@@ -13,7 +13,6 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static readonly AndroidJavaClass GA = new AndroidJavaClass("com.gameanalytics.sdk.GameAnalytics");
         private static readonly AndroidJavaClass UNITY_GA = new AndroidJavaClass("com.gameanalytics.sdk.unity.UnityGameAnalytics");
-        private static readonly AndroidJavaClass GA_IMEI = new AndroidJavaClass("com.gameanalytics.sdk.imei.GAImei");
 #if gameanalytics_mopub_enabled
         private static readonly AndroidJavaClass MoPubClass = new AndroidJavaClass("com.mopub.unity.MoPubUnityPlugin");
 #endif
@@ -104,16 +103,6 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void initialize(string gamekey, string gamesecret)
         {
-            if(GameAnalytics.SettingsGA.UseIMEI)
-            {
-                try
-                {
-                    GA_IMEI.CallStatic("readImei");
-                }
-                catch(Exception)
-                {
-                }
-            }
             UNITY_GA.CallStatic("initialize");
 
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
