@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "7.3.12";
+        public static string VERSION = "7.3.13";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -132,7 +132,6 @@ namespace GameAnalyticsSDK.Setup
         public bool VerboseLogBuild = false;
         public bool UseManualSessionHandling = false;
         public bool SendExampleGameDataToMyGame = false;
-        public bool UseIMEI = false;
         //public bool UseBundleVersion = false;
 
         public bool InternetConnectivity;
