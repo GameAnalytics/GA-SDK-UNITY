@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.15**
+* changed frequency logic for fps events
+
 **7.3.14**
 * small fix
 
