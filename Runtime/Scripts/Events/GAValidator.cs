@@ -55,7 +55,7 @@ namespace GameAnalyticsSDK.Validators
 			// validate itemType chars
 			if (!ValidateEventPartCharacters(itemType))
 			{
-				Debug.Log("Validation fail - business event - itemType: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: " + itemType);
+				Debug.Log("Validation fail - business event - itemType: Cannot contain other characters than A-z, 0-9, -_. ()!?. String: " + itemType);
 				return false;
 			}
 
@@ -109,7 +109,7 @@ namespace GameAnalyticsSDK.Validators
 			}
 			if (!ValidateEventPartCharacters(itemType))
 			{
-				Debug.Log("Validation fail - resource event - itemType: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: " + itemType);
+				Debug.Log("Validation fail - resource event - itemType: Cannot contain other characters than A-z, 0-9, -_. ()!?. String: " + itemType);
 				return false;
 			}
 			if (!GAState.HasAvailableResourceItemType(itemType))
@@ -163,7 +163,7 @@ namespace GameAnalyticsSDK.Validators
 			}
 			if (!ValidateEventPartCharacters(progression01))
 			{
-				Debug.Log("Validation fail - progression event - progression01: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: " + progression01);
+				Debug.Log("Validation fail - progression event - progression01: Cannot contain other characters than A-z, 0-9, -_. ()!?. String: " + progression01);
 				return false;
 			}
 			// progression02
@@ -176,7 +176,7 @@ namespace GameAnalyticsSDK.Validators
 				}
 				if (!ValidateEventPartCharacters(progression02))
 				{
-					Debug.Log("Validation fail - progression event - progression02: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: " + progression02);
+					Debug.Log("Validation fail - progression event - progression02: Cannot contain other characters than A-z, 0-9, -_. ()!?. String: " + progression02);
 					return false;
 				}
 			}
@@ -190,7 +190,7 @@ namespace GameAnalyticsSDK.Validators
 				}
 				if (!ValidateEventPartCharacters(progression03))
 				{
-					Debug.Log("Validation fail - progression event - progression03: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: " + progression03);
+					Debug.Log("Validation fail - progression event - progression03: Cannot contain other characters than A-z, 0-9, -_. ()!?. String: " + progression03);
 					return false;
 				}
 			}
@@ -206,7 +206,7 @@ namespace GameAnalyticsSDK.Validators
 			}
 			if (!ValidateEventIdCharacters(eventId))
 			{
-				Debug.Log("Validation fail - design event - eventId: Non valid characters. Only allowed A-z, 0-9, -_., ()!?. String: " + eventId);
+				Debug.Log("Validation fail - design event - eventId: Non valid characters. Only allowed A-z, 0-9, -_. ()!?. String: " + eventId);
 				return false;
 			}
 			// value: allow 0, negative and nil (not required)
@@ -454,7 +454,7 @@ namespace GameAnalyticsSDK.Validators
 			{
 				if (!ValidateEventPartCharacters(resourceItemType))
 				{
-					Debug.Log("resource item types validation failed: a resource item type cannot contain other characters than A-z, 0-9, -_., ()!?. String was: " + resourceItemType);
+					Debug.Log("resource item types validation failed: a resource item type cannot contain other characters than A-z, 0-9, -_. ()!?. String was: " + resourceItemType);
 					return false;
 				}
 			}

@@ -127,33 +127,33 @@ namespace GameAnalyticsSDK.Wrapper
         [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void addBusinessEventUWP([MarshalAs(UnmanagedType.LPWStr)]string currency, double amount, [MarshalAs(UnmanagedType.LPWStr)]string itemType, [MarshalAs(UnmanagedType.LPWStr)]string itemId, [MarshalAs(UnmanagedType.LPWStr)]string cartType, [MarshalAs(UnmanagedType.LPWStr)]string fields, double mergeFields);
 
-        private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields, double mergeFields)
+        private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields, bool mergeFields)
         {
-            addBusinessEventUWP(currency, amount, itemType, itemId, cartType, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addBusinessEventUWP(currency, amount, itemType, itemId, cartType, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void addResourceEventUWP(double flowType, [MarshalAs(UnmanagedType.LPWStr)]string currency, double amount, [MarshalAs(UnmanagedType.LPWStr)]string itemType, [MarshalAs(UnmanagedType.LPWStr)]string itemId, [MarshalAs(UnmanagedType.LPWStr)]string fields, double mergeFields);
 
-        private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields, double mergeFields)
+        private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields, bool mergeFields)
         {
-            addResourceEventUWP(flowType, currency, amount, itemType, itemId, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addResourceEventUWP(flowType, currency, amount, itemType, itemId, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void addProgressionEventUWP(double progressionStatus, [MarshalAs(UnmanagedType.LPWStr)]string progression01, [MarshalAs(UnmanagedType.LPWStr)]string progression02, [MarshalAs(UnmanagedType.LPWStr)]string progression03, [MarshalAs(UnmanagedType.LPWStr)]string fields, double mergeFields);
 
-        private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields, double mergeFields)
+        private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields, bool mergeFields)
         {
-            addProgressionEventUWP(progressionStatus, progression01, progression02, progression03, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addProgressionEventUWP(progressionStatus, progression01, progression02, progression03, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
 		private static extern void addProgressionEventWithScoreUWP(double progressionStatus, [MarshalAs(UnmanagedType.LPWStr)]string progression01, [MarshalAs(UnmanagedType.LPWStr)]string progression02, [MarshalAs(UnmanagedType.LPWStr)]string progression03, double score, [MarshalAs(UnmanagedType.LPWStr)]string fields, double mergeFields);
 
-        private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields, double mergeFields)
+        private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields, bool mergeFields)
         {
-            addProgressionEventWithScoreUWP(progressionStatus, progression01, progression02, progression03, score, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addProgressionEventWithScoreUWP(progressionStatus, progression01, progression02, progression03, score, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
@@ -161,7 +161,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void addDesignEvent(string eventId, string fields, bool mergeFields)
         {
-            addDesignEventUWP(eventId, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addDesignEventUWP(eventId, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
@@ -169,7 +169,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void addDesignEventWithValue(string eventId, float value, string fields, bool mergeFields)
         {
-            addDesignEventWithValueUWP(eventId, value, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addDesignEventWithValueUWP(eventId, value, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]
@@ -177,7 +177,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void addErrorEvent(int severity, string message, string fields, bool mergeFields)
         {
-            addErrorEventUWP(severity, message, GA_MiniJSON.Deserialize(fields) as IDictionary<string, object>, mergeFields ? 1 : 0);
+            addErrorEventUWP(severity, message, fields, mergeFields ? 1 : 0);
         }
 
         [DllImport ("GameAnalytics.UWP.dll")]

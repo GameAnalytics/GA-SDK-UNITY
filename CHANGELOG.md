@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.16**
+* fixed uwp build errors
+
 **7.3.15**
 * changed frequency logic for fps events
 
