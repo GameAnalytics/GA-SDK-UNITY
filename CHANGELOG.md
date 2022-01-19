@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.17**
+* added method manually update gamekey and secretkey
+
 **7.3.16**
 * fixed uwp build errors
 

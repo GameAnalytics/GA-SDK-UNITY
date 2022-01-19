@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "7.3.16";
+        public static string VERSION = "7.3.17";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -362,6 +362,12 @@ namespace GameAnalyticsSDK.Setup
             }
 
             return valid;
+        }
+
+        public static void UpdateKeys(int index, string gameKey, string secretKey)
+        {
+            GameAnalytics.SettingsGA.gameKey[index] = gameKey;
+            GameAnalytics.SettingsGA.secretKey[index] = secretKey;
         }
 
         public void UpdateGameKey(int index, string value)
