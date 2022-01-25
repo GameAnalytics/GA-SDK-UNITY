@@ -33,7 +33,7 @@ Changelog
 * fixed upm dependecy
 
 **7.3.7**
-* added depedencies.xml for upm release
+* added dependencies.xml for upm release
 
 **7.3.6**
 * fixed playmaker bugs
