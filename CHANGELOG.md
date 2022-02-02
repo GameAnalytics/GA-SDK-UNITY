@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.19**
+* updated dependencies
+
 **7.3.18**
 * fixed fps event script to still run coroutines when Time.timeScale = 0 by using WaitForSecondsRealtime instead of WaitForSeconds
 
