@@ -46,7 +46,7 @@ namespace GameAnalyticsSDK.Events
             while(Application.isPlaying && GameAnalytics.SettingsGA != null &&  GameAnalytics.SettingsGA.SubmitFpsAverage)
             {
                 int waitingTime = 30 * _fpsWaitTimeMultiplier;
-                yield return new WaitForSeconds(waitingTime);
+                yield return new WaitForSecondsRealtime(waitingTime);
                 _fpsWaitTimeMultiplier *= 2;
                 SubmitFPS();
             }
@@ -56,7 +56,7 @@ namespace GameAnalyticsSDK.Events
         {
             while(Application.isPlaying && GameAnalytics.SettingsGA != null &&  GameAnalytics.SettingsGA.SubmitFpsCritical)
             {
-                yield return new WaitForSeconds(GameAnalytics.SettingsGA.FpsCirticalSubmitInterval);
+                yield return new WaitForSecondsRealtime(GameAnalytics.SettingsGA.FpsCirticalSubmitInterval);
                 CheckCriticalFPS();
             }
         }
