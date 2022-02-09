@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.20**
+* added event uuid to events sent
+
 **7.3.19**
 * updated dependencies
 

@@ -669,10 +669,7 @@ var gameanalytics;
                 return Math.round(date.getTime() / 1000);
             };
             GAUtilities.createGuid = function () {
-                return (GAUtilities.s4() + GAUtilities.s4() + "-" + GAUtilities.s4() + "-4" + GAUtilities.s4().substr(0, 3) + "-" + GAUtilities.s4() + "-" + GAUtilities.s4() + GAUtilities.s4() + GAUtilities.s4()).toLowerCase();
-            };
-            GAUtilities.s4 = function () {
-                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+                return ("10000000-1000-4000-8000-100000000000").replace(/[018]/g, function (c) { return (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16); });
             };
             GAUtilities.keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
             return GAUtilities;
@@ -1274,7 +1271,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.4.2";
+            GADevice.sdkWrapperVersion = "javascript 4.4.4";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
@@ -1966,6 +1963,7 @@ var gameanalytics;
             GAState.getEventAnnotations = function () {
                 var annotations = {};
                 annotations["v"] = 2;
+                annotations["event_uuid"] = GAUtilities.createGuid();
                 annotations["user_id"] = GAState.instance.identifier;
                 annotations["client_ts"] = GAState.getClientTsAdjusted();
                 annotations["sdk_version"] = GADevice.getRelevantSdkVersion();
@@ -2007,6 +2005,7 @@ var gameanalytics;
             GAState.getSdkErrorEventAnnotations = function () {
                 var annotations = {};
                 annotations["v"] = 2;
+                annotations["event_uuid"] = GAUtilities.createGuid();
                 annotations["category"] = GAState.CategorySdkError;
                 annotations["sdk_version"] = GADevice.getRelevantSdkVersion();
                 annotations["os_version"] = GADevice.osVersion;
