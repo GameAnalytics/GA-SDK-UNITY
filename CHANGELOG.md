@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.21**
+* fixed bug in internal error reporting
+
 **7.3.20**
 * added event uuid to events sent
 
