@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Globalization;
 
 namespace GameAnalyticsSDK.Utilities
 {
@@ -534,7 +535,7 @@ namespace GameAnalyticsSDK.Utilities
                             else
                             {
                                 builder.Append("\\u");
-                                builder.Append(codepoint.ToString("x4"));
+                                builder.Append(codepoint.ToString("x4", CultureInfo.InvariantCulture));
                             }
                             break;
                     }
@@ -550,7 +551,7 @@ namespace GameAnalyticsSDK.Utilities
                 // Previously floats and doubles lost precision too.
                 if (value is float)
                 {
-                    builder.Append(((float)value).ToString("R"));
+                    builder.Append(((float)value).ToString("R", CultureInfo.InvariantCulture));
                 }
                 else if (value is int
                   || value is uint
@@ -566,7 +567,7 @@ namespace GameAnalyticsSDK.Utilities
                 else if (value is double
                   || value is decimal)
                 {
-                    builder.Append(Convert.ToDouble(value).ToString("R"));
+                    builder.Append(Convert.ToDouble(value).ToString("R", CultureInfo.InvariantCulture));
                 }
                 else
                 {

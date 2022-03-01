@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.23**
+* fixed bug with custom fields (locale related bug)
+
 **7.3.22**
 * added external dependency manager for .unitypackage release as well to solve issues with appset id on android
 
