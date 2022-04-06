@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.3.24**
+* fixed fps script for when pausing game
+
 **7.3.23**
 * fixed bug with custom fields (locale related bug)
 

@@ -476,9 +476,59 @@ var gameanalytics;
         })(EGASdkErrorParameter = events.EGASdkErrorParameter || (events.EGASdkErrorParameter = {}));
     })(events = gameanalytics.events || (gameanalytics.events = {}));
 })(gameanalytics || (gameanalytics = {}));
-var EGAErrorSeverity = gameanalytics.EGAErrorSeverity;
-var EGAProgressionStatus = gameanalytics.EGAProgressionStatus;
-var EGAResourceFlowType = gameanalytics.EGAResourceFlowType;
+var public_enums;
+(function (public_enums) {
+    var EGAErrorSeverity;
+    (function (EGAErrorSeverity) {
+        EGAErrorSeverity[EGAErrorSeverity["Undefined"] = 0] = "Undefined";
+        EGAErrorSeverity[EGAErrorSeverity["Debug"] = 1] = "Debug";
+        EGAErrorSeverity[EGAErrorSeverity["Info"] = 2] = "Info";
+        EGAErrorSeverity[EGAErrorSeverity["Warning"] = 3] = "Warning";
+        EGAErrorSeverity[EGAErrorSeverity["Error"] = 4] = "Error";
+        EGAErrorSeverity[EGAErrorSeverity["Critical"] = 5] = "Critical";
+    })(EGAErrorSeverity = public_enums.EGAErrorSeverity || (public_enums.EGAErrorSeverity = {}));
+    var EGAProgressionStatus;
+    (function (EGAProgressionStatus) {
+        EGAProgressionStatus[EGAProgressionStatus["Undefined"] = 0] = "Undefined";
+        EGAProgressionStatus[EGAProgressionStatus["Start"] = 1] = "Start";
+        EGAProgressionStatus[EGAProgressionStatus["Complete"] = 2] = "Complete";
+        EGAProgressionStatus[EGAProgressionStatus["Fail"] = 3] = "Fail";
+    })(EGAProgressionStatus = public_enums.EGAProgressionStatus || (public_enums.EGAProgressionStatus = {}));
+    var EGAResourceFlowType;
+    (function (EGAResourceFlowType) {
+        EGAResourceFlowType[EGAResourceFlowType["Undefined"] = 0] = "Undefined";
+        EGAResourceFlowType[EGAResourceFlowType["Source"] = 1] = "Source";
+        EGAResourceFlowType[EGAResourceFlowType["Sink"] = 2] = "Sink";
+    })(EGAResourceFlowType = public_enums.EGAResourceFlowType || (public_enums.EGAResourceFlowType = {}));
+    var EGAAdAction;
+    (function (EGAAdAction) {
+        EGAAdAction[EGAAdAction["Undefined"] = 0] = "Undefined";
+        EGAAdAction[EGAAdAction["Clicked"] = 1] = "Clicked";
+        EGAAdAction[EGAAdAction["Show"] = 2] = "Show";
+        EGAAdAction[EGAAdAction["FailedShow"] = 3] = "FailedShow";
+        EGAAdAction[EGAAdAction["RewardReceived"] = 4] = "RewardReceived";
+    })(EGAAdAction = public_enums.EGAAdAction || (public_enums.EGAAdAction = {}));
+    var EGAAdError;
+    (function (EGAAdError) {
+        EGAAdError[EGAAdError["Undefined"] = 0] = "Undefined";
+        EGAAdError[EGAAdError["Unknown"] = 1] = "Unknown";
+        EGAAdError[EGAAdError["Offline"] = 2] = "Offline";
+        EGAAdError[EGAAdError["NoFill"] = 3] = "NoFill";
+        EGAAdError[EGAAdError["InternalError"] = 4] = "InternalError";
+        EGAAdError[EGAAdError["InvalidRequest"] = 5] = "InvalidRequest";
+        EGAAdError[EGAAdError["UnableToPrecache"] = 6] = "UnableToPrecache";
+    })(EGAAdError = public_enums.EGAAdError || (public_enums.EGAAdError = {}));
+    var EGAAdType;
+    (function (EGAAdType) {
+        EGAAdType[EGAAdType["Undefined"] = 0] = "Undefined";
+        EGAAdType[EGAAdType["Video"] = 1] = "Video";
+        EGAAdType[EGAAdType["RewardedVideo"] = 2] = "RewardedVideo";
+        EGAAdType[EGAAdType["Playable"] = 3] = "Playable";
+        EGAAdType[EGAAdType["Interstitial"] = 4] = "Interstitial";
+        EGAAdType[EGAAdType["OfferWall"] = 5] = "OfferWall";
+        EGAAdType[EGAAdType["Banner"] = 6] = "Banner";
+    })(EGAAdType = public_enums.EGAAdType || (public_enums.EGAAdType = {}));
+})(public_enums || (public_enums = {}));
 var gameanalytics;
 (function (gameanalytics) {
     var logging;
@@ -1271,7 +1321,7 @@ var gameanalytics;
                 }
                 return result;
             };
-            GADevice.sdkWrapperVersion = "javascript 4.4.4";
+            GADevice.sdkWrapperVersion = "javascript 4.4.5";
             GADevice.osVersionPair = GADevice.matchItem([
                 navigator.platform,
                 navigator.userAgent,
