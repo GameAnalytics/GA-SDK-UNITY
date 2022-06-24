@@ -1,6 +1,11 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.4.0**
+* Added Health event
+* Includes FPS data measurement automatically sent at the end of the session
+
+
 **7.3.24**
 * fixed fps script for when pausing game
 
