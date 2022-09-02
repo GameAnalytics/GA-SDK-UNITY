@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.4.1**
+* fixed a crash with the health event on android if not on the main thread:added session_num for the init event on iOS
+
 **7.4.0**
 * Added Health event
 * Includes FPS data measurement automatically sent at the end of the session
