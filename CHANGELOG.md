@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.4.4**
+* dependency fix for openupm package
+
 **7.4.2**
 * bugfix for android health event error reporting
 
