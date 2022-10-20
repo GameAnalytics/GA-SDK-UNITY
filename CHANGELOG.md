@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.4.3**
+* dependency fix for openupm package
+
 **7.4.2.1**
 * dependency fix for openupm package
 
