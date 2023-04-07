@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.5.1**
+* reintroduced the health event
+* added method to retrieve the user id
+
 **7.5.0**
 * Temporary removal of FPS tracking due to rare issues observed. FPS tracking will be reintroduced in the future once the cause is identified and fixed.
 

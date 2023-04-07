@@ -1581,6 +1581,15 @@ typedef enum GAAdError : NSInteger
 /*!
  @method
 
+ @abstract Get the user id
+
+ @availability Available since (TBD)
+ */
++ (NSString *)getUserId;
+
+/*!
+ @method
+
  @abstract Get A/B testing id
 
  @availability Available since (TBD)

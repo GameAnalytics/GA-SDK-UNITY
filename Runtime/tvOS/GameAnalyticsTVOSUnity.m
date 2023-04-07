@@ -412,6 +412,11 @@ char* getABTestingId() {
     return cStringCopy([result UTF8String]);
 }
 
+char* getUserId() {
+    NSString *result = [GameAnalytics getUserId];
+    return cStringCopy([result UTF8String]);
+}
+
 char* getABTestingVariantId() {
     NSString *result = [GameAnalytics getABTestingVariantId];
     return cStringCopy([result UTF8String]);

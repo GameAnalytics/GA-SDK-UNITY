@@ -263,6 +263,11 @@ namespace GameAnalyticsSDK.Wrapper
         {
             return GA.CallStatic<long>("stopTimer", key);
         }
+
+        public static String getUserId()
+        {
+            return GA.CallStatic<string>("getUserId");
+        }
 #endif
     }
 }

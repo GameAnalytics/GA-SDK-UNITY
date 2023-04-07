@@ -80,6 +80,14 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
+        public static string getUserId() {
+            if (GameAnalytics.SettingsGA.InfoLogEditor) {
+                Debug.Log ("getUserId");
+            }
+
+            return "";
+        }
+
         private static void initialize (string gamekey, string gamesecret)
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {

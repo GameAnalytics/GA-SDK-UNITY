@@ -214,6 +214,11 @@ namespace GameAnalyticsSDK.Wrapper
         {
             // not supported
         }
+
+        public static string getUserId()
+        {
+            return "";
+        }
 #endif
     }
 }

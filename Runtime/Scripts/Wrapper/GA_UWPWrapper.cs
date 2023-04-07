@@ -261,6 +261,11 @@ namespace GameAnalyticsSDK.Wrapper
             return buffer.ToString();
         }
 
+        public static string getUserId()
+        {
+            return "";
+        }
+
         private static void configureAutoDetectAppVersion (bool flag)
         {
             // not supported

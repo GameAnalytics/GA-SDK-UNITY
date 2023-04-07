@@ -870,6 +870,14 @@ namespace GameAnalyticsSDK
         }
 
         /// <summary>
+        /// gets the current user id
+        /// </summary>
+        public static String GetUserId()
+        {
+            return GA_Wrapper.getUserId();
+        }
+
+        /// <summary>
         /// Sets the enabled manual session handling.
         /// </summary>
         /// <param name="enabled">If set to <c>true</c> enabled.</param>
