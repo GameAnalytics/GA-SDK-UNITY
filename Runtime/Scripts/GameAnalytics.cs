@@ -108,7 +108,7 @@ namespace GameAnalyticsSDK
 
         void OnApplicationQuit()
         {
-#if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN && !UNITY_SWITCH && !UNITY_PS4 && !UNITY_XBOXONE)
+#if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN && !UNITY_SWITCH && !UNITY_PS4 && !UNITY_XBOXONE && !UNITY_GAMECORE && !UNITY_PS5)
 #if (UNITY_WSA)
             onQuit();
 #else
