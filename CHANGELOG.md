@@ -1,6 +1,18 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.6.0**
+* deprecated armv7 and i386 for iOS
+* added option to opt-out of GAID tracking for android
+
+**7.6.0**
+* deprecated armv7 and i386 for iOS
+* added option to opt-out of GAID tracking for android
+
+**7.6.0**
+* deprecated armv7 and i386 for iOS
+* added option to opt-out of GAID tracking for android
+
 **7.5.1**
 * reintroduced the health event
 * added method to retrieve the user id

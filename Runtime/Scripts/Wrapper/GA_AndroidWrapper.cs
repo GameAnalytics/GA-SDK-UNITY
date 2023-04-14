@@ -268,6 +268,11 @@ namespace GameAnalyticsSDK.Wrapper
         {
             return GA.CallStatic<string>("getUserId");
         }
+
+        public static void enableGAIDTracking(bool flag)
+        {
+            GA.CallStatic("setGAIDTracking", flag);
+        }
 #endif
     }
 }
