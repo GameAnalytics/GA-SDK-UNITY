@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.6.1**
+* fixed openupm version
+
 **7.6.0**
 * deprecated armv7 and i386 for iOS
 * added option to opt-out of GAID tracking for android
