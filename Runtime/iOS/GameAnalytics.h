@@ -1590,6 +1590,13 @@ typedef enum GAAdError : NSInteger
 /*!
  @method
 
+ @abstract flag to use a randomized id instead of idfv
+ */
++ (void)useRandomizedId:(BOOL) flag;
+
+/*!
+ @method
+
  @abstract Get A/B testing id
 
  @availability Available since (TBD)
@@ -1687,6 +1694,21 @@ typedef enum GAAdError : NSInteger
 
  */
 + (void)setEnabledEventSubmission:(BOOL)flag;
+
+/*!
+ @method
+
+ @abstract Enable/disable event submission.
+ When enabled this will allow events to be sent.
+
+ @param flag
+ Enable or disable event submission.
+
+ @param doLocalEventCaching
+ do cache events locally even if the submission is disabled
+
+ */
++ (void)setEnabledEventSubmission:(BOOL)flag doLocalEventCaching:(BOOL)doCache;
 
 /*!
  @method

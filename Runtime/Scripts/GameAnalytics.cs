@@ -896,6 +896,16 @@ namespace GameAnalyticsSDK
         }
 
         /// <summary>
+        /// Sets the enabled event submission.
+        /// </summary>
+        /// <param name="enabled">If set to <c>true</c> enabled.</param>
+        /// <param name="doCache">If set to <c>true</c> events will be cached locally even if submission is disabled.</param>
+        public static void SetEnabledEventSubmission(bool enabled, bool doCache)
+        {
+            GA_Wrapper.SetEnabledEventSubmission(enabled, doCache);
+        }
+
+        /// <summary>
         /// Starts the session.
         /// </summary>
         public static void StartSession()
@@ -1024,6 +1034,15 @@ namespace GameAnalyticsSDK
             GameAnalyticsATTClient.Instance.RequestTrackingAuthorization(listener);
 #endif
         }
+
+        public static void EnableAdvertisingIdTracking(bool flag)
+        {
+#if UNITY_ANDROID && (!UNITY_EDITOR)
+            GA_Wrapper.enableGAIDTracking(flag);
+#endif
+        }
+
+        
 
         private static string GetUnityVersion()
         {

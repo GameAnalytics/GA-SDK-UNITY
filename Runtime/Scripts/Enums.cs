@@ -54,7 +54,8 @@ namespace GameAnalyticsSDK
         Playable = 3,
         Interstitial = 4,
         OfferWall = 5,
-        Banner = 6
+        Banner = 6,
+        AppOpen = 7
     }
 
     public enum GAAdError

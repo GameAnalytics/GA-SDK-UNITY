@@ -209,6 +209,11 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("setEnabledEventSubmission", enabled);
         }
 
+        private static void setEventSubmission(bool enabled, bool doCacheLocally)
+        {
+            GA.CallStatic("setEnabledEventSubmission", enabled, doCacheLocally);
+        }
+
         private static void gameAnalyticsStartSession()
         {
             GA.CallStatic("startSession");
