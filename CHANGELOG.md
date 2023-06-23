@@ -2,7 +2,11 @@ Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
 **7.6.2b**
-* beta version:added functionality for opting out of GAID/idfv tracking on request:option to enable local storing of events with submission disabled:updated admob impression listener
+** beta version **
+* added functionality for opting out of GAID/IDFV tracking on request
+* option to enable local storing of events with submission disabled
+* updated admob impression listener
+* beta support for app open ads
 
 **7.6.1**
 * fixed openupm version
