@@ -5,7 +5,7 @@ Changelog
 ** beta version **
 * added functionality for opting out of GAID/IDFV tracking on request
 * option to enable local storing of events with submission disabled
-* updated admob impression listener
+* updated impression listener for AdMob 8.0.0, please check the migration guide: https://developers.google.com/admob/unity/migration
 * beta support for app open ads
 
 **7.6.1**
