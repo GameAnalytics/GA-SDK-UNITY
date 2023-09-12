@@ -46,6 +46,9 @@ namespace GameAnalyticsSDK
 
         private static bool _hasInitializeBeenCalled;
 
+        public static event EventHandler<bool> onInitialize;
+        public static bool Initialized { get{ return _hasInitializeBeenCalled; } }
+
         #region unity derived methods
 
         #if UNITY_EDITOR
@@ -253,11 +256,14 @@ namespace GameAnalyticsSDK
             {
                 GA_Wrapper.Initialize (SettingsGA.GetGameKey (platformIndex), SettingsGA.GetSecretKey (platformIndex));
                 GameAnalytics._hasInitializeBeenCalled = true;
+
+                onInitialize?.Invoke(typeof(GameAnalytics), true);
             }
             else
             {
                 GameAnalytics._hasInitializeBeenCalled = true;
                 Debug.LogWarning("GameAnalytics: Unsupported platform (events will not be sent in editor; or missing platform in settings): " + Application.platform);
+                onInitialize?.Invoke(typeof(GameAnalytics), false);
             }
         }
 

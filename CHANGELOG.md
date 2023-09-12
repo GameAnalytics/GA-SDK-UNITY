@@ -1,6 +1,12 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.7.0**
+* updated impression listeners for AdMob 8.0.0 (please check out the migration guide: https://developers.google.com/admob/unity/migration)
+* added functionality to opt out of GAID & IDFV tracking
+* optional local event caching if event submission is disabled:support for AppOpen ads
+* support for custom initialization callbacks
+
 **7.6.2b**
 ** beta version **
 * added functionality for opting out of GAID/IDFV tracking on request
