@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.7.1**
+* fixed a bug in the android user-id generation
+
 **7.7.0**
 * updated impression listeners for AdMob 8.0.0 (please check out the migration guide: https://developers.google.com/admob/unity/migration)
 * added functionality to opt out of GAID & IDFV tracking
