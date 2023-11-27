@@ -245,7 +245,7 @@ namespace GameAnalyticsSDK.Validators
                 Debug.Log("Validation fail - ad event - message: Ad SDK name cannot be above 32 characters.");
                 return false;
             }
-            if (!ValidateString(adPlacement, false))
+            if (!ValidateString(adPlacement, true))
             {
                 Debug.Log("Validation fail - ad event - message: Ad placement cannot be above 64 characters.");
                 return false;
