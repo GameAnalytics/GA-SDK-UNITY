@@ -36,6 +36,9 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void configureUserId(string userId);
 
         [DllImport ("__Internal")]
+        private static extern void configureExternalUserId(string userId);
+
+        [DllImport ("__Internal")]
         private static extern void configureAutoDetectAppVersion(bool flag);
 
         [DllImport ("__Internal")]
@@ -123,6 +126,10 @@ namespace GameAnalyticsSDK.Wrapper
 
         [DllImport ("__Internal")]
         [return: MarshalAs(UnmanagedType.LPStr)]
+        private static extern string getRemoteConfigsContentAsJSON();
+
+        [DllImport ("__Internal")]
+        [return: MarshalAs(UnmanagedType.LPStr)]
         private static extern string getABTestingId();
 
         [DllImport ("__Internal")]
@@ -144,6 +151,10 @@ namespace GameAnalyticsSDK.Wrapper
         [DllImport ("__Internal")]
         [return: MarshalAs(UnmanagedType.LPStr)]
         public static extern string getUserId();
+
+        [DllImport ("__Internal")]
+        [return: MarshalAs(UnmanagedType.LPStr)]
+        public static extern string getExternalUserId();
 
         [DllImport ("__Internal")]
         public static extern void useRandomizedId(bool flag);

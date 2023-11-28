@@ -100,6 +100,11 @@ void configureUserId(const char *userId) {
     [GameAnalytics configureUserId:userIdString];
 }
 
+void configureExternalUserId(const char *userId) {
+    NSString *userIdString = userId != NULL ? [NSString stringWithUTF8String:userId] : nil;
+    [GameAnalytics configureExternalUserId:userIdString];
+}
+
 void configureAutoDetectAppVersion(BOOL flag) {
     [GameAnalytics configureAutoDetectAppVersion:flag];
 }
@@ -412,6 +417,11 @@ char* getRemoteConfigsContentAsString() {
     return cStringCopy([result UTF8String]);
 }
 
+char* getRemoteConfigsContentAsJSON() {
+    NSString *result = [GameAnalytics getRemoteConfigsContentAsJSON];
+    return cStringCopy([result UTF8String]);
+}
+
 char* getABTestingId() {
     NSString *result = [GameAnalytics getABTestingId];
     return cStringCopy([result UTF8String]);
@@ -419,6 +429,11 @@ char* getABTestingId() {
 
 char* getUserId() {
     NSString *result = [GameAnalytics getUserId];
+    return cStringCopy([result UTF8String]);
+}
+
+char* getExternalUserId() {
+    NSString *result = [GameAnalytics getExternalUserId];
     return cStringCopy([result UTF8String]);
 }
 

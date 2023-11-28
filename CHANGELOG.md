@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.7.2**
+* added optional external user id:increased resource currency limit from 20 to 50
+
 **7.7.1**
 * fixed a bug in the android user-id generation
 

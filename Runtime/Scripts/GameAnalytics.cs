@@ -884,6 +884,24 @@ namespace GameAnalyticsSDK
         }
 
         /// <summary>
+        /// gets the current external user id (if any)
+        /// </summary>
+        public static String GetExternalUserId()
+        {
+            return GA_Wrapper.GetExternalUserId();
+        }
+
+        /// <summary>
+        /// Sets an optional external user id. Will be attached to every event. Has no impact on the GA process
+        /// Can be set or changed at any time
+        /// </summary>
+        /// <param name="externalUserId">External User identifier.</param>
+        public static void SetExternalUserId(string externalUserId)
+        {
+            GA_Wrapper.SetExternalUserId(externalUserId);
+        }
+
+        /// <summary>
         /// Sets the enabled manual session handling.
         /// </summary>
         /// <param name="enabled">If set to <c>true</c> enabled.</param>
@@ -1000,6 +1018,11 @@ namespace GameAnalyticsSDK
         public static string GetRemoteConfigsContentAsString()
         {
             return GA_Wrapper.GetRemoteConfigsContentAsString();
+        }
+
+        public static string GetRemoteConfigsContentAsJSON()
+        {
+            return GA_Wrapper.GetRemoteConfigsContentAsJSON();
         }
 
         // ----------------------- A/B TESTING ---------------------- //

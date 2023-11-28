@@ -286,6 +286,23 @@ typedef enum GAAdError : NSInteger
  */
 + (void)configureUserId:(NSString *)userId;
 
+/*!
+ @method
+
+ @abstract Set a custom external unique user_id identifying the user. 
+ Has no impact on any GA process, but will be added to every event
+ Can be changed at any point
+
+ @discussion <i>Example usage:</i>
+ <pre><code>
+ [GameAnalytics configureExternalUserId:@"24566"];
+ </code></pre>
+
+ @param userId
+ (String max length=64)
+ */
++ (void)configureExternalUserId:(NSString *)userId;
+
 /* @IF WRAPPER */
 
 /*
@@ -1561,6 +1578,17 @@ typedef enum GAAdError : NSInteger
 /*!
  @method
 
+ @abstract Get remote configs configurations as a valid json
+
+ @availability Available since (TBD)
+
+ @attribute For internal use.
+ */
++ (NSString *)getRemoteConfigsContentAsJSON;
+
+/*!
+ @method
+
  @abstract Use this to set the delegate for the Remote Configs to retreive information about the status of loading configurations
 
  @availability Available since (TBD)
@@ -1586,6 +1614,15 @@ typedef enum GAAdError : NSInteger
  @availability Available since (TBD)
  */
 + (NSString *)getUserId;
+
+/*!
+ @method
+
+ @abstract Get the external user id
+
+ @availability Available since (TBD)
+ */
++ (NSString *)getExternalUserId;
 
 /*!
  @method

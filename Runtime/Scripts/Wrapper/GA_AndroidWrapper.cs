@@ -249,6 +249,16 @@ namespace GameAnalyticsSDK.Wrapper
             return GA.CallStatic<string>("getABTestingVariantId");
         }
 
+        private static string getExternalUserId()
+        {
+            return GA.CallStatic<string>("getExternalUserId");
+        }
+
+        private static void configureExternalUserId(string externalUserId)
+        {
+            GA.CallStatic("configureExternalUserId", externalUserId);
+        }
+
         private static void startTimer(string key)
         {
             GA.CallStatic("startTimer", key);

@@ -36,16 +36,6 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _infoLogBuild = new GUIContent("Info Log Build", "Show info messages from GA in builds (f.x. Xcode for iOS).");
         private GUIContent _verboseLogBuild = new GUIContent("Verbose Log Build", "Show full info messages from GA in builds (f.x. Xcode for iOS). Noet that this option includes long JSON messages sent to the server.");
         private GUIContent _useManualSessionHandling = new GUIContent("Use manual session handling", "Manually choose when to end and start a new session. Note initializing of the SDK will automatically start the first session.");
-
-        private GUIContent _enableSDKInitEvent  = new GUIContent("Enable Startup Metrics", "Enables automatic startup performance data collection. This includes: application's boot time, general device specs (such as cpu model, number of cores, total memory, device resolution) and if this was the first time the user booted this application.");
-        private GUIContent _enableHealthEvent   = new GUIContent("Enable Session Performance Metrics", "Enables automatic performance data collection across the whole session. This includes sampling fps, memory consumption & cpu usage without any noticeable performance impact.");
-
-        private GUIContent _enableAppBootTracking    = new GUIContent("Boot time", "Will collect data on application start-up time (from launch until GameAnalytics has been initialized)");
-        private GUIContent _enableMemoryTracking     = new GUIContent("Memory Snapshots", "Performance & error events will take memory usage snapshots");
-        private GUIContent _enableHardwareTracking   = new GUIContent("Hardware Info", "Data about the user's hardware info and usage will be collected");
-        private GUIContent _enableFPSHistogram       = new GUIContent("FPS Histogram", "Samples FPS across the whole session and compiles a histogram");
-        private GUIContent _enableMemoryHistogram    = new GUIContent("Memory Usage Histogram", "Samples memory usage across the whole session & compiles a histogram");
-
 #if UNITY_5_6_OR_NEWER
         private GUIContent _usePlayerSettingsBunldeVersionForBuild = new GUIContent("Send Version* (Android, iOS) as build number", "The SDK will automatically fetch the version* number on Android and iOS and send it as the GameAnalytics build number.");
 #else
@@ -81,10 +71,6 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _debugSettingsIcon;
         private bool _debugSettingsIconOpen = false;
         private GUIContent _debugSettingsIconMsg = new GUIContent("Debug settings allows you to enable info log for the editor or for builds (Xcode, etc.). Enabling verbose logging will show additional JSON messages in builds.");
-
-        private GUIContent  _healthEventIcon;
-        private bool        _healthEventIconOpen = false;
-        private GUIContent  _healthEventIconMsg  = new GUIContent("Enable automatic collection of performance metrics. Those will give you insight into your application's general performance such as fps, memory consumption and user hadrware");
 
         private GUIContent _deleteIcon;
         private GUIContent _homeIcon;
@@ -174,11 +160,6 @@ namespace GameAnalyticsSDK.Editor
             if (_debugSettingsIcon == null)
             {
                 _debugSettingsIcon = new GUIContent(ga.InfoIcon, "Debug Settings.");
-            }
-
-            if (_healthEventIcon == null)
-            {
-                _healthEventIcon = new GUIContent(ga.InfoIcon, "Performance Metrics.");
             }
 
             if (_deleteIcon == null)
@@ -1542,113 +1523,6 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
-
-                    const int layoutWidth   = 35;
-                    const int btnSize       = 12;
-
-                    GUILayout.BeginVertical("Performance");
-
-                        GUILayout.BeginHorizontal();
-                        //GUILayout.Space(-4);
-                        GUILayout.Label("Performance Metrics (EXPERIMENTAL)", EditorStyles.largeLabel);
-
-                        if (GUILayout.Button(_healthEventIcon, EditorStyles.iconButton, new GUILayoutOption[] {
-                            GUILayout.Width(btnSize),
-                            GUILayout.Height(btnSize)
-                        }))
-                        {
-                            _healthEventIconOpen = !_healthEventIconOpen;
-                        }
-                        GUILayout.EndHorizontal();
-
-                        if (_healthEventIconOpen)
-                        {
-                            GUILayout.BeginHorizontal();
-                            TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                            GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                            Color tmpColor = GUI.skin.box.normal.textColor;
-                            GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                            RectOffset tmpOffset = GUI.skin.box.padding;
-                            GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                            GUILayout.Box(_healthEventIconMsg);
-                            GUI.skin.box.alignment = tmpAnchor;
-                            GUI.skin.box.normal.textColor = tmpColor;
-                            GUI.skin.box.padding = tmpOffset;
-                            GUILayout.EndHorizontal();
-
-                            Rect tmpRect = GUILayoutUtility.GetLastRect();
-                            if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
-                            {
-                                Application.OpenURL("https://docs.gameanalytics.com");
-                            }
-                        }
-
-                        EditorGUILayout.Space();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label(_enableHardwareTracking);
-                        ga.EnableHardwareTracking = EditorGUILayout.Toggle("", ga.EnableHardwareTracking, GUILayout.Width(layoutWidth));
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label(_enableMemoryTracking);
-                        ga.EnableMemoryTracking = EditorGUILayout.Toggle("", ga.EnableMemoryTracking, GUILayout.Width(layoutWidth));
-                        GUILayout.EndHorizontal();
-
-                        EditorGUILayout.Space();
-                        EditorGUILayout.Space();
-
-                        GUILayout.BeginVertical("Startup Performance");
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Space(-12);
-                            EditorGUILayout.LabelField("Startup Performance", EditorStyles.boldLabel);
-                            GUILayout.EndHorizontal();
-
-                            EditorGUILayout.Space();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_enableSDKInitEvent);
-                            ga.EnableSDKInitEvent = EditorGUILayout.Toggle("", ga.EnableSDKInitEvent, GUILayout.Width(layoutWidth));
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_enableAppBootTracking);
-                            ga.EnableAppBootTimeTracking = EditorGUILayout.Toggle("", ga.EnableAppBootTimeTracking, GUILayout.Width(layoutWidth));
-                            GUILayout.EndHorizontal();
-
-                        GUILayout.EndVertical();
-
-                        EditorGUILayout.Space();
-                        EditorGUILayout.Space();
-
-                        GUILayout.BeginVertical("Session Performance");
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Space(-12);
-                            EditorGUILayout.LabelField("Session Performance", EditorStyles.boldLabel);
-                            GUILayout.EndHorizontal();
-
-                            EditorGUILayout.Space();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_enableHealthEvent);
-                            ga.EnableHealthEvent = EditorGUILayout.Toggle("", ga.EnableHealthEvent, GUILayout.Width(layoutWidth));
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_enableFPSHistogram);
-                            ga.EnableFPSHistogram = EditorGUILayout.Toggle("", ga.EnableFPSHistogram, GUILayout.Width(layoutWidth));
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_enableMemoryHistogram);
-                            ga.EnableMemoryHistogram = EditorGUILayout.Toggle("", ga.EnableMemoryHistogram, GUILayout.Width(layoutWidth));
-                            GUILayout.EndHorizontal();
-
-                        GUILayout.EndVertical();
-
-                    GUILayout.EndVertical();
                 }
                 #endregion // Settings.InspectorStates.Pref
             }

@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "7.7.1";
+        public static string VERSION = "7.7.2";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -133,14 +133,6 @@ namespace GameAnalyticsSDK.Setup
         public bool UseManualSessionHandling = false;
         public bool SendExampleGameDataToMyGame = false;
         //public bool UseBundleVersion = false;
-
-        public bool EnableSDKInitEvent      = false;
-        public bool EnableHealthEvent       = false;
-        public bool EnableHardwareTracking  = false;
-        public bool EnableMemoryTracking    = false;
-        public bool EnableFPSHistogram      = false;
-        public bool EnableMemoryHistogram   = false;
-        public bool EnableAppBootTimeTracking = false;
 
         public bool InternetConnectivity;
 

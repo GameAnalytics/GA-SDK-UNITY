@@ -653,6 +653,16 @@ namespace GameAnalyticsSDK.Wrapper
             return getRemoteConfigsContentAsString();
         }
 
+        public static string GetRemoteConfigsContentAsJSON()
+        {
+            #if UNITY_IOS && !(UNITY_EDITOR)
+                return getRemoteConfigsContentAsJSON();
+            #else
+                return GetRemoteConfigsContentAsString();
+            #endif
+        }
+
+
         public static string GetABTestingId()
         {
             return getABTestingId();
@@ -661,6 +671,24 @@ namespace GameAnalyticsSDK.Wrapper
         public static string GetABTestingVariantId()
         {
             return getABTestingVariantId();
+        }
+
+        public static void SetExternalUserId(string userId)
+        {
+            #if (UNITY_IOS || UNITY_ANDROID) && !(UNITY_EDITOR)
+                configureExternalUserId(userId);
+            #else
+                return;
+            #endif
+        }
+
+        public static string GetExternalUserId()
+        {
+            #if (UNITY_IOS || UNITY_ANDROID) && !(UNITY_EDITOR)
+                return getExternalUserId();
+            #else
+                return "";
+            #endif
         }
 
         private static string DictionaryToJsonString(IDictionary<string, object> dict)
