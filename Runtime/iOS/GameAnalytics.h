@@ -1829,6 +1829,14 @@ typedef enum GAAdError : NSInteger
  */
 + (void)setGlobalCustomEventFields:(NSDictionary *)customFields;
 
++ (void) enableSDKInitEvent:(BOOL)flag;
+
++ (void) enableFpsHistogram:(BOOL)flag;
+
++ (void) enableMemoryHistogram:(BOOL)flag;
+
++ (void) enableHealthHardwareInfo:(BOOL)flag;
+
 /*!
  @method
 

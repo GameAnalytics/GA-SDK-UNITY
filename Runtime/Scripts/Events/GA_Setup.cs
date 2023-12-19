@@ -82,6 +82,25 @@ namespace GameAnalyticsSDK.Events
 		{
 			GA_Wrapper.SetGlobalCustomEventFields(customFields);
 		}
+        public static void EnableSDKInitEvent(bool flag)
+        {
+            GA_Wrapper.EnableSDKInitEvent(flag);
+        }
+
+        public static void EnableFpsHistogram(bool flag)
+        {
+            GA_Wrapper.EnableFpsHistogram(flag);
+        }
+
+        public static void EnableMemoryHistogram(bool flag)
+        {
+            GA_Wrapper.EnableMemoryHistogram(flag);
+        }
+
+        public static void EnableHealthHardwareInfo(bool flag)
+        {
+            GA_Wrapper.EnableHealthHardwareInfo(flag);
+        }
 
 		#endregion
 	}

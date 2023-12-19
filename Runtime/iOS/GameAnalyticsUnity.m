@@ -463,5 +463,21 @@ void resumeTimer(const char *key) {
 
 long stopTimer(const char *key) {
     NSString *keyString = key != NULL ? [NSString stringWithUTF8String:key] : nil;
-    return [GameAnalytics stopTimer:keyString];
+    [GameAnalytics stopTimer:keyString];
+}
+
+void enableSDKInitEvent(BOOL flag) {
+    [GameAnalytics enableSDKInitEvent:flag];
+}
+
+void enableFpsHistogram(BOOL flag) {
+    [GameAnalytics enableFpsHistogram:flag];
+}
+
+void enableMemoryHistogram(BOOL flag) {
+    [GameAnalytics enableMemoryHistogram:flag];
+}
+
+void enableHealthHardwareInfo(BOOL flag) {
+    [GameAnalytics enableHealthHardwareInfo:flag];
 }

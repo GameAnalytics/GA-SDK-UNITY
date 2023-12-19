@@ -159,6 +159,18 @@ namespace GameAnalyticsSDK.Wrapper
         [DllImport ("__Internal")]
         public static extern void useRandomizedId(bool flag);
 
+        [DllImport ("__Internal")]
+        public static extern void enableSDKInitEvent(bool flag);
+
+        [DllImport ("__Internal")]
+        public static extern void enableFpsHistogram(bool flag);
+
+        [DllImport ("__Internal")]
+        public static extern void enableMemoryHistogram(bool flag);
+
+        [DllImport ("__Internal")]
+        public static extern void enableHealthHardwareInfo(bool flag);
+
         private static void initialize(string gamekey, string gamesecret)
         {
             gaInitialize(gamekey, gamesecret, GameAnalytics.SettingsGA.NativeErrorReporting);

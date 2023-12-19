@@ -288,6 +288,26 @@ namespace GameAnalyticsSDK.Wrapper
         {
             GA.CallStatic("setGAIDTracking", flag);
         }
+
+        public static void enableSDKInitEvent(bool flag)
+        {
+            GA.CallStatic("enableSDKInitEvent", flag);
+        }
+
+        public static void enableFpsHistogram(bool flag)
+        {
+            GA.CallStatic("enableFpsHistogram", flag);
+        }
+
+        public static void enableMemoryHistogram(bool flag)
+        {
+            GA.CallStatic("enableMemoryHistogram", flag);
+        }
+
+        public static void enableHealthHardwareInfo(bool flag)
+        {
+            GA.CallStatic("enableHealthHardwareInfo", flag);
+        }
 #endif
     }
 }

@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "7.7.2";
+        public static string VERSION = "7.8.0-beta";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -198,6 +198,19 @@ namespace GameAnalyticsSDK.Setup
 
         public bool ResourceItemTypesFoldOut = false;
         public bool ResourceCurrenciesFoldOut = false;
+
+        public bool EnableMemoryHistogram = false;
+        public bool EnableHealthEvent = false;
+
+        public bool EnableFPSHistogram = false;
+
+        public bool EnableSDKInitEvent = false;
+
+        public bool EnableHardwareTracking = false;
+
+        public bool EnableMemoryTracking = false;
+
+
 
         #endregion
 

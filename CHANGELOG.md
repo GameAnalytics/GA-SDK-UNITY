@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.8.0-beta**
+* beta versionadded optional session performance metrics collection
+* added optional app boot-time metric collection
+
 **7.7.2**
 * added optional external user id:increased resource currency limit from 20 to 50
 

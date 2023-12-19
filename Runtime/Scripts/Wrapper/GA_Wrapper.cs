@@ -742,6 +742,36 @@ namespace GameAnalyticsSDK.Wrapper
             return 0;
 #endif
         }
+
+        ///// HEALTH
+
+        public static void EnableSDKInitEvent(bool flag)
+        {
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+                enableSDKInitEvent(flag);
+            #endif
+        }
+
+        public static void EnableFpsHistogram(bool flag)
+        {
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+                enableFpsHistogram(flag);
+            #endif
+        }
+
+        public static void EnableMemoryHistogram(bool flag)
+        {
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+                enableMemoryHistogram(flag);
+            #endif
+        }
+
+        public static void EnableHealthHardwareInfo(bool flag)
+        {
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+                enableHealthHardwareInfo(flag);
+            #endif
+        }
     }
 
 }
