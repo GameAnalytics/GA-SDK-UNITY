@@ -104,6 +104,21 @@ var GameAnalyticsUnity = {
         fieldsString = fieldsString ? fieldsString : "{}";
         gameanalytics.GameAnalytics.addErrorEvent(severity, Pointer_stringify(message), JSON.parse(fieldsString), mergeFields);
     },
+    addAdEventWithDuration: function (adAction, adType, adSdkName, adPlacement, duration, fields, mergeFields) {
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addAdEventWithDuration(adAction, adType, Pointer_stringify(adSdkName), Pointer_stringify(adPlacement), duration, JSON.parse(fieldsString), mergeFields);
+    },
+    addAdEventWithReason: function (adAction, adType, adSdkName, adPlacement, noAdReason, fields, mergeFields) {
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addAdEventWithNoAdReason(adAction, adType, Pointer_stringify(adSdkName), Pointer_stringify(adPlacement), noAdReason, JSON.parse(fieldsString), mergeFields);
+    },
+    addAdEvent: function (adAction, adType, adSdkName, adPlacement, fields, mergeFields) {
+        var fieldsString = Pointer_stringify(fields);
+        fieldsString = fieldsString ? fieldsString : "{}";
+        gameanalytics.GameAnalytics.addAdEvent(adAction, adType, Pointer_stringify(adSdkName), Pointer_stringify(adPlacement), JSON.parse(fieldsString), mergeFields);
+    },
     setEnabledInfoLog: function(enabled)
     {
         gameanalytics.GameAnalytics.setEnabledInfoLog(enabled);
