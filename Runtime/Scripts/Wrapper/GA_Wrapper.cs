@@ -592,7 +592,7 @@ namespace GameAnalyticsSDK.Wrapper
             {
                 addAdEventWithDuration((int)adAction, (int)adType, adSdkName, adPlacement, duration, fieldsAsString, mergeFields);
             }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#elif UNITY_IOS || UNITY_ANDROID
                 addAdEventWithDuration((int)adAction, (int)adType, adSdkName, adPlacement, duration, fieldsAsString, mergeFields);
 #endif
         }
@@ -605,7 +605,7 @@ namespace GameAnalyticsSDK.Wrapper
             {
                 addAdEventWithReason((int)adAction, (int)adType, adSdkName, adPlacement, (int)noAdReason, fieldsAsString, mergeFields);
             }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#elif UNITY_IOS || UNITY_ANDROID
                 addAdEventWithReason((int)adAction, (int)adType, adSdkName, adPlacement, (int)noAdReason, fieldsAsString, mergeFields);
 #endif
         }
@@ -618,7 +618,7 @@ namespace GameAnalyticsSDK.Wrapper
             {
                 addAdEvent((int)adAction, (int)adType, adSdkName, adPlacement, fieldsAsString, mergeFields);
             }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#elif UNITY_IOS || UNITY_ANDROID
                 addAdEvent((int)adAction, (int)adType, adSdkName, adPlacement, fieldsAsString, mergeFields);
 #endif
         }

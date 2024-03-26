@@ -121,10 +121,7 @@ namespace GameAnalyticsSDK.Events
 
                     if (fpsSinceUpdate > 0)
                     {
-                        if (GameAnalytics.Initialized)
-                        {
-                            GameAnalytics.NewDesignEvent("GA:AverageFPS", ((int)fpsSinceUpdate));
-                        }
+                        GameAnalytics.NewDesignEvent("GA:AverageFPS", ((int)fpsSinceUpdate));
                     }
                 }
             }
@@ -133,11 +130,7 @@ namespace GameAnalyticsSDK.Events
             {
                 if (_criticalFpsCount > 0)
                 {
-                    if(GameAnalytics.Initialized)
-                    {
-                        GameAnalytics.NewDesignEvent("GA:CriticalFPS", _criticalFpsCount);
-                    }
-
+                    GameAnalytics.NewDesignEvent("GA:CriticalFPS", _criticalFpsCount);
                     _criticalFpsCount = 0;
                 }
             }
