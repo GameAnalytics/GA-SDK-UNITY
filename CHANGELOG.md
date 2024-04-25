@@ -1,6 +1,11 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.9.1**
+* consent status is now tracked correctly on iOS
+* bug fix for fps tracking on iOS
+* updated ironsource impression listener
+
 **7.9.0**
 * added the iOS Privacy Manifest
 * fixed app boot time measurement for Android & iOS
