@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.0-beta**
+* added checks to safely upgrade from 7.6.0 , 7.6.1, 7.7.0 without having any impact on metrics for Android
+* fixed impression callback json for Digital Turbine
+
 **7.9.1**
 * consent status is now tracked correctly on iOS
 * bug fix for fps tracking on iOS
