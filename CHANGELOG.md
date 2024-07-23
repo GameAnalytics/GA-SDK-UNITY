@@ -1,6 +1,13 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.0**
+* added checks to safely upgrade from 7.6.0 , 7.6.1, 7.7.0 without having any impact on metrics for Android
+
+* fixed impression callback json for Digital Turbine
+* removed deprecated functions from webgl
+* fixed warnings for android
+
 **7.10.0-beta**
 * added checks to safely upgrade from 7.6.0 , 7.6.1, 7.7.0 without having any impact on metrics for Android
 * fixed impression callback json for Digital Turbine
