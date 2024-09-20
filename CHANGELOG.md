@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.2**
+* fixed legacy FPS warning if events were sent before sdk was initialized:fixed webgl string marshaling bug
+
 **7.10.1**
 * fixed error event validation on iOS
 

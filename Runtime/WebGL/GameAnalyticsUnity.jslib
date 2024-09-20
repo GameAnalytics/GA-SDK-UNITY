@@ -146,7 +146,7 @@ var GameAnalyticsUnity = {
     getRemoteConfigsValueAsString: function(key, defaultValue)
     {
         var returnStr = gameanalytics.GameAnalytics.getRemoteConfigsValueAsString(UTF8ToString(key), UTF8ToString(defaultValue));
-        var buffer = stringToUTF8(returnStr);
+        var buffer = allocateStringBuffer(returnStr);
         return buffer;
     },
     isRemoteConfigsReady: function()
@@ -156,19 +156,19 @@ var GameAnalyticsUnity = {
     getRemoteConfigsContentAsString: function()
     {
         var returnStr = gameanalytics.GameAnalytics.getRemoteConfigsContentAsString();
-        var buffer = stringToUTF8(returnStr);
+        var buffer = allocateStringBuffer(returnStr);
         return buffer;
     },
     getABTestingId: function()
     {
         var returnStr = gameanalytics.GameAnalytics.getABTestingId();
-        var buffer = stringToUTF8(returnStr);
+        var buffer = allocateStringBuffer(returnStr);
         return buffer;
     },
     getABTestingVariantId: function()
     {
         var returnStr = gameanalytics.GameAnalytics.getABTestingVariantId();
-        var buffer = stringToUTF8(returnStr);
+        var buffer = allocateStringBuffer(returnStr);
         return buffer;
     }
 };
