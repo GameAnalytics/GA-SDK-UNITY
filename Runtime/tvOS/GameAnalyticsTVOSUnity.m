@@ -5,7 +5,7 @@
 //  Copyright (c) GameAnalytics. All rights reserved.
 //
 
-#import "GameAnalytics.h"
+#import "GameAnalyticsTVOS.h"
 
 @interface GARemoteConfigsUnityDelegate : NSObject<GARemoteConfigsDelegate>
 {
