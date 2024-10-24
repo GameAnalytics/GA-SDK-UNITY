@@ -20,7 +20,7 @@ namespace GameAnalyticsSDK.Editor
             signup.maxSize = new Vector2(640, 600);
             signup.minSize = new Vector2(640, 600);
 
-            signup.titleContent = new GUIContent ("GameAnalytics - Sign up for FREE");
+            signup.titleContent = new GUIContent ("GameAnalytics - Setup Guide");
             signup.ShowUtility ();
             signup.Opened();
 

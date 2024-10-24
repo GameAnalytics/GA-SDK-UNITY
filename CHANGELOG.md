@@ -1,6 +1,13 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.3**
+* removed user sign-up form
+* updated GATool links
+* updated documentation links
+* updated login requests
+* update game and organization requests
+
 **7.10.2**
 * fixed legacy FPS warning if events were sent before sdk was initialized:fixed webgl string marshaling bug
 
