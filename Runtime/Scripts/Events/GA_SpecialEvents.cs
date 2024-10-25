@@ -133,7 +133,7 @@ namespace GameAnalyticsSDK.Events
                 {
                     if(GameAnalytics.Initialized)
                         GameAnalytics.NewDesignEvent("GA:CriticalFPS", _criticalFpsCount);
-                    
+                        
                     _criticalFpsCount = 0;
                 }
             }
