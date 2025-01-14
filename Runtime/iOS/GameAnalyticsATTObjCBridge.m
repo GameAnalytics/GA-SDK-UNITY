@@ -9,7 +9,7 @@ void GameAnalyticsRequestTrackingAuthorization(
     GameAnalyticsATTListenerAuthorized gameAnalyticsATTListenerAuthorized)
 {
     if (@available(iOS 14, *)) {
-#ifdef __IPHONE_14_0
+#ifdef __IPHONE_14_0 || __TVOS_14_0
         [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
             switch (status)
                 {

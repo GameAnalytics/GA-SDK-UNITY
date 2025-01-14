@@ -13,7 +13,7 @@ using UnityEditor;
 using System.IO;
 #endif
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 using GameAnalyticsSDK.iOS;
 #endif
 
@@ -1110,7 +1110,7 @@ namespace GameAnalyticsSDK
         // ----------------------- IOS 14+ APP TRACKING TRANSPARENCY ---------------------- //
         public static void RequestTrackingAuthorization(IGameAnalyticsATTListener listener)
         {
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
             GameAnalyticsATTClient.Instance.RequestTrackingAuthorization(listener);
 #endif
         }
