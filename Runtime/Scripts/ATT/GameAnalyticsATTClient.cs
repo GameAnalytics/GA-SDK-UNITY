@@ -1,4 +1,4 @@
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 using AOT;
 
 namespace GameAnalyticsSDK.iOS

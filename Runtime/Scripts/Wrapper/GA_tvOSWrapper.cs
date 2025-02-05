@@ -90,9 +90,6 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void setEventSubmission(bool enabled);
 
         [DllImport ("__Internal")]
-        private static extern void setEventSubmissionWithCaching(bool enabled, bool doCacheLocally);
-
-        [DllImport ("__Internal")]
         private static extern void gameAnalyticsStartSession();
 
         [DllImport ("__Internal")]

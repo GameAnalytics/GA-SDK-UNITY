@@ -217,7 +217,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static string getUserId()
         {
-            return "";
+            return GameAnalyticsSDK.Net.GameAnalytics.GetUserId();
         }
 #endif
     }
