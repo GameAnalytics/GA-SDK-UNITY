@@ -1,6 +1,13 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.4**
+* added fix for bug with getting user id on win32/mac/android
+* added fix for tvOS platform
+* fixed warning for unsupported platform
+* removed unused variables
+* repair Max SDK integration
+
 **7.10.3**
 * removed user sign-up form
 * updated GATool links
