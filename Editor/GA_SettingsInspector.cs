@@ -963,10 +963,6 @@ namespace GameAnalyticsSDK.Editor
                         this.selectedPlatformIndex = 0;
                     }
 
-#if UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WP_8_1 || UNITY_SAMSUNGTV
-                    // Do nothing
-#else
-
                     EditorGUILayout.Space();
 
                     GUILayout.BeginHorizontal();
@@ -981,7 +977,6 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.EndHorizontal();
 
-#endif
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
                     EditorGUILayout.Space();
@@ -1493,6 +1488,7 @@ namespace GameAnalyticsSDK.Editor
                     EditorGUILayout.Space();
 
                     const int layoutWidth   = 35;
+                    const int btnSize       = 12;
 
                     GUILayout.BeginVertical("Performance");
 

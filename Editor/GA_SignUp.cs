@@ -34,6 +34,10 @@ namespace GameAnalyticsSDK.Editor
         private const int INPUT_WIDTH = 230;
 
         private static GA_SignUp _instance;
+
+        private bool _signUpInProgress = false;
+        private bool _createGameInProgress = false;
+        private string _googlePlayPublicKey = "";
         private RuntimePlatform _selectedPlatform;
         private int _selectedOrganization;
         private int _selectedStudio;
