@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.5**
+* Android: fixed a bug regarding OAID logic
+* Android: improved internal user id logic
+
 **7.10.4**
 * added fix for bug with getting user id on win32/mac/android
 * added fix for tvOS platform

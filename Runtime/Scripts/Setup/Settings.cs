@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "7.10.4";
+        public static string VERSION = "7.10.5";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
