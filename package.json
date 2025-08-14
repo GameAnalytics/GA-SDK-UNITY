@@ -4,9 +4,6 @@
     "displayName": "GameAnalytics",
     "description": "GameAnalytics collects and stores your data with no limits.  You can then view your core KPI's in order to see what areas of your game need to improvements.  If you want to find out more about how gamers play, then add in funnels, progression events and resource tracking. ",
     "unity": "2018.1",
-    "dependencies": {
-        "com.google.external-dependency-manager": "1.2.168"
-    },
     "publishConfig": {
         "registry": "https://package.openupm.com"
     },

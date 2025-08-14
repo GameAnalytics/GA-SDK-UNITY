@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -161,20 +162,35 @@ namespace GameAnalyticsSDK.Setup
         public List<HelpTypes> ClosedHints = new List<HelpTypes>();
         public bool DisplayHints;
         public Vector2 DisplayHintsScrollState;
+        
+        [NonSerialized]
         public Texture2D Logo;
+        [NonSerialized]
         public Texture2D UpdateIcon;
+        [NonSerialized]
         public Texture2D InfoIcon;
+        [NonSerialized]
         public Texture2D DeleteIcon;
+        [NonSerialized]
         public Texture2D GameIcon;
+        [NonSerialized]
         public Texture2D HomeIcon;
+        [NonSerialized]
         public Texture2D InstrumentIcon;
+        [NonSerialized]
         public Texture2D QuestionIcon;
+        [NonSerialized]
         public Texture2D UserIcon;
 
+        [NonSerialized]
         public Texture2D AmazonIcon;
+        [NonSerialized]
         public Texture2D GooglePlayIcon;
+        [NonSerialized]
         public Texture2D iosIcon;
+        [NonSerialized]
         public Texture2D macIcon;
+        [NonSerialized]
         public Texture2D windowsPhoneIcon;
 
         [System.NonSerialized]
