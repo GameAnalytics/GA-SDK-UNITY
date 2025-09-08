@@ -1,6 +1,10 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**7.10.6**
+* Fixed a bug where GetUserID() could be called before SDK was initialized.
+* GetUserID() now returns empty string if called before SDK is not done initializing.
+
 **7.10.5**
 * Android: fixed a bug regarding OAID logic
 * Android: improved internal user id logic

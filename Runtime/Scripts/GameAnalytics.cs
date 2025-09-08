@@ -886,7 +886,14 @@ namespace GameAnalyticsSDK
         /// </summary>
         public static String GetUserId()
         {
-            return GA_Wrapper.getUserId();
+            if (Initialized)
+            {
+                return GA_Wrapper.getUserId();
+            }
+            else
+            {
+                return "";
+            }
         }
 
         /// <summary>
