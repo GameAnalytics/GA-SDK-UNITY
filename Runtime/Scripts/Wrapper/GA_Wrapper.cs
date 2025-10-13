@@ -693,15 +693,17 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static string DictionaryToJsonString(IDictionary<string, object> dict)
         {
-            Hashtable table = new Hashtable();
-            if (dict != null)
+            using (GA_HashtablePool.Get(out var table))
             {
-                foreach (KeyValuePair<string, object> pair in dict)
+                if (dict != null)
                 {
-                    table.Add(pair.Key, pair.Value);
+                    foreach (KeyValuePair<string, object> pair in dict)
+                    {
+                        table.Add(pair.Key, pair.Value);
+                    }
                 }
+                return GA_MiniJSON.Serialize(table);
             }
-            return GA_MiniJSON.Serialize(table);
         }
 
         // TIMER FUNCTIONS
