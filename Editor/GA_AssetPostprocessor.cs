@@ -203,40 +203,63 @@ namespace GameAnalyticsSDK.Editor
                     importer.SaveAndReimport();
                 }
             }
-            {
-                PluginImporter importer = AssetImporter.GetAtPath(AssetsPrependPath + "/Plugins/Linux/sqlite3.so") as PluginImporter;
-                if(importer != null && (importer.GetCompatibleWithAnyPlatform() ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux64)
-#if UNITY_2019_2_OR_NEWER
-#else
-                    || !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinux) ||
-                    !importer.GetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal)
-#endif
-                ))
+            { 
+                // c++ LIB
+                const int ID_WINDOWS    = 0;
+                const int ID_LINUX      = 1;
+                const int ID_OSX        = 2;
+                const int NUM_PLATFORMS = 3;
+
+                string[] libNames = {
+                    "Windows/GameAnalytics.dll",
+                    "Linux/libGameAnalytics.so",
+                    "MacOS/libGameAnalytics.dylib" 
+                };
+
+                for (int i = 0; i < NUM_PLATFORMS; ++i)
                 {
-                    importer.SetCompatibleWithAnyPlatform(false);
-                    importer.SetCompatibleWithEditor(false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, true);
-#if UNITY_2019_2_OR_NEWER
-#else
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux, true);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinuxUniversal, true);
-#endif
-#if UNITY_2017_3_OR_NEWER
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
-#else
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
-#endif
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
-                    importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, false);
-                    importer.SaveAndReimport();
+                    PluginImporter importer = AssetImporter.GetAtPath(AssetsPrependPath + "/Plugins/" + libNames[i]) as PluginImporter;
+                    if (importer != null)
+                    {
+                        importer.SetCompatibleWithEditor(false);
+                        importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
+                        importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
+                        importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
+                        importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
+                        importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, false);
+
+                        switch (i)
+                        {
+                            case ID_WINDOWS:
+                                {
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, true);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
+                                    break;
+                                }
+
+                            case ID_LINUX:
+                                {
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, true);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
+                                    break;
+                                }
+
+                            case ID_OSX:
+                                {
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
+                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
+                                    break;
+                                }
+                        }
+
+                        importer.SaveAndReimport();
+                    }
                 }
             }
             #endregion // Standalone

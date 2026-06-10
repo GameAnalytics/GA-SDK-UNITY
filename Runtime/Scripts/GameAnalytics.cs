@@ -114,6 +114,12 @@ namespace GameAnalyticsSDK
 #if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN && !UNITY_SWITCH && !UNITY_PS4 && !UNITY_XBOXONE)
 #if (UNITY_WSA)
             onQuit();
+#elif UNITY_STANDALONE && !GA_USE_MONO_WRAPPER
+            // C++ wrapper path: drive end-of-session through the native SDK
+            // while Mono is still alive, so the SESSION END event and its
+            // log lines are routed through the custom log handler before
+            // ~GAState runs during static destruction.
+            GA_Wrapper.OnQuit();
 #else
             GameAnalyticsSDK.Net.GameAnalytics.OnQuit();
 # endif
@@ -177,6 +183,10 @@ namespace GameAnalyticsSDK
         {
             if(!Application.isPlaying)
                 return; // no need to setup anything else if we are in the editor and not playing
+
+            // Route native logs to Unity before anything else, so any log
+            // emitted by subsequent setup calls is captured by our handler.
+            GA_Wrapper.ConfigureCustomLogHandler(GA_NativeLogger.GetCallback());
 
             if(SettingsGA.InfoLogBuild)
             {
@@ -255,6 +265,14 @@ namespace GameAnalyticsSDK
 
         public static void Initialize ()
         {
+            // Initialization touches main-thread-only Unity APIs; marshal if called off-thread.
+            if (GameAnalyticsSDK.Utilities.GA_MainThreadDispatcher.IsInitialized
+                && !GameAnalyticsSDK.Utilities.GA_MainThreadDispatcher.IsMainThread)
+            {
+                GameAnalyticsSDK.Utilities.GA_MainThreadDispatcher.RunOnMainThread(Initialize);
+                return;
+            }
+
             InternalInitialize();
             int platformIndex = GetPlatformIndex();
 

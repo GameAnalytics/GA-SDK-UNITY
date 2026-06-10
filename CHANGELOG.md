@@ -1,6 +1,13 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**8.0.0**
+* Standalone (Windows/macOS/Linux) now use the native C++ GameAnalytics SDK instead of the Mono wrapper
+* Native SDK logs are now routed to the Unity console
+* Initialize() is now thread-safe and auto-marshals to the main thread
+* Removed bundled sqlite3 libraries (now built into native binaries)
+* Updated iOS SDK to 5.0.1
+
 **7.10.6**
 * Fixed a bug where GetUserID() could be called before SDK was initialized.
 * GetUserID() now returns empty string if called before SDK is not done initializing.

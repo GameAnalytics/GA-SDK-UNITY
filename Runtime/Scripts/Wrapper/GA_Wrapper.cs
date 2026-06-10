@@ -623,6 +623,27 @@ namespace GameAnalyticsSDK.Wrapper
 #endif
         }
 
+        public static void ConfigureCustomLogHandler(GANativeLogCallback callback)
+        {
+#if UNITY_STANDALONE && !(UNITY_EDITOR) && !(GA_USE_MONO_WRAPPER)
+            configureCustomLogHandler(callback);
+#endif
+        }
+
+        // Drives the native SDK's end-of-app sequence (ends session, flushes
+        // event queue, joins worker thread). Must be called while the host
+        // runtime is still alive so the session_end event and its log lines
+        // can be routed through the custom log handler before Mono tears
+        // down. Without this, that work would only happen later in
+        // ~GAState during static destruction, by which point the handler
+        // has been reset and the logs go to the SDK's default sink.
+        public static void OnQuit()
+        {
+#if UNITY_STANDALONE && !(UNITY_EDITOR) && !(GA_USE_MONO_WRAPPER)
+            gameAnalyticsOnQuit();
+#endif
+        }
+
         public static void SetInfoLog (bool enabled)
         {
             setEnabledInfoLog (enabled);

@@ -354,7 +354,7 @@ void setEventSubmission(BOOL flag) {
 
 
 void setEventSubmissionWithCaching(BOOL flag, BOOL doCache) {
-    [GameAnalytics setEnabledEventSubmission:flag doLocalEventCaching:doCache];
+    [GameAnalytics setEnabledEventSubmission:flag doCacheLocally:doCache];
 }
 
 void gameAnalyticsStartSession() {
@@ -435,10 +435,6 @@ char* getUserId() {
 char* getExternalUserId() {
     NSString *result = [GameAnalytics getExternalUserId];
     return cStringCopy([result UTF8String]);
-}
-
-void useRandomizedId(BOOL flag) {
-    [GameAnalytics useRandomizedId:flag];
 }
 
 char* getABTestingVariantId() {

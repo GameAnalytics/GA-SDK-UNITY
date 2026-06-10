@@ -279,6 +279,21 @@ namespace GameAnalyticsSDK.Editor
 #endif
 
                 File.WriteAllText(projPath, proj.WriteToString());
+
+                // NSUserTrackingUsageDescription is required by Apple when AppTrackingTransparency is linked.
+                string plistPath = Path.Combine(path, "Info.plist");
+                if (File.Exists(plistPath))
+                {
+                    UnityEditor.iOS.Xcode.PlistDocument plist = new UnityEditor.iOS.Xcode.PlistDocument();
+                    plist.ReadFromString(File.ReadAllText(plistPath));
+
+                    const string trackingKey = "NSUserTrackingUsageDescription";
+                    if (!plist.root.values.ContainsKey(trackingKey))
+                    {
+                        plist.root.SetString(trackingKey, "This identifier will be used to deliver personalized ads to you.");
+                        File.WriteAllText(plistPath, plist.WriteToString());
+                    }
+                }
 #endif
             }
 

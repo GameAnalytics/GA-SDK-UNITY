@@ -68,4 +68,16 @@ namespace GameAnalyticsSDK
         InvalidRequest = 5,
         UnableToPrecache = 6
     }
+
+    /// <summary>
+    /// Mirrors the native C++ GALoggerMessageType enum.
+    /// </summary>
+    internal enum GANativeLogType
+    {
+        Error   = 0,
+        Warning = 1,
+        Info    = 2,
+        Debug   = 3,
+        Verbose = 4
+    }
 }
