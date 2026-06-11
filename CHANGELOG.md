@@ -1,6 +1,9 @@
 Changelog
 ---------
 <!--(CHANGELOG_TOP)-->
+**8.0.1**
+* Fixed an Android dexing issue (updated GameAnalytics Android SDK to 7.0.1)
+
 **8.0.0**
 * Standalone (Windows/macOS/Linux) now use the native C++ GameAnalytics SDK instead of the Mono wrapper
 * Native SDK logs are now routed to the Unity console
