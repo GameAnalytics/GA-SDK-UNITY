@@ -6,15 +6,41 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using GameAnalyticsSDK.Utilities;
+using AOT;
 
 namespace GameAnalyticsSDK.Wrapper
 {
 #if UNITY_STANDALONE && !(UNITY_EDITOR) && !(GA_USE_MONO_WRAPPER)
     public partial class GA_Wrapper
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void GANativeRemoteConfigsCallback(IntPtr remoteConfigs);
+
+        private static readonly GANativeRemoteConfigsCallback remoteConfigsCallback = OnNativeRemoteConfigsUpdated;
+
+        [MonoPInvokeCallback(typeof(GANativeRemoteConfigsCallback))]
+        private static void OnNativeRemoteConfigsUpdated(IntPtr remoteConfigs)
+        {
+            GA_MainThreadDispatcher.RunOnMainThread(GameAnalytics.RemoteConfigsUpdated);
+        }
+
         private static void configureCustomLogHandler(GANativeLogCallback callback)
         {
             gameAnalytics_configureCustomLogHandler(callback);
+        }
+
+        private static void configureRemoteConfigsListener()
+        {
+            try
+            {
+                gameAnalytics_configureRemoteConfigsListener(remoteConfigsCallback);
+            }
+            catch (EntryPointNotFoundException)
+            {
+                Debug.LogWarning("GameAnalytics: bundled native library does not report remote "
+                    + "configs updates - OnRemoteConfigsUpdatedEvent will not fire. "
+                    + "Poll GameAnalytics.IsRemoteConfigsReady() instead.");
+            }
         }
 
         private static string[] MakeList(string list)
@@ -105,6 +131,7 @@ namespace GameAnalyticsSDK.Wrapper
         private static void initialize(string gamekey, string gamesecret)
         {
             configureLegacyWritablePath(); // must run before initialize
+            configureRemoteConfigsListener(); // must run before initialize
             gameAnalytics_initialize(gamekey, gamesecret);
         }
 
@@ -397,6 +424,9 @@ namespace GameAnalyticsSDK.Wrapper
 
         [DllImport ("gameanalytics")]
         private static extern void gameAnalytics_configureCustomLogHandler(GANativeLogCallback handler);
+
+        [DllImport ("gameanalytics")]
+        private static extern void gameAnalytics_configureRemoteConfigsListener(GANativeRemoteConfigsCallback listener);
     }
 
     #endif

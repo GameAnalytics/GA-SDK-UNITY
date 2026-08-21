@@ -114,6 +114,18 @@ namespace GameAnalyticsSDK.Wrapper
         [DllImport ("__Internal")]
         private static extern string getABTestingVariantId();
 
+        [DllImport ("__Internal")]
+        private static extern void enableHealthEvent(bool flag);
+
+        [DllImport ("__Internal")]
+        private static extern string getExtUserId();
+
+        [DllImport ("__Internal")]
+        private static extern void setExtUserId(string extUserId);
+
+        [DllImport ("__Internal")]
+        private static extern string getRemoteConfigsValueAsJSON(string key, string defaultValue);
+
         private static void gameAnalyticsStartSession()
         {
             startSession();
@@ -129,10 +141,8 @@ namespace GameAnalyticsSDK.Wrapper
             // not supported
         }
 
-        public static string getUserId()
-        {
-            return "";
-        }
+        [DllImport ("__Internal")]
+        public static extern string getUserId();
 
 #endif
     }

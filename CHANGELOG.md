@@ -1,6 +1,43 @@
-Changelog
----------
+# Changelog
+
+All notable changes to the GameAnalytics Unity SDK are documented in this file.
+
+From 8.1.0 onwards the format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Releases before 8.1.0 use the legacy format and are kept unchanged below.
+
 <!--(CHANGELOG_TOP)-->
+## [8.1.0] - 2026-08-21
+
+### Added
+
+- ILRD: support for the current Unity LevelPlay impression API (`LevelPlay.OnImpressionDataReady`), used automatically when LevelPlay 8.10.1 or newer is detected in the project
+- ILRD: `GameAnalyticsILRD.SubscribeLevelPlayImpressions()` — identical to `SubscribeIronSourceImpressions()`, named after the current LevelPlay branding
+- Android: ProGuard rules to fix R8 failures on minified builds with AGP 8+
+- Automatic cleanup of legacy files from older SDK versions when upgrading via `.unitypackage`
+
+### Changed
+
+- Raised the minimum supported Unity version to 2022.3 (LTS)
+- iOS/tvOS: replaced the static libraries with a single `GameAnalytics.xcframework` (updated GameAnalytics iOS SDK to 5.0.2)
+- Standalone (Windows/macOS/Linux): updated the native C++ SDK to 5.4.0
+
+### Removed
+
+- The External Dependency Manager (EDM4U) requirement — the Android SDK is now fully self-contained
+- Support for deprecated platforms: UWP/WSA, Tizen, Samsung TV and Windows Phone 8.1
+
+### Fixed
+
+- ILRD: impressions were not reported with Unity LevelPlay SDK 9.x, where the legacy `IronSource`/`IronSourceEvents` classes were removed — `SubscribeIronSourceImpressions()` silently did nothing. Projects using older IronSource/LevelPlay plugins keep working through the legacy API
+- ILRD: LevelPlay impression callbacks are now forwarded to the Unity main thread
+- ILRD: subscribing to IronSource/LevelPlay impressions without a supported mediation SDK in the project now logs a warning instead of failing silently
+- 'Unable to find style' errors in the GameAnalytics settings inspector
+
+[8.1.0]: https://github.com/GameAnalytics/GA-SDK-UNITY/compare/8.0.1...8.1.0
+
+---
+
 **8.0.1**
 * Fixed an Android dexing issue (updated GameAnalytics Android SDK to 7.0.1)
 

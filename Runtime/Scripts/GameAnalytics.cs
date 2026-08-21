@@ -6,7 +6,6 @@ using GameAnalyticsSDK.Events;
 using GameAnalyticsSDK.Setup;
 using GameAnalyticsSDK.Wrapper;
 using GameAnalyticsSDK.State;
-using System.Runtime.InteropServices;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -54,7 +53,11 @@ namespace GameAnalyticsSDK
         #if UNITY_EDITOR
         void OnEnable()
         {
+#if UNITY_6000_5_OR_NEWER
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += GameAnalytics.HierarchyWindowCallback;
+#else
             EditorApplication.hierarchyWindowItemOnGUI += GameAnalytics.HierarchyWindowCallback;
+#endif
 
             if(Application.isPlaying)
                 _instance = this;
@@ -62,7 +65,11 @@ namespace GameAnalyticsSDK
 
         void OnDisable()
         {
+#if UNITY_6000_5_OR_NEWER
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI -= GameAnalytics.HierarchyWindowCallback;
+#else
             EditorApplication.hierarchyWindowItemOnGUI -= GameAnalytics.HierarchyWindowCallback;
+#endif
         }
         #else
         void OnEnable()
@@ -104,28 +111,19 @@ namespace GameAnalyticsSDK
                 _instance = null;
         }
 
-#if (!UNITY_EDITOR && UNITY_WSA)
-        [DllImport("GameAnalytics.UWP.dll")]
-        private static extern void onQuit();
-#endif
-
         void OnApplicationQuit()
         {
-#if (!UNITY_EDITOR && !UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_WEBGL && !UNITY_TIZEN && !UNITY_SWITCH && !UNITY_PS4 && !UNITY_XBOXONE)
-#if (UNITY_WSA)
-            onQuit();
-#elif UNITY_STANDALONE && !GA_USE_MONO_WRAPPER
+#if (!UNITY_EDITOR && UNITY_STANDALONE)
+#if GA_USE_MONO_WRAPPER
+            GameAnalyticsSDK.Net.GameAnalytics.OnQuit();
+#else
             // C++ wrapper path: drive end-of-session through the native SDK
             // while Mono is still alive, so the SESSION END event and its
             // log lines are routed through the custom log handler before
             // ~GAState runs during static destruction.
             GA_Wrapper.OnQuit();
-#else
-            GameAnalyticsSDK.Net.GameAnalytics.OnQuit();
-# endif
-#if UNITY_STANDALONE
-            System.Threading.Thread.Sleep(1500);
 #endif
+            System.Threading.Thread.Sleep(1500);
 #endif
         }
 
@@ -1204,12 +1202,6 @@ namespace GameAnalyticsSDK
                     result = SettingsGA.Platforms.IndexOf(platform);
                 }
             }
-            // HACK: To also check for RuntimePlatform.MetroPlayerARM, RuntimePlatform.MetroPlayerX64 and RuntimePlatform.MetroPlayerX86 which are deprecated but have same value as the WSA enums
-            else if (platform == RuntimePlatform.WSAPlayerARM || platform == RuntimePlatform.WSAPlayerX64 || platform == RuntimePlatform.WSAPlayerX86 ||
-                ((int)platform == (int)RuntimePlatform.WSAPlayerARM) || ((int)platform == (int)RuntimePlatform.WSAPlayerX64) || ((int)platform == (int)RuntimePlatform.WSAPlayerX86))
-            {
-                result = SettingsGA.Platforms.IndexOf(RuntimePlatform.WSAPlayerARM);
-            }
             else
             {
                 result = SettingsGA.Platforms.IndexOf(platform);
@@ -1227,9 +1219,6 @@ namespace GameAnalyticsSDK
         /// <param name="">File name including extension e.g. image.png</param>
         public static string WhereIs(string _file, string _type)
         {
-#if UNITY_SAMSUNGTV
-            return "";
-#else
             string[] guids = AssetDatabase.FindAssets("t:" + _type);
             foreach(string g in guids)
             {
@@ -1240,12 +1229,19 @@ namespace GameAnalyticsSDK
                 }
             }
             return "";
-#endif
         }
 
+#if UNITY_6000_5_OR_NEWER
+        public static void HierarchyWindowCallback(EntityId instanceID, Rect selectionRect)
+#else
         public static void HierarchyWindowCallback(int instanceID, Rect selectionRect)
+#endif
         {
+#if UNITY_6000_5_OR_NEWER
+            GameObject go = (GameObject)EditorUtility.EntityIdToObject(instanceID);
+#else
             GameObject go = (GameObject)EditorUtility.InstanceIDToObject(instanceID);
+#endif
             if(go != null && go.GetComponent<GameAnalytics>() != null)
             {
                 float addX = 0;

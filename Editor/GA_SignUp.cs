@@ -390,7 +390,7 @@ namespace GameAnalyticsSDK.Editor
                     #endif
                         new StringWithType { Text = "" },
 
-                    #if UNITY_IOS || UNITY_TVOS || UNITY_STANDALONE || UNITY_TIZEN || UNITY_WEBGL || UNITY_WINRT
+                    #if UNITY_IOS || UNITY_TVOS || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WINRT
 
                     new StringWithType {
                     Text = "Click here to check online documentation!",
@@ -401,7 +401,7 @@ namespace GameAnalyticsSDK.Editor
                     #else
 
                     new StringWithType { Text = "Your selected build platform is not currently supported by GameAnalytics." },
-                    new StringWithType { Text = "The Unity SDK includes support for Windows, Mac, Linux, WebGL, iOS, tvOS, UWP, Tizen, Universal Windows 8 and Android.", Type = StringType.Link, Link = "https://docs.gameanalytics.com/integrations/sdk/unity" },
+                    new StringWithType { Text = "The Unity SDK includes support for Windows, Mac, Linux, WebGL, iOS, tvOS and Android.", Type = StringType.Link, Link = "https://docs.gameanalytics.com/integrations/sdk/unity" },
 
                     #endif
                     };
@@ -521,50 +521,24 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-#if UNITY_2020_1_OR_NEWER
                 if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
-#elif UNITY_2017_1_OR_NEWER
-                if (!(www.isNetworkError || www.isHttpError))
-#else
-                if (string.IsNullOrEmpty(www.error))
-#endif
                 {
                     switch (storeName)
                     {
                         case "amazon_appstore":
-#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.AmazonIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
-#else
-                            GameAnalytics.SettingsGA.AmazonIcon = www.texture;
-#endif
                             break;
                         case "google_play":
-#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.GooglePlayIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
-#else
-                            GameAnalytics.SettingsGA.GooglePlayIcon = www.texture;
-#endif
                             break;
                         case "apple:ios":
-#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.iosIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
-#else
-                            GameAnalytics.SettingsGA.iosIcon = www.texture;
-#endif
                             break;
                         case "apple:mac":
-#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.macIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
-#else
-                            GameAnalytics.SettingsGA.macIcon = www.texture;
-#endif
                             break;
                         case "windows_phone":
-#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.windowsPhoneIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
-#else
-                            GameAnalytics.SettingsGA.windowsPhoneIcon = www.texture;
-#endif
                             break;
                     }
                     signup.Repaint();

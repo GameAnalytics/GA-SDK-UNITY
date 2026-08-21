@@ -170,6 +170,33 @@ var GameAnalyticsUnity = {
         var returnStr = gameanalytics.GameAnalytics.getABTestingVariantId();
         var buffer = allocateStringBuffer(returnStr);
         return buffer;
+    },
+    enableHealthEvent: function(flag)
+    {
+        gameanalytics.GameAnalytics.enableHealthEvent(flag);
+    },
+    getExtUserId: function()
+    {
+        var returnStr = gameanalytics.GameAnalytics.getExtUserId();
+        var buffer = allocateStringBuffer(returnStr);
+        return buffer;
+    },
+    setExtUserId: function(extUserId)
+    {
+        gameanalytics.GameAnalytics.setExtUserId(UTF8ToString(extUserId));
+    },
+    getRemoteConfigsValueAsJSON: function(key, defaultValue)
+    {
+        var returnVal = gameanalytics.GameAnalytics.getRemoteConfigsValueAsJSON(UTF8ToString(key), UTF8ToString(defaultValue));
+        var returnStr = JSON.stringify(returnVal);
+        var buffer = allocateStringBuffer(returnStr);
+        return buffer;
+    },
+    getUserId: function()
+    {
+        var returnStr = gameanalytics.GameAnalytics.getUserId();
+        var buffer = allocateStringBuffer(returnStr);
+        return buffer;
     }
 };
 

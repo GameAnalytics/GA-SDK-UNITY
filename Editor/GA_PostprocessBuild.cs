@@ -7,22 +7,18 @@ using System.Collections.Generic;
 
 namespace GameAnalyticsSDK.Editor
 {
-#if UNITY_2018_1_OR_NEWER
     public class GA_PostprocessBuild : UnityEditor.Build.IPreprocessBuildWithReport
-#else
-    public class GA_PostprocessBuild
-#endif
     {
         private static string gameanalytics_mopub = "gameanalytics_mopub_enabled";
         private static string gameanalytics_fyber = "gameanalytics_fyber_enabled";
         private static string gameanalytics_ironsource = "gameanalytics_ironsource_enabled";
+        private static string gameanalytics_levelplay = "gameanalytics_levelplay_enabled";
         private static string gameanalytics_topon = "gameanalytics_topon_enabled";
         private static string gameanalytics_max = "gameanalytics_max_enabled";
         private static string gameanalytics_aequus = "gameanalytics_aequus_enabled";
         private static string gameanalytics_hyperbid = "gameanalytics_hyperbid_enabled";
         private static string gameanalytics_admob = "gameanalytics_admob_enabled";
 
-#if UNITY_2018_1_OR_NEWER
         public int callbackOrder
         {
             get { return 0; }
@@ -32,7 +28,6 @@ namespace GameAnalyticsSDK.Editor
         {
             Update3rdPartyIntegrations();
         }
-#endif
 
         [DidReloadScripts]
         private static void OnScriptsReloaded()
@@ -109,19 +104,16 @@ namespace GameAnalyticsSDK.Editor
         }
 
         /// <summary>
-        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if IronSource classes are detected within the Unity project
+        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if legacy IronSource classes are detected within the Unity project,
+        /// and `gameanalytics_levelplay_enabled` to true if the LevelPlay impression data API (Unity LevelPlay 8.10.1+/9.x) is detected
         /// </summary>
         private static void UpdateIronSource()
         {
             var ironSourceTypes = new string[] { "IronSourceEvents", "IronSource" };
-            if (TypeExists(ironSourceTypes))
-            {
-                UpdateDefines(gameanalytics_ironsource, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-            }
-            else
-            {
-                UpdateDefines(gameanalytics_ironsource, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-            }
+            UpdateDefines(gameanalytics_ironsource, TypeExists(ironSourceTypes), new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+
+            var levelPlayTypes = new string[] { "Unity.Services.LevelPlay.LevelPlay" };
+            UpdateDefines(gameanalytics_levelplay, TypeWithEventExists("OnImpressionDataReady", levelPlayTypes), new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
         }
 
         /// <summary>
@@ -219,6 +211,25 @@ namespace GameAnalyticsSDK.Editor
             return false;
         }
 
+        private static bool TypeWithEventExists(string eventName, params string[] types)
+        {
+            if (types == null || types.Length == 0)
+                return false;
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                foreach (var typeName in types)
+                {
+                    var type = assembly.GetType(typeName);
+                    if (type != null && type.GetEvent(eventName) != null)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
 #endregion
 
 
@@ -233,12 +244,7 @@ namespace GameAnalyticsSDK.Editor
                 UnityEditor.iOS.Xcode.PBXProject proj = new UnityEditor.iOS.Xcode.PBXProject();
                 proj.ReadFromString(File.ReadAllText(projPath));
 
-#if UNITY_2019_3_OR_NEWER
                 string target = proj.GetUnityMainTargetGuid();
-#else
-                string targetName = UnityEditor.iOS.Xcode.PBXProject.GetUnityTargetName();
-                string target = proj.TargetGuidByName(targetName);
-#endif
 
                 proj.AddFileToBuild(target, proj.AddFile("usr/lib/libsqlite3.dylib", "Frameworks/libsqlite3.dylib", UnityEditor.iOS.Xcode.PBXSourceTree.Sdk));
                 proj.AddFileToBuild(target, proj.AddFile("usr/lib/libz.dylib", "Frameworks/libz.dylib", UnityEditor.iOS.Xcode.PBXSourceTree.Sdk));

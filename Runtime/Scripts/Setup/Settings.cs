@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "8.0.1";
+        public static string VERSION = "8.1.0";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -275,13 +275,7 @@ namespace GameAnalyticsSDK.Setup
             RuntimePlatform.OSXPlayer,
             RuntimePlatform.tvOS,
             RuntimePlatform.WebGLPlayer,
-            RuntimePlatform.WindowsPlayer,
-            RuntimePlatform.WSAPlayerARM
-#if UNITY_2018_1_OR_NEWER
-
-#else
-            ,RuntimePlatform.TizenPlayer
-#endif
+            RuntimePlatform.WindowsPlayer
         };
 
         public string[] GetAvailablePlatforms()
@@ -318,13 +312,6 @@ namespace GameAnalyticsSDK.Setup
                         {
                             result.Add(value.ToString());
                         }
-                    }
-                }
-                else if(value == RuntimePlatform.WSAPlayerARM)
-                {
-                    if(!this.Platforms.Contains(value))
-                    {
-                        result.Add("WSA");
                     }
                 }
                 else

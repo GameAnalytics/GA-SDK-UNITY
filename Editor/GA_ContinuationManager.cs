@@ -39,21 +39,10 @@ namespace GameAnalyticsSDK
 			for (int i = jobs.Count-1; i>=0; --i)
 			{
 				var jobIt = jobs[i];
-#if UNITY_2017_1_OR_NEWER
                 if (!jobIt.Routine.MoveNext()) //movenext is false if coroutine completed
                 {
                     jobs.RemoveAt(i);
                 }
-#else
-                if (jobIt.Done())
-				{
-					if (!jobIt.Routine.MoveNext()) //movenext is false if coroutine completed
-					{
-                        Debug.Log("GA_ContinuationManager.Update: Routine finished");
-                        jobs.RemoveAt(i);
-					}
-				}
-#endif
             }
 			if (!jobs.Any())
 			{

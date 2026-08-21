@@ -67,6 +67,10 @@ enum GALoggerMessageType
 typedef float(*GAFpsTracker)(void);
 typedef void(*GALogHandler)(const char* message, GALoggerMessageType messageType);
 
+// called when remote configs are populated (on the SDK's internal thread)
+// the string is only valid during the call - copy it if needed, do not free it
+typedef void(*GARemoteConfigsListener)(const char* remoteConfigs);
+
 GA_API void gameAnalytics_freeString(const char* ptr);
 
 GA_API void gameAnalytics_configureAvailableCustomDimensions01(const char **customDimensions, int size);
@@ -137,6 +141,10 @@ GA_API const char* gameAnalytics_getExternalUserId();
 
 GA_API GAStatus    gameAnalytics_isRemoteConfigsReady();
 GA_API const char* gameAnalytics_getRemoteConfigsContentAsString();
+
+// single listener; registering again replaces it, NULL unregisters
+// register before initialize to not miss the first update
+GA_API void gameAnalytics_configureRemoteConfigsListener(GARemoteConfigsListener listener);
 
 GA_API const char* gameAnalytics_getABTestingId();
 GA_API const char* gameAnalytics_getABTestingVariantId();

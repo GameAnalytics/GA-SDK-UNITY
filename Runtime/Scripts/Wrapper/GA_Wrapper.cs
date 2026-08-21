@@ -8,7 +8,7 @@ namespace GameAnalyticsSDK.Wrapper
 {
     public partial class GA_Wrapper
     {
-        #if (UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_STANDALONE && !UNITY_WEBGL && !UNITY_WSA && !UNITY_WP_8_1 && !UNITY_TIZEN && !UNITY_SAMSUNGTV))
+        #if (UNITY_EDITOR || (!UNITY_IOS && !UNITY_ANDROID && !UNITY_TVOS && !UNITY_STANDALONE && !UNITY_WEBGL))
 
         private static void configureAvailableCustomDimensions01 (string list)
         {
@@ -413,7 +413,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static void SetEnabledEventSubmission (bool enabled, bool doCache)
         {
-            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID)
                 setEventSubmission (enabled, doCache);
             #else
                 setEventSubmission (enabled);
@@ -592,7 +592,7 @@ namespace GameAnalyticsSDK.Wrapper
             {
                 addAdEventWithDuration((int)adAction, (int)adType, adSdkName, adPlacement, duration, fieldsAsString, mergeFields);
             }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || UNITY_WEBGL
                 addAdEventWithDuration((int)adAction, (int)adType, adSdkName, adPlacement, duration, fieldsAsString, mergeFields);
 #endif
         }
@@ -605,7 +605,7 @@ namespace GameAnalyticsSDK.Wrapper
             {
                 addAdEventWithReason((int)adAction, (int)adType, adSdkName, adPlacement, (int)noAdReason, fieldsAsString, mergeFields);
             }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || UNITY_WEBGL
                 addAdEventWithReason((int)adAction, (int)adType, adSdkName, adPlacement, (int)noAdReason, fieldsAsString, mergeFields);
 #endif
         }
@@ -618,7 +618,7 @@ namespace GameAnalyticsSDK.Wrapper
             {
                 addAdEvent((int)adAction, (int)adType, adSdkName, adPlacement, fieldsAsString, mergeFields);
             }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || UNITY_WEBGL
                 addAdEvent((int)adAction, (int)adType, adSdkName, adPlacement, fieldsAsString, mergeFields);
 #endif
         }
@@ -662,11 +662,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static bool IsRemoteConfigsReady()
         {
-#if (UNITY_WSA) && (!UNITY_EDITOR)
-            return isRemoteConfigsReady() != 0;
-#else
             return isRemoteConfigsReady();
-#endif
         }
 
         public static string GetRemoteConfigsContentAsString()
@@ -676,7 +672,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static string GetRemoteConfigsContentAsJSON()
         {
-            #if UNITY_IOS && !(UNITY_EDITOR)
+            #if (UNITY_IOS || UNITY_TVOS) && !(UNITY_EDITOR)
                 return getRemoteConfigsContentAsJSON();
             #else
                 return GetRemoteConfigsContentAsString();
@@ -696,7 +692,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static void SetExternalUserId(string userId)
         {
-            #if (UNITY_IOS || UNITY_ANDROID) && !(UNITY_EDITOR)
+            #if (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID) && !(UNITY_EDITOR)
                 configureExternalUserId(userId);
             #else
                 return;
@@ -705,7 +701,7 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static string GetExternalUserId()
         {
-            #if (UNITY_IOS || UNITY_ANDROID) && !(UNITY_EDITOR)
+            #if (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID) && !(UNITY_EDITOR)
                 return getExternalUserId();
             #else
                 return "";
@@ -730,7 +726,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
 #if UNITY_EDITOR
             startTimer(key);
-#elif UNITY_IOS || UNITY_ANDROID
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID
             startTimer(key);
 #endif
         }
@@ -739,7 +735,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
 #if UNITY_EDITOR
             pauseTimer(key);
-#elif UNITY_IOS || UNITY_ANDROID
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID
             pauseTimer(key);
 #endif
         }
@@ -748,7 +744,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
 #if UNITY_EDITOR
             resumeTimer(key);
-#elif UNITY_IOS || UNITY_ANDROID
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID
             resumeTimer(key);
 #endif
         }
@@ -757,7 +753,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
 #if UNITY_EDITOR
             return stopTimer(key);
-#elif UNITY_IOS || UNITY_ANDROID
+#elif UNITY_IOS || UNITY_TVOS || UNITY_ANDROID
             return stopTimer(key);
 #else
             return 0;
@@ -768,28 +764,28 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static void EnableSDKInitEvent(bool flag)
         {
-            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID)
                 enableSDKInitEvent(flag);
             #endif
         }
 
         public static void EnableFpsHistogram(bool flag)
         {
-            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID)
                 enableFpsHistogram(flag);
             #endif
         }
 
         public static void EnableMemoryHistogram(bool flag)
         {
-            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID)
                 enableMemoryHistogram(flag);
             #endif
         }
 
         public static void EnableHealthHardwareInfo(bool flag)
         {
-            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS || UNITY_ANDROID)
                 enableHealthHardwareInfo(flag);
             #endif
         }

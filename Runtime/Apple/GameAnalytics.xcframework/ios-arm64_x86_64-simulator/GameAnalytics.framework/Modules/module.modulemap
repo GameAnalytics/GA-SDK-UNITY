@@ -1,0 +1,9 @@
+framework module GameAnalytics {
+    umbrella header "GameAnalytics.h"
+
+    export *
+    module * { export * }
+
+    // public header, but not part of the umbrella - keeps the module verifier quiet
+    exclude header "GameAnalyticsWrapper.h"
+}
