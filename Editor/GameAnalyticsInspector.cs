@@ -4,11 +4,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Reflection;
-using System;
-using GameAnalyticsSDK.Setup;
 
 namespace GameAnalyticsSDK.Editor
 {
@@ -31,7 +26,7 @@ namespace GameAnalyticsSDK.Editor
 			
 			if (GUILayout.Button(_documentationLink, GUILayout.MaxWidth(60)))
 			{
-				Application.OpenURL("http://support.gameanalytics.com/");
+				Application.OpenURL("https://docs.gameanalytics.com/event-tracking-and-integrations/sdks-and-collection-api/game-engine-sdks/unity");
 			}
 			
 			GUILayout.EndHorizontal();
@@ -46,21 +41,6 @@ namespace GameAnalyticsSDK.Editor
 			{
 	            EditorUtility.SetDirty(ga);
 	        }
-		}
-		
-		private MessageType ConvertMessageType(GameAnalyticsSDK.Setup.Settings.MessageTypes msgType)
-		{
-			switch (msgType)
-			{
-				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Error:
-					return MessageType.Error;
-				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Info:
-					return MessageType.Info;
-				case GameAnalyticsSDK.Setup.Settings.MessageTypes.Warning:
-					return MessageType.Warning;
-				default:
-					return MessageType.None;
-			}
 		}
 	}
 }

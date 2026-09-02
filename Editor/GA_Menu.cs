@@ -30,7 +30,7 @@ namespace GameAnalyticsSDK.Editor
         [MenuItem ("Window/GameAnalytics/Create GameAnalytics Object", false, 200)]
         static void AddGASystemTracker ()
         {
-            if (Object.FindObjectOfType (typeof(GameAnalytics)) == null)
+            if (Object.FindAnyObjectByType<GameAnalytics>() == null)
             {
                 GameObject go = PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath(GameAnalytics.WhereIs("GameAnalytics.prefab", "Prefab"), typeof(GameObject))) as GameObject;
                 go.name = "GameAnalytics";

@@ -1,13 +1,9 @@
-/// <summary>
-/// The inspector for the GA prefab.
-/// </summary>
-
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Reflection;
 using System;
 using GameAnalyticsSDK.Utilities;
 using GameAnalyticsSDK.Setup;
@@ -16,1622 +12,1450 @@ using UnityEngine.Networking;
 
 namespace GameAnalyticsSDK.Editor
 {
+    /// <summary>
+    /// Custom inspector for the GameAnalytics Settings asset (UI Toolkit).
+    /// UI state (tab, foldouts, intro dismissal) lives in EditorPrefs so browsing
+    /// the inspector never dirties Settings.asset.
+    /// </summary>
     [CustomEditor(typeof(Settings))]
     public class GA_SettingsInspector : UnityEditor.Editor
     {
-        public const bool IsCustomPackage = true;
-        private const string AssetsPrependPath = IsCustomPackage ? "Packages/com.gameanalytics.sdk" : "Assets/GameAnalytics";
+        private const string GaUrl = "https://platform.gameanalytics.com/ext/v1/";
+        private const string GaToolUrl = "https://tool.gameanalytics.com";
+        private const string GaForgotPasswordUrl = GaToolUrl + "/forgot-password";
+        private const string GaSettingsUrl = GaToolUrl + "/game/{0}/settings/general";
+        private const string GaOverviewUrl = GaToolUrl + "/game/{0}/overview";
+        private const string GaLoginUrl = GaToolUrl + "/login?";
+        private const string GaSignUpUrl = GaToolUrl + "/signup";
+        private const string GaSupportUrl = "https://www.gameanalytics.com/contact";
+        private const string GaIssuesUrl = "https://github.com/GameAnalytics/GA-SDK-UNITY/issues";
+        private const string GaDocsUrl = "https://docs.gameanalytics.com/event-tracking-and-integrations/sdks-and-collection-api/game-engine-sdks/unity";
+        private const string GaConfigurationDocsUrl = GaDocsUrl + "/configuration";
+        private const string GaLoggingDocsUrl = GaDocsUrl + "/debug";
+        private const string GaHealthDocsUrl = GaDocsUrl + "/health";
 
-        private Settings settings;
-
-        private GUIContent _publicKeyLabel = new GUIContent("Game Key", "Your GameAnalytics Game Key - copy/paste from the GA website.");
-        private GUIContent _privateKeyLabel = new GUIContent("Secret Key", "Your GameAnalytics Secret Key - copy/paste from the GA website.");
-        private GUIContent _emailLabel = new GUIContent("Email", "Your GameAnalytics user account email.");
-        private GUIContent _passwordLabel = new GUIContent("Password", "Your GameAnalytics user account password. Must be at least 8 characters in length.");
-        private GUIContent _organizationsLabel = new GUIContent("Org.", "Organizations tied to your GameAnalytics user account.");
-        private GUIContent _studiosLabel = new GUIContent("Studio", "Studios tied to your GameAnalytics user account.");
-        private GUIContent _gamesLabel = new GUIContent("Game", "Games tied to the selected GameAnalytics studio.");
-        private GUIContent _build = new GUIContent("Build", "The current version of the game. Updating the build name for each test version of the game will allow you to filter by build when viewing your data on the GA website.");
-        private GUIContent _infoLogEditor = new GUIContent("Info Log Editor", "Show info messages from GA in the unity editor console when submitting data.");
-        private GUIContent _infoLogBuild = new GUIContent("Info Log Build", "Show info messages from GA in builds (f.x. Xcode for iOS).");
-        private GUIContent _verboseLogBuild = new GUIContent("Verbose Log Build", "Show full info messages from GA in builds (f.x. Xcode for iOS). Noet that this option includes long JSON messages sent to the server.");
-        private GUIContent _useManualSessionHandling = new GUIContent("Use manual session handling", "Manually choose when to end and start a new session. Note initializing of the SDK will automatically start the first session.");
-
-        private GUIContent _enableSDKInitEvent  = new GUIContent("Enable SDK Init Event (boot time on Android, iOS)", "Enable the SDK Init Event to automatically track the boot time (time from application launch to the GameAnalytics SDK initialization)");
-        private GUIContent _enableHealthEvent   = new GUIContent("Enable Session Performance Metrics", "Enables automatic performance data collection across the whole session. This includes sampling fps, memory consumption & cpu usage without any noticeable performance impact.");
-
-        private GUIContent _enableMemoryTracking     = new GUIContent("Health Memory Snapshots (Android, iOS)", "Performance & error events will take memory usage snapshots");
-        private GUIContent _enableHardwareTracking   = new GUIContent("Health Hardware Info (Android, iOS)", "Memory information collected (if available) and added as properties to health events. Determining total device memory, system memory usage and app memory usage");
-        private GUIContent _enableFPSHistogram       = new GUIContent("Submit Session FPS Histogram (Android, iOS)", "Enable FPS sampling across the entire session to ultimately send an FPS histogram at the end of the session. FPS insights can be reviewed in the GameAnalytics Health feature");
-        private GUIContent _enableMemoryHistogram    = new GUIContent("Submit Memory Usage Histogram (Android, iOS)", "Enable memory usage sampling across the entire session to ultimately send an memory histogram at the end of the session. Memory insights can be reviewed in the GameAnalytics Health feature");
-
-        private GUIContent _usePlayerSettingsBunldeVersionForBuild = new GUIContent("Send Version* (Android, iOS) as build number", "The SDK will automatically fetch the version* number on Android and iOS and send it as the GameAnalytics build number.");
-        //private GUIContent _sendExampleToMyGame        = new GUIContent("Get Example Game Data", "If enabled data collected while playing the example tutorial game will be sent to your game (using your game key and secret key). Otherwise data will be sent to a premade GA test game, to prevent it from polluting your data.");
-        private GUIContent _account = new GUIContent("Account", "This tab allows you to login and automatically retrieve your Game Key and Secret Key.");
-        private GUIContent _setup = new GUIContent("Setup", "This tab shows general options which are relevant for a wide variety of messages sent to GameAnalytics.");
-        private GUIContent _advanced = new GUIContent("Advanced", "This tab shows advanced and misc. options for the GameAnalytics SDK.");
-        private GUIContent _customDimensions01 = new GUIContent("Custom Dimensions 01", "List of custom dimensions 01.");
-        private GUIContent _customDimensions02 = new GUIContent("Custom Dimensions 02", "List of custom dimensions 02.");
-        private GUIContent _customDimensions03 = new GUIContent("Custom Dimensions 03", "List of custom dimensions 03.");
-        private GUIContent _resourceItemTypes = new GUIContent("Resource Item Types", "List of Resource Item Types.");
-        private GUIContent _resourceCurrrencies = new GUIContent("Resource Currencies", "List of Resource Currencies.");
-        private GUIContent _gaFpsAverage = new GUIContent("Submit Average FPS (Legacy)", "Submit the average frames per second. Warning: This FPS tracking approach will be replaced in a future update.");
-        private GUIContent _gaFpsCritical = new GUIContent("Submit Critical FPS (Legacy)", "Submit a message whenever the frames per second falls below a certain threshold. The location of the Track Target will be used for critical FPS events. Warning: This FPS tracking approach will be replaced in a future update.");
-        private GUIContent _gaFpsCriticalThreshold = new GUIContent("FPS <", "Frames per second threshold.");
-        private GUIContent _gaSubmitErrors = new GUIContent("Submit Unity Errors Automatically", "Submit error and exception messages to the GameAnalytics server. Useful for getting relevant data when the game crashes, etc.");
-        private GUIContent _gaNativeErrorReporting = new GUIContent("Submit Native Errors (Android, iOS) Automatically", "Submit error and exception messages from native errors and exceptions to the GameAnalytics server. Useful for getting relevant data when the game crashes, etc. from native code.");
-
-        private GUIContent _gameSetupIcon;
-        private bool _gameSetupIconOpen = false;
-        private GUIContent _gameSetupIconMsg = new GUIContent("Your game and secret key will authenticate the game. Please set the build version too. All fields are required.");
-        private GUIContent _customDimensionsIcon;
-        private bool _customDimensionsIconOpen = false;
-        private GUIContent _customDimensionsIconMsg = new GUIContent("Define your custom dimension values below. Values that are not defined will be ignored.");
-        private GUIContent _resourceTypesIcon;
-        private bool _resourceTypesIconOpen = false;
-        private GUIContent _resourceTypesIconMsg = new GUIContent("Define all your resource currencies and resource item types. Values that are not defined will be ignored.");
-        private GUIContent _advancedSettingsIcon;
-        private bool _advancedSettingsIconOpen = false;
-        private GUIContent _advancedSettingsIconMsg = new GUIContent("Advanced settings allows you to enable tracking of Unity errors and exceptions, and frames per second (for performance).");
-        private GUIContent _debugSettingsIcon;
-        private bool _debugSettingsIconOpen = false;
-        private GUIContent _debugSettingsIconMsg = new GUIContent("Debug settings allows you to enable info log for the editor or for builds (Xcode, etc.). Enabling verbose logging will show additional JSON messages in builds.");
-
-        private GUIContent  _healthEventIcon;
-        private bool        _healthEventIconOpen = false;
-        private GUIContent  _healthEventIconMsg  = new GUIContent("Enable automatic tracking of events to discover and address issues related to how a game is technically running on devices/clients. Tracking options include errors, fps/memory usage histograms, app boot and hardware configuration");
-
-        private GUIContent _deleteIcon;
-        private GUIContent _homeIcon;
-        private GUIContent _infoIcon;
-        private GUIContent _instrumentIcon;
-        private GUIContent _questionIcon;
-
-        private GUIStyle _orangeUpdateLabelStyle;
-        private GUIStyle _orangeUpdateIconStyle;
-
-        //private static readonly Texture2D _triggerAdNotEnabledTexture = new Texture2D(1, 1);
-        private static bool _checkedProjectNames = false;
-
-        private const string _unityToken = "KKy7MQNc2TEUOeK0EMtR";
-
-        private const string _gaUrl = "https://platform.gameanalytics.com/ext/v1/";
-
-        private const string _gaToolUrl = "https://tool.gameanalytics.com";
-
-        private const string _gaForgotPasswordUrl = _gaToolUrl + "/forgot-password";
-
-        private const string _gaSettingsUrl = _gaToolUrl + "/game/{0}/settings/general";
-
-        private const string _gaOverviewUrl = _gaToolUrl + "/game/{0}/overview";
-
-        private const string _gaLoginUrl = _gaToolUrl + "/login?";
-
-        private const string _gaSignUpUrl = _gaToolUrl + "/signup";
-
-        private const string _gaSupportUrl = "http://support.gameanalytics.com/";
+        private const string NotLoggedInStatus = "Not logged in.";
 
         private const int MaxNumberOfDimensions = 20;
 
-        private int selectedPlatformIndex = 0;
-        private string[] availablePlatforms;
+        private enum Tab
+        {
+            Account = 0,
+            Setup = 1,
+            Events = 2,
+            Advanced = 3
+        }
 
-        private const int MAJOR_V = 0;
-        private const int MINOR_V = 1;
-        private const int PATCH_V = 2;
-        private const int ALL_V   = 3;
+        private Settings settings;
+
+        private VisualElement _root;
+        private VisualElement _header;
+        private VisualElement _body;
+        private Texture2D _logoTexture;
+        private int _addPlatformIndex;
+
+        // Snapshot used by the scheduled poll to notice async state changes
+        // (login coroutines, update check) and refresh the UI.
+        private string _lastLoginStatus;
+        private bool _lastLoggedIn;
+        private string _lastNewVersion;
+
+        private static bool _checkedProjectNames;
+
+        #region EditorPrefs-backed UI state
+
+        private static string PrefKey(string name)
+        {
+            return "GA.Inspector." + name + "-" + Application.dataPath;
+        }
+
+        private Tab CurrentTab
+        {
+            get
+            {
+                Tab tab = (Tab)EditorPrefs.GetInt(PrefKey("Tab"), (int)Tab.Setup);
+                if (tab == Tab.Account && IsLoggedIn)
+                {
+                    tab = Tab.Setup;
+                }
+                if (tab < Tab.Account || tab > Tab.Advanced)
+                {
+                    tab = Tab.Setup;
+                }
+                return tab;
+            }
+            set { EditorPrefs.SetInt(PrefKey("Tab"), (int)value); }
+        }
+
+        private bool IntroDismissed
+        {
+            get { return EditorPrefs.GetBool(PrefKey("IntroDismissed"), false); }
+            set { EditorPrefs.SetBool(PrefKey("IntroDismissed"), value); }
+        }
+
+        private bool GetPlatformFold(RuntimePlatform platform)
+        {
+            return EditorPrefs.GetBool(PrefKey("PlatformFold." + platform), platform == ActiveBuildRuntimePlatform());
+        }
+
+        private void SetPlatformFold(RuntimePlatform platform, bool open)
+        {
+            EditorPrefs.SetBool(PrefKey("PlatformFold." + platform), open);
+        }
+
+        private bool GetListFold(string listName)
+        {
+            return EditorPrefs.GetBool(PrefKey("Fold." + listName), false);
+        }
+
+        private void SetListFold(string listName, bool open)
+        {
+            EditorPrefs.SetBool(PrefKey("Fold." + listName), open);
+        }
+
+        #endregion
+
+        private bool IsLoggedIn
+        {
+            get { return settings.Organizations != null; }
+        }
 
         void OnEnable()
         {
-            settings = target as Settings;
+            settings = (Settings)target;
 
-            if (settings.UpdateIcon == null)
-            {
-                settings.UpdateIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/update_orange.png", typeof(Texture2D));
-            }
-
-            if (settings.DeleteIcon == null)
-            {
-                settings.DeleteIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/delete.png", typeof(Texture2D));
-            }
-
-            if (settings.GameIcon == null)
-            {
-                settings.GameIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/game.png", typeof(Texture2D));
-            }
-
-            if (settings.HomeIcon == null)
-            {
-                settings.HomeIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/home.png", typeof(Texture2D));
-            }
-
-            if (settings.InfoIcon == null)
-            {
-                settings.InfoIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/info.png", typeof(Texture2D));
-            }
-
+            // GA_SignUp still renders this icon from the shared Settings object.
             if (settings.InstrumentIcon == null)
             {
-                settings.InstrumentIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/instrument.png", typeof(Texture2D));
+                settings.InstrumentIcon = GA_EditorPaths.LoadTexture("Images/instrument.png");
             }
-
-            if (settings.QuestionIcon == null)
-            {
-                settings.QuestionIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/question.png", typeof(Texture2D));
-            }
-
-            if (settings.UserIcon == null)
-            {
-                settings.UserIcon = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/user.png", typeof(Texture2D));
-            }
-
-            if (_gameSetupIcon == null)
-            {
-                _gameSetupIcon = new GUIContent(settings.InfoIcon, "Game Setup.");
-            }
-
-            if (_customDimensionsIcon == null)
-            {
-                _customDimensionsIcon = new GUIContent(settings.InfoIcon, "Custom Dimensions.");
-            }
-
-            if (_resourceTypesIcon == null)
-            {
-                _resourceTypesIcon = new GUIContent(settings.InfoIcon, "Resource Types.");
-            }
-
-            if (_advancedSettingsIcon == null)
-            {
-                _advancedSettingsIcon = new GUIContent(settings.InfoIcon, "Advanced Settings.");
-            }
-
-            if (_debugSettingsIcon == null)
-            {
-                _debugSettingsIcon = new GUIContent(settings.InfoIcon, "Debug Settings.");
-            }
-
-            if (_healthEventIcon == null)
-            {
-                _healthEventIcon = new GUIContent(settings.InfoIcon, "Performance Metrics.");
-            }
-
-            if (_deleteIcon == null)
-            {
-                _deleteIcon = new GUIContent(settings.DeleteIcon, "Delete.");
-            }
-
-            if (_homeIcon == null)
-            {
-                _homeIcon = new GUIContent(settings.HomeIcon, "Your GameAnalytics webpage tool.");
-            }
-
-            if (_instrumentIcon == null)
-            {
-                _instrumentIcon = new GUIContent(settings.InstrumentIcon, "GameAnalytics setup guide.");
-            }
-
-            if (_questionIcon == null)
-            {
-                _questionIcon = new GUIContent(settings.QuestionIcon, "GameAnalytics support.");
-            }
-
             if (settings.Logo == null)
             {
-                settings.Logo = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/gaLogo.png", typeof(Texture2D));
+                settings.Logo = GA_EditorPaths.LoadTexture("gaLogo.png");
             }
         }
 
-        public override void OnInspectorGUI()
+        public override VisualElement CreateInspectorGUI()
         {
-            EditorGUI.indentLevel = 1;
-            EditorGUILayout.Space();
+            settings = (Settings)target;
+            settings.EnsureBuildNumberAutoDetectList();
 
-            if (settings.SignupButton == null)
+            _logoTexture = GA_EditorPaths.LoadTexture("gaLogoIcon.png");
+            if (_logoTexture == null)
             {
-                GUIStyle signupButton = new GUIStyle(GUI.skin.button);
-                signupButton.normal.background = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/default.png", typeof(Texture2D));
-                signupButton.active.background = (Texture2D)AssetDatabase.LoadAssetAtPath(AssetsPrependPath + "/Gizmos/GameAnalytics/Images/active.png", typeof(Texture2D));
-                signupButton.normal.textColor = Color.white;
-                signupButton.active.textColor = Color.white;
-                signupButton.fontSize = 14;
-                signupButton.fontStyle = FontStyle.Bold;
-                settings.SignupButton = signupButton;
+                _logoTexture = GA_EditorPaths.LoadTexture("gaLogo.png");
             }
 
-            #region Header section
-
-            GUILayout.BeginHorizontal();
-
-            GUILayout.Label(settings.Logo, new GUILayoutOption[] {
-                GUILayout.Width(32),
-                GUILayout.Height(32)
-            });
-
-            GUILayout.BeginVertical();
-
-            GUILayout.Space(8);
-
-            GUILayout.BeginHorizontal();
-
-            GUILayout.Label("Unity SDK v." + Settings.VERSION);
-
-            GUILayout.EndHorizontal();
-            GUILayout.EndVertical();
-
-            DrawLinkButton(_homeIcon, GUI.skin.label, _gaLoginUrl, GUILayout.Width(24), GUILayout.Height(24));
-
-            DrawLinkButton(_questionIcon, GUI.skin.label, "http://support.gameanalytics.com/", GUILayout.Width(24), GUILayout.Height(24));
-
-            DrawLinkButton(_instrumentIcon, GUI.skin.label, _gaSignUpUrl, GUILayout.Width(24), GUILayout.Height(24));
-
-            GUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            string updateStatus = GA_UpdateWindow.UpdateStatus(Settings.VERSION);
-
-            if (!updateStatus.Equals(string.Empty))
+            _root = new VisualElement();
+            _root.AddToClassList("ga-root");
+            StyleSheet styleSheet = GA_EditorPaths.LoadStyleSheet("GA_SettingsInspector.uss");
+            if (styleSheet != null)
             {
-                GUILayout.BeginHorizontal();
+                _root.styleSheets.Add(styleSheet);
+            }
 
-                GUILayout.Space(10);
+            _header = new VisualElement();
+            _body = new VisualElement();
+            _root.Add(_header);
+            _root.Add(_body);
 
-                _orangeUpdateLabelStyle = new GUIStyle(EditorStyles.label);
-                _orangeUpdateLabelStyle.normal.textColor = new Color(0.875f, 0.309f, 0.094f);
+            Rebuild();
+            _root.schedule.Execute(RefreshIfStateChanged).Every(300);
 
-                _orangeUpdateIconStyle = new GUIStyle(EditorStyles.label);
+            GA_UpdateChecker.CheckForUpdates();
 
-                if (GUILayout.Button(settings.UpdateIcon, _orangeUpdateIconStyle, GUILayout.MaxWidth(17)))
-                {
-                    OpenUpdateWindow();
-                }
+            return _root;
+        }
 
-                GUILayout.Label(updateStatus, _orangeUpdateLabelStyle);
+        private void Rebuild()
+        {
+            TakeStateSnapshot();
 
-                if (settings.Organizations == null)
-                {
-                    GUILayout.EndHorizontal();
-                    GUILayout.Space(2);
-                }
+            _header.Clear();
+            _body.Clear();
+
+            BuildHeader(_header);
+
+            if (ShowIntro())
+            {
+                PrefillStudioAndGameName();
+                BuildIntroScreen(_body);
             }
             else
             {
-                if (settings.Organizations != null)
+                BuildTabs(_body);
+                switch (CurrentTab)
                 {
-                    GUILayout.BeginHorizontal();
-                }
-                else
-                {
-                    GUILayout.Space(22);
+                    case Tab.Account: BuildAccountTab(_body); break;
+                    case Tab.Setup: BuildSetupTab(_body); break;
+                    case Tab.Events: BuildEventsTab(_body); break;
+                    case Tab.Advanced: BuildAdvancedTab(_body); break;
                 }
             }
 
-            if (settings.Organizations != null)
+            BuildFooter(_body);
+        }
+
+        private void TakeStateSnapshot()
+        {
+            _lastLoginStatus = settings.LoginStatus;
+            _lastLoggedIn = IsLoggedIn;
+            _lastNewVersion = settings.NewVersion;
+        }
+
+        private void RefreshIfStateChanged()
+        {
+            if (settings == null)
             {
-                GUILayout.FlexibleSpace();
-
-                float minW = 0;
-                float maxW = 0;
-                GUIContent email = new GUIContent(settings.EmailGA);
-                EditorStyles.miniLabel.CalcMinMaxWidth(email, out minW, out maxW);
-                GUILayout.Label(email, EditorStyles.miniLabel, GUILayout.MaxWidth(maxW));
-
-                GUILayout.BeginVertical();
-                //GUILayout.Space(-1);
-
-                if (GUILayout.Button("Log out", GUILayout.MaxWidth(67)))
-                {
-                    settings.Organizations = null;
-                    SetLoginStatus("Not logged in.", settings);
-                }
-
-                GUILayout.EndVertical();
-
-                GUILayout.EndHorizontal();
+                return;
             }
 
-            EditorGUILayout.Space();
+            bool loggedInChanged = _lastLoggedIn != IsLoggedIn;
+            bool changed = loggedInChanged
+                || _lastLoginStatus != settings.LoginStatus
+                || _lastNewVersion != settings.NewVersion;
 
-            #endregion // Header section
-
-            #region IntroScreen
-            if (settings.IntroScreen)
+            if (!changed)
             {
-                bool finishIntro = false;
+                return;
+            }
+
+            if (loggedInChanged && IsLoggedIn)
+            {
+                CurrentTab = Tab.Setup;
+            }
+
+            Rebuild();
+        }
+
+        private bool ShowIntro()
+        {
+            if (IntroDismissed || IsLoggedIn)
+            {
+                return false;
+            }
+            for (int i = 0; i < settings.Platforms.Count; ++i)
+            {
+                if (settings.GetGameKey(i).Length > 0 || settings.GetSecretKey(i).Length > 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>Records an undoable change to the settings asset and refreshes the UI.</summary>
+        private void Apply(string undoName, Action mutate, bool rebuild = true)
+        {
+            Undo.RecordObject(settings, undoName);
+            mutate();
+            EditorUtility.SetDirty(settings);
+            if (rebuild)
+            {
+                Rebuild();
+            }
+        }
+
+        #region Header
+
+        private void BuildHeader(VisualElement parent)
+        {
+            VisualElement titleRow = new VisualElement();
+            titleRow.AddToClassList("ga-header-row");
+
+            if (_logoTexture != null)
+            {
+                Image logo = new Image { image = _logoTexture, scaleMode = ScaleMode.ScaleToFit };
+                logo.AddToClassList("ga-logo");
+                titleRow.Add(logo);
+            }
+
+            Label title = new Label("GameAnalytics SDK");
+            title.AddToClassList("ga-title");
+            titleRow.Add(title);
+
+            if (GA_UpdateChecker.IsUpdateAvailable(settings))
+            {
+                Button badge = new Button(GA_UpdateWindow.Open)
+                {
+                    text = "v " + Settings.VERSION + " → " + settings.NewVersion,
+                    tooltip = settings.NewVersion + " is available - open the update window."
+                };
+                badge.AddToClassList("ga-badge");
+                badge.AddToClassList("ga-badge--update");
+                titleRow.Add(badge);
+            }
+            else
+            {
+                Label badge = new Label("v " + Settings.VERSION);
+                badge.AddToClassList("ga-badge");
+                badge.tooltip = "Installed SDK version.";
+                titleRow.Add(badge);
+            }
+
+            parent.Add(titleRow);
+
+            VisualElement chipsRow = new VisualElement();
+            chipsRow.AddToClassList("ga-chips-row");
+
+            if (ShowIntro())
+            {
+                chipsRow.Add(MakeChip("Not configured", ok: false, neutral: true));
+            }
+            else if (settings.Platforms.Count == 0)
+            {
+                chipsRow.Add(MakeChip("No platforms configured", ok: false));
+            }
+            else
+            {
                 for (int i = 0; i < settings.Platforms.Count; ++i)
                 {
-                    if (settings.GetGameKey(i).Length > 0 || settings.GetSecretKey(i).Length > 0)
-                    {
-                        finishIntro = true;
-                        break;
-                    }
+                    bool configured = settings.GetGameKey(i).Length > 0 && settings.GetSecretKey(i).Length > 0;
+                    string name = PlatformToString(settings.Platforms[i]);
+                    chipsRow.Add(MakeChip(configured ? name : name + " · keys missing", configured));
                 }
+            }
 
-                if (finishIntro)
+            if (IsLoggedIn)
+            {
+                VisualElement account = new VisualElement();
+                account.AddToClassList("ga-account-row");
+                Label email = new Label(settings.EmailGA);
+                email.AddToClassList("ga-dim");
+                email.AddToClassList("ga-account-email");
+                email.style.marginRight = 6;
+                account.Add(email);
+                Button logout = new Button(() =>
                 {
-                    settings.IntroScreen = false;
+                    settings.Organizations = null;
+                    SetLoginStatus(NotLoggedInStatus, settings);
+                    Rebuild();
+                })
+                { text = "Log out" };
+                account.Add(logout);
+                chipsRow.Add(account);
+            }
+
+            parent.Add(chipsRow);
+
+            VisualElement separator = new VisualElement();
+            separator.AddToClassList("ga-header-separator");
+            parent.Add(separator);
+        }
+
+        private static VisualElement MakeChip(string text, bool ok, bool neutral = false)
+        {
+            Label chip = new Label(text);
+            chip.AddToClassList("ga-chip");
+            if (!neutral)
+            {
+                chip.AddToClassList(ok ? "ga-chip--ok" : "ga-chip--warn");
+            }
+            return chip;
+        }
+
+        #endregion // Header
+
+        #region Intro screen
+
+        private void BuildIntroScreen(VisualElement parent)
+        {
+            VisualElement intro = new VisualElement();
+            intro.AddToClassList("ga-intro");
+
+            Label title = new Label("Track your game for free");
+            title.AddToClassList("ga-intro-title");
+            intro.Add(title);
+
+            Label sub = new Label("Sessions, retention, monetization and health metrics for 100k+ games.");
+            sub.AddToClassList("ga-intro-sub");
+            intro.Add(sub);
+
+            Button signUp = new Button(OpenSignUp)
+            {
+                text = "Create free account",
+                tooltip = "Opens the GameAnalytics signup page."
+            };
+            signUp.AddToClassList("ga-button-primary");
+            signUp.style.marginTop = 12;
+            signUp.style.paddingLeft = 24;
+            signUp.style.paddingRight = 24;
+            signUp.style.height = 30;
+            intro.Add(signUp);
+
+            intro.Add(MakeDivider("Already have an account?"));
+
+            intro.Add(BuildLoginForm());
+
+            intro.Add(MakeDivider(null));
+
+            Button manual = MakeLink("Skip - enter game keys manually", () =>
+            {
+                IntroDismissed = true;
+                CurrentTab = Tab.Setup;
+                Rebuild();
+            }, "Fill in your game and secret keys yourself under Setup.");
+            intro.Add(manual);
+
+            parent.Add(intro);
+        }
+
+        private static VisualElement MakeDivider(string text)
+        {
+            VisualElement divider = new VisualElement();
+            divider.AddToClassList("ga-divider");
+            VisualElement left = new VisualElement();
+            left.AddToClassList("ga-divider-line");
+            divider.Add(left);
+            if (!string.IsNullOrEmpty(text))
+            {
+                Label label = new Label(text.ToUpperInvariant());
+                label.AddToClassList("ga-divider-text");
+                divider.Add(label);
+                VisualElement right = new VisualElement();
+                right.AddToClassList("ga-divider-line");
+                divider.Add(right);
+            }
+            return divider;
+        }
+
+        private void PrefillStudioAndGameName()
+        {
+            if (_checkedProjectNames || EditorPrefs.GetBool("GA_Installed" + "-" + Application.dataPath, false))
+            {
+                return;
+            }
+            _checkedProjectNames = true;
+
+            if (!PlayerSettings.companyName.Equals("DefaultCompany"))
+            {
+                settings.StudioName = PlayerSettings.companyName;
+            }
+            if (!PlayerSettings.productName.StartsWith("New Unity Project"))
+            {
+                settings.GameName = PlayerSettings.productName;
+            }
+            EditorPrefs.SetBool("GA_Installed" + "-" + Application.dataPath, true);
+        }
+
+        #endregion // Intro screen
+
+        #region Tabs
+
+        private void BuildTabs(VisualElement parent)
+        {
+            VisualElement tabs = new VisualElement();
+            tabs.AddToClassList("ga-tabs");
+
+            if (!IsLoggedIn)
+            {
+                tabs.Add(MakeTabButton("Account", Tab.Account, "Log in to fetch your game keys automatically."));
+            }
+            tabs.Add(MakeTabButton("Setup", Tab.Setup, "Per-platform game keys and build numbers."));
+            tabs.Add(MakeTabButton("Events", Tab.Events, "Custom dimensions and resource types."));
+            tabs.Add(MakeTabButton("Advanced", Tab.Advanced, "Session handling, logging, health tracking and diagnostics."));
+
+            parent.Add(tabs);
+        }
+
+        private Button MakeTabButton(string label, Tab tab, string tooltip)
+        {
+            Button button = new Button(() =>
+            {
+                CurrentTab = tab;
+                Rebuild();
+            })
+            { text = label, tooltip = tooltip };
+            button.AddToClassList("ga-tab");
+            if (CurrentTab == tab)
+            {
+                button.AddToClassList("ga-tab--active");
+            }
+            return button;
+        }
+
+        #endregion // Tabs
+
+        #region Account tab
+
+        private void BuildAccountTab(VisualElement parent)
+        {
+            VisualElement body;
+            parent.Add(MakeCard("Sign in to GameAnalytics", null, null, out body));
+
+            Label note = new Label("Signing in fetches your organizations, studios and games so keys fill themselves in.");
+            note.AddToClassList("ga-note");
+            body.Add(note);
+
+            BuildLoginStatusRows(body);
+
+            if (IsLoggedIn)
+            {
+                return;
+            }
+
+            body.Add(BuildLoginForm());
+
+            body.Add(MakeDivider(null));
+
+            VisualElement links = new VisualElement();
+            links.AddToClassList("ga-links-row");
+            links.AddToClassList("ga-links-row--split");
+            links.Add(MakeLink("New here? Create a free account ↗", OpenSignUp, "Opens the GameAnalytics signup page."));
+            links.Add(MakeLink("Enter game keys manually →", () =>
+            {
+                CurrentTab = Tab.Setup;
+                Rebuild();
+            }, "Fill in your game and secret keys yourself under Setup."));
+            body.Add(links);
+        }
+
+        private VisualElement BuildLoginForm()
+        {
+            VisualElement form = new VisualElement();
+            form.AddToClassList("ga-login-form");
+
+            TextField email = new TextField("Email")
+            {
+                value = settings.EmailGA,
+                tooltip = "Your GameAnalytics user account email."
+            };
+            email.RegisterValueChangedCallback(evt => { settings.EmailGA = evt.newValue; EditorUtility.SetDirty(settings); });
+            form.Add(email);
+
+            TextField password = new TextField("Password")
+            {
+                value = settings.PasswordGA,
+                isPasswordField = true,
+                tooltip = "Your GameAnalytics user account password. Press Enter to sign in."
+            };
+            password.RegisterValueChangedCallback(evt => settings.PasswordGA = evt.newValue);
+            form.Add(password);
+
+            EventCallback<KeyDownEvent> submitOnEnter = evt =>
+            {
+                if (evt.keyCode == KeyCode.Return || evt.keyCode == KeyCode.KeypadEnter)
+                {
+                    evt.StopPropagation();
+                    DoLogin();
+                }
+            };
+            email.RegisterCallback(submitOnEnter);
+            password.RegisterCallback(submitOnEnter);
+
+            VisualElement buttonRow = new VisualElement();
+            buttonRow.style.flexDirection = FlexDirection.Row;
+            buttonRow.style.flexWrap = Wrap.Wrap;
+            buttonRow.style.justifyContent = Justify.FlexEnd;
+            buttonRow.style.alignItems = Align.Center;
+            buttonRow.style.marginTop = 6;
+
+            Button forgot = MakeLink("Forgot password?", () => Application.OpenURL(GaForgotPasswordUrl), "Opens the password reset page.");
+            forgot.style.marginRight = 8;
+            buttonRow.Add(forgot);
+
+            Button login = new Button(DoLogin) { text = "Sign in" };
+            login.AddToClassList("ga-button-primary");
+            login.style.paddingLeft = 18;
+            login.style.paddingRight = 18;
+            buttonRow.Add(login);
+
+            form.Add(buttonRow);
+            return form;
+        }
+
+        private void DoLogin()
+        {
+            IntroDismissed = true;
+            CurrentTab = Tab.Account;
+            StartLogin();
+            Rebuild();
+        }
+
+        private void StartLogin()
+        {
+            settings.Organizations = null;
+            SetLoginStatus("Contacting Server..", settings);
+            LoginUser(settings);
+        }
+
+        private void BuildLoginStatusRows(VisualElement parent)
+        {
+            if (string.IsNullOrEmpty(settings.LoginStatus) || settings.LoginStatus.Equals(NotLoggedInStatus))
+            {
+                return;
+            }
+
+            if (settings.JustSignedUp && !settings.HideSignupWarning)
+            {
+                VisualElement row = new VisualElement();
+                row.style.flexDirection = FlexDirection.Row;
+                row.style.alignItems = Align.FlexStart;
+                HelpBox notice = new HelpBox(
+                    "Please be aware that our service might take a few minutes to get ready to receive events. Open Integration Status to follow the progress as you start sending events.",
+                    HelpBoxMessageType.Warning);
+                notice.style.flexGrow = 1;
+                row.Add(notice);
+                Button dismiss = new Button(() => { settings.HideSignupWarning = true; Rebuild(); }) { text = "X" };
+                row.Add(dismiss);
+                parent.Add(row);
+            }
+
+            VisualElement statusRow = new VisualElement();
+            statusRow.AddToClassList("ga-row");
+            Label label = new Label("Status");
+            label.AddToClassList("ga-field-label");
+            statusRow.Add(label);
+            statusRow.Add(new Label(settings.LoginStatus));
+            parent.Add(statusRow);
+        }
+
+        #endregion // Account tab
+
+        #region Setup tab
+
+        private void BuildSetupTab(VisualElement parent)
+        {
+            SyncPlatformOrganizationList();
+            settings.EnsureBuildNumberAutoDetectList();
+
+            VisualElement statusHost = new VisualElement();
+            statusHost.style.marginTop = 4;
+            BuildLoginStatusRows(statusHost);
+            if (statusHost.childCount > 0)
+            {
+                parent.Add(statusHost);
+            }
+
+            for (int i = 0; i < settings.Platforms.Count; ++i)
+            {
+                parent.Add(BuildPlatformCard(i));
+            }
+
+            BuildAddPlatformRow(parent);
+
+#if !(UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL)
+            HelpBox unsupported = new HelpBox(
+                "PLEASE NOTICE: Currently the GameAnalytics Unity SDK does not support your selected build Platform. Please refer to the GameAnalytics documentation for additional information.",
+                HelpBoxMessageType.Warning);
+            unsupported.style.marginTop = 8;
+            unsupported.RegisterCallback<ClickEvent>(_ => Application.OpenURL(GaDocsUrl));
+            parent.Add(unsupported);
+#endif
+        }
+
+        private VisualElement BuildPlatformCard(int i)
+        {
+            RuntimePlatform platform = settings.Platforms[i];
+            bool open = GetPlatformFold(platform);
+            bool configured = settings.GetGameKey(i).Length > 0 && settings.GetSecretKey(i).Length > 0;
+
+            VisualElement card = new VisualElement();
+            card.AddToClassList("ga-card");
+
+            VisualElement header = new VisualElement();
+            header.AddToClassList("ga-card-header");
+
+            Button arrow = new Button(() =>
+            {
+                SetPlatformFold(platform, !open);
+                Rebuild();
+            })
+            { text = open ? "▼" : "▶", tooltip = open ? "Collapse" : "Expand" };
+            arrow.AddToClassList("ga-fold-arrow");
+            header.Add(arrow);
+
+            Label title = new Label(PlatformToString(platform));
+            title.AddToClassList("ga-card-title");
+            header.Add(title);
+
+            // The chip is anchored to the right edge of the card header. No per-platform
+            // help button: it would duplicate the Documentation link in the footer.
+            VisualElement chip = MakeChip(configured ? "configured" : "keys missing", configured);
+            chip.style.marginLeft = StyleKeyword.Auto;
+            chip.style.marginRight = 0;
+            header.Add(chip);
+
+            // Clicking the header (not its buttons) also toggles the foldout.
+            header.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (evt.target == header || evt.target == title)
+                {
+                    SetPlatformFold(platform, !open);
+                    Rebuild();
+                }
+            });
+
+            card.Add(header);
+
+            if (!open)
+            {
+                return card;
+            }
+
+            VisualElement body = new VisualElement();
+            body.AddToClassList("ga-card-body");
+
+            bool loggedIn = settings.Organizations != null && settings.Organizations.Count > 0 && i < settings.SelectedOrganization.Count;
+            if (loggedIn)
+            {
+                BuildGameSelectionPopups(body, i);
+            }
+            else
+            {
+                BuildSelectedGameSummary(body, i);
+            }
+
+            body.Add(BuildKeyRow(i, "Game key", "Your GameAnalytics Game Key - copy/paste from the GA website.", isSecret: false));
+            body.Add(BuildKeyRow(i, "Secret key", "Your GameAnalytics Secret Key - copy/paste from the GA website.", isSecret: true));
+
+            BuildBuildNumberRows(body, i);
+
+            VisualElement footer = new VisualElement();
+            footer.style.flexDirection = FlexDirection.Row;
+            footer.style.flexWrap = Wrap.Wrap;
+            footer.style.justifyContent = Justify.SpaceBetween;
+            footer.style.alignItems = Align.Center;
+            footer.style.marginTop = 6;
+
+            VisualElement links = new VisualElement();
+            links.AddToClassList("ga-links-row");
+            links.style.flexShrink = 1;
+            if (settings.SelectedPlatformGameID[i] >= 0)
+            {
+                int gameId = settings.SelectedPlatformGameID[i];
+                links.Add(MakeLink("Integration status ↗", () => OpenGamePage(GaOverviewUrl, gameId),
+                    "Opens this game's realtime integration status on the dashboard."));
+                links.Add(MakeLink("Game settings ↗", () => OpenGamePage(GaSettingsUrl, gameId),
+                    "Opens this game's settings on the dashboard."));
+            }
+            footer.Add(links);
+
+            int index = i;
+            Button remove = new Button(() =>
+                Apply("Remove platform", () => settings.RemovePlatformAtIndex(index)))
+            { text = "Remove", tooltip = "Remove the " + PlatformToString(platform) + " configuration." };
+            footer.Add(remove);
+
+            body.Add(footer);
+            card.Add(body);
+            return card;
+        }
+
+        private VisualElement BuildKeyRow(int i, string label, string tooltip, bool isSecret)
+        {
+            VisualElement row = new VisualElement();
+            row.AddToClassList("ga-row");
+
+            Label fieldLabel = new Label(label);
+            fieldLabel.AddToClassList("ga-field-label");
+            fieldLabel.tooltip = tooltip;
+            row.Add(fieldLabel);
+
+            VisualElement wrap = new VisualElement();
+            wrap.AddToClassList("ga-keywrap");
+
+            TextField field = new TextField
+            {
+                value = isSecret ? settings.GetSecretKey(i) : settings.GetGameKey(i),
+                isPasswordField = isSecret,
+                tooltip = tooltip
+            };
+
+            int index = i;
+            field.RegisterValueChangedCallback(evt =>
+            {
+                string current = isSecret ? settings.GetSecretKey(index) : settings.GetGameKey(index);
+                if (!evt.newValue.Equals(current))
+                {
+                    // A hand-edited key unlinks the game that was selected via login.
+                    settings.SelectedPlatformOrganization[index] = "";
+                    settings.SelectedPlatformStudio[index] = "";
+                    settings.SelectedPlatformGame[index] = "";
+                }
+                if (isSecret)
+                {
+                    settings.UpdateSecretKey(index, evt.newValue);
                 }
                 else
                 {
-                    if (!_checkedProjectNames && !EditorPrefs.GetBool("GA_Installed" + "-" + Application.dataPath, false))
-                    {
-                        _checkedProjectNames = true;
-
-                        if (!PlayerSettings.companyName.Equals("DefaultCompany"))
-                        {
-                            settings.StudioName = PlayerSettings.companyName;
-                        }
-                        if (!PlayerSettings.productName.StartsWith("New Unity Project"))
-                        {
-                            settings.GameName = PlayerSettings.productName;
-                        }
-                        EditorPrefs.SetBool("GA_Installed" + "-" + Application.dataPath, true);
-                        Selection.activeObject = settings;
-                    }
-
-                    GUILayout.Space(5);
-
-                    Splitter(new Color(0.35f, 0.35f, 0.35f));
-
-                    GUILayout.Space(10);
-
-                    GUIStyle largeWhiteStyle = new GUIStyle(EditorStyles.whiteLargeLabel);
-                    if (!Application.HasProLicense())
-                    {
-                        largeWhiteStyle = new GUIStyle(EditorStyles.largeLabel);
-                    }
-                    largeWhiteStyle.fontSize = 16;
-                    //largeWhiteStyle.fontStyle = FontStyle.Bold;
-
-                    DrawLabelWithFlexibleSpace("Thank you for downloading!", largeWhiteStyle, 30);
-
-                    GUILayout.Space(20);
-
-                    GUIStyle greyStyle = new GUIStyle(EditorStyles.label);
-                    greyStyle.fontSize = 12;
-
-                    DrawLabelWithFlexibleSpace("Get started tracking your game by signing up to", greyStyle, 20);
-
-                    GUILayout.Space(-5);
-
-                    DrawLabelWithFlexibleSpace("GameAnalytics for FREE.", greyStyle, 20);
-
-                    GUILayout.Space(20);
-
-                    DrawButtonWithFlexibleSpace("Sign up", settings.SignupButton, OpenSignUp, GUILayout.Width(175), GUILayout.Height(40));
-
-                    GUILayout.Space(15);
-
-                    Splitter(new Color(0.35f, 0.35f, 0.35f));
-
-                    GUILayout.Space(15);
-
-                    DrawLabelWithFlexibleSpace("Already have an account? Please login", greyStyle, 20);
-
-                    GUILayout.Space(15);
-
-                    GUILayout.BeginHorizontal();
-                    //GUILayout.Label("", GUILayout.Width(3));
-                    GUILayout.Label(_emailLabel, GUILayout.Width(75));
-                    settings.EmailGA = EditorGUILayout.TextField("", settings.EmailGA);
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    //GUILayout.Label("", GUILayout.Width(3));
-                    GUILayout.Label(_passwordLabel, GUILayout.Width(75));
-                    settings.PasswordGA = EditorGUILayout.PasswordField("", settings.PasswordGA);
-                    GUILayout.EndHorizontal();
-
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(90));
-                    if (GUILayout.Button("Login", new GUILayoutOption[] {
-                        GUILayout.Width(130),
-                        GUILayout.MaxHeight(30)
-                    }))
-                    {
-                        settings.IntroScreen = false;
-                        settings.SignUpOpen = false;
-                        settings.CurrentInspectorState = Settings.InspectorStates.Account;
-
-                        settings.Organizations = null;
-                        SetLoginStatus("Contacting Server..", settings);
-                        LoginUser(settings);
-                    }
-                    GUILayout.Label("", GUILayout.Width(10));
-                    GUILayout.BeginVertical();
-                    GUILayout.Space(8);
-
-                    DrawLinkButton("Forgot password?", EditorStyles.label, _gaForgotPasswordUrl, GUILayout.Width(105));
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.EndVertical();
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.Space(15);
-
-                    Splitter(new Color(0.35f, 0.35f, 0.35f));
-
-                    GUILayout.Space(15);
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("I want to fill in my game keys manually", EditorStyles.label, GUILayout.Width(207)))
-                    {
-                        settings.IntroScreen = false;
-                        settings.CurrentInspectorState = Settings.InspectorStates.Basic;
-                    }
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.FlexibleSpace();
-                    GUILayout.EndHorizontal();
+                    settings.UpdateGameKey(index, evt.newValue);
                 }
-            }
-            #endregion // IntroScreen
-            else
+                EditorUtility.SetDirty(settings);
+            });
+            // Rebuild (to refresh status chips) only when the key actually changed
+            // during this edit - an unconditional rebuild on blur would swallow the
+            // click that moved focus away (e.g. onto the reveal button).
+            string valueAtFocusIn = null;
+            field.RegisterCallback<FocusInEvent>(_ => valueAtFocusIn = field.value);
+            field.RegisterCallback<FocusOutEvent>(_ =>
             {
-                //Tabs
-                GUILayout.BeginHorizontal();
-
-                GUIStyle activeTabStyle = new GUIStyle(EditorStyles.miniButtonMid);
-                GUIStyle activeTabStyleLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-                GUIStyle activeTabStyleRight = new GUIStyle(EditorStyles.miniButtonRight);
-
-                activeTabStyle.normal = EditorStyles.miniButtonMid.active;
-                activeTabStyleLeft.normal = EditorStyles.miniButtonLeft.active;
-                activeTabStyleRight.normal = EditorStyles.miniButtonRight.active;
-
-                GUIStyle inactiveTabStyle = new GUIStyle(EditorStyles.miniButtonMid);
-                GUIStyle inactiveTabStyleLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-                GUIStyle inactiveTabStyleRight = new GUIStyle(EditorStyles.miniButtonRight);
-
-                GUIStyle basicTabStyle = settings.CurrentInspectorState == Settings.InspectorStates.Basic ? activeTabStyleLeft : inactiveTabStyleLeft;
-
-                if (settings.Organizations == null)
+                bool changed = valueAtFocusIn != null && valueAtFocusIn != field.value;
+                valueAtFocusIn = null;
+                if (changed)
                 {
-                    if (GUILayout.Button(_account, settings.CurrentInspectorState == Settings.InspectorStates.Account ? activeTabStyleLeft : inactiveTabStyleLeft))
-                    {
-                        settings.CurrentInspectorState = Settings.InspectorStates.Account;
-                    }
-
-                    basicTabStyle = settings.CurrentInspectorState == Settings.InspectorStates.Basic ? activeTabStyle : inactiveTabStyle;
+                    Rebuild();
                 }
+            });
+            wrap.Add(field);
 
-                if (GUILayout.Button(_setup, basicTabStyle))
+            if (isSecret)
+            {
+                // Eye button overlaid on the right edge of the field, as in the mockup.
+                Image eye = new Image
                 {
-                    settings.CurrentInspectorState = Settings.InspectorStates.Basic;
-                }
-
-                if (GUILayout.Button(_advanced, settings.CurrentInspectorState == Settings.InspectorStates.Pref ? activeTabStyleRight : inactiveTabStyleRight))
+                    image = EditorGUIUtility.IconContent("animationvisibilitytoggleon").image,
+                    scaleMode = ScaleMode.ScaleToFit,
+                    pickingMode = PickingMode.Ignore
+                };
+                Button reveal = null;
+                reveal = new Button(() =>
                 {
-                    settings.CurrentInspectorState = Settings.InspectorStates.Pref;
-                }
+                    field.isPasswordField = !field.isPasswordField;
+                    bool revealed = !field.isPasswordField;
+                    reveal.tooltip = revealed ? "Hide secret key" : "Show secret key";
+                    reveal.EnableInClassList("ga-reveal--on", revealed);
+                })
+                { tooltip = "Show secret key" };
+                reveal.AddToClassList("ga-reveal");
+                reveal.Add(eye);
+                wrap.Add(reveal);
+            }
 
-                GUILayout.EndHorizontal();
+            row.Add(wrap);
+            return row;
+        }
 
-                #region Settings.InspectorStates.Account
-                if (settings.CurrentInspectorState == Settings.InspectorStates.Account)
+        private void BuildBuildNumberRows(VisualElement parent, int i)
+        {
+            RuntimePlatform platform = settings.Platforms[i];
+            int index = i;
+
+            if (!Settings.SupportsBuildNumberAutoDetect(platform))
+            {
+                VisualElement row = new VisualElement();
+                row.AddToClassList("ga-row");
+                Label label = new Label("Build number");
+                label.AddToClassList("ga-field-label");
+                label.tooltip = "The build number reported with events. Auto-detection is available on iOS, tvOS and Android only.";
+                row.Add(label);
+                TextField field = new TextField { value = settings.Build[i], tooltip = label.tooltip };
+                field.RegisterValueChangedCallback(evt => { settings.Build[index] = evt.newValue; EditorUtility.SetDirty(settings); });
+                row.Add(field);
+                parent.Add(row);
+                return;
+            }
+
+            bool auto = settings.BuildNumberAutoDetect[i];
+
+            VisualElement sourceRow = new VisualElement();
+            sourceRow.AddToClassList("ga-row");
+            Label sourceLabel = new Label("Build number");
+            sourceLabel.AddToClassList("ga-field-label");
+            sourceLabel.tooltip = "Where the build number reported with events comes from.";
+            sourceRow.Add(sourceLabel);
+
+            List<string> choices = new List<string>
+            {
+                "Auto - Player Settings › Version (" + PlayerSettings.bundleVersion + ")",
+                "Custom value..."
+            };
+            DropdownField source = new DropdownField(choices, auto ? 0 : 1) { tooltip = sourceLabel.tooltip };
+            source.RegisterValueChangedCallback(_ =>
+                Apply("Change build number source", () => settings.BuildNumberAutoDetect[index] = source.index == 0));
+            sourceRow.Add(source);
+            parent.Add(sourceRow);
+
+            if (!auto)
+            {
+                VisualElement valueRow = new VisualElement();
+                valueRow.AddToClassList("ga-row");
+                Label spacer = new Label("");
+                spacer.AddToClassList("ga-field-label");
+                valueRow.Add(spacer);
+                TextField field = new TextField
                 {
-                    EditorGUILayout.Space();
+                    value = settings.Build[i],
+                    tooltip = "The build number reported with events for this platform."
+                };
+                field.RegisterValueChangedCallback(evt => { settings.Build[index] = evt.newValue; EditorUtility.SetDirty(settings); });
+                valueRow.Add(field);
+                parent.Add(valueRow);
+            }
+        }
 
-                    GUILayout.Label("Already have an account with GameAnalytics?", EditorStyles.largeLabel);
+        private void BuildGameSelectionPopups(VisualElement parent, int i)
+        {
+            int index = i;
 
-                    EditorGUILayout.Space();
-
-                    if (!string.IsNullOrEmpty(settings.LoginStatus) && !settings.LoginStatus.Equals("Not logged in."))
-                    {
-                        EditorGUILayout.Space();
-                        if (settings.JustSignedUp && !settings.HideSignupWarning)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            EditorGUILayout.HelpBox("Please be aware that our service might take a few minutes to get ready to receive events. Click here to open Integration Status to follow the progress as you start sending events.", MessageType.Warning);
-                            Rect r = GUILayoutUtility.GetLastRect();
-                            if (GUI.Button(r, "", EditorStyles.label))
-                            {
-                                //Application.OpenURL("https://go.gameanalytics.com/login?token=" + settings.TokenGA + "&exp=" + settings.ExpireTime + "&goto=/game/" + settings.Studios[settings.SelectedStudio - 1].Games[settings.SelectedGame - 1].ID + "/initialize");
-                            }
-                            EditorGUIUtility.AddCursorRect(r, MouseCursor.Link);
-                            if (GUILayout.Button("X"))
-                            {
-                                settings.HideSignupWarning = true;
-                            }
-                            GUILayout.EndHorizontal();
-                            EditorGUILayout.Space();
-                        }
-                        GUILayout.BeginHorizontal();
-                        //GUILayout.Label("", GUILayout.Width(7));
-                        GUILayout.Label("Status", GUILayout.Width(88));
-                        GUILayout.Label(settings.LoginStatus);
-                        GUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-
-                    if (settings.Organizations == null)
-                    {
-                        GUILayout.Label(_emailLabel, GUILayout.Width(75));
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(-17));
-                        settings.EmailGA = EditorGUILayout.TextField("", settings.EmailGA, GUILayout.MaxWidth(270));
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.Space(12);
-
-                        GUILayout.Label(_passwordLabel, GUILayout.Width(75));
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(-17));
-                        settings.PasswordGA = EditorGUILayout.PasswordField("", settings.PasswordGA, GUILayout.MaxWidth(270));
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.Space(12);
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Space(2);
-                        if (GUILayout.Button("Login", new GUILayoutOption[] {
-                            GUILayout.Width(130),
-                            GUILayout.MaxHeight(40)
-                        }))
-                        {
-                            settings.Organizations = null;
-                            SetLoginStatus("Contacting Server..", settings);
-                            LoginUser(settings);
-                        }
-                        GUILayout.Label("", GUILayout.Width(10));
-                        GUILayout.BeginVertical();
-                        GUILayout.Space(14);
-                        if (GUILayout.Button("Forgot password?", EditorStyles.label, GUILayout.Width(105)))
-                        {
-                            Application.OpenURL(_gaForgotPasswordUrl);
-                        }
-                        EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                        GUILayout.EndVertical();
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.Space(20);
-
-                        Splitter(new Color(0.35f, 0.35f, 0.35f));
-
-                        GUILayout.Space(16);
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.FlexibleSpace();
-                        if (GUILayout.Button("I want to fill in my game keys manually", EditorStyles.label, GUILayout.Width(207)))
-                        {
-                            settings.CurrentInspectorState = Settings.InspectorStates.Basic;
-                        }
-                        EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                        GUILayout.FlexibleSpace();
-                        GUILayout.EndHorizontal();
-                    }
-                }
-                #endregion // Settings.InspectorStates.Account
-                #region Settings.InspectorStates.Basic
-                else if (settings.CurrentInspectorState == Settings.InspectorStates.Basic)
+            string[] organizationNames = Organization.GetOrganizationNames(settings.Organizations);
+            if (settings.SelectedOrganization[i] >= organizationNames.Length)
+            {
+                settings.SelectedOrganization[i] = 0;
+            }
+            parent.Add(MakePopupRow("Organization", "Organizations tied to your GameAnalytics user account.",
+                organizationNames, settings.SelectedOrganization[i], newIndex =>
                 {
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.BeginVertical();
-                    GUILayout.Space(-4);
-                    GUILayout.Label("Game Setup", EditorStyles.largeLabel);
-                    GUILayout.EndVertical();
-
-                    #region Setup help
-                    if (!_gameSetupIconOpen)
+                    Apply("Select organization", () =>
                     {
-                        GUI.color = new Color(0.54f, 0.54f, 0.54f);
-                    }
-                    if (GUILayout.Button(_gameSetupIcon, GUIStyle.none, new GUILayoutOption[] {
-                        GUILayout.Width(12),
-                        GUILayout.Height(12)
-                    }))
-                    {
-                        _gameSetupIconOpen = !_gameSetupIconOpen;
-                    }
-                    GUI.color = Color.white;
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.FlexibleSpace();
-
-                    GUILayout.EndHorizontal();
-
-                    if (_gameSetupIconOpen)
-                    {
-                        GUILayout.BeginHorizontal();
-                        TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                        GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                        Color tmpColor = GUI.skin.box.normal.textColor;
-                        GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                        RectOffset tmpOffset = GUI.skin.box.padding;
-                        GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                        GUILayout.Box(_gameSetupIconMsg);
-                        GUI.skin.box.alignment = tmpAnchor;
-                        GUI.skin.box.normal.textColor = tmpColor;
-                        GUI.skin.box.padding = tmpOffset;
-                        //GUILayout.Label("Advanced settings are pretty awesome! They allow you to do all kinds of things, such as tracking Unity errors and exceptions, and frames per second (for performance). See http://www.support.gameanalytics.com", EditorStyles.wordWrappedMiniLabel);
-                        GUILayout.EndHorizontal();
-
-                        Rect tmpRect = GUILayoutUtility.GetLastRect();
-                        if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
+                        settings.SelectedOrganization[index] = newIndex;
+                        settings.SelectedStudio[index] = 0;
+                        settings.SelectedGame[index] = 0;
+                        if (newIndex <= 0)
                         {
-                            Application.OpenURL("https://docs.gameanalytics.com/integrations/sdk/unity");
-                        }
-                    }
-                    #endregion // Setup help
-
-                    EditorGUILayout.Space();
-
-                    if (!string.IsNullOrEmpty(settings.LoginStatus) && !settings.LoginStatus.Equals("Not logged in."))
-                    {
-                        if (settings.JustSignedUp && !settings.HideSignupWarning)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            EditorGUILayout.HelpBox("Please be aware that our service might take a few minutes to get ready to receive events. Click here to open Integration Status to follow the progress as you start sending events.", MessageType.Warning);
-                            Rect r = GUILayoutUtility.GetLastRect();
-                            if (GUI.Button(r, "", EditorStyles.label))
-                            {
-                                //Application.OpenURL("https://go.gameanalytics.com/login?token=" + settings.TokenGA + "&exp=" + settings.ExpireTime + "&goto=/game/" + settings.Studios[settings.SelectedStudio - 1].Games[settings.SelectedGame - 1].ID + "/initialize");
-                            }
-                            EditorGUIUtility.AddCursorRect(r, MouseCursor.Link);
-                            if (GUILayout.Button("X"))
-                            {
-                                settings.HideSignupWarning = true;
-                            }
-                            GUILayout.EndHorizontal();
-                            EditorGUILayout.Space();
-                        }
-
-                        GUILayout.BeginHorizontal();
-                        //GUILayout.Label("", GUILayout.Width(7));
-                        GUILayout.Label("Status", GUILayout.Width(63));
-                        GUILayout.Label(settings.LoginStatus);
-                        GUILayout.EndHorizontal();
-                    }
-
-                    Splitter(new Color(0.35f, 0.35f, 0.35f));
-
-                    // sanity check
-                    if(settings.SelectedPlatformOrganization.Count != settings.Platforms.Count)
-                    {
-                        int diff = settings.SelectedPlatformOrganization.Count - settings.Platforms.Count;
-
-                        if(diff < 0)
-                        {
-                            int absDiff = Mathf.Abs(diff);
-
-                            for(int i = 0; i < absDiff; ++i)
-                            {
-                                settings.SelectedPlatformOrganization.Add("");
-                            }
+                            SetLoginStatus("Please select organization..", settings);
                         }
                         else
                         {
-                            for (int i = 0; i < diff; ++i)
-                            {
-                                settings.SelectedPlatformOrganization.RemoveAt(settings.SelectedPlatformOrganization.Count - 1);
-                            }
+                            SelectOrganization(newIndex, settings, index);
                         }
-                    }
-
-                    int platformToRemove = -1;
-
-                    for (int i = 0; i < settings.Platforms.Count; ++i)
-                    {
-                        settings.PlatformFoldOut[i] = EditorGUILayout.Foldout(settings.PlatformFoldOut[i], PlatformToString(settings.Platforms[i]));
-
-                        if (settings.PlatformFoldOut[i])
-                        {
-                            if (settings.Organizations != null && settings.Organizations.Count > 0 && i < settings.SelectedOrganization.Count)
-                            {
-                                EditorGUILayout.Space();
-                                //Splitter(new Color(0.35f, 0.35f, 0.35f));
-
-                                GUILayout.BeginHorizontal();
-                                //GUILayout.Label("", GUILayout.Width(7));
-                                GUILayout.Label(_organizationsLabel, GUILayout.Width(50));
-                                string[] organizationNames = Organization.GetOrganizationNames(settings.Organizations);
-                                if (settings.SelectedOrganization[i] >= organizationNames.Length)
-                                {
-                                    settings.SelectedOrganization[i] = 0;
-                                }
-                                int tmpSelectedOrganization = settings.SelectedOrganization[i];
-                                settings.SelectedOrganization[i] = EditorGUILayout.Popup("", settings.SelectedOrganization[i], organizationNames);
-                                if (tmpSelectedOrganization != settings.SelectedOrganization[i])
-                                {
-                                    settings.SelectedStudio[i] = 0;
-                                    settings.SelectedGame[i] = 0;
-                                }
-                                GUILayout.EndHorizontal();
-
-                                if (settings.SelectedOrganization[i] > 0)
-                                {
-                                    if (tmpSelectedOrganization != settings.SelectedOrganization[i])
-                                    {
-                                        SelectOrganization(settings.SelectedOrganization[i], settings, i);
-                                    }
-
-                                    GUILayout.BeginHorizontal();
-                                    //GUILayout.Label("", GUILayout.Width(7));
-                                    GUILayout.Label(_studiosLabel, GUILayout.Width(50));
-                                    string[] studioNames = Studio.GetStudioNames(settings.Organizations[settings.SelectedOrganization[i] - 1].Studios);
-                                    if (settings.SelectedStudio[i] >= studioNames.Length)
-                                    {
-                                        settings.SelectedStudio[i] = 0;
-                                    }
-                                    int tmpSelectedStudio = settings.SelectedStudio[i];
-                                    settings.SelectedStudio[i] = EditorGUILayout.Popup("", settings.SelectedStudio[i], studioNames);
-                                    GUILayout.EndHorizontal();
-
-                                    if (settings.SelectedStudio[i] > 0)
-                                    {
-                                        if (tmpSelectedStudio != settings.SelectedStudio[i])
-                                        {
-                                            SelectStudio(settings.SelectedStudio[i], settings, i);
-                                        }
-
-                                        GUILayout.BeginHorizontal();
-                                        //GUILayout.Label("", GUILayout.Width(7));
-                                        GUILayout.Label(_gamesLabel, GUILayout.Width(50));
-                                        string[] gameNames = Studio.GetGameNames(settings.SelectedStudio[i] - 1, settings.Organizations[settings.SelectedOrganization[i] - 1].Studios);
-                                        if (settings.SelectedGame[i] >= gameNames.Length)
-                                        {
-                                            settings.SelectedGame[i] = 0;
-                                        }
-
-                                        int tmpSelectedGame = settings.SelectedGame[i];
-                                        settings.SelectedGame[i] = EditorGUILayout.Popup("", settings.SelectedGame[i], gameNames);
-                                        GUILayout.EndHorizontal();
-
-                                        if (settings.SelectedStudio[i] > 0 && tmpSelectedGame != settings.SelectedGame[i])
-                                        {
-                                            SelectGame(settings.SelectedGame[i], settings, i);
-                                        }
-                                    }
-                                    else if (tmpSelectedStudio != settings.SelectedStudio[i])
-                                    {
-                                        SetLoginStatus("Please select studio..", settings);
-                                    }
-                                }
-                                else if (tmpSelectedOrganization != settings.SelectedOrganization[i])
-                                {
-                                    SetLoginStatus("Please select organization..", settings);
-                                }
-                            }
-                            else
-                            {
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label(_organizationsLabel, GUILayout.Width(85));
-                                GUILayout.Space(-10);
-                                GUILayout.Label(!string.IsNullOrEmpty(settings.SelectedPlatformOrganization[i]) ? settings.SelectedPlatformOrganization[i] : "N/A");
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label(_studiosLabel, GUILayout.Width(85));
-                                GUILayout.Space(-10);
-                                GUILayout.Label(!string.IsNullOrEmpty(settings.SelectedPlatformStudio[i]) ? settings.SelectedPlatformStudio[i] : "N/A");
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label(_gamesLabel, GUILayout.Width(85));
-                                GUILayout.Space(-10);
-                                GUILayout.Label(!string.IsNullOrEmpty(settings.SelectedPlatformGame[i]) ? settings.SelectedPlatformGame[i] : "N/A");
-                                GUILayout.EndHorizontal();
-                            }
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_publicKeyLabel, GUILayout.Width(70));
-                            GUILayout.Space(-10);
-                            string beforeGameKey = settings.GetGameKey(i);
-                            string tmpGameKey = EditorGUILayout.TextField("", settings.GetGameKey(i));
-
-                            if (!tmpGameKey.Equals(beforeGameKey))
-                            {
-                                settings.SelectedPlatformOrganization[i] = "";
-                                settings.SelectedPlatformStudio[i] = "";
-                                settings.SelectedPlatformGame[i] = "";
-                            }
-
-                            settings.UpdateGameKey(i, tmpGameKey);
-
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label(_privateKeyLabel, GUILayout.Width(70));
-                            GUILayout.Space(-10);
-                            string beforeSecretKey = settings.GetSecretKey(i);
-                            string tmpSecretKey = EditorGUILayout.TextField("", settings.GetSecretKey(i));
-
-                            if (!tmpSecretKey.Equals(beforeSecretKey))
-                            {
-                                settings.SelectedPlatformOrganization[i] = "";
-                                settings.SelectedPlatformStudio[i] = "";
-                                settings.SelectedPlatformGame[i] = "";
-                            }
-
-                            settings.UpdateSecretKey(i, tmpSecretKey);
-
-                            GUILayout.EndHorizontal();
-
-                            EditorGUILayout.Space();
-
-                            switch (settings.UsePlayerSettingsBuildNumber)
-                            {
-                                case true:
-                                    if (settings.Platforms[i] != RuntimePlatform.Android && settings.Platforms[i] != RuntimePlatform.IPhonePlayer)
-                                    {
-                                        GUILayout.BeginHorizontal();
-                                        //GUILayout.Label("", GUILayout.Width(7));
-                                        GUILayout.Label(_build, GUILayout.Width(60));
-                                        settings.Build[i] = EditorGUILayout.TextField("", settings.Build[i]);
-                                        GUILayout.EndHorizontal();
-
-                                        EditorGUILayout.Space();
-                                    }
-                                    else
-                                    {
-                                        if (settings.Platforms[i] == RuntimePlatform.Android)
-                                        {
-                                            settings.Build[i] = PlayerSettings.bundleVersion;
-                                            EditorGUILayout.HelpBox("Using Android Player Settings Version* number as build number in events. \nBuild number is currently set to \"" + settings.Build[i] + "\".", MessageType.Info);
-                                        }
-                                        if (settings.Platforms[i] == RuntimePlatform.IPhonePlayer)
-                                        {
-                                            settings.Build[i] = PlayerSettings.bundleVersion;
-                                            EditorGUILayout.HelpBox("Using iOS Player Settings Version* number as build number in events. \nBuild number is currently set to \"" + settings.Build[i] + "\".", MessageType.Info);
-                                        }
-                                    }
-                                    break;
-                                case false:
-                                    GUILayout.BeginHorizontal();
-                                    //GUILayout.Label("", GUILayout.Width(7));
-                                    GUILayout.Label(_build, GUILayout.Width(60));
-                                    settings.Build[i] = EditorGUILayout.TextField("", settings.Build[i]);
-                                    GUILayout.EndHorizontal();
-
-                                    EditorGUILayout.Space();
-                                    break;
-                            }
-
-                            if (settings.SelectedPlatformGameID[i] >= 0)
-                            {
-                                EditorGUILayout.Space();
-                                GUILayout.BeginHorizontal();
-                                //GUILayout.Label("View", GUILayout.Width(65));
-                                if (GUILayout.Button("Integration Status"))
-                                {
-                                    if (string.IsNullOrEmpty(settings.TokenGA))
-                                    {
-                                        Application.OpenURL(String.Format(_gaOverviewUrl, settings.SelectedPlatformGameID[i]));
-                                    }
-                                    else
-                                    {
-                                        Application.OpenURL(_gaLoginUrl);
-                                    }
-                                }
-                                if (GUILayout.Button("Game Settings"))
-                                {
-                                    if (string.IsNullOrEmpty(settings.TokenGA))
-                                    {
-                                        Application.OpenURL(String.Format(_gaSettingsUrl, settings.SelectedPlatformGameID[i]));
-                                    }
-                                    else
-                                    {
-                                        Application.OpenURL(_gaLoginUrl);
-                                    }
-                                }
-                                GUILayout.EndHorizontal();
-                            }
-                        }
-
-                        if (GUILayout.Button("Remove platform"))
-                        {
-                            platformToRemove = i;
-                        }
-
-                        Splitter(new Color(0.35f, 0.35f, 0.35f));
-                    }
-
-                    if (platformToRemove >= 0)
-                    {
-                        settings.RemovePlatformAtIndex(platformToRemove);
-                        this.availablePlatforms = settings.GetAvailablePlatforms();
-                        this.selectedPlatformIndex = 0;
-                    }
-
-                    if (this.availablePlatforms == null)
-                    {
-                        this.availablePlatforms = settings.GetAvailablePlatforms();
-                    }
-
-                    this.selectedPlatformIndex = EditorGUILayout.Popup("Platform to add", this.selectedPlatformIndex, this.availablePlatforms);
-                    if (GUILayout.Button("Add platform"))
-                    {
-                        settings.AddPlatform((RuntimePlatform)System.Enum.Parse(typeof(RuntimePlatform), this.availablePlatforms[this.selectedPlatformIndex]));
-                        this.availablePlatforms = settings.GetAvailablePlatforms();
-                        this.selectedPlatformIndex = 0;
-                    }
-
-#if UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || UNITY_STANDALONE || UNITY_WEBGL
-                    // Do nothing
-#else
-
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    EditorGUILayout.HelpBox("PLEASE NOTICE: Currently the GameAnalytics Unity SDK does not support your selected build Platform. Please refer to the GameAnalytics documentation for additional information.", MessageType.Warning);
-
-                    if (GUI.Button(GUILayoutUtility.GetLastRect(), "", GUIStyle.none))
-                    {
-                        Application.OpenURL("http://www.gameanalytics.com/docs");
-                    }
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-
-                    GUILayout.EndHorizontal();
-
-#endif
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.BeginVertical();
-                    GUILayout.Space(-4);
-                    GUILayout.Label("Custom Dimensions", EditorStyles.largeLabel);
-                    GUILayout.EndVertical();
-
-                    if (!_customDimensionsIconOpen)
-                    {
-                        GUI.color = new Color(0.54f, 0.54f, 0.54f);
-                    }
-                    if (GUILayout.Button(_customDimensionsIcon, GUIStyle.none, GUILayout.Width(12), GUILayout.Height(12)))
-                    {
-                        _customDimensionsIconOpen = !_customDimensionsIconOpen;
-                    }
-                    GUI.color = Color.white;
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.FlexibleSpace();
-
-                    GUILayout.EndHorizontal();
-
-                    if (_customDimensionsIconOpen)
-                    {
-                        GUILayout.BeginHorizontal();
-                        TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                        GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                        Color tmpColor = GUI.skin.box.normal.textColor;
-                        GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                        RectOffset tmpOffset = GUI.skin.box.padding;
-                        GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                        GUILayout.Box(_customDimensionsIconMsg);
-                        GUI.skin.box.alignment = tmpAnchor;
-                        GUI.skin.box.normal.textColor = tmpColor;
-                        GUI.skin.box.padding = tmpOffset;
-                        //GUILayout.Label("Advanced settings are pretty awesome! They allow you to do all kinds of things, such as tracking Unity errors and exceptions, and frames per second (for performance). See http://www.support.gameanalytics.com", EditorStyles.wordWrappedMiniLabel);
-                        GUILayout.EndHorizontal();
-
-                        Rect tmpRect = GUILayoutUtility.GetLastRect();
-                        if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
-                        {
-                            Application.OpenURL("https://docs.gameanalytics.com/integrations/sdk/unity/advanced-setup#custom-dimensions");
-                        }
-                    }
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    // Custom dimensions 1
-                    settings.CustomDimensions01FoldOut = EditorGUILayout.Foldout(settings.CustomDimensions01FoldOut, new GUIContent("   " + _customDimensions01.text + " (" + settings.CustomDimensions01.Count + " / " + MaxNumberOfDimensions + " values)", _customDimensions01.tooltip));
-
-                    if (settings.CustomDimensions01FoldOut)
-                    {
-                        int removeIndex = -1;
-
-                        for (int i = 0; i < settings.CustomDimensions01.Count; i++)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(21));
-                            GUILayout.Label("-", GUILayout.Width(10));
-
-                            settings.CustomDimensions01[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(settings.CustomDimensions01[i]));
-
-                            if (GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
-                                GUILayout.Width(16),
-                                GUILayout.Height(16)
-                            }))
-                            {
-                                removeIndex = i;
-                            }
-                            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                            GUILayout.EndHorizontal();
-                            GUILayout.Space(2);
-                        }
-
-                        if (removeIndex >= 0)
-                        {
-                            settings.CustomDimensions01.RemoveAt(removeIndex);
-                        }
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(21));
-                        if (GUILayout.Button("Add", GUILayout.Width(63)))
-                        {
-                            if (settings.CustomDimensions01.Count < MaxNumberOfDimensions)
-                            {
-                                settings.CustomDimensions01.Add("New (" + (settings.CustomDimensions01.Count + 1) + ")");
-                            }
-                        }
-                        GUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-
-                    // Custom dimensions 2
-                    settings.CustomDimensions02FoldOut = EditorGUILayout.Foldout(settings.CustomDimensions02FoldOut, new GUIContent("   " + _customDimensions02.text + " (" + settings.CustomDimensions02.Count + " / " + MaxNumberOfDimensions + " values)", _customDimensions02.tooltip));
-
-                    if (settings.CustomDimensions02FoldOut)
-                    {
-                        int removeIndex = -1;
-
-                        for (int i = 0; i < settings.CustomDimensions02.Count; i++)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(21));
-                            GUILayout.Label("-", GUILayout.Width(10));
-
-                            settings.CustomDimensions02[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(settings.CustomDimensions02[i]));
-
-                            if (GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
-                                GUILayout.Width(16),
-                                GUILayout.Height(16)
-                            }))
-                            {
-                                removeIndex = i;
-                            }
-                            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                            GUILayout.EndHorizontal();
-                            GUILayout.Space(2);
-                        }
-
-                        if (removeIndex >= 0)
-                        {
-                            settings.CustomDimensions02.RemoveAt(removeIndex);
-                        }
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(21));
-                        if (GUILayout.Button("Add", GUILayout.Width(63)))
-                        {
-                            if (settings.CustomDimensions02.Count < MaxNumberOfDimensions)
-                            {
-                                settings.CustomDimensions02.Add("New (" + (settings.CustomDimensions02.Count + 1) + ")");
-                            }
-                        }
-                        GUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-
-                    // Custom dimensions 3
-                    settings.CustomDimensions03FoldOut = EditorGUILayout.Foldout(settings.CustomDimensions03FoldOut, new GUIContent("   " + _customDimensions03.text + " (" + settings.CustomDimensions03.Count + " / " + MaxNumberOfDimensions + " values)", _customDimensions03.tooltip));
-
-                    if (settings.CustomDimensions03FoldOut)
-                    {
-                        int removeIndex = -1;
-
-                        for (int i = 0; i < settings.CustomDimensions03.Count; i++)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(21));
-                            GUILayout.Label("-", GUILayout.Width(10));
-
-                            settings.CustomDimensions03[i] = ValidateCustomDimensionEditor(EditorGUILayout.TextField(settings.CustomDimensions03[i]));
-
-                            if (GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
-                                GUILayout.Width(16),
-                                GUILayout.Height(16)
-                            }))
-                            {
-                                removeIndex = i;
-                            }
-                            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                            GUILayout.EndHorizontal();
-                            GUILayout.Space(2);
-                        }
-
-                        if (removeIndex >= 0)
-                        {
-                            settings.CustomDimensions03.RemoveAt(removeIndex);
-                        }
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(21));
-                        if (GUILayout.Button("Add", GUILayout.Width(63)))
-                        {
-                            if (settings.CustomDimensions03.Count < MaxNumberOfDimensions)
-                            {
-                                settings.CustomDimensions03.Add("New (" + (settings.CustomDimensions03.Count + 1) + ")");
-                            }
-                        }
-                        GUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.BeginVertical();
-                    GUILayout.Space(-4);
-                    GUILayout.Label("Resource Types", EditorStyles.largeLabel);
-                    GUILayout.EndVertical();
-
-                    if (!_resourceTypesIconOpen)
-                    {
-                        GUI.color = new Color(0.54f, 0.54f, 0.54f);
-                    }
-                    if (GUILayout.Button(_resourceTypesIcon, GUIStyle.none, new GUILayoutOption[] {
-                        GUILayout.Width(12),
-                        GUILayout.Height(12)
-                    }))
-                    {
-                        _resourceTypesIconOpen = !_resourceTypesIconOpen;
-                    }
-                    GUI.color = Color.white;
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.FlexibleSpace();
-
-                    GUILayout.EndHorizontal();
-
-                    if (_resourceTypesIconOpen)
-                    {
-                        GUILayout.BeginHorizontal();
-                        TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                        GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                        Color tmpColor = GUI.skin.box.normal.textColor;
-                        GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                        RectOffset tmpOffset = GUI.skin.box.padding;
-                        GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                        GUILayout.Box(_resourceTypesIconMsg);
-                        GUI.skin.box.alignment = tmpAnchor;
-                        GUI.skin.box.normal.textColor = tmpColor;
-                        GUI.skin.box.padding = tmpOffset;
-                        GUILayout.EndHorizontal();
-
-                        Rect tmpRect = GUILayoutUtility.GetLastRect();
-                        if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
-                        {
-                            Application.OpenURL("https://docs.gameanalytics.com/integrations/sdk/unity/advanced-setup#resource-types");
-                        }
-                    }
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    // Resource types
-
-                    settings.ResourceCurrenciesFoldOut = EditorGUILayout.Foldout(settings.ResourceCurrenciesFoldOut, new GUIContent("   " + _resourceCurrrencies.text + " (" + settings.ResourceCurrencies.Count + " / " + MaxNumberOfDimensions + " values)", _resourceCurrrencies.tooltip));
-
-                    if (settings.ResourceCurrenciesFoldOut)
-                    {
-                        int removeIndex = -1;
-
-                        for (int i = 0; i < settings.ResourceCurrencies.Count; i++)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(21));
-                            GUILayout.Label("-", GUILayout.Width(10));
-                            settings.ResourceCurrencies[i] = ValidateResourceCurrencyEditor(EditorGUILayout.TextField(settings.ResourceCurrencies[i]));
-
-                            if (GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
-                                GUILayout.Width(16),
-                                GUILayout.Height(16)
-                            }))
-                            {
-                                removeIndex = i;
-                            }
-                            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                            GUILayout.EndHorizontal();
-                            GUILayout.Space(2);
-                        }
-
-                        if (removeIndex >= 0)
-                        {
-                            settings.ResourceCurrencies.RemoveAt(removeIndex);
-                        }
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(21));
-                        if (GUILayout.Button("Add", GUILayout.Width(63)))
-                        {
-                            if (settings.ResourceCurrencies.Count < MaxNumberOfDimensions)
-                            {
-                                settings.ResourceCurrencies.Add("NewCurrency"); // + (settings.ResourceCurrencies.Count + 1));
-                            }
-                        }
-                        GUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-
-                    settings.ResourceItemTypesFoldOut = EditorGUILayout.Foldout(settings.ResourceItemTypesFoldOut, new GUIContent("   " + _resourceItemTypes.text + " (" + settings.ResourceItemTypes.Count + " / " + MaxNumberOfDimensions + " values)", _resourceItemTypes.tooltip));
-
-                    if (settings.ResourceItemTypesFoldOut)
-                    {
-                        int removeIndex = -1;
-
-                        for (int i = 0; i < settings.ResourceItemTypes.Count; i++)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(21));
-                            GUILayout.Label("-", GUILayout.Width(10));
-                            //string tmp = settings.ResourceTypes[i];
-                            settings.ResourceItemTypes[i] = ValidateResourceItemTypeEditor(EditorGUILayout.TextField(settings.ResourceItemTypes[i]));
-
-                            if (GUILayout.Button(_deleteIcon, GUI.skin.label, new GUILayoutOption[] {
-                                GUILayout.Width(16),
-                                GUILayout.Height(16)
-                            }))
-                            {
-                                removeIndex = i;
-                            }
-                            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                            GUILayout.EndHorizontal();
-                            GUILayout.Space(2);
-                        }
-
-                        if (removeIndex >= 0)
-                        {
-                            settings.ResourceItemTypes.RemoveAt(removeIndex);
-                        }
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("", GUILayout.Width(21));
-                        if (GUILayout.Button("Add", GUILayout.Width(63)))
-                        {
-                            if (settings.ResourceItemTypes.Count < MaxNumberOfDimensions)
-                            {
-                                settings.ResourceItemTypes.Add("New (" + (settings.ResourceItemTypes.Count + 1) + ")");
-                            }
-                        }
-                        GUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-                }
-                #endregion // Settings.InspectorStates.Basic
-                #region Settings.InspectorStates.Pref
-                else if (settings.CurrentInspectorState == Settings.InspectorStates.Pref)
+                    });
+                }));
+
+            if (settings.SelectedOrganization[i] <= 0)
+            {
+                return;
+            }
+
+            string[] studioNames = Studio.GetStudioNames(settings.Organizations[settings.SelectedOrganization[i] - 1].Studios);
+            if (settings.SelectedStudio[i] >= studioNames.Length)
+            {
+                settings.SelectedStudio[i] = 0;
+            }
+            parent.Add(MakePopupRow("Studio", "Studios tied to your GameAnalytics user account.",
+                studioNames, settings.SelectedStudio[i], newIndex =>
                 {
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.BeginVertical();
-                    GUILayout.Space(-4);
-                    GUILayout.Label("Advanced Settings", EditorStyles.largeLabel);
-                    GUILayout.EndVertical();
-
-                    if (!_advancedSettingsIconOpen)
+                    Apply("Select studio", () =>
                     {
-                        GUI.color = new Color(0.54f, 0.54f, 0.54f);
-                    }
-                    if (GUILayout.Button(_advancedSettingsIcon, GUIStyle.none, new GUILayoutOption[] {
-                        GUILayout.Width(12),
-                        GUILayout.Height(12)
-                    }))
-                    {
-                        _advancedSettingsIconOpen = !_advancedSettingsIconOpen;
-                    }
-                    GUI.color = Color.white;
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.FlexibleSpace();
-
-                    GUILayout.EndHorizontal();
-
-                    if (_advancedSettingsIconOpen)
-                    {
-                        GUILayout.BeginHorizontal();
-                        TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                        GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                        Color tmpColor = GUI.skin.box.normal.textColor;
-                        GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                        RectOffset tmpOffset = GUI.skin.box.padding;
-                        GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                        GUILayout.Box(_advancedSettingsIconMsg);
-                        GUI.skin.box.alignment = tmpAnchor;
-                        GUI.skin.box.normal.textColor = tmpColor;
-                        GUI.skin.box.padding = tmpOffset;
-                        GUILayout.EndHorizontal();
-
-                        Rect tmpRect = GUILayoutUtility.GetLastRect();
-                        if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
+                        if (newIndex <= 0)
                         {
-                            Application.OpenURL("https://docs.gameanalytics.com/integrations/sdk/unity/advanced-setup#advanced-settings");
+                            settings.SelectedStudio[index] = 0;
+                            settings.SelectedGame[index] = 0;
+                            SetLoginStatus("Please select studio..", settings);
                         }
-                    }
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.UseManualSessionHandling = EditorGUILayout.Toggle("", settings.UseManualSessionHandling, GUILayout.Width(35));
-                    GUILayout.Label(_useManualSessionHandling);
-                    GUILayout.EndHorizontal();
-
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.UsePlayerSettingsBuildNumber = EditorGUILayout.Toggle("", settings.UsePlayerSettingsBuildNumber, GUILayout.Width(35));
-                    GUILayout.Label(_usePlayerSettingsBunldeVersionForBuild);
-                    GUILayout.EndHorizontal();
-
-                    if (settings.UsePlayerSettingsBuildNumber)
-                    {
-                        EditorGUILayout.HelpBox("PLEASE NOTICE: The SDK will use the Version* number (Android, iOS) from Player Settings as the build number in events.", MessageType.Info);
-                    }
-
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.SubmitFpsAverage = EditorGUILayout.Toggle("", settings.SubmitFpsAverage, GUILayout.Width(35));
-                    GUILayout.Label(_gaFpsAverage);
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.SubmitFpsCritical = EditorGUILayout.Toggle("", settings.SubmitFpsCritical, GUILayout.Width(35));
-                    GUILayout.Label(_gaFpsCritical, GUILayout.Width(200));
-                    GUI.enabled = settings.SubmitFpsCritical;
-                    GUILayout.Label(_gaFpsCriticalThreshold, GUILayout.Width(40));
-                    GUILayout.Label("", GUILayout.Width(-26));
-
-                    int tmpFpsCriticalThreshold = 0;
-                    if (int.TryParse(EditorGUILayout.TextField(settings.FpsCriticalThreshold.ToString(), GUILayout.Width(45)), out tmpFpsCriticalThreshold))
-                    {
-                        settings.FpsCriticalThreshold = Mathf.Max(Mathf.Min(tmpFpsCriticalThreshold, 99), 5);
-                    }
-                    GUI.enabled = true;
-
-                    GUILayout.EndHorizontal();
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.BeginVertical();
-                    GUILayout.Space(-4);
-                    GUILayout.Label("Debug Settings", EditorStyles.largeLabel);
-                    GUILayout.EndVertical();
-
-                    if (!_debugSettingsIconOpen)
-                    {
-                        GUI.color = new Color(0.54f, 0.54f, 0.54f);
-                    }
-                    if (GUILayout.Button(_debugSettingsIcon, GUIStyle.none, new GUILayoutOption[] {
-                        GUILayout.Width(12),
-                        GUILayout.Height(12)
-                    }))
-                    {
-                        _debugSettingsIconOpen = !_debugSettingsIconOpen;
-                    }
-                    GUI.color = Color.white;
-                    EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                    GUILayout.FlexibleSpace();
-
-                    GUILayout.EndHorizontal();
-
-                    if (_debugSettingsIconOpen)
-                    {
-                        GUILayout.BeginHorizontal();
-                        TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                        GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                        Color tmpColor = GUI.skin.box.normal.textColor;
-                        GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                        RectOffset tmpOffset = GUI.skin.box.padding;
-                        GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                        GUILayout.Box(_debugSettingsIconMsg);
-                        GUI.skin.box.alignment = tmpAnchor;
-                        GUI.skin.box.normal.textColor = tmpColor;
-                        GUI.skin.box.padding = tmpOffset;
-                        GUILayout.EndHorizontal();
-
-                        Rect tmpRect = GUILayoutUtility.GetLastRect();
-                        if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
+                        else
                         {
-                            Application.OpenURL("https://docs.gameanalytics.com/integrations/sdk/unity/advanced-setup#advanced-settings");
+                            SelectStudio(newIndex, settings, index);
                         }
-                    }
+                    });
+                }));
 
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.InfoLogEditor = EditorGUILayout.Toggle("", settings.InfoLogEditor, GUILayout.Width(35));
-                    GUILayout.Label(_infoLogEditor);
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.InfoLogBuild = EditorGUILayout.Toggle("", settings.InfoLogBuild, GUILayout.Width(35));
-                    GUILayout.Label(_infoLogBuild);
-                    GUILayout.EndHorizontal();
-
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("", GUILayout.Width(-18));
-                    settings.VerboseLogBuild = EditorGUILayout.Toggle("", settings.VerboseLogBuild, GUILayout.Width(35));
-                    GUILayout.Label(_verboseLogBuild);
-                    GUILayout.EndHorizontal();
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    const int layoutWidth   = 35;
-
-                    GUILayout.BeginVertical();
-
-                        GUILayout.BeginHorizontal();
-
-                            GUILayout.BeginVertical();
-                            GUILayout.Space(-4);
-                            GUILayout.Label("Health Tracking", EditorStyles.largeLabel);
-                            GUILayout.EndVertical();
-
-                            if (!_healthEventIconOpen)
-                            {
-                                GUI.color = new Color(0.54f, 0.54f, 0.54f);
-                            }
-                            if (GUILayout.Button(_healthEventIcon, GUIStyle.none, new GUILayoutOption[] {
-                                GUILayout.Width(12),
-                                GUILayout.Height(12)
-                            }))
-                            {
-                                _healthEventIconOpen = !_healthEventIconOpen;
-                            }
-                            GUI.color = Color.white;
-                            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-                            GUILayout.FlexibleSpace();
-
-                        GUILayout.EndHorizontal();
-
-                        if (_healthEventIconOpen)
-                        {
-                            GUILayout.BeginHorizontal();
-                            TextAnchor tmpAnchor = GUI.skin.box.alignment;
-                            GUI.skin.box.alignment = TextAnchor.UpperLeft;
-                            Color tmpColor = GUI.skin.box.normal.textColor;
-                            GUI.skin.box.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-                            RectOffset tmpOffset = GUI.skin.box.padding;
-                            GUI.skin.box.padding = new RectOffset(6, 6, 5, 32);
-                            GUILayout.Box(_healthEventIconMsg);
-                            GUI.skin.box.alignment = tmpAnchor;
-                            GUI.skin.box.normal.textColor = tmpColor;
-                            GUI.skin.box.padding = tmpOffset;
-                            GUILayout.EndHorizontal();
-
-                            Rect tmpRect = GUILayoutUtility.GetLastRect();
-                            if (GUI.Button(new Rect(tmpRect.x + 5, tmpRect.y + tmpRect.height - 25, 80, 20), "Learn more"))
-                            {
-                                Application.OpenURL("https://docs.gameanalytics.com/features/health");
-                            }
-                        }
-
-                        EditorGUILayout.Space();
-                        EditorGUILayout.Space();
-
-                        GUILayout.BeginVertical();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Space(-12);
-                            EditorGUILayout.LabelField("General", EditorStyles.boldLabel);
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.SubmitErrors = EditorGUILayout.Toggle("", settings.SubmitErrors, GUILayout.Width(35));
-                            GUILayout.Label(_gaSubmitErrors);
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.NativeErrorReporting = EditorGUILayout.Toggle("", settings.NativeErrorReporting, GUILayout.Width(35));
-                            GUILayout.Label(_gaNativeErrorReporting);
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.EnableSDKInitEvent = EditorGUILayout.Toggle("", settings.EnableSDKInitEvent, GUILayout.Width(layoutWidth));
-                            GUILayout.Label(_enableSDKInitEvent);
-                            GUILayout.EndHorizontal();
-
-                        GUILayout.EndVertical();
-
-                        EditorGUILayout.Space();
-                        EditorGUILayout.Space();
-
-                        GUILayout.BeginVertical();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Space(-12);
-                            EditorGUILayout.LabelField("Session Performance Event", EditorStyles.boldLabel);
-                            GUILayout.EndHorizontal();
-
-                            EditorGUILayout.Space();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.EnableFPSHistogram = EditorGUILayout.Toggle("", settings.EnableFPSHistogram, GUILayout.Width(layoutWidth));
-                            GUILayout.Label(_enableFPSHistogram);
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.EnableMemoryHistogram = EditorGUILayout.Toggle("", settings.EnableMemoryHistogram, GUILayout.Width(layoutWidth));
-                            GUILayout.Label(_enableMemoryHistogram);
-                            GUILayout.EndHorizontal();
-
-                        GUILayout.EndVertical();
-
-                        EditorGUILayout.Space();
-                        EditorGUILayout.Space();
-
-                        GUILayout.BeginVertical();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Space(-12);
-                            EditorGUILayout.LabelField("EXPERIMENTAL", EditorStyles.boldLabel);
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.EnableHardwareTracking = EditorGUILayout.Toggle("", settings.EnableHardwareTracking, GUILayout.Width(layoutWidth));
-                            GUILayout.Label(_enableHardwareTracking);
-                            GUILayout.EndHorizontal();
-
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(-18));
-                            settings.EnableMemoryTracking = EditorGUILayout.Toggle("", settings.EnableMemoryTracking, GUILayout.Width(layoutWidth));
-                            GUILayout.Label(_enableMemoryTracking);
-                            GUILayout.EndHorizontal();
-
-                        GUILayout.EndVertical();
-
-                    GUILayout.EndVertical();
-                }
-                #endregion // Settings.InspectorStates.Pref
-            }
-
-            if (GUI.changed)
+            if (settings.SelectedStudio[i] <= 0)
             {
-                EditorUtility.SetDirty(settings);
+                return;
             }
+
+            string[] gameNames = Studio.GetGameNames(settings.SelectedStudio[i] - 1, settings.Organizations[settings.SelectedOrganization[i] - 1].Studios);
+            if (settings.SelectedGame[i] >= gameNames.Length)
+            {
+                settings.SelectedGame[i] = 0;
+            }
+            parent.Add(MakePopupRow("Game", "Games tied to the selected GameAnalytics studio.",
+                gameNames, settings.SelectedGame[i], newIndex =>
+                {
+                    Apply("Select game", () => SelectGame(newIndex, settings, index));
+                }));
         }
 
-        private MessageType ConvertMessageType(Settings.MessageTypes msgType)
+        private static VisualElement MakePopupRow(string label, string tooltip, string[] choices, int selectedIndex, Action<int> onChanged)
         {
-            switch (msgType)
+            VisualElement row = new VisualElement();
+            row.AddToClassList("ga-row");
+            Label fieldLabel = new Label(label);
+            fieldLabel.AddToClassList("ga-field-label");
+            fieldLabel.tooltip = tooltip;
+            row.Add(fieldLabel);
+
+            DropdownField popup = new DropdownField(new List<string>(choices), selectedIndex) { tooltip = tooltip };
+            popup.RegisterValueChangedCallback(_ => onChanged(popup.index));
+            row.Add(popup);
+            return row;
+        }
+
+        private void BuildSelectedGameSummary(VisualElement parent, int i)
+        {
+            parent.Add(MakeSummaryRow("Organization", settings.SelectedPlatformOrganization[i]));
+            parent.Add(MakeSummaryRow("Studio", settings.SelectedPlatformStudio[i]));
+            parent.Add(MakeSummaryRow("Game", settings.SelectedPlatformGame[i]));
+        }
+
+        private static VisualElement MakeSummaryRow(string label, string value)
+        {
+            VisualElement row = new VisualElement();
+            row.AddToClassList("ga-row");
+            Label fieldLabel = new Label(label);
+            fieldLabel.AddToClassList("ga-field-label");
+            row.Add(fieldLabel);
+            Label valueLabel = new Label(string.IsNullOrEmpty(value) ? "N/A" : value);
+            valueLabel.AddToClassList("ga-dim");
+            row.Add(valueLabel);
+            return row;
+        }
+
+        private void BuildAddPlatformRow(VisualElement parent)
+        {
+            string[] availablePlatforms = settings.GetAvailablePlatforms();
+            if (availablePlatforms.Length == 0)
             {
-                case Settings.MessageTypes.Error:
-                    return MessageType.Error;
-                case Settings.MessageTypes.Info:
-                    return MessageType.Info;
-                case Settings.MessageTypes.Warning:
-                    return MessageType.Warning;
-                default:
-                    return MessageType.None;
+                Label done = new Label("All supported platforms are configured.");
+                done.AddToClassList("ga-note");
+                done.style.marginTop = 8;
+                parent.Add(done);
+                return;
+            }
+
+            VisualElement card = new VisualElement();
+            card.AddToClassList("ga-card");
+            VisualElement body = new VisualElement();
+            body.AddToClassList("ga-card-body");
+            body.style.flexDirection = FlexDirection.Row;
+            body.style.alignItems = Align.Center;
+
+            if (_addPlatformIndex >= availablePlatforms.Length)
+            {
+                _addPlatformIndex = 0;
+            }
+            DropdownField picker = new DropdownField(new List<string>(availablePlatforms), _addPlatformIndex)
+            {
+                tooltip = "Platform to add."
+            };
+            picker.AddToClassList("ga-grow");
+            picker.style.marginRight = 6;
+            picker.RegisterValueChangedCallback(_ => _addPlatformIndex = picker.index);
+            body.Add(picker);
+
+            Button add = new Button(() =>
+            {
+                string chosen = availablePlatforms[Mathf.Clamp(_addPlatformIndex, 0, availablePlatforms.Length - 1)];
+                Apply("Add platform", () => settings.AddPlatform((RuntimePlatform)Enum.Parse(typeof(RuntimePlatform), chosen)));
+                _addPlatformIndex = 0;
+            })
+            { text = "Add platform" };
+            body.Add(add);
+
+            card.Add(body);
+            parent.Add(card);
+        }
+
+        private void SyncPlatformOrganizationList()
+        {
+            List<string> list = settings.SelectedPlatformOrganization;
+
+            while (list.Count < settings.Platforms.Count)
+            {
+                list.Add("");
+            }
+            while (list.Count > settings.Platforms.Count)
+            {
+                list.RemoveAt(list.Count - 1);
             }
         }
+
+        private void OpenGamePage(string urlTemplate, int gameId)
+        {
+            if (string.IsNullOrEmpty(settings.TokenGA))
+            {
+                Application.OpenURL(string.Format(urlTemplate, gameId));
+            }
+            else
+            {
+                Application.OpenURL(GaLoginUrl);
+            }
+        }
+
+        private static RuntimePlatform ActiveBuildRuntimePlatform()
+        {
+            switch (EditorUserBuildSettings.activeBuildTarget)
+            {
+                case BuildTarget.Android: return RuntimePlatform.Android;
+                case BuildTarget.iOS: return RuntimePlatform.IPhonePlayer;
+                case BuildTarget.tvOS: return RuntimePlatform.tvOS;
+                case BuildTarget.WebGL: return RuntimePlatform.WebGLPlayer;
+                case BuildTarget.StandaloneOSX: return RuntimePlatform.OSXPlayer;
+                case BuildTarget.StandaloneLinux64: return RuntimePlatform.LinuxPlayer;
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64: return RuntimePlatform.WindowsPlayer;
+                default: return (RuntimePlatform)(-1);
+            }
+        }
+
+        #endregion // Setup tab
+
+        #region Events tab
+
+        private void BuildEventsTab(VisualElement parent)
+        {
+            VisualElement dimensionsBody;
+            parent.Add(MakeCard("Custom dimensions", "Custom dimensions documentation.",
+                GaConfigurationDocsUrl + "#set-custom-dimensions", out dimensionsBody));
+
+            Label dimensionsNote = new Label("Define your custom dimension values below. Values that are not defined will be ignored.");
+            dimensionsNote.AddToClassList("ga-note");
+            dimensionsBody.Add(dimensionsNote);
+
+            BuildStringListGroup(dimensionsBody, "CustomDimensions01", "Dimension 01", settings.CustomDimensions01, ValidateCustomDimensionEditor, NumberedNewValue);
+            BuildStringListGroup(dimensionsBody, "CustomDimensions02", "Dimension 02", settings.CustomDimensions02, ValidateCustomDimensionEditor, NumberedNewValue);
+            BuildStringListGroup(dimensionsBody, "CustomDimensions03", "Dimension 03", settings.CustomDimensions03, ValidateCustomDimensionEditor, NumberedNewValue);
+
+            VisualElement resourcesBody;
+            parent.Add(MakeCard("Resource types", "Resource events documentation.",
+                GaConfigurationDocsUrl + "#resources", out resourcesBody));
+
+            Label resourcesNote = new Label("Define all your resource currencies and resource item types. Values that are not defined will be ignored.");
+            resourcesNote.AddToClassList("ga-note");
+            resourcesBody.Add(resourcesNote);
+
+            BuildStringListGroup(resourcesBody, "ResourceCurrencies", "Currencies", settings.ResourceCurrencies, ValidateResourceCurrencyEditor, _ => "NewCurrency");
+            BuildStringListGroup(resourcesBody, "ResourceItemTypes", "Item types", settings.ResourceItemTypes, ValidateResourceItemTypeEditor, NumberedNewValue);
+        }
+
+        private void BuildStringListGroup(VisualElement parent, string foldKey, string title, List<string> values,
+            Func<string, string> validate, Func<int, string> makeNewValue)
+        {
+            bool open = GetListFold(foldKey);
+
+            VisualElement header = new VisualElement();
+            header.AddToClassList("ga-row");
+            header.style.marginTop = 6;
+
+            Button arrow = new Button(() =>
+            {
+                SetListFold(foldKey, !open);
+                Rebuild();
+            })
+            { text = open ? "▼" : "▶", tooltip = open ? "Collapse" : "Expand" };
+            arrow.AddToClassList("ga-fold-arrow");
+            header.Add(arrow);
+
+            Label titleLabel = new Label(title + "  (" + values.Count + " / " + MaxNumberOfDimensions + ")");
+            titleLabel.AddToClassList("ga-subhead");
+            titleLabel.style.marginTop = 0;
+            titleLabel.style.marginBottom = 0;
+            header.Add(titleLabel);
+
+            parent.Add(header);
+
+            if (!open)
+            {
+                return;
+            }
+
+            for (int i = 0; i < values.Count; i++)
+            {
+                int index = i;
+                VisualElement row = new VisualElement();
+                row.AddToClassList("ga-row");
+                row.style.marginLeft = 16;
+
+                TextField field = new TextField { value = values[i] };
+                field.RegisterCallback<FocusOutEvent>(_ =>
+                {
+                    if (index >= values.Count)
+                    {
+                        return; // the row was deleted while this field had focus
+                    }
+                    string validated = validate(field.value);
+                    if (validated != values[index])
+                    {
+                        Apply("Edit " + title, () => values[index] = validated, rebuild: false);
+                        field.SetValueWithoutNotify(validated);
+                    }
+                });
+                row.Add(field);
+
+                Button delete = new Button(() =>
+                    Apply("Remove " + title + " value", () => values.RemoveAt(index)))
+                { text = "✕", tooltip = "Remove value." };
+                delete.AddToClassList("ga-fold-arrow");
+                row.Add(delete);
+
+                parent.Add(row);
+            }
+
+            Button addButton = new Button(() =>
+            {
+                if (values.Count < MaxNumberOfDimensions)
+                {
+                    Apply("Add " + title + " value", () => values.Add(makeNewValue(values.Count)));
+                }
+            })
+            { text = "+ Add" };
+            addButton.style.alignSelf = Align.FlexStart;
+            addButton.style.marginLeft = 16;
+            addButton.style.marginTop = 2;
+            parent.Add(addButton);
+        }
+
+        private static string NumberedNewValue(int currentCount)
+        {
+            return "New (" + (currentCount + 1) + ")";
+        }
+
+        #endregion // Events tab
+
+        #region Advanced tab
+
+        private void BuildAdvancedTab(VisualElement parent)
+        {
+            VisualElement advancedBody;
+            parent.Add(MakeCard("Advanced settings", "Advanced settings documentation.",
+                GaConfigurationDocsUrl + "#manual-session-handling", out advancedBody));
+
+            advancedBody.Add(MakeToggle("Manual session handling",
+                "Manually choose when to end and start a new session. Note initializing of the SDK will automatically start the first session.",
+                () => settings.UseManualSessionHandling, v => settings.UseManualSessionHandling = v));
+            advancedBody.Add(MakeToggle("Submit average FPS (legacy)",
+                "Submit the average frames per second. Warning: This FPS tracking approach will be replaced in a future update.",
+                () => settings.SubmitFpsAverage, v => settings.SubmitFpsAverage = v));
+
+            VisualElement criticalRow = new VisualElement();
+            criticalRow.style.flexDirection = FlexDirection.Row;
+            criticalRow.style.flexWrap = Wrap.Wrap;
+            criticalRow.style.alignItems = Align.Center;
+
+            IntegerField threshold = new IntegerField
+            {
+                value = settings.FpsCriticalThreshold,
+                tooltip = "Frames per second threshold."
+            };
+            threshold.style.width = 44;
+            threshold.SetEnabled(settings.SubmitFpsCritical);
+            threshold.RegisterValueChangedCallback(evt =>
+            {
+                int clamped = Mathf.Clamp(evt.newValue, 5, 99);
+                settings.FpsCriticalThreshold = clamped;
+                threshold.SetValueWithoutNotify(clamped);
+                EditorUtility.SetDirty(settings);
+            });
+
+            Toggle critical = MakeToggle("Submit critical FPS (legacy)",
+                "Submit a message whenever the frames per second falls below a certain threshold. Warning: This FPS tracking approach will be replaced in a future update.",
+                () => settings.SubmitFpsCritical, v => settings.SubmitFpsCritical = v);
+            critical.RegisterValueChangedCallback(evt => threshold.SetEnabled(evt.newValue));
+            criticalRow.Add(critical);
+
+            Label below = new Label("below");
+            below.AddToClassList("ga-dim");
+            below.style.marginLeft = 6;
+            below.style.marginRight = 4;
+            criticalRow.Add(below);
+            criticalRow.Add(threshold);
+            advancedBody.Add(criticalRow);
+
+            VisualElement loggingBody;
+            parent.Add(MakeCard("Logging", "Debug logging documentation.",
+                GaLoggingDocsUrl, out loggingBody));
+
+            loggingBody.Add(MakeToggle("Info log in editor",
+                "Show info messages from GA in the unity editor console when submitting data.",
+                () => settings.InfoLogEditor, v => settings.InfoLogEditor = v));
+            loggingBody.Add(MakeToggle("Info log in build",
+                "Show info messages from GA in builds (f.x. Xcode for iOS).",
+                () => settings.InfoLogBuild, v => settings.InfoLogBuild = v));
+            loggingBody.Add(MakeToggle("Verbose log in build",
+                "Show full info messages from GA in builds. Note that this option includes long JSON messages sent to the server.",
+                () => settings.VerboseLogBuild, v => settings.VerboseLogBuild = v));
+
+            VisualElement healthBody;
+            parent.Add(MakeCard("Health tracking", "Health feature documentation.", GaHealthDocsUrl, out healthBody));
+
+            Label general = new Label("GENERAL");
+            general.AddToClassList("ga-subhead");
+            healthBody.Add(general);
+
+            healthBody.Add(MakeToggle("Submit Unity errors automatically",
+                "Submit error and exception messages to the GameAnalytics server. Useful for getting relevant data when the game crashes, etc.",
+                () => settings.SubmitErrors, v => settings.SubmitErrors = v));
+            healthBody.Add(MakeToggle("Submit native errors automatically (Android, iOS)",
+                "Submit error and exception messages from native errors and exceptions to the GameAnalytics server.",
+                () => settings.NativeErrorReporting, v => settings.NativeErrorReporting = v));
+            healthBody.Add(MakeToggle("SDK init event - boot time (Android, iOS)",
+                "Track the boot time: from application launch to the GameAnalytics SDK initialization.",
+                () => settings.EnableSDKInitEvent, v => settings.EnableSDKInitEvent = v));
+            healthBody.Add(MakeToggle("Hardware info (Android, iOS)",
+                "Memory information collected (if available) and added as properties to health events: total device memory, system memory usage and app memory usage.",
+                () => settings.EnableHardwareTracking, v => settings.EnableHardwareTracking = v));
+
+            Label sessionPerformance = new Label("SESSION PERFORMANCE");
+            sessionPerformance.AddToClassList("ga-subhead");
+            healthBody.Add(sessionPerformance);
+
+            healthBody.Add(MakeToggle("FPS histogram (Android, iOS)",
+                "Sample FPS across the entire session and send an FPS histogram at session end. Review FPS insights in the GameAnalytics Health feature.",
+                () => settings.EnableFPSHistogram, v => settings.EnableFPSHistogram = v));
+            healthBody.Add(MakeToggle("Memory usage histogram (Android, iOS)",
+                "Sample memory usage across the entire session and send a memory histogram at session end.",
+                () => settings.EnableMemoryHistogram, v => settings.EnableMemoryHistogram = v));
+            healthBody.Add(MakeToggle("Memory snapshots (Android, iOS)",
+                "Performance & error events will take memory usage snapshots.",
+                () => settings.EnableMemoryTracking, v => settings.EnableMemoryTracking = v));
+
+            BuildDiagnosticsCard(parent);
+        }
+
+        private void BuildDiagnosticsCard(VisualElement parent)
+        {
+            VisualElement body;
+            parent.Add(MakeCard("Diagnostics", "Copy these versions into a support ticket.", GaSupportUrl, out body));
+
+            string diagnostics =
+                "Unity SDK: " + Settings.VERSION + "\n" +
+                "Unity Editor: " + Application.unityVersion + "\n" +
+                "Native Android: " + GA_NativeSdkVersions.Android + "\n" +
+                "Native iOS/tvOS: " + GA_NativeSdkVersions.AppleIosTvos + "\n" +
+                "Native desktop: " + GA_NativeSdkVersions.Desktop + "\n" +
+                "WebGL library: " + GA_NativeSdkVersions.WebGL + "\n" +
+                "Install channel: " + GA_UpdateChecker.InstallChannel;
+
+            foreach (string line in diagnostics.Split('\n'))
+            {
+                int split = line.IndexOf(':');
+                VisualElement row = new VisualElement();
+                row.AddToClassList("ga-row");
+                Label key = new Label(line.Substring(0, split));
+                key.AddToClassList("ga-field-label");
+                row.Add(key);
+                row.Add(new Label(line.Substring(split + 1).Trim()));
+                body.Add(row);
+            }
+
+            VisualElement footer = new VisualElement();
+            footer.style.flexDirection = FlexDirection.Row;
+            footer.style.justifyContent = Justify.SpaceBetween;
+            footer.style.alignItems = Align.Center;
+            footer.style.marginTop = 6;
+
+            footer.Add(MakeLink("Contact support ↗", () => Application.OpenURL(GaSupportUrl),
+                "Opens gameanalytics.com/contact - paste the copied block into your ticket."));
+
+            Button copy = new Button(() =>
+            {
+                EditorGUIUtility.systemCopyBuffer = diagnostics;
+                Debug.Log("GameAnalytics: diagnostics copied to clipboard.");
+            })
+            { text = "Copy", tooltip = "Copy all versions for a support ticket." };
+            footer.Add(copy);
+
+            body.Add(footer);
+        }
+
+        #endregion // Advanced tab
+
+        #region Footer
+
+        private void BuildFooter(VisualElement parent)
+        {
+            VisualElement footer = new VisualElement();
+            footer.AddToClassList("ga-footer");
+
+            footer.Add(MakeLink("Documentation ↗", () => Application.OpenURL(GaDocsUrl),
+                "Opens the GameAnalytics Unity SDK documentation."));
+            footer.Add(MakeLink("Contact support ↗", () => Application.OpenURL(GaSupportUrl),
+                "The preferred channel for bugs, account and integration help."));
+            footer.Add(MakeLink("Report an issue ↗", () => Application.OpenURL(GaIssuesUrl),
+                "GitHub issue tracker. Contact support is the preferred channel."));
+
+            parent.Add(footer);
+        }
+
+        #endregion // Footer
+
+        #region Shared UI helpers
+
+        private static VisualElement MakeCard(string title, string helpTooltip, string docUrl, out VisualElement body)
+        {
+            VisualElement card = new VisualElement();
+            card.AddToClassList("ga-card");
+
+            VisualElement header = new VisualElement();
+            header.AddToClassList("ga-card-header");
+            Label titleLabel = new Label(title);
+            titleLabel.AddToClassList("ga-card-title");
+            header.Add(titleLabel);
+            if (docUrl != null)
+            {
+                header.Add(MakeHelpButton(helpTooltip, docUrl));
+            }
+            card.Add(header);
+
+            body = new VisualElement();
+            body.AddToClassList("ga-card-body");
+            card.Add(body);
+            return card;
+        }
+
+        private static Button MakeHelpButton(string tooltip, string docUrl)
+        {
+            Button help = new Button(() => Application.OpenURL(docUrl))
+            {
+                text = "?",
+                tooltip = tooltip + " Opens " + docUrl
+            };
+            help.AddToClassList("ga-help-button");
+            return help;
+        }
+
+        private static Button MakeLink(string text, Action onClick, string tooltip)
+        {
+            Button link = new Button(onClick) { text = text, tooltip = tooltip };
+            link.AddToClassList("ga-link");
+            return link;
+        }
+
+        private Toggle MakeToggle(string label, string tooltip, Func<bool> get, Action<bool> set)
+        {
+            Toggle toggle = new Toggle { text = label, value = get(), tooltip = tooltip };
+            toggle.RegisterValueChangedCallback(evt =>
+            {
+                Undo.RecordObject(settings, label);
+                set(evt.newValue);
+                EditorUtility.SetDirty(settings);
+            });
+            return toggle;
+        }
+
+        private static void OpenSignUp()
+        {
+            Application.OpenURL(GaSignUpUrl);
+        }
+
+        private static string PlatformToString(RuntimePlatform platform)
+        {
+            switch (platform)
+            {
+                case RuntimePlatform.IPhonePlayer:
+                    return "iOS";
+                case RuntimePlatform.tvOS:
+                    return "tvOS";
+                default:
+                    return platform.ToString();
+            }
+        }
+
+        /// <summary>
+        /// IMGUI separator kept for GA_SignUp, which still draws with OnGUI.
+        /// </summary>
+        public static void Splitter(Color rgb, float thickness = 1, int margin = 0)
+        {
+            GUIStyle splitter = new GUIStyle();
+            splitter.normal.background = EditorGUIUtility.whiteTexture;
+            splitter.stretchWidth = true;
+            splitter.margin = new RectOffset(margin, margin, 7, 7);
+
+            Rect position = GUILayoutUtility.GetRect(GUIContent.none, splitter, GUILayout.Height(thickness));
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                Color restoreColor = GUI.color;
+                GUI.color = rgb;
+                splitter.Draw(position, false, false, false, false);
+                GUI.color = restoreColor;
+            }
+        }
+
+        #endregion // Shared UI helpers
+
+        #region Account web requests
 
         private static void LoginUser(Settings settings)
         {
@@ -1641,27 +1465,23 @@ namespace GameAnalyticsSDK.Editor
 
             byte[] data = System.Text.Encoding.UTF8.GetBytes(GA_MiniJSON.Serialize(jsonTable));
 
-            UnityWebRequest www = new UnityWebRequest(_gaUrl + "token", UnityWebRequest.kHttpVerbPOST);
-            UploadHandlerRaw uH = new UploadHandlerRaw(data)
+            UnityWebRequest www = new UnityWebRequest(GaUrl + "token", UnityWebRequest.kHttpVerbPOST);
+            www.uploadHandler = new UploadHandlerRaw(data)
             {
                 contentType = "application/json"
             };
-            www.uploadHandler = uH;
             www.downloadHandler = new DownloadHandlerBuffer();
 
-            Dictionary<string, string> headers = GA_EditorUtilities.WWWHeaders();
-            foreach (KeyValuePair<string, string> entry in headers)
+            foreach (KeyValuePair<string, string> entry in GA_EditorUtilities.WWWHeaders())
             {
                 www.SetRequestHeader(entry.Key, entry.Value);
             }
 
-            GA_ContinuationManager.StartCoroutine(LoginUserFrontend(www, settings), () => www.isDone);
+            GA_ContinuationManager.StartCoroutine(LoginUserCoroutine(www, settings), () => www.isDone);
         }
 
-
-        private static IEnumerator LoginUserFrontend(UnityWebRequest www, Settings settings)
+        private static IEnumerator LoginUserCoroutine(UnityWebRequest www, Settings settings)
         {
-
             yield return www.SendWebRequest();
 
             while (!www.isDone)
@@ -1669,38 +1489,18 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-                string error = "";
-                IDictionary<string, object> returnParam = null;
+                IDictionary<string, object> response = DeserializeResponse(www);
+                string error = GetFirstErrorMessage(response);
 
-                string text = www.downloadHandler.text;
-
-                if (!string.IsNullOrEmpty(text))
+                if (!RequestFailed(www))
                 {
-                    returnParam = GA_MiniJSON.Deserialize(text) as IDictionary<string, object>;
-
-                    if (returnParam != null && returnParam.ContainsKey("errors"))
-                    {
-                        IList<object> errorList = returnParam["errors"] as IList<object>;
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
-
-                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
-                {
-                    if (!String.IsNullOrEmpty(error))
+                    if (!string.IsNullOrEmpty(error))
                     {
                         SetLoginStatus("Failed to login.", settings);
                     }
-                    else if (returnParam != null)
+                    else if (response != null)
                     {
-                        IList<object> resultList = returnParam["results"] as IList<object>;
+                        IList<object> resultList = response["results"] as IList<object>;
                         IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
                         settings.TokenGA = results["token"].ToString();
 
@@ -1709,7 +1509,7 @@ namespace GameAnalyticsSDK.Editor
                         GetUserData(settings);
                     }
                 }
-                else if (www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                else if (IsApiOutdated(www.responseCode))
                 {
                     Debug.LogError("Failed to login. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
                     SetLoginStatus("Failed to login. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", settings);
@@ -1720,9 +1520,9 @@ namespace GameAnalyticsSDK.Editor
                     SetLoginStatus("Failed to login.", settings);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Debug.LogError("Failed to login:" + e.ToString());
+                Debug.LogError("Failed to login:" + e);
                 Debug.LogError(e.StackTrace);
                 SetLoginStatus("Failed to login.", settings);
             }
@@ -1730,18 +1530,16 @@ namespace GameAnalyticsSDK.Editor
 
         private static void GetUserData(Settings settings)
         {
-            UnityWebRequest www = UnityWebRequest.Get(_gaUrl + "user");
-            Dictionary<string, string> headers = GA_EditorUtilities.WWWHeadersWithAuthorization(settings.TokenGA);
-            foreach (KeyValuePair<string, string> entry in headers)
+            UnityWebRequest www = UnityWebRequest.Get(GaUrl + "user");
+            foreach (KeyValuePair<string, string> entry in GA_EditorUtilities.WWWHeadersWithAuthorization(settings.TokenGA))
             {
                 www.SetRequestHeader(entry.Key, entry.Value);
             }
 
-            GA_ContinuationManager.StartCoroutine(GetUserDataFrontend(www, settings), () => www.isDone);
+            GA_ContinuationManager.StartCoroutine(GetUserDataCoroutine(www, settings), () => www.isDone);
         }
 
-
-        private static IEnumerator GetUserDataFrontend(UnityWebRequest www, Settings settings)
+        private static IEnumerator GetUserDataCoroutine(UnityWebRequest www, Settings settings)
         {
             yield return www.SendWebRequest();
 
@@ -1750,85 +1548,29 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-                IDictionary<string, object> returnParam = null;
-                string error = "";
+                IDictionary<string, object> response = DeserializeResponse(www);
+                string error = GetFirstErrorMessage(response);
 
-                string text = www.downloadHandler.text;
-
-                if (!string.IsNullOrEmpty(text))
+                if (!RequestFailed(www))
                 {
-                    returnParam = GA_MiniJSON.Deserialize(text) as IDictionary<string, object>;
-                    if (returnParam.ContainsKey("errors"))
-                    {
-                        IList<object> errorList = returnParam["errors"] as IList<object>;
-                        if (errorList != null && errorList.Count > 0)
-                        {
-                            IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
-                            if (errors.ContainsKey("msg"))
-                            {
-                                error = errors["msg"].ToString();
-                            }
-                        }
-                    }
-                }
-
-                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
-                {
-                    if (!String.IsNullOrEmpty(error))
+                    if (!string.IsNullOrEmpty(error))
                     {
                         Debug.LogError(error);
                         SetLoginStatus("Failed to get data.", settings);
                     }
-                    else if (returnParam != null)
+                    else if (response != null)
                     {
-                        IList<object> resultList = returnParam["results"] as IList<object>;
+                        IList<object> resultList = response["results"] as IList<object>;
                         IDictionary<string, object> results = resultList[0] as IDictionary<string, object>;
-                        IDictionary<string, object> orgs = results["organizations"] as IDictionary<string, object>;
-                        IList<object> studioList = results["studios"] as IList<object>;
 
-                        Dictionary<string, Organization> organizationMap = new Dictionary<string, Organization>();
-                        List<Organization> returnOrganizations = new List<Organization>();
-                        foreach(KeyValuePair<string, object> pair in orgs)
-                        {
-                            IDictionary<string, object> organization = pair.Value as IDictionary<string, object>;
-                            Organization o = new Organization(organization["name"].ToString(), organization["id"].ToString());
-                            returnOrganizations.Add(o);
-                            organizationMap.Add(o.ID, o);
-                        }
-
-                        for (int s = 0; s < studioList.Count; s++)
-                        {
-                            IDictionary<string, object> studio = studioList[s] as IDictionary<string, object>;
-
-                            if ((!studio.ContainsKey("demo") || !((bool)studio["demo"])) && (!studio.ContainsKey("archived") || !((bool)studio["archived"])))
-                            {
-                                List<Game> returnGames = new List<Game>();
-
-                                List<object> gamesList = (List<object>)studio["games"];
-                                for (int g = 0; g < gamesList.Count; g++)
-                                {
-                                    IDictionary<string, object> game = gamesList[g] as IDictionary<string, object>;
-
-                                    if ((!game.ContainsKey("archived") || !((bool)game["archived"])) && (!game.ContainsKey("disabled") || !((bool)game["disabled"])))
-                                    {
-                                        returnGames.Add(new Game(game["name"].ToString(), int.Parse(game["id"].ToString()), game["key"].ToString(), game["secret"].ToString()));
-                                    }
-                                }
-
-                                Studio st = new Studio(studio["name"].ToString(), studio["id"].ToString(), studio["org_id"].ToString(), returnGames);
-                                organizationMap[st.OrganizationID].Studios.Add(st);
-                            }
-                        }
-                        settings.Organizations = returnOrganizations;
+                        settings.Organizations = ParseOrganizations(results);
 
                         if (settings.Organizations.Count == 1 && settings.Organizations[0].Studios.Count == 1)
                         {
                             bool autoSelectedPlatform = false;
                             for (int i = 0; i < settings.Platforms.Count; ++i)
                             {
-                                RuntimePlatform platform = settings.Platforms[i];
-
-                                if (platform == settings.LastCreatedGamePlatform)
+                                if (settings.Platforms[i] == settings.LastCreatedGamePlatform)
                                 {
                                     SelectOrganization(1, settings, i);
                                     autoSelectedPlatform = true;
@@ -1841,11 +1583,9 @@ namespace GameAnalyticsSDK.Editor
                         {
                             SetLoginStatus("Received data. Add a platform..", settings);
                         }
-
-                        settings.CurrentInspectorState = Settings.InspectorStates.Basic;
                     }
                 }
-                else if (www.responseCode == 301 || www.responseCode == 404 || www.responseCode == 410)
+                else if (IsApiOutdated(www.responseCode))
                 {
                     Debug.LogError("Failed to get data. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version: " + www.error + " " + error);
                     SetLoginStatus("Failed to get data. GameAnalytics request not successful. API was changed. Please update your SDK to the latest version.", settings);
@@ -1858,9 +1598,96 @@ namespace GameAnalyticsSDK.Editor
             }
             catch (Exception e)
             {
-                Debug.LogError("Failed to get user data: " + e.ToString() + ", " + e.StackTrace);
+                Debug.LogError("Failed to get user data: " + e + ", " + e.StackTrace);
                 SetLoginStatus("Failed to get data.", settings);
             }
+        }
+
+        private static List<Organization> ParseOrganizations(IDictionary<string, object> results)
+        {
+            IDictionary<string, object> orgs = results["organizations"] as IDictionary<string, object>;
+            IList<object> studioList = results["studios"] as IList<object>;
+
+            Dictionary<string, Organization> organizationMap = new Dictionary<string, Organization>();
+            List<Organization> organizations = new List<Organization>();
+            foreach (KeyValuePair<string, object> pair in orgs)
+            {
+                IDictionary<string, object> organization = pair.Value as IDictionary<string, object>;
+                Organization o = new Organization(organization["name"].ToString(), organization["id"].ToString());
+                organizations.Add(o);
+                organizationMap.Add(o.ID, o);
+            }
+
+            for (int s = 0; s < studioList.Count; s++)
+            {
+                IDictionary<string, object> studio = studioList[s] as IDictionary<string, object>;
+
+                if (GetFlag(studio, "demo") || GetFlag(studio, "archived"))
+                {
+                    continue;
+                }
+
+                List<Game> games = new List<Game>();
+                List<object> gamesList = (List<object>)studio["games"];
+                for (int g = 0; g < gamesList.Count; g++)
+                {
+                    IDictionary<string, object> game = gamesList[g] as IDictionary<string, object>;
+
+                    if (!GetFlag(game, "archived") && !GetFlag(game, "disabled"))
+                    {
+                        games.Add(new Game(game["name"].ToString(), int.Parse(game["id"].ToString()), game["key"].ToString(), game["secret"].ToString()));
+                    }
+                }
+
+                Studio st = new Studio(studio["name"].ToString(), studio["id"].ToString(), studio["org_id"].ToString(), games);
+                organizationMap[st.OrganizationID].Studios.Add(st);
+            }
+
+            return organizations;
+        }
+
+        private static bool GetFlag(IDictionary<string, object> data, string key)
+        {
+            return data.ContainsKey(key) && (bool)data[key];
+        }
+
+        private static IDictionary<string, object> DeserializeResponse(UnityWebRequest www)
+        {
+            string text = www.downloadHandler.text;
+            if (string.IsNullOrEmpty(text))
+            {
+                return null;
+            }
+            return GA_MiniJSON.Deserialize(text) as IDictionary<string, object>;
+        }
+
+        private static string GetFirstErrorMessage(IDictionary<string, object> response)
+        {
+            if (response == null || !response.ContainsKey("errors"))
+            {
+                return "";
+            }
+
+            IList<object> errorList = response["errors"] as IList<object>;
+            if (errorList != null && errorList.Count > 0)
+            {
+                IDictionary<string, object> errors = errorList[0] as IDictionary<string, object>;
+                if (errors.ContainsKey("msg"))
+                {
+                    return errors["msg"].ToString();
+                }
+            }
+            return "";
+        }
+
+        private static bool RequestFailed(UnityWebRequest www)
+        {
+            return www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError;
+        }
+
+        private static bool IsApiOutdated(long responseCode)
+        {
+            return responseCode == 301 || responseCode == 404 || responseCode == 410;
         }
 
         private static void SelectOrganization(int index, Settings settings, int platform)
@@ -1879,10 +1706,12 @@ namespace GameAnalyticsSDK.Editor
         private static void SelectStudio(int index, Settings settings, int platform)
         {
             settings.SelectedStudio[platform] = index;
-            if (settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[index - 1].Games.Count == 1)
+
+            Studio studio = settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[index - 1];
+            if (studio.Games.Count == 1)
             {
-                if (settings.IsGameKeyValid(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[0].GameKey) &&
-                   settings.IsSecretKeyValid(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[0].SecretKey))
+                if (settings.IsGameKeyValid(platform, studio.Games[0].GameKey) &&
+                    settings.IsSecretKeyValid(platform, studio.Games[0].SecretKey))
                 {
                     SelectGame(1, settings, platform);
                 }
@@ -1901,30 +1730,32 @@ namespace GameAnalyticsSDK.Editor
             {
                 settings.UpdateGameKey(platform, "");
                 settings.UpdateSecretKey(platform, "");
+                return;
             }
-            else if (settings.IsGameKeyValid(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].GameKey) &&
-               settings.IsSecretKeyValid(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
+
+            Organization organization = settings.Organizations[settings.SelectedOrganization[platform] - 1];
+            Studio studio = organization.Studios[settings.SelectedStudio[platform] - 1];
+            Game game = studio.Games[index - 1];
+
+            if (settings.IsGameKeyValid(platform, game.GameKey) && settings.IsSecretKeyValid(platform, game.SecretKey))
             {
-                settings.SelectedPlatformOrganization[platform] = settings.Organizations[settings.SelectedOrganization[platform] - 1].Name;
-                settings.SelectedPlatformStudio[platform] = settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Name;
-                settings.SelectedPlatformGame[platform] = settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].Name;
-                settings.SelectedPlatformGameID[platform] = settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].ID;
-                settings.UpdateGameKey(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].GameKey);
-                settings.UpdateSecretKey(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].SecretKey);
+                settings.SelectedPlatformOrganization[platform] = organization.Name;
+                settings.SelectedPlatformStudio[platform] = studio.Name;
+                settings.SelectedPlatformGame[platform] = game.Name;
+                settings.SelectedPlatformGameID[platform] = game.ID;
+                settings.UpdateGameKey(platform, game.GameKey);
+                settings.UpdateSecretKey(platform, game.SecretKey);
                 SetLoginStatus("Received keys. Ready to go!", settings);
+            }
+            else if (!settings.IsGameKeyValid(platform, game.GameKey))
+            {
+                Debug.LogError("[GameAnalytics] Game key already exists for another platform. Platforms can't use the same key.");
+                settings.SelectedGame[platform] = 0;
             }
             else
             {
-                if (!settings.IsGameKeyValid(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].GameKey))
-                {
-                    Debug.LogError("[GameAnalytics] Game key already exists for another platform. Platforms can't use the same key.");
-                    settings.SelectedGame[platform] = 0;
-                }
-                else if (!settings.IsSecretKeyValid(platform, settings.Organizations[settings.SelectedOrganization[platform] - 1].Studios[settings.SelectedStudio[platform] - 1].Games[index - 1].SecretKey))
-                {
-                    Debug.LogError("[GameAnalytics] Secret key already exists for another platform. Platforms can't use the same key.");
-                    settings.SelectedGame[platform] = 0;
-                }
+                Debug.LogError("[GameAnalytics] Secret key already exists for another platform. Platforms can't use the same key.");
+                settings.SelectedGame[platform] = 0;
             }
         }
 
@@ -1934,397 +1765,97 @@ namespace GameAnalyticsSDK.Editor
             EditorUtility.SetDirty(settings);
         }
 
-        public static void CheckForUpdates()
+        #endregion // Account web requests
+
+        #region UI validation
+
+        /// <summary>
+        /// Check if a string matches a defined pattern
+        /// </summary>
+        /// <returns><c>true</c>, if match <c>false</c> otherwise.</returns>
+        /// <param name="s">Given string</param>
+        /// <param name="pattern">Pattern.</param>
+        public static bool StringMatch(string s, string pattern)
         {
-            if (Settings.CheckingForUpdates)
-            {
-                return;
-            }
-
-            Settings.CheckingForUpdates = true;
-
-            UnityWebRequest www = UnityWebRequest.Get("https://s3.amazonaws.com/public.gameanalytics.com/sdk_status/current.json");
-            GA_ContinuationManager.StartCoroutine(CheckForUpdatesCoroutine(www), () => www.isDone);
-        }
-
-        private static void GetChangeLogsAndShowUpdateWindow(string newVersion)
-        {
-            UnityWebRequest www = UnityWebRequest.Get("https://s3.amazonaws.com/public.gameanalytics.com/sdk_status/change_logs.json");
-            GA_ContinuationManager.StartCoroutine(GetChangeLogsAndShowUpdateWindowCoroutine(www, newVersion), () => www.isDone);
-        }
-
-        private static IEnumerator CheckForUpdatesCoroutine(UnityWebRequest www)
-        {
-            yield return www.SendWebRequest();
-
-            while (!www.isDone)
-                yield return null;
-
-            bool changeLogRequested = false;
-
-            try
-            {
-                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
-                {
-                    string text;
-                    text = www.downloadHandler.text;
-                    IDictionary<string, object> returnParam = GA_MiniJSON.Deserialize(text) as IDictionary<string, object>;
-                    if (returnParam.ContainsKey("unity"))
-                    {
-                        IDictionary<string, object> unityParam = returnParam["unity"] as IDictionary<string, object>;
-                        if (unityParam.ContainsKey("version"))
-                        {
-                            string newVersion = (returnParam["unity"] as IDictionary<string, object>)["version"].ToString();
-
-                            if (IsNewVersion(newVersion, Settings.VERSION))
-                            {
-                                changeLogRequested = true;
-                                GetChangeLogsAndShowUpdateWindow(newVersion);
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                if (!changeLogRequested)
-                {
-                    Settings.CheckingForUpdates = false;
-                }
-            }
-        }
-
-        private static IEnumerator GetChangeLogsAndShowUpdateWindowCoroutine(UnityWebRequest www, string newVersion)
-        {
-            yield return www.SendWebRequest();
-            while (!www.isDone)
-                yield return null;
-
-            try
-            {
-                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
-                {
-                    string text;
-                    text = www.downloadHandler.text;
-                    IDictionary<string, object> returnParam = GA_MiniJSON.Deserialize(text) as IDictionary<string, object>;
-
-                    IList<object> unity = (returnParam["unity"] as IList<object>);
-                    string newChanges = "";
-                    for (int i = 0; i < unity.Count; i++)
-                    {
-                        IDictionary<string, object> unityHash = unity[i] as IDictionary<string, object>;
-                        IList<object> changes = (unityHash["changes"] as IList<object>);
-
-                        if (unityHash["version"].ToString() == Settings.VERSION)
-                        {
-                            break;
-                        }
-
-                        if (string.IsNullOrEmpty(newChanges))
-                        {
-                            newChanges = unityHash["version"].ToString();
-                        }
-                        else
-                        {
-                            newChanges += "\n\n" + unityHash["version"].ToString();
-                        }
-
-                        for (int u = 0; u < changes.Count; u++)
-                        {
-                            if (string.IsNullOrEmpty(newChanges))
-                            {
-                                newChanges = "- " + changes[u].ToString();
-                            }
-                            else
-                            {
-                                newChanges += "\n- " + changes[u].ToString();
-                            }
-                        }
-
-                        if (unityHash["version"].ToString() == newVersion)
-                        {
-                            GA_UpdateWindow.SetNewVersion(newVersion);
-                        }
-                    }
-
-                    string skippedVersion = EditorPrefs.GetString("ga_skip_version" + "-" + Application.dataPath, "");
-
-                    GA_UpdateWindow.SetChanges(newChanges);
-                    if (!skippedVersion.Equals(newVersion))
-                    {
-                        OpenUpdateWindow();
-                    }
-
-                    Settings.CheckingForUpdates = false;
-                }
-            }
-            catch
-            {
-                Settings.CheckingForUpdates = false;
-            }
-        }
-
-        private static void OpenUpdateWindow()
-        {
-            if(!Application.isBatchMode)
-            {
-                // TODO: possible to close existing window if already there?
-                //GA_UpdateWindow updateWindow = ScriptableObject.CreateInstance<GA_UpdateWindow> ();
-                GA_UpdateWindow updateWindow = (GA_UpdateWindow)EditorWindow.GetWindow(typeof(GA_UpdateWindow), utility: true);
-                updateWindow.position = new Rect(150, 150, 415, 340);
-                updateWindow.titleContent = new GUIContent("An update for GameAnalytics is available!");
-                updateWindow.Show();
-            }
-        }
-
-        public static void Splitter(Color rgb, float thickness = 1, int margin = 0)
-        {
-            GUIStyle splitter = new GUIStyle();
-            splitter.normal.background = EditorGUIUtility.whiteTexture;
-            splitter.stretchWidth = true;
-            splitter.margin = new RectOffset(margin, margin, 7, 7);
-
-            Rect position = GUILayoutUtility.GetRect(GUIContent.none, splitter, GUILayout.Height(thickness));
-
-            if(Event.current.type == EventType.Repaint)
-            {
-                Color restoreColor = GUI.color;
-                GUI.color = rgb;
-                splitter.Draw(position, false, false, false, false);
-                GUI.color = restoreColor;
-            }
-        }
-
-        private static string PlatformToString(RuntimePlatform platform)
-        {
-            string result = platform.ToString();
-
-            if (platform == RuntimePlatform.IPhonePlayer)
-            {
-                result = "iOS";
-            }
-            if (platform == RuntimePlatform.tvOS) {
-                result = "tvOS";
-            }
-
-            return result;
-        }
-
-        // versionstring is:
-        // [majorVersion].[minorVersion].[patchnumber]
-        static bool IsNewVersion(string newVersion, string currentVersion)
-        {
-
-            int[] newVersionInts = GetVersionIntegersFromString(newVersion);
-            int[] currentVersionInts = GetVersionIntegersFromString(currentVersion);
-
-            if(newVersionInts == null || currentVersionInts == null)
+            if (s == null || pattern == null)
             {
                 return false;
             }
 
-            // compare majorVersion
-            if(newVersionInts[MAJOR_V] > currentVersionInts[MAJOR_V])
-            {
-                return true;
-            }
-            else if(newVersionInts[MAJOR_V] < currentVersionInts[MAJOR_V])
-            {
-                return false;
-            }
-
-            // compare minorVersion (majorVersion is unchanged)
-            if(newVersionInts[MINOR_V] > currentVersionInts[MINOR_V])
-            {
-                return true;
-            }
-            else if(newVersionInts[MINOR_V] < currentVersionInts[MINOR_V])
-            {
-                return false;
-            }
-
-            // compare patchnumber (majorVersion, minorVersion is unchanged)
-            if(newVersionInts[PATCH_V] > currentVersionInts[PATCH_V])
-            {
-                return true;
-            }
-
-            // not valid new version
-            return false;
+            return Regex.IsMatch(s, pattern);
         }
 
-        // version string need to be: x.y.z
-        // return validated ints in array or null
-        static int[] GetVersionIntegersFromString(string versionString)
+        private static string ValidateResourceCurrencyEditor(string currency)
         {
-            string[] versionNumbers = versionString.Split('.');
-            if(versionNumbers.Length != ALL_V)
+            if (!StringMatch(currency, "^[A-Za-z]+$"))
             {
-                return null;
+                if (currency != null)
+                {
+                    Debug.LogError("Validation fail - resource currency: Cannot contain other characters than 'A-Za-z'. String:'" + currency + "'");
+                }
+                return "Empty";
             }
-
-            // container for validated version integers
-            int[] validatedVersionNumbers = new int[ALL_V];
-
-            // verify int parsing
-            bool isIntMajorVersion = int.TryParse(versionNumbers[MAJOR_V], out validatedVersionNumbers[MAJOR_V]);
-            bool isIntMinorVersion = int.TryParse(versionNumbers[MINOR_V], out validatedVersionNumbers[MINOR_V]);
-            bool isIntPatchnumber  = int.TryParse(versionNumbers[PATCH_V], out validatedVersionNumbers[PATCH_V]);
-
-            if(isIntMajorVersion && isIntMinorVersion && isIntPatchnumber)
+            if (ConsistsOfWhiteSpace(currency))
             {
-                return validatedVersionNumbers;
+                return "Empty";
             }
-            else
+            return currency;
+        }
+
+        private static string ValidateResourceItemTypeEditor(string itemType)
+        {
+            if (itemType.Length > 64)
             {
-                return null;
+                Debug.LogError("Validation fail - resource itemType cannot be longer than 64 chars.");
+                return "Empty";
             }
-        }
-
-#region Helper functions
-
-        private static void OpenSignUp()
-        {
-            Application.OpenURL(_gaSignUpUrl);
-        }
-
-        private static void OpenSignUpSwitchToGuideStep()
-        {
-            GA_SignUp signup = ScriptableObject.CreateInstance<GA_SignUp>();
-            signup.maxSize = new Vector2(640, 600);
-            signup.minSize = new Vector2(640, 600);
-            signup.titleContent = new GUIContent("GameAnalytics - Setup Guide");
-            signup.ShowUtility();
-            signup.Opened();
-
-            signup.SwitchToGuideStep();
-        }
-
-        private static void DrawLinkButton(string text, GUIStyle style, string url, params GUILayoutOption[] options)
-        {
-            DrawLinkButton(new GUIContent(text), style, url, options);
-        }
-
-        private static void DrawLinkButton(GUIContent content, GUIStyle style, string url, params GUILayoutOption[] options)
-        {
-            Action action = () => Application.OpenURL(url);
-            DrawButton(content, style, action, options);
-        }
-
-        private static void DrawButton(string text, GUIStyle style, Action action, params GUILayoutOption[] options)
-        {
-            DrawButton(new GUIContent(text), style, action, options);
-        }
-
-        private static void DrawButton(GUIContent content, GUIStyle style, Action action, params GUILayoutOption[] options)
-        {
-            if(GUILayout.Button(content, style, options))
+            if (!StringMatch(itemType, "^[A-Za-z0-9\\s\\-_\\.\\(\\)\\!\\?]{1,64}$"))
             {
-                action();
+                if (itemType != null)
+                {
+                    Debug.LogError("Validation fail - resource itemType: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: '" + itemType + "'");
+                }
+                return "Empty";
             }
-            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
+            if (ConsistsOfWhiteSpace(itemType))
+            {
+                return "Empty";
+            }
+            return itemType;
         }
 
-        private static void DrawButtonWithFlexibleSpace(string text, GUIStyle style, Action action, params GUILayoutOption[] options)
+        private static string ValidateCustomDimensionEditor(string customDimension)
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            DrawButton(text, style, action, options);
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
+            if (customDimension.Length > 32)
+            {
+                Debug.LogError("Validation fail - custom dimension cannot be longer than 32 chars.");
+                return "Empty";
+            }
+            if (!StringMatch(customDimension, "^[A-Za-z0-9\\s\\-_\\.\\(\\)\\!\\?]{1,32}$"))
+            {
+                if (customDimension != null)
+                {
+                    Debug.LogError("Validation fail - custom dimension: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: '" + customDimension + "'");
+                }
+                return "Empty";
+            }
+            if (ConsistsOfWhiteSpace(customDimension))
+            {
+                return "Empty";
+            }
+            return customDimension;
         }
 
-        private static void DrawLabelWithFlexibleSpace(string text, GUIStyle style, int height)
+        private static bool ConsistsOfWhiteSpace(string s)
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Label(text, style, new GUILayoutOption[] { GUILayout.Height(height) });
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
+            foreach (char c in s)
+            {
+                if (c != ' ')
+                    return false;
+            }
+            return true;
         }
 
-#endregion // Helper functions
-
-#region UIvalidation
-
-		/// <summary>
-		/// Check if a string matches a defined pattern
-		/// </summary>
-		/// <returns><c>true</c>, if match <c>false</c> otherwise.</returns>
-		/// <param name="s">Given string</param>
-		/// <param name="pattern">Pattern.</param>
-		public static bool StringMatch(string s, string pattern)
-		{
-			if(s == null || pattern == null)
-			{
-				return false;
-			}
-
-			return Regex.IsMatch(s, pattern);
-		}
-
-		private string ValidateResourceCurrencyEditor(string currency)
-		{
-			if (!StringMatch (currency, "^[A-Za-z]+$")) {
-				if (currency != null) {
-					Debug.LogError ("Validation fail - resource currency: Cannot contain other characters than 'A-Za-z'. String:'" + currency + "'");
-				}
-				return "Empty";
-			}
-			if (ConsistsOfWhiteSpace(currency)) {
-				return "Empty";
-			}
-			return currency;
-		}
-
-		private string ValidateResourceItemTypeEditor (string itemType)
-		{
-			if (itemType.Length > 64) {
-				Debug.LogError ("Validation fail - resource itemType cannot be longer than 64 chars.");
-				return "Empty";
-			}
-			if (!StringMatch (itemType, "^[A-Za-z0-9\\s\\-_\\.\\(\\)\\!\\?]{1,64}$")) {
-				if (itemType != null) {
-					Debug.LogError ("Validation fail - resource itemType: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: '" + itemType + "'");
-				}
-				return "Empty";
-			}
-			if (ConsistsOfWhiteSpace(itemType)) {
-				return "Empty";
-			}
-			return itemType;
-		}
-
-		private string ValidateCustomDimensionEditor(string customDimension)
-		{
-			if (customDimension.Length > 32) {
-				Debug.LogError ("Validation fail - custom dimension cannot be longer than 32 chars.");
-				return "Empty";
-			}
-			if (!StringMatch (customDimension, "^[A-Za-z0-9\\s\\-_\\.\\(\\)\\!\\?]{1,32}$")) {
-				if (customDimension != null) {
-					Debug.LogError ("Validation fail - custom dimension: Cannot contain other characters than A-z, 0-9, -_., ()!?. String: '" + customDimension + "'");
-				}
-				return "Empty";
-			}
-			if (ConsistsOfWhiteSpace(customDimension)) {
-				return "Empty";
-			}
-			return customDimension;
-		}
-
-		private bool ConsistsOfWhiteSpace(string s)
-		{
-			foreach (char c in s) {
-				if (c != ' ')
-					return false;
-			}
-			return true;
-		}
-
-#endregion
+        #endregion // UI validation
     }
 }

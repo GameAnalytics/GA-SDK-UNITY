@@ -1,0 +1,404 @@
+/* GameAnalytics settings inspector styles.
+   Colors lean on translucent black/white overlays so both editor skins work. */
+
+.ga-root {
+    padding: 8px 6px 12px 6px;
+}
+
+/* ---------- header ---------- */
+
+.ga-header-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.ga-logo {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    margin-right: 8px;
+    border-radius: 6px;
+}
+
+.ga-title {
+    font-size: 15px;
+    -unity-font-style: bold;
+    flex-shrink: 1;
+    overflow: hidden;
+}
+
+.ga-badge {
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 2px 10px;
+    border-radius: 9px;
+    font-size: 11px;
+    background-color: rgba(0, 0, 0, 0.18);
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.25);
+    opacity: 0.85;
+}
+
+.ga-badge--update {
+    background-color: rgba(185, 108, 24, 0.85);
+    border-color: rgba(120, 70, 15, 0.9);
+    color: rgb(255, 228, 196);
+    opacity: 1;
+    -unity-font-style: bold;
+}
+
+.ga-badge--update:hover {
+    background-color: rgba(205, 124, 32, 0.95);
+}
+
+.ga-chips-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.ga-chip {
+    flex-direction: row;
+    align-items: center;
+    padding: 1px 7px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    background-color: rgba(0, 0, 0, 0.14);
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.ga-chip--ok {
+    color: rgb(66, 176, 120);
+}
+
+.ga-chip--warn {
+    color: rgb(206, 145, 60);
+}
+
+.ga-account-row {
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.ga-account-email {
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ga-header-separator {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.25);
+    margin-top: 8px;
+}
+
+/* ---------- tabs ---------- */
+
+.ga-tabs {
+    flex-direction: row;
+    margin-top: 6px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.14);
+}
+
+.ga-tab {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 5px 0;
+    border-width: 0;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-text-align: middle-center;
+    opacity: 0.75;
+}
+
+.ga-tab:hover {
+    background-color: rgba(128, 128, 128, 0.15);
+    opacity: 1;
+}
+
+.ga-tab--active {
+    background-color: rgba(128, 128, 128, 0.3);
+    -unity-font-style: bold;
+    opacity: 1;
+}
+
+/* ---------- cards ---------- */
+
+.ga-card {
+    margin-top: 8px;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+.ga-card-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 8px;
+    background-color: rgba(0, 0, 0, 0.12);
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+.ga-card-title {
+    -unity-font-style: bold;
+}
+
+.ga-card-body {
+    padding: 6px 8px 8px 8px;
+}
+
+.ga-fold-arrow {
+    margin: 0 4px 0 0;
+    padding: 0 3px;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.ga-help-button {
+    margin-left: auto;
+    width: 18px;
+    height: 16px;
+    padding: 0;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.12);
+    font-size: 10px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    opacity: 0.7;
+}
+
+.ga-help-button:hover {
+    opacity: 1;
+}
+
+/* ---------- rows and fields ---------- */
+
+.ga-row {
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 0;
+}
+
+.ga-field-label {
+    width: 96px;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.ga-row TextField {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.ga-row DropdownField {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.ga-keywrap {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.ga-keywrap TextField {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+/* Keep typed text clear of the overlaid eye button. */
+.ga-keywrap .unity-base-text-field__input {
+    padding-right: 22px;
+}
+
+/* Eye button overlaid inside the field, anchored to its right edge. */
+.ga-reveal {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    translate: 0 -50%;
+    width: 18px;
+    height: 15px;
+    margin: 0;
+    padding: 1px 2px;
+    border-width: 0;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0.55;
+}
+
+.ga-reveal:hover {
+    opacity: 1;
+}
+
+.ga-reveal--on {
+    opacity: 1;
+    background-color: rgba(96, 140, 220, 0.25);
+}
+
+/* Growing, shrinkable middle element of a row (e.g. the add-platform picker). */
+.ga-grow {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+/* Row of links that stays left-packed and wraps instead of spreading out. */
+.ga-links-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ga-links-row .ga-link {
+    margin-right: 12px;
+}
+
+/* Variant that spreads its links to opposite ends of the row. */
+.ga-links-row--split {
+    justify-content: space-between;
+}
+
+.ga-links-row--split .ga-link {
+    margin-right: 0;
+}
+
+.ga-subhead {
+    margin: 8px 0 2px 0;
+    font-size: 10px;
+    -unity-font-style: bold;
+    opacity: 0.65;
+}
+
+.ga-dim {
+    opacity: 0.65;
+}
+
+.ga-note {
+    font-size: 11px;
+    opacity: 0.7;
+    white-space: normal;
+    margin: 3px 0;
+}
+
+.ga-link {
+    padding: 1px 2px;
+    margin: 0 4px 0 0;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(96, 140, 220);
+}
+
+.ga-link:hover {
+    color: rgb(130, 170, 245);
+}
+
+.ga-button-primary {
+    background-color: rgb(23, 140, 92);
+    border-color: rgb(14, 100, 65);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+}
+
+.ga-button-primary:hover {
+    background-color: rgb(28, 158, 105);
+}
+
+.ga-changelog {
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 5px 7px;
+}
+
+/* ---------- intro ---------- */
+
+.ga-intro {
+    align-items: center;
+    padding: 16px 12px 8px 12px;
+}
+
+.ga-intro-title {
+    font-size: 15px;
+    -unity-font-style: bold;
+}
+
+.ga-intro-sub {
+    margin-top: 4px;
+    opacity: 0.75;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.ga-divider {
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0;
+    align-self: stretch;
+}
+
+.ga-divider-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.ga-divider-text {
+    margin: 0 8px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    opacity: 0.6;
+}
+
+/* Left-aligned inside the Account card; the intro screen centers it
+   through its own align-items. */
+.ga-login-form {
+    width: 100%;
+    max-width: 320px;
+}
+
+.ga-login-form .unity-base-field__label {
+    min-width: 96px;
+    width: 96px;
+    opacity: 0.8;
+}
+
+/* ---------- footer ---------- */
+
+.ga-footer {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.25);
+}

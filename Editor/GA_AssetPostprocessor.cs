@@ -5,7 +5,7 @@ namespace GameAnalyticsSDK.Editor
 {
     public class GA_AssetPostprocessor : AssetPostprocessor
     {
-        private const string AssetsPrependPath = GA_SettingsInspector.IsCustomPackage ? "Packages/com.gameanalytics.sdk/Runtime" : "Assets/GameAnalytics";
+        private static string AssetsPrependPath { get { return GA_EditorPaths.PluginsRoot; } }
 
         // Assets shipped by earlier SDK versions. A .unitypackage import merges instead
         // of replacing, so upgrading over an old install leaves them behind: the old
@@ -24,6 +24,16 @@ namespace GameAnalyticsSDK.Editor
             "/Plugins/Scripts/Wrapper/GA_tvOSWrapper.cs",
             // unused static lib dropped from the desktop (shared-lib) layout
             "/Plugins/Linux/libGameAnalytics.a",
+            // pre-8.0 Mono wrapper (managed GameAnalytics.dll + sqlite) replaced by the
+            // native C++ SDK; the Linux "sqlite3.so" was in fact a Mach-O binary
+            "/Plugins/GameAnalytics.dll",
+            "/Plugins/Linux/sqlite3.so",
+            "/Plugins/Windows/x64",
+            "/Plugins/Windows/x86",
+            // Samsung TV and Tizen support removed from the SDK
+            "/Plugins/SamsungTV",
+            "/Plugins/Tizen",
+            "/Plugins/Scripts/Wrapper/GA_TizenWrapper.cs",
             // UWP support removed from the SDK
             "/Plugins/WSA",
             "/Plugins/Scripts/Wrapper/GA_UWPWrapper.cs",
@@ -31,6 +41,16 @@ namespace GameAnalyticsSDK.Editor
             // Android artifact (App Set ID is picked up at runtime when present)
             "/Editor/Android/Dependencies.xml",
             "/Editor/Android",
+            // icons of the pre-8.2.0 IMGUI settings inspector
+            "/Gizmos/GameAnalytics/Images/active.png",
+            "/Gizmos/GameAnalytics/Images/default.png",
+            "/Gizmos/GameAnalytics/Images/delete.png",
+            "/Gizmos/GameAnalytics/Images/game.png",
+            "/Gizmos/GameAnalytics/Images/home.png",
+            "/Gizmos/GameAnalytics/Images/info.png",
+            "/Gizmos/GameAnalytics/Images/question.png",
+            "/Gizmos/GameAnalytics/Images/update_orange.png",
+            "/Gizmos/GameAnalytics/Images/user.png",
         };
 
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
@@ -144,64 +164,13 @@ namespace GameAnalyticsSDK.Editor
                     importer.SaveAndReimport();
                 }
             }
-            { 
-                // c++ LIB
-                const int ID_WINDOWS    = 0;
-                const int ID_LINUX      = 1;
-                const int ID_OSX        = 2;
-                const int NUM_PLATFORMS = 3;
-
-                string[] libNames = {
-                    "Windows/GameAnalytics.dll",
-                    "Linux/libGameAnalytics.so",
-                    "MacOS/libGameAnalytics.dylib" 
-                };
-
-                for (int i = 0; i < NUM_PLATFORMS; ++i)
-                {
-                    PluginImporter importer = AssetImporter.GetAtPath(AssetsPrependPath + "/Plugins/" + libNames[i]) as PluginImporter;
-                    if (importer != null)
-                    {
-                        importer.SetCompatibleWithEditor(false);
-                        importer.SetCompatibleWithPlatform(BuildTarget.Android, false);
-                        importer.SetCompatibleWithPlatform(BuildTarget.iOS, false);
-                        importer.SetCompatibleWithPlatform(BuildTarget.tvOS, false);
-                        importer.SetCompatibleWithPlatform(BuildTarget.WebGL, false);
-                        importer.SetCompatibleWithPlatform(BuildTarget.WSAPlayer, false);
-
-                        switch (i)
-                        {
-                            case ID_WINDOWS:
-                                {
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, true);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
-                                    break;
-                                }
-
-                            case ID_LINUX:
-                                {
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, true);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
-                                    break;
-                                }
-
-                            case ID_OSX:
-                                {
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, false);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, false);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneLinux64, false);
-                                    importer.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, true);
-                                    break;
-                                }
-                        }
-
-                        importer.SaveAndReimport();
-                    }
-                }
+            {
+                // C++ shared libs. Saving must be conditional: SaveAndReimport from
+                // inside OnPostprocessAllAssets retriggers this callback, so an
+                // unconditional save loops the import forever.
+                ApplyCppLibImportSettings("Windows/GameAnalytics.dll", windows: true, windows64: true, linux: false, osx: false);
+                ApplyCppLibImportSettings("Linux/libGameAnalytics.so", windows: false, windows64: false, linux: true, osx: false);
+                ApplyCppLibImportSettings("MacOS/libGameAnalytics.dylib", windows: false, windows64: false, linux: false, osx: true);
             }
             #endregion // Standalone
             #region WebGL
@@ -296,6 +265,53 @@ namespace GameAnalyticsSDK.Editor
                 }
             }
             #endregion // WebGL
+        }
+
+        private static void ApplyCppLibImportSettings(string pathInPlugins, bool windows, bool windows64, bool linux, bool osx)
+        {
+            PluginImporter importer = AssetImporter.GetAtPath(AssetsPrependPath + "/Plugins/" + pathInPlugins) as PluginImporter;
+            if (importer == null)
+            {
+                return;
+            }
+
+            bool changed = false;
+
+            if (importer.GetCompatibleWithAnyPlatform())
+            {
+                importer.SetCompatibleWithAnyPlatform(false);
+                changed = true;
+            }
+            if (importer.GetCompatibleWithEditor())
+            {
+                importer.SetCompatibleWithEditor(false);
+                changed = true;
+            }
+
+            changed |= SetCompatibility(importer, BuildTarget.Android, false);
+            changed |= SetCompatibility(importer, BuildTarget.iOS, false);
+            changed |= SetCompatibility(importer, BuildTarget.tvOS, false);
+            changed |= SetCompatibility(importer, BuildTarget.WebGL, false);
+            changed |= SetCompatibility(importer, BuildTarget.WSAPlayer, false);
+            changed |= SetCompatibility(importer, BuildTarget.StandaloneWindows, windows);
+            changed |= SetCompatibility(importer, BuildTarget.StandaloneWindows64, windows64);
+            changed |= SetCompatibility(importer, BuildTarget.StandaloneLinux64, linux);
+            changed |= SetCompatibility(importer, BuildTarget.StandaloneOSX, osx);
+
+            if (changed)
+            {
+                importer.SaveAndReimport();
+            }
+        }
+
+        private static bool SetCompatibility(PluginImporter importer, BuildTarget target, bool enabled)
+        {
+            if (importer.GetCompatibleWithPlatform(target) == enabled)
+            {
+                return false;
+            }
+            importer.SetCompatibleWithPlatform(target, enabled);
+            return true;
         }
     }
 }

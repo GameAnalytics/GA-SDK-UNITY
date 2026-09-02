@@ -15,45 +15,13 @@ namespace GameAnalyticsSDK.Setup
     ///
     public class Settings : ScriptableObject
     {
-        /// <summary>
-        /// Types of help given in the help box of the GA inspector
-        /// </summary>
-        public enum HelpTypes
-        {
-            None,
-            IncludeSystemSpecsHelp,
-            ProvideCustomUserID
-        }
-
-        ;
-
-        public enum MessageTypes
-        {
-            None,
-            Error,
-            Info,
-            Warning
-        }
-
-        ;
-
-        /// <summary>
-        /// A message and message type for the help box displayed on the GUI inspector
-        /// </summary>
-        public struct HelpInfo
-        {
-            public string Message;
-            public MessageTypes MsgType;
-            public HelpTypes HelpType;
-        }
-
         #region public static values
 
         /// <summary>
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "8.1.0";
+        public static string VERSION = "8.2.0";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -61,22 +29,6 @@ namespace GameAnalyticsSDK.Setup
         #endregion
 
         #region public values
-
-        public int TotalMessagesSubmitted;
-        public int TotalMessagesFailed;
-
-        public int DesignMessagesSubmitted;
-        public int DesignMessagesFailed;
-        public int QualityMessagesSubmitted;
-        public int QualityMessagesFailed;
-        public int ErrorMessagesSubmitted;
-        public int ErrorMessagesFailed;
-        public int BusinessMessagesSubmitted;
-        public int BusinessMessagesFailed;
-        public int UserMessagesSubmitted;
-        public int UserMessagesFailed;
-
-        public string CustomArea = string.Empty;
 
         [SerializeField]
         private List<string> gameKey = new List<string>();
@@ -102,11 +54,8 @@ namespace GameAnalyticsSDK.Setup
         public string NewVersion = "";
         public string Changes = "";
 
-        public bool SignUpOpen = true;
         public string StudioName = "";
         public string GameName = "";
-        public string OrganizationName = "";
-        public string OrganizationIdentifier = "";
         public string EmailGA = "";
 
         [System.NonSerialized]
@@ -114,15 +63,11 @@ namespace GameAnalyticsSDK.Setup
         [System.NonSerialized]
         public string TokenGA = "";
         [System.NonSerialized]
-        public string ExpireTime = "";
-        [System.NonSerialized]
         public string LoginStatus = "Not logged in.";
         [System.NonSerialized]
         public bool JustSignedUp = false;
         [System.NonSerialized]
         public bool HideSignupWarning = false;
-
-        public bool IntroScreen = true;
 
         [System.NonSerialized]
         public List<GameAnalyticsSDK.Setup.Organization> Organizations;
@@ -131,11 +76,6 @@ namespace GameAnalyticsSDK.Setup
         public bool InfoLogBuild = true;
         public bool VerboseLogBuild = false;
         public bool UseManualSessionHandling = false;
-        public bool SendExampleGameDataToMyGame = false;
-        //public bool UseBundleVersion = false;
-
-        public bool InternetConnectivity;
-
         public List<string> CustomDimensions01 = new List<string>();
         public List<string> CustomDimensions02 = new List<string>();
         public List<string> CustomDimensions03 = new List<string>();
@@ -147,60 +87,45 @@ namespace GameAnalyticsSDK.Setup
 
         public List<RuntimePlatform> Platforms = new List<RuntimePlatform>();
 
-        //These values are used for the GA_Inspector only
-        public enum InspectorStates
-        {
-            Account,
-            Basic,
-            Debugging,
-            Pref
-
-        }
-
-        public InspectorStates CurrentInspectorState;
-        public List<HelpTypes> ClosedHints = new List<HelpTypes>();
-        public bool DisplayHints;
-        public Vector2 DisplayHintsScrollState;
+        [System.NonSerialized]
         public Texture2D Logo;
-        public Texture2D UpdateIcon;
-        public Texture2D InfoIcon;
-        public Texture2D DeleteIcon;
-        public Texture2D GameIcon;
-        public Texture2D HomeIcon;
+        [System.NonSerialized]
         public Texture2D InstrumentIcon;
-        public Texture2D QuestionIcon;
-        public Texture2D UserIcon;
-
-        public Texture2D AmazonIcon;
-        public Texture2D GooglePlayIcon;
-        public Texture2D iosIcon;
-        public Texture2D macIcon;
-        public Texture2D windowsPhoneIcon;
 
         [System.NonSerialized]
-        public GUIStyle SignupButton;
+        public Texture2D AmazonIcon;
+        [System.NonSerialized]
+        public Texture2D GooglePlayIcon;
+        [System.NonSerialized]
+        public Texture2D iosIcon;
+        [System.NonSerialized]
+        public Texture2D macIcon;
+        [System.NonSerialized]
+        public Texture2D windowsPhoneIcon;
 
+        /// <summary>
+        /// Legacy global flag, superseded by the per-platform BuildNumberAutoDetect
+        /// list. Kept serialized so existing Settings.asset files migrate: see
+        /// EnsureBuildNumberAutoDetectList().
+        /// </summary>
         public bool UsePlayerSettingsBuildNumber = false;
+
+        /// <summary>
+        /// Per-platform build number source, parallel to Platforms. True means the
+        /// build number is auto-detected from Player Settings > Version (supported on
+        /// iOS, tvOS and Android); false means the Build list entry is reported as typed.
+        /// </summary>
+        [SerializeField]
+        public List<bool> BuildNumberAutoDetect = new List<bool>();
         public bool SubmitErrors = true;
         public bool NativeErrorReporting = false;
         public int MaxErrorCount = 10;
         public bool SubmitFpsAverage = false;
         public bool SubmitFpsCritical = false;
-        public bool IncludeGooglePlay = true;
         public int FpsCriticalThreshold = 20;
         public int FpsCirticalSubmitInterval = 1;
 
-        public List<bool> PlatformFoldOut = new List<bool>();
-
-        public bool CustomDimensions01FoldOut = false;
-        public bool CustomDimensions02FoldOut = false;
-        public bool CustomDimensions03FoldOut = false;
-
-        public bool ResourceItemTypesFoldOut = false;
-        public bool ResourceCurrenciesFoldOut = false;
-
         public bool EnableMemoryHistogram = false;
-        public bool EnableHealthEvent = false;
 
         public bool EnableFPSHistogram = false;
 
@@ -211,31 +136,15 @@ namespace GameAnalyticsSDK.Setup
         public bool EnableMemoryTracking = false;
 
 
-
         #endregion
 
         #region public methods
-
-        /// <summary>
-        /// Sets a custom user ID.
-        /// Make sure each user has a unique user ID. This is useful if you have your own log-in system with unique user IDs.
-        /// NOTE: Only use this method if you have enabled "Custom User ID" on the GA inspector!
-        /// </summary>
-        /// <param name="customID">
-        /// The custom user ID - this should be unique for each user
-        /// </param>
-        public void SetCustomUserID(string customID)
-        {
-            if (customID != string.Empty)
-            {
-                // Set custom ID native
-            }
-        }
 
         public void RemovePlatformAtIndex(int index)
         {
             if (index >= 0 && index < this.Platforms.Count)
             {
+                this.EnsureBuildNumberAutoDetectList();
                 this.gameKey.RemoveAt(index);
                 this.secretKey.RemoveAt(index);
                 this.Build.RemoveAt(index);
@@ -246,13 +155,14 @@ namespace GameAnalyticsSDK.Setup
                 this.SelectedOrganization.RemoveAt(index);
                 this.SelectedStudio.RemoveAt(index);
                 this.SelectedGame.RemoveAt(index);
-                this.PlatformFoldOut.RemoveAt(index);
+                this.BuildNumberAutoDetect.RemoveAt(index);
                 this.Platforms.RemoveAt(index);
             }
         }
 
         public void AddPlatform(RuntimePlatform platform)
         {
+            this.EnsureBuildNumberAutoDetectList();
             this.gameKey.Add("");
             this.secretKey.Add("");
             this.Build.Add("0.1");
@@ -263,8 +173,53 @@ namespace GameAnalyticsSDK.Setup
             this.SelectedOrganization.Add(0);
             this.SelectedStudio.Add(0);
             this.SelectedGame.Add(0);
-            this.PlatformFoldOut.Add(true);
+            this.BuildNumberAutoDetect.Add(SupportsBuildNumberAutoDetect(platform));
             this.Platforms.Add(platform);
+        }
+
+        /// <summary>
+        /// Platforms where the native SDK can report the app version itself
+        /// (GA_Wrapper.SetAutoDetectAppVersion).
+        /// </summary>
+        public static bool SupportsBuildNumberAutoDetect(RuntimePlatform platform)
+        {
+            return platform == RuntimePlatform.Android
+                || platform == RuntimePlatform.IPhonePlayer
+                || platform == RuntimePlatform.tvOS;
+        }
+
+        /// <summary>
+        /// Pads/trims BuildNumberAutoDetect to match Platforms. Entries added for
+        /// pre-existing platforms take the legacy global UsePlayerSettingsBuildNumber
+        /// flag, so settings saved by older SDK versions keep their behavior.
+        /// </summary>
+        public void EnsureBuildNumberAutoDetectList()
+        {
+            while (this.BuildNumberAutoDetect.Count < this.Platforms.Count)
+            {
+                RuntimePlatform platform = this.Platforms[this.BuildNumberAutoDetect.Count];
+                // The legacy toggle was documented as Android + iOS only, so a migrated
+                // tvOS entry keeps reporting its manual Build value.
+                bool legacyAuto = this.UsePlayerSettingsBuildNumber
+                    && (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer);
+                this.BuildNumberAutoDetect.Add(legacyAuto);
+            }
+            while (this.BuildNumberAutoDetect.Count > this.Platforms.Count)
+            {
+                this.BuildNumberAutoDetect.RemoveAt(this.BuildNumberAutoDetect.Count - 1);
+            }
+        }
+
+        /// <summary>
+        /// True when the platform at this index reports its build number from
+        /// Player Settings > Version instead of the manual Build entry.
+        /// </summary>
+        public bool IsBuildNumberAutoDetected(int index)
+        {
+            this.EnsureBuildNumberAutoDetectList();
+            return index >= 0 && index < this.Platforms.Count
+                && SupportsBuildNumberAutoDetect(this.Platforms[index])
+                && this.BuildNumberAutoDetect[index];
         }
 
         public static readonly RuntimePlatform[] AvailablePlatforms = new RuntimePlatform[]
@@ -420,23 +375,6 @@ namespace GameAnalyticsSDK.Setup
         public string GetSecretKey(int index)
         {
             return this.secretKey[index];
-        }
-
-        /// <summary>
-        /// Sets a custom area string. An area is often just a level, but you can set it to whatever makes sense for your game. F.x. in a big open world game you will probably need custom areas to identify regions etc.
-        /// By default, if no custom area is set, the Application.loadedLevelName string is used.
-        /// </summary>
-        /// <param name="customID">
-        /// The custom area.
-        /// </param>
-        public void SetCustomArea(string customArea)
-        {
-            // Set custom area native
-        }
-
-        public void SetKeys(string gamekey, string secretkey)
-        {
-            // set keys native
         }
 
 #endregion

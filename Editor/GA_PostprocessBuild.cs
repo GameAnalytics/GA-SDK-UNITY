@@ -1,5 +1,6 @@
 using UnityEditor.Callbacks;
 using UnityEditor;
+using UnityEditor.Build;
 using System.IO;
 using System;
 using System.Linq;
@@ -51,7 +52,8 @@ namespace GameAnalyticsSDK.Editor
         {
             foreach (var group in groups)
             {
-                var defines = new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+                var target = NamedBuildTarget.FromBuildTargetGroup(group);
+                var defines = new List<string>(PlayerSettings.GetScriptingDefineSymbols(target).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
                 var edited = false;
                 if (enabled && !defines.Contains(entry))
                 {
@@ -64,7 +66,7 @@ namespace GameAnalyticsSDK.Editor
                     edited = true;
                 }
                 if (edited) {
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines.ToArray()));
+                    PlayerSettings.SetScriptingDefineSymbols(target, string.Join(";", defines.ToArray()));
                 }
             }
         }

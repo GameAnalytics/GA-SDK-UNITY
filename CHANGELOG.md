@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Releases before 8.1.0 use the legacy format and are kept unchanged below.
 
 <!--(CHANGELOG_TOP)-->
+## [8.2.0] - 2026-08-31
+
+### Added
+
+- Per-platform build number source — "Auto (Player Settings Version)" (iOS, tvOS, Android) or a custom value per platform, replacing the global "Send Version as build number" toggle (existing settings migrate automatically)
+
+### Changed
+
+- Settings inspector redesigned
+- Update check: the new-version check now asks the package registry (UPM installs) or the public GA-SDK-UNITY repo (`.unitypackage` installs) instead of retired status files, and release notes come from the published changelog; the update action matches the install channel (Package Manager update vs. versioned `.unitypackage` download)
+- Android: updated the native GameAnalytics Android SDK to 7.1.0 — improved A/B testing id persistence
+- Desktop (Windows/macOS/Linux): updated the native GameAnalytics C++ SDK to 5.4.1 — fixes remote configs caching and a listener crash, custom fields validation, and resource leaks
+- Custom event fields are serialized to JSON directly, without copying the dictionary into an intermediate `Hashtable` first (public PR #52)
+
+### Removed
+
+- Unused private fields in `GA_SignUp` that only produced compiler warnings (public issue #44)
+- Dead state left over from the previous settings inspector: unused `Settings` fields (help/hint state, fold-outs, message counters, sign-up leftovers), the empty `SetCustomUserID`/`SetCustomArea`/`SetKeys` methods, and nine unreferenced Gizmo PNGs (existing installs delete them on import)
+
+### Fixed
+
+- Android: the bundled `gameanalytics.aar` now carries the ProGuard keep/dontwarn rules as consumer rules, so minified builds work without editing `proguard-user.txt` by hand (public issue #49)
+- Passing `null` to `SetCustomDimension01/02/03` is now forwarded as an empty string, so "reset the dimension" works as documented on Android too — the Android SDK stored the `null` and then threw a `NullPointerException` on every following event (public issue #50)
+- `.unitypackage` upgrades from 7.x now also remove the pre-8.0 Mono wrapper leftovers (managed `GameAnalytics.dll`, `sqlite3` libraries — the Linux one was a Mac binary and broke Linux players, public issue #48), the Samsung TV / Tizen folders and `GA_TizenWrapper.cs`
+- Editor: replaced the obsolete `FindObjectOfType` and `Get/SetScriptingDefineSymbolsForGroup` calls that warned on Unity 2023+ (public issues #42, #43)
+- The editor-only icon textures referenced by `Settings.asset` (which lives under `Resources/`) are no longer serialized, so the Gizmo PNGs stop being included in player builds (public PR #45)
+- TopOn ILRD: support the TopOn Unity plugin 2.x ("TPN"), which the previous integration did not compile against — impressions are read from the ad client events and the SDK version is looked up from whichever native package the installed plugin ships (`com.thinkup.core.api.TUSDK`, `com.secmtp.sdk.core.api.ATSDK` or `com.anythink.core.api.ATSDK`)
+- Editor assets (logo, icons) failed to load when the SDK was not installed under `Packages/com.gameanalytics.sdk` — the install layout is now detected at runtime
+- Editor: the asset postprocessor reimported the desktop native libraries in an infinite loop
+- macOS builds no longer bundle the Windows native library
+- Documentation links updated to the current docs site structure (several pointed at removed pages)
+
 ## [8.1.0] - 2026-08-21
 
 ### Added

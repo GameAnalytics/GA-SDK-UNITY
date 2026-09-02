@@ -16,9 +16,6 @@ namespace GameAnalyticsSDK.Wrapper
 #if gameanalytics_mopub_enabled
         private static readonly AndroidJavaClass MoPubClass = new AndroidJavaClass("com.mopub.unity.MoPubUnityPlugin");
 #endif
-#if gameanalytics_topon_enabled
-        private static readonly AndroidJavaClass TopOnClass = new AndroidJavaClass("com.anythink.core.api.ATSDK");
-#endif
 
         private static void configureAvailableCustomDimensions01(string list)
         {

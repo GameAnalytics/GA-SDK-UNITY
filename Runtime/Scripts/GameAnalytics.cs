@@ -203,24 +203,15 @@ namespace GameAnalyticsSDK
 
             if(platformIndex >= 0)
             {
-                if (GameAnalytics.SettingsGA.UsePlayerSettingsBuildNumber) {
-                    for (int i = 0; i < GameAnalytics.SettingsGA.Platforms.Count; ++i) {
-                        if (GameAnalytics.SettingsGA.Platforms [i] == RuntimePlatform.Android || GameAnalytics.SettingsGA.Platforms [i] == RuntimePlatform.IPhonePlayer) {
-                            GameAnalytics.SettingsGA.Build [i] = Application.version;
-                        }
-                    }
-                    if (GameAnalytics.SettingsGA.Platforms [platformIndex] == RuntimePlatform.Android || GameAnalytics.SettingsGA.Platforms [platformIndex] == RuntimePlatform.IPhonePlayer)
-                    {
-                        GA_Wrapper.SetAutoDetectAppVersion(true);
-                    }
-                    else
-                    {
-                        GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
-                    }
+                // Build number source is chosen per platform in the settings inspector
+                // (auto = the native SDK reports Player Settings > Version itself).
+                if (SettingsGA.IsBuildNumberAutoDetected(platformIndex))
+                {
+                    GA_Wrapper.SetAutoDetectAppVersion(true);
                 }
                 else
                 {
-                    GA_Wrapper.SetBuild (SettingsGA.Build [platformIndex]);
+                    GA_Wrapper.SetBuild(SettingsGA.Build[platformIndex]);
                 }
             }
 

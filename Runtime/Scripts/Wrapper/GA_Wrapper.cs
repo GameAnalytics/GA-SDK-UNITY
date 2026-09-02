@@ -456,18 +456,17 @@ namespace GameAnalyticsSDK.Wrapper
 
         public static void SetCustomDimension01 (string customDimension)
         {
-            setCustomDimension01 (customDimension);
+            setCustomDimension01 (customDimension ?? string.Empty);
         }
 
         public static void SetCustomDimension02 (string customDimension)
         {
-
-            setCustomDimension02 (customDimension);
+            setCustomDimension02 (customDimension ?? string.Empty);
         }
 
         public static void SetCustomDimension03 (string customDimension)
         {
-            setCustomDimension03 (customDimension);
+            setCustomDimension03 (customDimension ?? string.Empty);
         }
 
         public static void SetGlobalCustomEventFields(IDictionary<string, object> customFields)
@@ -710,15 +709,15 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static string DictionaryToJsonString(IDictionary<string, object> dict)
         {
-            Hashtable table = new Hashtable();
-            if (dict != null)
+            if (dict == null)
             {
-                foreach (KeyValuePair<string, object> pair in dict)
-                {
-                    table.Add(pair.Key, pair.Value);
-                }
+                return "{}";
             }
-            return GA_MiniJSON.Serialize(table);
+            if (dict is IDictionary asDict)
+            {
+                return GA_MiniJSON.Serialize(asDict);
+            }
+            return GA_MiniJSON.Serialize(new Dictionary<string, object>(dict));
         }
 
         // TIMER FUNCTIONS
