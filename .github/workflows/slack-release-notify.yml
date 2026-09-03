@@ -1,0 +1,32 @@
+# Posts every published release of this repo to Slack (#public-sdk-releases).
+# Logic lives in GameAnalytics/sdk-release-notify; this file only names the SDK.
+#
+# To re-post an existing release (pilot, or Slack was down): Actions tab →
+# "Slack release notification" → Run workflow → enter the tag.
+
+name: Slack release notification
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to (re)post, e.g. 1.2.3
+        required: true
+        type: string
+
+jobs:
+  notify:
+    # Skip pre-releases, and skip releases created by a bot: repos whose
+    # releases are cut by a workflow post from that workflow instead, so the
+    # real person can be credited.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (!github.event.release.prerelease && !endsWith(github.event.release.author.login, '[bot]'))
+    uses: GameAnalytics/sdk-release-notify/.github/workflows/notify.yml@main
+    with:
+      sdk_name: Unity SDK
+      tag: ${{ inputs.tag }}
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
