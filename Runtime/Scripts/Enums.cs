@@ -58,6 +58,12 @@ namespace GameAnalyticsSDK
         AppOpen = 7
     }
 
+    public enum GAStore
+    {
+        AppStore = 0,
+        GooglePlay = 1
+    }
+
     public enum GAAdError
     {
         Undefined = 0,

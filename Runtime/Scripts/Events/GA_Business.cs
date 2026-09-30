@@ -45,6 +45,11 @@ namespace GameAnalyticsSDK.Events
 			GA_Wrapper.AddBusinessEvent(currency, amount, itemType, itemId, cartType, fields, mergeFields);
 		}
 #endif
+
+		public static void NewEvent(string currency, int amount, string itemType, string itemId, string cartType, GAReceiptInfo receipt, IDictionary<string, object> fields, bool mergeFields)
+		{
+			GA_Wrapper.AddBusinessEvent(currency, amount, itemType, itemId, cartType, receipt, fields, mergeFields);
+		}
 		#endregion
 	}
 }

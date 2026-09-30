@@ -63,6 +63,9 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void addBusinessEventAndAutoFetchReceipt(string currency, int amount, string itemType, string itemId, string cartType, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]
+        private static extern void addBusinessEventWithTransactionId(string currency, int amount, string itemType, string itemId, string cartType, string transactionId, string fields, bool mergeFields);
+
+        [DllImport ("__Internal")]
         private static extern void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields, bool mergeFields);
 
         [DllImport ("__Internal")]

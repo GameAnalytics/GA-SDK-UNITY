@@ -171,6 +171,29 @@ void addBusinessEventAndAutoFetchReceipt(const char *currency, int amount, const
                                     mergeFields:mergeFields];
 }
 
+void addBusinessEventWithTransactionId(const char *currency, int amount, const char *itemType, const char *itemId, const char *cartType, const char *transactionId, const char *fields, BOOL mergeFields) {
+    NSString *currencyString = currency != NULL ? [NSString stringWithUTF8String:currency] : nil;
+    NSInteger amountInteger = (NSInteger)amount;
+    NSString *itemTypeString = itemType != NULL ? [NSString stringWithUTF8String:itemType] : nil;
+    NSString *itemIdString = itemId != NULL ? [NSString stringWithUTF8String:itemId] : nil;
+    NSString *cartTypeString = cartType != NULL ? [NSString stringWithUTF8String:cartType] : nil;
+    NSString *transactionIdString = transactionId != NULL ? [NSString stringWithUTF8String:transactionId] : nil;
+    NSString *fieldsString = fields != NULL ? [NSString stringWithUTF8String:fields] : nil;
+    NSDictionary *fields_dict = nil;
+    if (fieldsString) {
+        fields_dict = [NSJSONSerialization JSONObjectWithData:[fieldsString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+    }
+
+    [GameAnalytics addBusinessEventWithCurrency:currencyString
+                                         amount:amountInteger
+                                       itemType:itemTypeString
+                                         itemId:itemIdString
+                                       cartType:cartTypeString
+                                  transactionId:transactionIdString
+                                   customFields:fields_dict
+                                    mergeFields:mergeFields];
+}
+
 void addResourceEvent(int flowType, const char *currency, float amount, const char *itemType, const char *itemId, const char *fields, BOOL mergeFields) {
     NSString *currencyString = currency != NULL ? [NSString stringWithUTF8String:currency] : nil;
     NSNumber *amountNumber = [NSNumber numberWithFloat:amount];

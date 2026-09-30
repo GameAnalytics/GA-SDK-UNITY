@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Releases before 8.1.0 use the legacy format and are kept unchanged below.
 
 <!--(CHANGELOG_TOP)-->
+## [8.3.0] - 2026-09-30
+
+### Added
+
+- `GameAnalytics.NewBusinessEvent(..., GAReceiptInfo receipt)` overloads: pass `GAReceiptInfo.AppStore(transactionId)` (iOS, tvOS: StoreKit 1 `transactionIdentifier` or StoreKit 2 `Transaction.id`) or `GAReceiptInfo.GooglePlay(productId, purchaseToken)` (Android) and the purchase is validated server side against the store. One call site compiles on every platform; on desktop and WebGL the event is sent without validation. The existing `NewBusinessEventIOS`, `NewBusinessEventIOSAutoFetchReceipt` and `NewBusinessEventGooglePlay` methods are unchanged
+- Playmaker: `SendBusinessEventWithReceipt` action
+
+### Changed
+
+- iOS/tvOS: updated the native GameAnalytics iOS SDK to 5.1.0 — business events with an App Store transaction id, fixes a crash and an empty session id when the init request is rejected
+- Android: updated the native GameAnalytics Android SDK to 7.2.0 — business events with Google Play receipt info (product id + purchase token)
+
+- `PlayMakerPresenceCheck` (editor-only) moved from the global namespace into `GameAnalyticsSDK.Editor`
+- UPM package manifest: added license, documentation and changelog links, trimmed the keyword list, dropped the unused OpenUPM `publishConfig`
+- The UPM package no longer carries the leftover `GooglePackages/` folder (EDM4U tarball, unused since 8.1.0)
+
+### Fixed
+
+- Settings inspector: a newly added platform card opens expanded instead of collapsed
+- Window → GameAnalytics → Select Settings locks the Inspector on the settings asset, so clicking elsewhere in the editor no longer navigates away from it (the padlock in the Inspector header unlocks it)
+- Submit Errors only forwards exceptions and errors; warnings and asserts no longer consume the 10-per-session automatic error budget (#60)
+
 ## [8.2.0] - 2026-08-31
 
 ### Added

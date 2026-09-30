@@ -1027,7 +1027,9 @@ namespace GameAnalyticsSDK.Editor
             Button add = new Button(() =>
             {
                 string chosen = availablePlatforms[Mathf.Clamp(_addPlatformIndex, 0, availablePlatforms.Length - 1)];
-                Apply("Add platform", () => settings.AddPlatform((RuntimePlatform)Enum.Parse(typeof(RuntimePlatform), chosen)));
+                RuntimePlatform platform = (RuntimePlatform)Enum.Parse(typeof(RuntimePlatform), chosen);
+                SetPlatformFold(platform, true);
+                Apply("Add platform", () => settings.AddPlatform(platform));
                 _addPlatformIndex = 0;
             })
             { text = "Add platform" };

@@ -2,6 +2,8 @@
 using UnityEditor;
 using System;
 
+namespace GameAnalyticsSDK.Editor
+{
 public class PlayMakerPresenceCheck : AssetPostprocessor{
 
 	static string PlayMakerTypeCheck = "HutongGames.PlayMaker.Actions.ActivateGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
@@ -78,4 +80,5 @@ public class PlayMakerPresenceCheck : AssetPostprocessor{
 		}
 
 	}
+}
 }

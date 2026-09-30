@@ -141,6 +141,14 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, receipt, store, signature, fields, mergeFields);
         }
 
+        private static void addBusinessEventWithReceiptInfo(string currency, int amount, string itemType, string itemId, string cartType, string store, string productId, string purchaseToken, string fields, bool mergeFields)
+        {
+            using (var receiptInfo = new AndroidJavaObject("com.gameanalytics.sdk.events.ReceiptInfo", store, productId, purchaseToken))
+            {
+                GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, receiptInfo, fields, mergeFields);
+            }
+        }
+
         private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields, bool mergeFields)
         {
             GA.CallStatic("addResourceEvent", flowType, currency, amount, itemType, itemId, fields, mergeFields);
