@@ -10,7 +10,19 @@ namespace GameAnalyticsSDK.Editor
         [MenuItem ("Window/GameAnalytics/Select Settings", false, 0)]
         static void SelectGASettings ()
         {
+            System.Type inspectorType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.InspectorWindow");
+            EditorWindow inspector = inspectorType != null ? EditorWindow.GetWindow(inspectorType) : null;
+
+            ActiveEditorTracker tracker = ActiveEditorTracker.sharedTracker;
+            tracker.isLocked = false;
             Selection.activeObject = GameAnalytics.SettingsGA;
+            tracker.ForceRebuild();
+            tracker.isLocked = true;
+
+            if (inspector != null)
+            {
+                inspector.Repaint();
+            }
         }
 
         [MenuItem ("Window/GameAnalytics/Setup Guide", false, 100)]

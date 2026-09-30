@@ -438,6 +438,47 @@ namespace GameAnalyticsSDK
 #endif
 
         /// <summary>
+        /// Track any real money transaction in-game and have the purchase validated server side against the store.
+        /// Supported on iOS, tvOS (App Store) and Android (Google Play); on other platforms the event is sent without validation.
+        /// </summary>
+        /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
+        /// <param name="amount">Amount in cents (int). (e.g. 99).</param>
+        /// <param name="itemType">Item Type bought. (e.g. Gold Pack).</param>
+        /// <param name="itemId">Item bought. (e.g. 1000 gold).</param>
+        /// <param name="cartType">Cart type.</param>
+        /// <param name="receipt">Store identifiers of the purchase, see <see cref="GAReceiptInfo.AppStore"/> and <see cref="GAReceiptInfo.GooglePlay"/>.</param>
+        public static void NewBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, GAReceiptInfo receipt)
+        {
+            if(!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, receipt, null, false);
+        }
+
+        /// <summary>
+        /// Track any real money transaction in-game and have the purchase validated server side against the store.
+        /// Supported on iOS, tvOS (App Store) and Android (Google Play); on other platforms the event is sent without validation.
+        /// </summary>
+        /// <param name="currency">Currency code in ISO 4217 format. (e.g. USD).</param>
+        /// <param name="amount">Amount in cents (int). (e.g. 99).</param>
+        /// <param name="itemType">Item Type bought. (e.g. Gold Pack).</param>
+        /// <param name="itemId">Item bought. (e.g. 1000 gold).</param>
+        /// <param name="cartType">Cart type.</param>
+        /// <param name="receipt">Store identifiers of the purchase, see <see cref="GAReceiptInfo.AppStore"/> and <see cref="GAReceiptInfo.GooglePlay"/>.</param>
+        /// <param name="customFields">Custom fields to add to the event. Dictionary of key-value pairs. Only string or numbers allowed as values. Custom fields are only stored in raw events and can only be used for data export (i.e. not visible in the tool).</param>
+        public static void NewBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, GAReceiptInfo receipt, IDictionary<string, object> customFields, bool mergeFields = false)
+        {
+            if(!GameAnalytics._hasInitializeBeenCalled)
+            {
+                Debug.LogError("GameAnalytics: REMEMBER THE SDK NEEDS TO BE MANUALLY INITIALIZED NOW");
+                return;
+            }
+            GA_Business.NewEvent(currency, amount, itemType, itemId, cartType, receipt, customFields, mergeFields);
+        }
+
+        /// <summary>
         /// Track any type of design event that you want to measure i.e. GUI elements or tutorial steps. Custom dimensions are not supported.
         /// </summary>
         /// <param name="eventName">String can consist of 1 to 5 segments. Segments are seperated by ':' and segments can have a max length of 16. (e.g. segment1:anotherSegment:gold).</param>

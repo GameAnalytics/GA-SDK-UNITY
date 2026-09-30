@@ -163,6 +163,13 @@ namespace GameAnalyticsSDK.Wrapper
         }
         #endif
 
+        private static void addBusinessEventWithReceiptInfo (string currency, int amount, string itemType, string itemId, string cartType, GAReceiptInfo receipt, string fields, bool mergeFields)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor) {
+                Debug.Log ("addBusinessEventWithReceiptInfo(" + currency + "," + amount + "," + itemType + "," + itemId + "," + cartType + "," + receipt.Store + "," + receipt.TransactionId + "," + receipt.ProductId + ")");
+            }
+        }
+
         private static void addResourceEvent (int flowType, string currency, float amount, string itemType, string itemId, string fields, bool mergeFields)
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
@@ -510,6 +517,31 @@ namespace GameAnalyticsSDK.Wrapper
 #endif
         }
 #endif
+
+        public static void AddBusinessEvent (string currency, int amount, string itemType, string itemId, string cartType, GAReceiptInfo receipt, IDictionary<string, object> fields, bool mergeFields)
+        {
+            string fieldsAsString = DictionaryToJsonString(fields);
+#if UNITY_EDITOR
+            if (GAValidator.ValidateBusinessEvent (currency, amount, cartType, itemType, itemId)) {
+                addBusinessEventWithReceiptInfo (currency, amount, itemType, itemId, cartType, receipt, fieldsAsString, mergeFields);
+            }
+#elif UNITY_IOS || UNITY_TVOS
+            if (receipt.Store != GAStore.AppStore || string.IsNullOrEmpty(receipt.TransactionId)) {
+                Debug.LogError ("GameAnalytics: business event dropped, purchase validation on iOS/tvOS needs GAReceiptInfo.AppStore with a transaction id");
+                return;
+            }
+            addBusinessEventWithTransactionId (currency, amount, itemType, itemId, cartType, receipt.TransactionId, fieldsAsString, mergeFields);
+#elif UNITY_ANDROID
+            if (receipt.Store != GAStore.GooglePlay || string.IsNullOrEmpty(receipt.ProductId) || string.IsNullOrEmpty(receipt.PurchaseToken)) {
+                Debug.LogError ("GameAnalytics: business event dropped, purchase validation on Android needs GAReceiptInfo.GooglePlay with a product id and purchase token");
+                return;
+            }
+            addBusinessEventWithReceiptInfo (currency, amount, itemType, itemId, cartType, "google_play_store", receipt.ProductId, receipt.PurchaseToken, fieldsAsString, mergeFields);
+#else
+            Debug.LogWarning ("GameAnalytics: purchase validation is only available on iOS, tvOS and Android, sending the business event without receipt");
+            addBusinessEvent (currency, amount, itemType, itemId, cartType, fieldsAsString, mergeFields);
+#endif
+        }
 
         public static void AddResourceEvent (GAResourceFlowType flowType, string currency, float amount, string itemType, string itemId, IDictionary<string, object> fields, bool mergeFields)
         {

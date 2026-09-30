@@ -577,6 +577,115 @@ typedef enum GAAdError : NSInteger {
 /*!
  @method
 
+ @abstract Add new business event with an App Store transaction id
+
+ @discussion Use this overload to have the purchase validated through Apple's App Store Server API.
+    Works for both StoreKit 1 (pass SKPaymentTransaction.transactionIdentifier) and
+    StoreKit 2 (pass String(Transaction.id)). The SDK does not observe transactions or
+    finish them; the game keeps owning that.
+
+ @param currency
+    Currency code in ISO 4217 format. (e.g. USD)
+ @param amount
+    (Integer) Amount in cents. (e.g. 99)
+ @param itemType
+    Item Type bought. (e.g. Gold Pack)
+ @param itemId
+    Item bought. (e.g. 1000 gold)
+ @param cartType
+    Cart type. (e.g. end of level)
+ @param transactionId
+    Apple transaction id of the purchase. Required, the event is dropped if nil or empty.
+
+ @availability Available since 5.1.0
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addBusinessEventWithCurrency:(NSString *)currency
+                              amount:(NSInteger)amount
+                            itemType:(NSString *)itemType
+                              itemId:(NSString *)itemId
+                            cartType:(NSString *)cartType
+                       transactionId:(NSString *)transactionId;
+
+/*!
+ @method
+
+ @abstract Add new business event with an App Store transaction id
+
+ @discussion Use this overload to have the purchase validated through Apple's App Store Server API.
+    Works for both StoreKit 1 (pass SKPaymentTransaction.transactionIdentifier) and
+    StoreKit 2 (pass String(Transaction.id)).
+
+ @param currency
+    Currency code in ISO 4217 format. (e.g. USD)
+ @param amount
+    (Integer) Amount in cents. (e.g. 99)
+ @param itemType
+    Item Type bought. (e.g. Gold Pack)
+ @param itemId
+    Item bought. (e.g. 1000 gold)
+ @param cartType
+    Cart type. (e.g. end of level)
+ @param transactionId
+    Apple transaction id of the purchase. Required, the event is dropped if nil or empty.
+ @param customFields
+    Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
+
+ @availability Available since 5.1.0
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addBusinessEventWithCurrency:(NSString *)currency
+                              amount:(NSInteger)amount
+                            itemType:(NSString *)itemType
+                              itemId:(NSString *)itemId
+                            cartType:(NSString *)cartType
+                       transactionId:(NSString *)transactionId
+                        customFields:(NSDictionary *)customFields;
+
+/*!
+ @method
+
+ @abstract Add new business event with an App Store transaction id
+
+ @discussion Use this overload to have the purchase validated through Apple's App Store Server API.
+    Works for both StoreKit 1 (pass SKPaymentTransaction.transactionIdentifier) and
+    StoreKit 2 (pass String(Transaction.id)).
+
+ @param currency
+    Currency code in ISO 4217 format. (e.g. USD)
+ @param amount
+    (Integer) Amount in cents. (e.g. 99)
+ @param itemType
+    Item Type bought. (e.g. Gold Pack)
+ @param itemId
+    Item bought. (e.g. 1000 gold)
+ @param cartType
+    Cart type. (e.g. end of level)
+ @param transactionId
+    Apple transaction id of the purchase. Required, the event is dropped if nil or empty.
+ @param customFields
+    Dictionary of key-value pairs to be added to the event. Custom fields will only be available for data export.
+ @param mergeFields
+    If true merge specified fields with global fields
+
+ @availability Available since 5.1.0
+
+ @attribute Note! This method cannot be called before initialize method has been triggered
+ */
++ (void)addBusinessEventWithCurrency:(NSString *)currency
+                              amount:(NSInteger)amount
+                            itemType:(NSString *)itemType
+                              itemId:(NSString *)itemId
+                            cartType:(NSString *)cartType
+                       transactionId:(NSString *)transactionId
+                        customFields:(NSDictionary *)customFields
+                         mergeFields:(BOOL)mergeFields;
+
+/*!
+ @method
+
  @abstract Add new resource event
 
  @param flowType
