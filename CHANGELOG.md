@@ -11,14 +11,16 @@ Releases before 8.1.0 use the legacy format and are kept unchanged below.
 
 ### Added
 
-- `GameAnalytics.NewBusinessEvent(..., GAReceiptInfo receipt)` overloads: pass `GAReceiptInfo.AppStore(transactionId)` (iOS, tvOS: StoreKit 1 `transactionIdentifier` or StoreKit 2 `Transaction.id`) or `GAReceiptInfo.GooglePlay(productId, purchaseToken)` (Android) and the purchase is validated server side against the store. One call site compiles on every platform; on desktop and WebGL the event is sent without validation. The existing `NewBusinessEventIOS`, `NewBusinessEventIOSAutoFetchReceipt` and `NewBusinessEventGooglePlay` methods are unchanged
+- Modernised purchase validation: `GameAnalytics.NewBusinessEvent(..., GAReceiptInfo receipt)` validates a purchase server side using the store's own identifiers instead of a receipt blob and signature. One call site compiles on every platform; desktop and WebGL send the event without validation
+  - iOS, tvOS: `GAReceiptInfo.AppStore(transactionId)` (StoreKit 1 `transactionIdentifier` or StoreKit 2 `Transaction.id`). Validated through Apple's App Store Server API, which replaces the deprecated `verifyReceipt`
+  - Android: `GAReceiptInfo.GooglePlay(productId, purchaseToken)`. No signature needed
+- The existing `NewBusinessEventIOS`, `NewBusinessEventIOSAutoFetchReceipt` and `NewBusinessEventGooglePlay` methods keep working; migrating to the new overload is recommended
 - Playmaker: `SendBusinessEventWithReceipt` action
 
 ### Changed
 
-- iOS/tvOS: updated the native GameAnalytics iOS SDK to 5.1.0 — business events with an App Store transaction id, fixes a crash and an empty session id when the init request is rejected
-- Android: updated the native GameAnalytics Android SDK to 7.2.0 — business events with Google Play receipt info (product id + purchase token)
-
+- iOS/tvOS: native GameAnalytics iOS SDK updated to 5.1.0 (transaction id business events; fixes a crash and an empty session id when the init request is rejected)
+- Android: native GameAnalytics Android SDK updated to 7.2.0 (product id + purchase token business events; fixes a crash when the server returns 401)
 - `PlayMakerPresenceCheck` (editor-only) moved from the global namespace into `GameAnalyticsSDK.Editor`
 - UPM package manifest: added license, documentation and changelog links, trimmed the keyword list, dropped the unused OpenUPM `publishConfig`
 - The UPM package no longer carries the leftover `GooglePackages/` folder (EDM4U tarball, unused since 8.1.0)
